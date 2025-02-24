@@ -1,0 +1,11 @@
+*** Variables ***
+${EN_OWBProductCode}            xpath=//input[@id='productCode']
+${EN_OWBproductName}            xpath=(//input[@id='productName'])[1]
+${EN_OWBholderName}             xpath=//input[@id='holderName']
+${EN_OWBbankName}               xpath=//input[@id='bankName']
+${EN_OWBaccountNumber}          xpath=//input[@id='accountNumber']
+${EN_Userstatus}                xpath=//div[@class='ant-select-selection-selected-value']
+${EN_status}                    xpath=(//div[@class='ant-select-selection-selected-value'])[2]
+${EN_ridercompletiondate}       xpath=//input[@id='endTime']
+${EN_DeleteriderProductName}    xpath=(//input[@id='productName'])[2]
+${EN_riderPolicyNo}             xpath=(//input[@id='policyNo'])[2]

@@ -1,0 +1,143 @@
+*** Settings ***
+Library     AppiumLibrary
+Library     QraceHelper
+
+
+*** Variables ***
+${iOS_EN_PolicyOwnerName}                               xpath=//XCUIElementTypeStaticText[@name='Policy owner name']/following-sibling::XCUIElementTypeStaticText
+${iOS_EN_Policyownername_txt}                           chain=**/XCUIElementTypeStaticText[`label == 'Policy owner name'`]
+${iOS_EN_txtTitle}                                      xpath=(//XCUIElementTypeOther[@name="fwd-dropdown-control"])[1]
+# ${iOS_EN_txtTitle}    chain=**/XCUIElementTypeOther[`label CONTAINS 'Title'`][-1]
+${iOS_EN_txtFirstName}                                  chain=**/XCUIElementTypeTextField[`name == "first-name-input"`]
+${iOS_EN_txtMiddleName}                                 chain=**/XCUIElementTypeTextField[`name == "middle-name-input"`]
+${iOS_EN_txtLastName}                                   chain=**/XCUIElementTypeTextField[`name == "last-name-input"`]
+${iOS_EN_Marital_Status}                                xpath=(//XCUIElementTypeOther[@name="fwd-dropdown-control"])[2]
+# ${iOS_EN_Marital_Status}    chain=**/XCUIElementTypeOther[`label CONTAINS "Marital status (Optional)"`][-1]
+${iOS_EN_reasonToChangeName}                            chain=**/XCUIElementTypeOther[`label == 'Reason for name change'`][2]
+${iOS_EN_Updatename}                                    chain=**/XCUIElementTypeStaticText[`label == 'Update name'`]
+${iOS_EN_Facta status}                                  chain=**/XCUIElementTypeOther[`label == 'Yes'`]
+${iOS_EN_acknowledgeChkBox}                             chain=**/XCUIElementTypeOther[`label CONTAINS 'I acknowledge that'`]/XCUIElementTypeOther[-1]
+${iOS_EN_submitButton}                                  chain=**/XCUIElementTypeButton[`label == 'Submit'`]
+${iOS_EN_uploadIDCard}                                  xpath=//XCUIElementTypeStaticText[contains(@name,'Upload ID card or Passport')]/following-sibling::XCUIElementTypeOther/XCUIElementTypeScrollView/XCUIElementTypeOther[1]
+${iOS_EN_uploadCourtLegal}                              xpath=//XCUIElementTypeStaticText[contains(@name,'Upload court legal letter')]/following-sibling::XCUIElementTypeOther/XCUIElementTypeScrollView/XCUIElementTypeOther[1]
+${iOS_EN_Submit_btn}                                    chain=**/XCUIElementTypeButton[`label == 'Submit'`]
+${iOS_EN_Personal_particulars}                          chain=**/XCUIElementTypeStaticText[`label == "Personal particulars"`]
+${iOS_EN_AddImage}                                      chain=**/XCUIElementTypeOther[`name == "iBank-add-image"`]
+${iOS_EN_Upload_IDImage}                                chain=**/XCUIElementTypeOther[`name == 'add-image'`]
+${iOS_EN_Upload_DocImage}                               xpath=(//android.view.ViewGroup[@resource-id='add-image'])[2]
+
+${iOS_EN_Address_Txt}                                   chain=**/XCUIElementTypeOther[`label == "Address"`]
+# update email or mobile
+${iOS_EN_Update_Personal_Details_Txt}                   chain=**/XCUIElementTypeStaticText[`label == 'Update personal details'`]
+${iOS_EN_updatemobilefield}                             chain=**/XCUIElementTypeTextField[`name == "mobile-field-input"`]
+${iOS_EN_updateemailfield}                              chain=**/XCUIElementTypeTextField[`name == "email-field-input"`]
+${iOS_EN_btnSave}                                       chain=**/XCUIElementTypeButton[`label == 'Save'`]
+${iOS_EN_btnSave}                                       chain=**/XCUIElementTypeButton[`label == 'Save'`]
+${iOS_EN_countryCode}                                   chain=**/XCUIElementTypeOther[`name == "select-country-pressable"`]
+${iOS_EN_countryCodeHK}                                 xpath=//XCUIElementTypeOther[@name="select-country-HKG"]
+# update address
+${iOS_EN_selectpolicy}                                  chain=**/XCUIElementTypeOther[`label CONTAINS 'FWD Hospital Care Protection'`][-1]
+${iOS_EN_btnNext}                                       chain=**/XCUIElementTypeButton[`label == 'Next'`][-1]
+${iOS_EN_Verify_Button}                                 chain=**/XCUIElementTypeButton[`label == 'Verify'`]
+${iOS_EN_Update_Address_Txt}                            chain=**/XCUIElementTypeStaticText[`label == 'Update address'`]
+${iOS_EN_Current_Address}                               xpath=//XCUIElementTypeStaticText[@name="Current address"]/following-sibling::XCUIElementTypeStaticText
+${iOS_EN_Current_Country}                               chain=**/XCUIElementTypeOther[`label CONTAINS 'Country'`][-1]
+${iOS_EN_Search_here}                                   chain=**/XCUIElementTypeTextField[`value == 'Search here'`]
+${iOS_EN_txtAdd1}                                       chain=**/XCUIElementTypeTextField[`name == "input"`][1]
+${iOS_EN_txtAdd2}                                       chain=**/XCUIElementTypeTextField[`name == "input"`][2]
+# ${iOS_EN_txtZipCode}    chain=**/XCUIElementTypeTextField[`name == "input"`][3]
+${iOS_EN_txtDistrict}                                   chain=**/XCUIElementTypeOther[`label == "District"`][2]
+${iOS_EN_txtCity}                                       chain=**/XCUIElementTypeOther[`label == "City"`][2]
+${iOS_EN_txtState}                                      chain=**/XCUIElementTypeOther[`label == "State/Province/Region"`][2]
+# change success
+${iOS_EN_OTP_email}                                     chain=**/XCUIElementTypeOther[`label CONTAINS 'We sent you a code'`][-1]/XCUIElementTypeStaticText[2]
+${iOS_EN_successtext}                                   chain=**/XCUIElementTypeStaticText[`label == 'We’d love to hear from you'`]
+${iOS_EN_Error_Must_Be_Valid_Email_Txt}                 chain=**/XCUIElementTypeStaticText[`label == "Must be a valid email"`]
+${iOS_EN_Error_Must_Be_Mobile_No_Txt}                   chain=**/XCUIElementTypeStaticText[`label == "Must be a valid mobile number"`]
+${iOS_EN_Error_Email_Required_Txt}                      chain=**/XCUIElementTypeStaticText[`label == "Email is a required field"`]
+${iOS_EN_Change_Success_Txt}                            chain=**/XCUIElementTypeStaticText[`label == "Change Success!"`]
+${iOS_EN_All_Done_Txt}                                  chain=**/XCUIElementTypeStaticText[`label == "All Done!"`]
+${iOS_EN_Submitted_Txt}                                  chain=**/XCUIElementTypeStaticText[`label == "Submitted"`]
+${iOS_EN_Error_Messgage_FirstName}                      chain=**/XCUIElementTypeStaticText[`label == "First name is a required field"`]
+${iOS_EN_Error_Messgage_LasttName}                      chain=**/XCUIElementTypeStaticText[`label == "Last name is a required field"`]
+${IOS_EN_View_Servicing_Request_Transactions}           chain=**/XCUIElementTypeStaticText[`label == "View servicing request transactions"`]
+${iOS_EN_EmailerrorMessage}                             chain=**/XCUIElementTypeOther[`label CONTAINS 'You cannot change user info'`][-1]
+
+${iOS_EN_Current_Address}                               xpath=//XCUIElementTypeStaticText[@name="Current address"]/following-sibling::XCUIElementTypeStaticText
+${iOS_EN_AddressLineOne}                                chain=**/XCUIElementTypeStaticText[`label == "Address line 1"`]
+${iOS_EN_AddressLineTwo}                                chain=**/XCUIElementTypeStaticText[`label == "Address line 2"`]
+${iOS_EN_txtZipCode}                                    chain=**/XCUIElementTypeStaticText[`label == "Zip code"`]
+${iOS_EN_AddressfatcaNextButton}                        chain=**/XCUIElementTypeButton[`label == 'Next'`][-1]
+${iOS_EN_ChangeAddressDetails}                          chain=**/XCUIElementTypeOther[`label CONTAINS "New mailing address"`][-1]
+${IOS_EN_txtCity}                                       chain=**/XCUIElementTypeOther[`label == "City"`][2]
+${IOS_EN_txtState}                                      chain=**/XCUIElementTypeOther[`label == "State/Province/Region"`][2]
+${iOS_EN_AddressViewSummaryPage}                        chain=**/XCUIElementTypeStaticText[`label == "View summary"`]
+${iOS_EN_SummaryPage_newAddress}                        chain=**/XCUIElementTypeOther[`label BEGINSWITH "New mailing address"`][-2]/XCUIElementTypeOther[2]/XCUIElementTypeStaticText
+
+
+${Android_EN_Address_Txt}                               xpath=//android.widget.TextView[@text='Address']
+${Android_EN_Update_Address_Txt}                        xpath=//android.widget.TextView[@text='Update address']
+${Android_EN_btnNext}                                   android=new UiSelector().textContains("Next")
+
+${Android_EN_AddressfatcaNextButton}                    xpath=(//android.widget.Button)[2]
+${Android_EN_Current_Address}                           xpath=//android.widget.TextView[@text="Current address"]/following-sibling::android.widget.TextView[1]
+${Android_EN_AddressLineOne}                            xpath=(//android.widget.TextView[contains(@text,'Address line 1')]/../..//android.widget.EditText)[1]
+${Android_EN_AddressLineTwo}                            xpath=(//android.widget.TextView[contains(@text,'Address line 2')]/../..//android.widget.EditText)[2]
+${Android_EN_txtZipCode}                                xpath=(//android.widget.TextView[contains(@text,'Zip code')]/../..//android.widget.EditText)[3]
+${Android_EN_FATCAStatus}                               xpath=//android.widget.TextView[@text='FATCA']/following-sibling::android.widget.TextView[1]
+${Android_EN_txtCity}                                   xpath=//android.widget.TextView[contains(@text,'City')]//preceding::android.widget.EditText[1]
+${Android_EN_txtState}                                  xpath=//android.widget.TextView[contains(@text,'State')]//preceding::android.widget.EditText[1]
+${Android_EN_AddressViewSummaryPage}                    android=new UiSelector().textContains("View summary")
+${Android_EN_SummaryPage_newAddress}                    xpath=//android.widget.TextView[@text='New mailing address']/following-sibling::android.widget.TextView
+
+${Android_EN_EmailerrorMessage}                         android=new UiSelector().textContains("You cannot change user info")
+${Android_EN_PolicyOwnerName}                           xpath=//android.widget.TextView[@text='Policy owner name']/following-sibling::android.widget.TextView
+${Android_EN_Policyownername_txt}                       xpath=//android.widget.TextView[@text='Policy owner name']
+${Android_EN_txtTitle}                                  xpath=//android.widget.TextView[@text='Title']/following-sibling::android.widget.TextView
+${Android_EN_txtFirstName}                              xpath=(//android.widget.TextView[@text='First name']/../..//android.widget.EditText)[1]
+${Android_EN_txtMiddleName}                             xpath=(//android.widget.TextView[contains(@text,'Middle name')]/../..//android.widget.EditText)[2]
+${Android_EN_txtLastName}                               xpath=(//android.widget.TextView[@text='Last name']/../..//android.widget.EditText)[3]
+${Android_EN_Marital_Status}                            xpath=(//android.widget.TextView[@text='Marital status (Optional)']/following::android.widget.TextView)[1]
+${Android_EN_reasonToChangeName}                        chain=**/XCUIElementTypeOther[`label == 'Reason for name change'`][2]
+${Android_EN_Updatename}                                chain=**/XCUIElementTypeStaticText[`label == 'Update name'`]
+${Android_EN_Facta status}                              chain=**/XCUIElementTypeOther[`label == 'Yes'`]
+${Android_EN_acknowledgeChkBox}                         chain=**/XCUIElementTypeOther[`label CONTAINS 'I acknowledge that'`]/XCUIElementTypeOther[-1]
+${Android_EN_submitButton}                              chain=**/XCUIElementTypeButton[`label == 'Submit'`]
+${Android_EN_uploadIDCard}                              xpath=//XCUIElementTypeStaticText[contains(@name,'Upload ID card or Passport')]/following-sibling::XCUIElementTypeOther/XCUIElementTypeScrollView/XCUIElementTypeOther[1]
+${Android_EN_uploadCourtLegal}                          xpath=//XCUIElementTypeStaticText[contains(@name,'Upload court legal letter')]/following-sibling::XCUIElementTypeOther/XCUIElementTypeScrollView/XCUIElementTypeOther[1]
+${Android_EN_Submit_btn}                                chain=**/XCUIElementTypeButton[`label == 'Submit'`]
+${Android_EN_Personal_particulars}                      xpath=//android.widget.TextView[@text='Personal particulars']
+${Android_EN_Upload_IDImage}                            xpath=//android.view.ViewGroup[@resource-id='iBank-add-image']
+${Android_EN_Upload_DocImage}                           xpath=//android.view.ViewGroup[@resource-id='add-image']
+${Android_EN_Thanks_Txt}                                xpath=//android.widget.TextView[starts-with(@text,'Thanks')]
+${Android_EN_View_Servicing_Request_Transactions}       xpath=//android.widget.TextView[@text='View servicing request transactions']
+${Android_EN_Error_Messgage_FirstName}                  xpath=//android.widget.TextView[@text='First name is a required field']
+${Android_EN_Error_Messgage_LasttName}                  xpath=//android.widget.TextView[@text='Last name is a required field']
+
+${Android_EN_Email_Mobile_Txt}                          xpath=//android.widget.TextView[@text='Email and/or mobile']
+${Android_EN_Update_Personal_Details_Txt}               xpath=//android.widget.TextView[@text='Update personal details']
+${Android_EN_updatemobilefield}                         xpath=(//android.widget.EditText[contains(@resource-id,'input')])[1]
+${Android_EN_updateemailfield}                          xpath=(//android.widget.EditText[contains(@resource-id,'input')])[2]
+${Android_EN_countryCode}                               xpath=//android.widget.TextView[starts-with(@text, '+')]
+${Android_EN_Error_Email_Required_Txt}                  xpath=//android.widget.TextView[@text='Email is a required field']
+${Android_EN_Error_Must_Be_Mobile_No_Txt}               xpath=//android.widget.TextView[@text='Must be a valid email']
+${Android_EN_Error_Must_Be_Valid_Email_Txt}             xpath=//android.widget.TextView[@text='Must be a valid mobile number']
+${Android_EN_Change_Success_Txt}                        xpath=//android.widget.TextView[@text='Change success!']
+${Android_EN_btnSave}                                   xpath=//android.widget.TextView[@text='Save']
+${Android_EN_OTP_email}                                 xpath=(//android.widget.TextView[contains(@text,'We sent you a code')]/following-sibling::android.widget.TextView)[1]
+${Android_EN_TransactionEmail}                          xpath=(//android.widget.TextView[@text='Email']/following-sibling::android.widget.TextView)[1]
+${Android_EN_TransactionMobile}                         xpath=(//android.widget.TextView[@text='Mobile number']/following-sibling::android.widget.TextView)[1]
+${Android_EN_TransCompletion_Date}                      xpath=(//android.widget.TextView[@text='Completion date']/following-sibling::android.widget.TextView)[1]
+
+${Android_EN_TransactionNewAddress}                     xpath=(//android.widget.TextView[@text='New mailing address']/following::android.widget.TextView)[1]
+${Android_EN_AddressPolicyApplied}                      xpath=(//android.widget.TextView[@text='Policy(s) applied']/following::android.widget.TextView)[1]
+${Android_EN_TransactionCompletionDate}                 xpath=(//android.widget.TextView[@text='Completion date']/following::android.widget.TextView)[1]
+${Android_EN_AddresspolicyNumber}                       xpath=(//android.widget.TextView[contains(@text,'Policy no:')])[2]
+
+${Android_EN_TransactionNameTitle}                      xpath=(//android.widget.TextView[@text='Title']/following-sibling::android.widget.TextView)[1]
+${Android_EN_TransactionFirstName}                      xpath=(//android.widget.TextView[@text='First name']/following-sibling::android.widget.TextView)[1]
+${Android_EN_TransactionTitle}                          xpath=(//android.widget.TextView[@text='Title']/following-sibling::android.widget.TextView)[1]
+${Android_EN_TransactionMiddleName}                     xpath=(//android.widget.TextView[@text='Middle name']/following-sibling::android.widget.TextView)[1]
+${Android_EN_TransactionLastName}                       xpath=(//android.widget.TextView[@text='Last name']/following-sibling::android.widget.TextView)[1]
+${Android_EN_TransactionMarital}                        xpath=(//android.widget.TextView[@text='Marital status']/following-sibling::android.widget.TextView)[1]
+${Android_EN_TransactionStatus}                         xpath=(//android.widget.TextView[@text='Change of personal details']/following-sibling::android.view.ViewGroup/android.widget.TextView)[1]

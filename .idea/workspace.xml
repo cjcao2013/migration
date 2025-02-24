@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="8ff2f2f0-a2e2-4b9a-9a67-5a537c476714" name="Changes" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 7
+}</component>
+  <component name="ProjectId" id="2rHuUhcLHZkdKvJu9tLtwOV8x1g" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "TH__Automation__Script__7Jan2025",
+    "last_opened_file_path": "C:/Users/223741/OneDrive - FWD Group Management Holdings Limited/QKFolder/Automation_Script/JP Code"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\223741\OneDrive - FWD Group Management Holdings Limited\QKFolder\Automation_Script\TH Code\CustomLibraries\ClaimImages" />
+      <recent name="C:\Users\223741\OneDrive - FWD Group Management Holdings Limited\QKFolder\Automation_Script\TH Code\Pages\OWB" />
+      <recent name="C:\Users\223741\OneDrive - FWD Group Management Holdings Limited\QKFolder\Automation_Script\TH Code\Pages\Insurance" />
+      <recent name="C:\Users\223741\OneDrive - FWD Group Management Holdings Limited\QKFolder\Automation_Script\TH Code\PageObjects\Insurance\UpdatePolicy" />
+      <recent name="C:\Users\223741\OneDrive - FWD Group Management Holdings Limited\QKFolder\Automation_Script\TH Code\Pages\Insurance\UpdatePolicy" />
+    </key>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="8ff2f2f0-a2e2-4b9a-9a67-5a537c476714" name="Changes" comment="" />
+      <created>1736228338296</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1736228338296</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="robot-line">
+          <url>file://$PROJECT_DIR$/Pages/Insurance/Common/CommonMethod.resource</url>
+          <line>213</line>
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="robot-line">
+          <url>file://$PROJECT_DIR$/Pages/Insurance/UpdatePolicy/PersonalDetailsPage.resource</url>
+          <line>805</line>
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>

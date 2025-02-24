@@ -1,0 +1,12 @@
+stages:          # List of stages for jobs, and their order of execution
+  - test
+
+test-job:  # This job runs in the test stage.
+  tags:
+    - fwd_automation
+  stage: test    # It only starts when the job in the build stage completes successfully.
+  ## curl -d "projectName=Test_Dummy" -d "pipelineName=Test_Pipeline" -H "Authorization: Basic bGFsaXQuamFtb2RrYXI6UXJhY2VAMTIzTA==" -X POST http://10.160.132.200:8082/api/executePipelineFWD | jq -r '.[].executionId'
+  script:
+    - |
+      curl -d "projectName=FWD_Thailand_OMNE_Insurance_New" -d "pipelineName=TH_Regression" -H "Authorization: Basic bGFsaXQuamFtb2RrYXI6UXJhY2VAMTIzTA==" -X POST http://10.160.132.200:8082/api/executePipelineFWD
+      
