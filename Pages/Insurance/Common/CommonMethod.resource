@@ -323,7 +323,7 @@ Handle Feedback
        END
        Sleep    2s
         Click Element    ${${platformName}_${lang}_FeedbackSubmit_Btn}
-        ${status}   Run Keyword And Return Status    Wait Until Element Is Visible    ${${platformName}_${lang}_FeedbackSkip_Btn}    timeout=30s
+        ${status}   Run Keyword And Return Status    Wait Until Element Is Visible    ${${platformName}_${lang}_FeedbackSkip_Btn}    timeout=10s
         Take Screenshot    Feedback_Page
         IF    '${status}' == 'True'
             Input Text    ${${platformName}_${lang}_FeedbackComment_Txt}    Feedback Sample Text
@@ -331,12 +331,12 @@ Handle Feedback
             Click Element    ${${platformName}_${lang}_TellUsMoreTxt}
             Take Screenshot     FeedBack_Page
             Click Element    ${${platformName}_${lang}_FeedbackSubmit_Btn}
-            ${status}   Run Keyword And Return Status    Wait Until Element Is Visible    ${${platformName}_${lang}_FeedbackDone_Btn}    timeout=30s
+            ${status}   Run Keyword And Return Status    Wait Until Element Is Visible    ${${platformName}_${lang}_FeedbackDone_Btn}    timeout=10s
             Take Screenshot    FeedbackPage
             IF    '${status}' == 'True'
                 Click Element    ${${platformName}_${lang}_FeedbackDone_Btn}
             END
-            ${status}   Run Keyword And Return Status    Wait Until Element Is Visible    ${${platformName}_${lang}_FeedbackSubmit_Btn}    timeout=30s
+            ${status}   Run Keyword And Return Status    Wait Until Element Is Visible    ${${platformName}_${lang}_FeedbackSubmit_Btn}    timeout=3s
             Take Screenshot    FeedbackPage
             IF    '${status}' == 'True'
                 Click Element    ${${platformName}_${lang}_FeedbackSubmit_Btn}
@@ -344,7 +344,7 @@ Handle Feedback
         END
 #        Click Element    ${${platformName}_${lang}_FeedbackDone_Btn}
     END
-    Extra POP Up
+#    Extra POP Up
     ${Android_EN_InsurancePage}    Set Variable    android=new UiSelector().text("${Flow_Flag}")
     ${iOS_EN_InsurancePage}    Set Variable    chain=**/XCUIElementTypeButton[`label == '${Flow_Flag}'`]
     ${status}   Run Keyword And Return Status    Wait Until Element Is Visible    ${${platformName}_${lang}_InsurancePage}   timeout=30s
@@ -354,7 +354,7 @@ Handle Feedback
             Click Element    ${${platformName}_${lang}_InsurancePage}
     END
 
-    Set or enter PIN
+#    Set or enter PIN
 
 
 Check Transaction Status
@@ -362,7 +362,7 @@ Check Transaction Status
          ${status}    Run Keyword And Return Status
         ...    Wait Until Element Is Visible
         ...    ${${platformName}_${lang}_All_Done_Txt}
-        ...    timeout=20s
+        ...    timeout=30s
 
         IF    '${status}' == 'True'
             Take Screenshot    TransactionStatusPage
@@ -558,10 +558,13 @@ Transaction Success Page
         Take Screenshot    All Done Page
         Click Element    ${${platformName}_${lang}_AllDoneBtn}
         Handle Feedback
-        Wait Until Element Is Visible        ${${platformName}_${lang}_TransactionTab}        timeout=30s
+        Wait Until Element Is Visible        ${${platformName}_${lang}_TransactionTab}        timeout=50s
         Click Element        ${${platformName}_${lang}_TransactionTab}
-
-        Wait Until Element Is Visible        ${${platformName}_${lang}_TransactionServiceRequest}
+        ${status}       Run Keyword And Return Status   Wait Until Element Is Visible        ${${platformName}_${lang}_TransactionServiceRequest}   timeout=50s
+        IF    '${status}' != 'True'
+            Click Element        ${${platformName}_${lang}_TransactionTab}
+        END
+        Wait Until Element Is Visible        ${${platformName}_${lang}_TransactionServiceRequest}   timeout=10s
         Click Element    ${${platformName}_${lang}_TransactionServiceRequest}
     END
 

@@ -21,16 +21,26 @@ Get OTP from Message ID
 #   ${ResBody}   Evaluate       json.dumps(${response.text})
 #    ${response_body}   Convert To String    ${Res_body}
     Create File     ${screenshotPath}\\getMailBody_response.html     ${response_body}
-    ${OTPArr}      Split String    ${response_body}            </h4> <p
-    ${leng}     Get Length    ${OTPArr}
-    IF    '${leng}' == '1'
-        ${OTPNumber}    Set Variable
-    ELSE
+    TRY
+         ${OTPArr}      Split String    ${response_body}            10px">
+         ${OTP}      Set Variable      ${OTPArr}[1]
+         ${OTP}      Fetch From Left    ${OTP}    </h2>
+    EXCEPT
+        ${OTPArr}      Split String    ${response_body}            </h4> <p
         ${OTP}      Set Variable      ${OTPArr}[1]
         ${OTP}      Fetch From Right    ${OTP}    >
-        ${OTPNumber}      Strip String    ${OTP}
-        Log    "."${OTPNumber}"."
     END
+#    IF    '${leng}' == '1'
+#        ${OTPNumber}    Set Variable
+#    ELSE
+#        ${OTP}      Set Variable      ${OTPArr}[1]
+#        ${OTP}      Fetch From Right    ${OTP}    >
+#        ${OTPNumber}      Strip String    ${OTP}
+#        Log    "."${OTPNumber}"."
+#    END
+    ${OTPNumber}      Strip String    ${OTP}
+
+    Log    "."${OTPNumber}"."
     Set Global Variable    ${OTPNumber}
 #    **************** Username *******************
     ${Reg_Username}      Set Variable      ${OTPArr}[0]

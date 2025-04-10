@@ -3,7 +3,7 @@ ${iOS_EN_Transaction_Tab}                               chain=**/XCUIElementType
 ${iOS_EN_ServiceRequest_section}                        chain=**/XCUIElementTypeOther[`label == "Service request(s)"`][2]
 ${iOS_EN_TransactionVP}                                 chain=**/XCUIElementTypeOther[`label BEGINSWITH "Policy applied"`][2]
 ${iOS_EN_BackArrow}                                     chain=**/XCUIElementTypeButton[`name == "back-button"`]
-${IOS_EN_TransactionTab}                                chain=**/XCUIElementTypeOther[`label CONTAINS 'View transactions'`][-1]
+${IOS_EN_TransactionTab}                                chain=**/XCUIElementTypeOther[`label == "My transaction(s) See all"`]/XCUIElementTypeOther
 ${IOS_EN_SeeAll}                                        chain=**/XCUIElementTypeOther[`label == "My transaction(s) See all"`]/XCUIElementTypeOther[-1]
 ${IOS_EN_ServiceReuest}                                 chain=**/XCUIElementTypeOther[`label == "Service request(s)"`][2]
 ${IOS_EN_Transactions_first_PersonalDetail}             chain=**/XCUIElementTypeOther[`label == "Oct 11 2023 Change of personal details Completed Policy no: 40763685"`][1]

@@ -285,7 +285,7 @@ SignIn
         IF    '${status}' == 'True'
             Click Element       ${${platformName}_${lang}_Allow}
         END
-        ${status}    Run Keyword And Return Status   Wait Until Element Is Visible    ${${platformName}_${lang}_Sign_in_here}    timeout=2s
+        ${status}    Run Keyword And Return Status   Wait Until Element Is Visible    ${${platformName}_${lang}_Sign_in_here}    timeout=20s
         IF    '${status}' == 'True'    Click Element    ${${platformName}_${lang}_Sign_in_here}
         ${status}    Run Keyword And Return Status    Wait Until Element Is Visible    ${${platformName}_${lang}_SignIn_WelomebackText}    timeout=2s
         Set Global Variable    ${loginstatus}    ${status}
@@ -386,6 +386,7 @@ Additional Verification Page
             Wait Until Element Is Visible    ${${platformName}_${lang}_Verify_btn}
             Take Screenshot    Document_Details
             # Previous OTP from Mailsac
+
             Get OTP
             ${LoginPrevious_OTP}     Set Variable      ${OTPNumber}
             Set Global Variable    ${LoginPrevious_OTP}
@@ -393,6 +394,7 @@ Additional Verification Page
         END
         Take Screenshot    SignIn_OTP_Page
         Insert OTP      ${OTP_Source}    ${OTP_Expiry_Flag}     ${OTP_Resend_Flag}
+#         Pause Execution
         Omne Action Popup
     EXCEPT     AS  ${reason}
        Set Failed Actual Result and VP    Omne_Flow   ${reason}   Additional Verification Page

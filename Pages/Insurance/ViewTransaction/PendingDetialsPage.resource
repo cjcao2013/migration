@@ -1,7 +1,7 @@
 *** Settings ***
 Library     AppiumLibrary
 Library     FakerLibrary    locale=en_US
-Library    RPA.RobotLogListener
+
 Library    QraceHelper
 Library    DateTime
 Resource   ../../../CustomLibraries/common.robot

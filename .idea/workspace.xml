@@ -4,7 +4,38 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8ff2f2f0-a2e2-4b9a-9a67-5a537c476714" name="Changes" comment="" />
+    <list default="true" id="8ff2f2f0-a2e2-4b9a-9a67-5a537c476714" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CustomLibraries/MailSac/getMailBody.robot" beforeDir="false" afterPath="$PROJECT_DIR$/CustomLibraries/MailSac/getMailBody.robot" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CustomLibraries/common.robot" beforeDir="false" afterPath="$PROJECT_DIR$/CustomLibraries/common.robot" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Executor/Insurance/OmneInsuranceFlowExecutor.resource" beforeDir="false" afterPath="$PROJECT_DIR$/Executor/Insurance/OmneInsuranceFlowExecutor.resource" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PageObjects/Insurance/UpdatePolicy/PaymentFrequencyPageObjects.resource" beforeDir="false" afterPath="$PROJECT_DIR$/PageObjects/Insurance/UpdatePolicy/PaymentFrequencyPageObjects.resource" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PageObjects/Insurance/ViewTransactions/TransactionDetailsPageObjects.resource" beforeDir="false" afterPath="$PROJECT_DIR$/PageObjects/Insurance/ViewTransactions/TransactionDetailsPageObjects.resource" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pages/DBQuery/DBQuerySelect.py" beforeDir="false" afterPath="$PROJECT_DIR$/Pages/DBQuery/DBQuerySelect.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pages/Engagement/EngagementBannerPage.robot" beforeDir="false" afterPath="$PROJECT_DIR$/Pages/Engagement/EngagementBannerPage.robot" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pages/IL/Login.robot" beforeDir="false" afterPath="$PROJECT_DIR$/Pages/IL/Login.robot" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pages/Insurance/Claims/ClaimsPage.resource" beforeDir="false" afterPath="$PROJECT_DIR$/Pages/Insurance/Claims/ClaimsPage.resource" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pages/Insurance/Common/AddOTP.resource" beforeDir="false" afterPath="$PROJECT_DIR$/Pages/Insurance/Common/AddOTP.resource" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pages/Insurance/Common/CommonMethod.resource" beforeDir="false" afterPath="$PROJECT_DIR$/Pages/Insurance/Common/CommonMethod.resource" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pages/Insurance/Common/LoginPage.resource" beforeDir="false" afterPath="$PROJECT_DIR$/Pages/Insurance/Common/LoginPage.resource" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pages/Insurance/Common/UploadDocuments.resource" beforeDir="false" afterPath="$PROJECT_DIR$/Pages/Insurance/Common/UploadDocuments.resource" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pages/Insurance/PayPremium/LoanRepaymentPage.resource" beforeDir="false" afterPath="$PROJECT_DIR$/Pages/Insurance/PayPremium/LoanRepaymentPage.resource" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pages/Insurance/UpdatePolicy/ICPOptionPage.resource" beforeDir="false" afterPath="$PROJECT_DIR$/Pages/Insurance/UpdatePolicy/ICPOptionPage.resource" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pages/Insurance/UpdatePolicy/PaymentFrequencyPage.resource" beforeDir="false" afterPath="$PROJECT_DIR$/Pages/Insurance/UpdatePolicy/PaymentFrequencyPage.resource" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pages/Insurance/UpdatePolicy/SwitchFundsPage.resource" beforeDir="false" afterPath="$PROJECT_DIR$/Pages/Insurance/UpdatePolicy/SwitchFundsPage.resource" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pages/Insurance/UpdatePolicy/UpdatePoliciesmoduleSelectPage.resource" beforeDir="false" afterPath="$PROJECT_DIR$/Pages/Insurance/UpdatePolicy/UpdatePoliciesmoduleSelectPage.resource" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pages/Insurance/ViewTransaction/PendingDetialsPage.resource" beforeDir="false" afterPath="$PROJECT_DIR$/Pages/Insurance/ViewTransaction/PendingDetialsPage.resource" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pages/Insurance/ViewTransaction/TransactionDetailsPage.resource" beforeDir="false" afterPath="$PROJECT_DIR$/Pages/Insurance/ViewTransaction/TransactionDetailsPage.resource" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pages/OPUS/OPUSAssignTaskPage.resource" beforeDir="false" afterPath="$PROJECT_DIR$/Pages/OPUS/OPUSAssignTaskPage.resource" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pages/OPUS/OPUSChangeICPPage.resource" beforeDir="false" afterPath="$PROJECT_DIR$/Pages/OPUS/OPUSChangeICPPage.resource" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pages/OPUS/OPUSLoginPage.resource" beforeDir="false" afterPath="$PROJECT_DIR$/Pages/OPUS/OPUSLoginPage.resource" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pages/OPUS/OPUSPaymentFrequencyPage.resource" beforeDir="false" afterPath="$PROJECT_DIR$/Pages/OPUS/OPUSPaymentFrequencyPage.resource" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pages/OPUS/OPUSPersonalDetailsPage.resource" beforeDir="false" afterPath="$PROJECT_DIR$/Pages/OPUS/OPUSPersonalDetailsPage.resource" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pages/OPUS/OPUSTaskInquiryPage.resource" beforeDir="false" afterPath="$PROJECT_DIR$/Pages/OPUS/OPUSTaskInquiryPage.resource" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pages/OWB/OwbLoginPage.resource" beforeDir="false" afterPath="$PROJECT_DIR$/Pages/OWB/OwbLoginPage.resource" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Qrace/QraceHelper.py" beforeDir="false" afterPath="$PROJECT_DIR$/Qrace/QraceHelper.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -24,18 +55,26 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "TH__Automation__Script__7Jan2025",
-    "last_opened_file_path": "C:/Users/223741/OneDrive - FWD Group Management Holdings Limited/QKFolder/Automation_Script/JP Code"
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "TH__Automation__Script__24Feb25",
+    "last_opened_file_path": "C:/Users/223741/OneDrive - FWD Group Management Holdings Limited/QKFolder/Automation_Script/ID_New"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\223741\OneDrive - FWD Group Management Holdings Limited\QKFolder\Automation_Script\TH Code\Pages\Insurance\PayorOnbording" />
+      <recent name="C:\Users\223741\OneDrive - FWD Group Management Holdings Limited\QKFolder\Automation_Script\TH Code\Pages\Insurance\TrueOnbording" />
       <recent name="C:\Users\223741\OneDrive - FWD Group Management Holdings Limited\QKFolder\Automation_Script\TH Code\CustomLibraries\ClaimImages" />
       <recent name="C:\Users\223741\OneDrive - FWD Group Management Holdings Limited\QKFolder\Automation_Script\TH Code\Pages\OWB" />
       <recent name="C:\Users\223741\OneDrive - FWD Group Management Holdings Limited\QKFolder\Automation_Script\TH Code\Pages\Insurance" />
-      <recent name="C:\Users\223741\OneDrive - FWD Group Management Holdings Limited\QKFolder\Automation_Script\TH Code\PageObjects\Insurance\UpdatePolicy" />
-      <recent name="C:\Users\223741\OneDrive - FWD Group Management Holdings Limited\QKFolder\Automation_Script\TH Code\Pages\Insurance\UpdatePolicy" />
     </key>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-python-sdk-4f4e415b4190-aa17d162503b-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-243.26053.29" />
+      </set>
+    </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -51,11 +90,6 @@
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" type="robot-line">
-          <url>file://$PROJECT_DIR$/Pages/Insurance/Common/CommonMethod.resource</url>
-          <line>213</line>
-          <option name="timeStamp" value="6" />
-        </line-breakpoint>
         <line-breakpoint enabled="true" type="robot-line">
           <url>file://$PROJECT_DIR$/Pages/Insurance/UpdatePolicy/PersonalDetailsPage.resource</url>
           <line>805</line>

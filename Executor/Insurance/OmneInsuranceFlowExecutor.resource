@@ -23,7 +23,8 @@ Resource            ../../Pages/Insurance/UpdatePolicy/BenefitPayoutPage.resourc
 Resource            ../../Pages/Insurance/UpdatePolicy/PremiumpaymentHistoryPage.resource
 Resource            ../../Pages/Insurance/Common/ForgotMPIN.resource
 Resource    ../OWB/OWBExecutor.robot
-
+Resource        ../../Pages/Insurance/TrueOnbording/TrueOnboardingPage.resource
+Resource        ../../Pages/Insurance/PayorOnbording/PayorOnboardingPage.resource
 Library     Mainframe3270
 Resource    ../LA/LAExecutor.robot
 Resource    ../../CustomLibraries/Operation.py

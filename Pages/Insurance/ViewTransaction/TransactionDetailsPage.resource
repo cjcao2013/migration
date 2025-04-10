@@ -156,7 +156,7 @@ Transaction Cancel
 #    RETURN    ${failure_reason}
 #    END
 
-Transaction Payment frequency
+Transaction frequency
     ${Android_Selectposttransaction}    Set Variable
     ...    xpath=(//android.widget.TextView[@text='${current_day}']/following-sibling::android.widget.TextView[@text='${current_month}']/parent::android.view.ViewGroup/following-sibling::android.widget.TextView[@text='Change of payment frequency']/following-sibling::android.view.ViewGroup/android.widget.TextView[@text='${MCaseStatus}'])[1]
     ${iOS_Selectposttransaction}    Set Variable

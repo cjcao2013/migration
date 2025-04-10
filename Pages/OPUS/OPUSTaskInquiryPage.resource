@@ -29,10 +29,8 @@ OPUS Inquiry
         Wait Until Element Is Visible    ${EN_search_Icon}      timeout=10s
         Take OWB Screenshot    Home Page
         Click Element    ${EN_search_Icon}
-        Wait Until Element Is Visible    ${EN_taskInquiryOption}
+        Wait Until Element Is Visible    ${EN_taskInquiryOption}        timeout=10s
         Take OPUS Screenshot    Task Inquiry Page
-    #    ${OPUS_Case_No}     Set Variable        3672501
-    #    ${OPUSTransactionstatus}    Set Variable   Completed
         IF    '${OPUSTransactionstatus}' == 'In progress'
             Click Element    ${EN_taskInquiryOption}
         ELSE IF  '${OPUSTransactionstatus}' == 'Completed'
@@ -66,36 +64,52 @@ OPUS Inquiry
 
         Sleep   5s
         IF    '${OPUSTransactionstatus}' == 'In progress'
-            ${requeststatus}    Get Text    ${EN_RequestStatus}
-            IF    '${requeststatus}' != 'Completed'
+            ${status}    Run Keyword And Return Status      Wait Until Element Is Visible     ${EN_RequestStatus}
+            Pause Execution
+            IF    '${status}' == 'False' and '${Update_Policy_Module}' == 'Partial withdrawal' or '${Update_Policy_Module}' == 'Switch funds'
+                ${requeststatus}    Get Text     ${EN_RequestStatus}
+                Click Element    ${EN_caseInquiryOption}
+                Wait Until Element Is Visible    ${EN_CaseNo_Search}        timeout=10s
+                Input Text    ${EN_CaseNo_Search}    ${OPUS_Case_No}
+                Wait Until Element Is Visible    xpath=//a[text()='${OPUS_Case_No}']        timeout=10s
+                Click Element    xpath=//a[text()='${OPUS_Case_No}']
+                Take OPUS Screenshot    Inquiry Page
+                Wait Until Element Is Visible    ${EN_EWorksheet}         timeout=20s
+                Sleep    1s
+                Click Element    ${EN_EWorksheet}
+                ${tab2}    Switch Window    NEW
+                Take OPUS Screenshot    Inquiry Page
+            ELSE
+                 ${requeststatus}    Get Text     ${EN_RequestStatus}
+                 IF    '${requeststatus}' != 'Completed'
                     OPUS Assign and Change Task Status
                     IF    '${requeststatus}' == 'To Do'
                           ${mrequeststatus}       Set Variable      In Progress
                          Set Calc VP Actual Result With Original And Source    Transaction_Status    ${mrequeststatus.strip()}    ${requeststatus}    OPUS_Inquiry
                     END
             END
-            Sleep    5s
-            Wait Until Element Is Visible    ${EN_search_Button}        timeout=10s
-            Click Element    ${EN_search_Button}
+                Sleep    5s
+                Wait Until Element Is Visible    ${EN_search_Button}        timeout=10s
+                Click Element    ${EN_search_Button}
 
-            Reload Page
+                Reload Page
 
-            Wait Until Element Is Visible    ${EN_inputPolicyNumber}        timeout=60s
-            Input Text    ${EN_inputPolicyNumber}    ${Policy_No}
-            Take OPUS Screenshot    Inquiry Page
+                Wait Until Element Is Visible    ${EN_inputPolicyNumber}        timeout=60s
+                Input Text    ${EN_inputPolicyNumber}    ${Policy_No}
+                Take OPUS Screenshot    Inquiry Page
 
-            #input case no
-            Wait Until Element Is Visible    ${EN_CaseNo_Search}        timeout=10s
-            Input Text    ${EN_CaseNo_Search}    ${OPUS_Case_No}
+                #input case no
+                Wait Until Element Is Visible    ${EN_CaseNo_Search}        timeout=10s
+                Input Text    ${EN_CaseNo_Search}    ${OPUS_Case_No}
 
-            Wait Until Element Is Visible    ${EN_search_Button}        timeout=10s
-            Click Element    ${EN_search_Button}
+                Wait Until Element Is Visible    ${EN_search_Button}        timeout=10s
+                Click Element    ${EN_search_Button}
 
-            Wait Until Element Is Visible    xpath=//td[text()='${OPUS_Case_No}']        timeout=10s
-            Click Element    xpath=//td[text()='${OPUS_Case_No}']
-            Take OPUS Screenshot    Inquiry Page
+                Wait Until Element Is Visible    xpath=//td[text()='${OPUS_Case_No}']        timeout=10s
+                Click Element    xpath=//td[text()='${OPUS_Case_No}']
+                Take OPUS Screenshot    Inquiry Page
+            END
         ELSE IF  '${OPUSTransactionstatus}' == 'Completed'
-
             Wait Until Element Is Visible    xpath=//a[text()='${OPUS_Case_No}']        timeout=10s
             Click Element    xpath=//a[text()='${OPUS_Case_No}']
             Take OPUS Screenshot    Inquiry Page

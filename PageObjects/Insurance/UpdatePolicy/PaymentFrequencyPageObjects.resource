@@ -3,7 +3,7 @@ ${iOS_EN_CurrentPaymentFrequency}       chain=**/XCUIElementTypeOther[`label CON
 ${iOS_EN_CurrentPaymentPremium}          chain=**/XCUIElementTypeOther[`label CONTAINS 'Current payment frequency'`][-1]/XCUIElementTypeOther/XCUIElementTypeOther[2]
 ${iOS_EN_CurrentPaymentMethod}           chain=**/XCUIElementTypeOther[`label CONTAINS 'Current payment method'`][-1]/XCUIElementTypeStaticText[2]
 ${iOS_EN_FrequencyTransactionDetail}      chain=**/XCUIElementTypeOther[`label CONTAINS 'Policy applied'`][-1]
-${iOS_EN_PayerPolicy}           chain=**/XCUIElementTypeStaticText[`label CONTAINS 'Since you are a payor you are allowed to view the payment frequency.  For any specific policy related updates.'`][-1]
+${iOS_EN_PayerPolicy}           chain=**/XCUIElementTypeStaticText[`label CONTAINS 'Since you are a payor you are allowed'`][-1]
 
 ${Android_EN_CurrentPaymentFrequency}   xpath=//android.widget.TextView[@text='Current payment frequency']//following::android.widget.TextView[1]
 ${Android_EN_CurrentPaymentPremium}     xpath=//android.widget.TextView[@text='Current payment frequency']//following::android.widget.TextView[2]

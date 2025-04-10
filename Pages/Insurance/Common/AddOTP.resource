@@ -45,6 +45,7 @@ Insert OTP
         ${OTP_Source}     Convert To Lower Case    ${OTP_Source}
         IF      '${OTP_Source}' == 'mail'
             Sleep    10s
+
             Wait Until Page Contains Element        ${${platformName}_${lang}_OTP_email}        timeout=10s
             ${VP_OTP_Page_EmailID}    Get Text    ${${platformName}_${lang}_OTP_email}
             @{VP_OTP_Page_EmailID}    Split String    ${VP_OTP_Page_EmailID}

@@ -141,6 +141,7 @@ QR Code
         Take Screenshot    Loan_Repayment_Details
         Click Element    ${${platformName}_${lang}_DownloadQRCode}
         Sleep     3s
+        Pause Execution
         Click Text    OK    exact_match=true
 
         ${status}    Run Keyword And Return Status

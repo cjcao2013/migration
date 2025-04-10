@@ -92,7 +92,7 @@ Switch funds
        
 
         # switch in page
-        SwipePage
+        Scroll Till Transaction Is Visible     ${${platformName}_${lang}_Addnewfunds} 
         Wait Until Element Is Visible    ${${platformName}_${lang}_Addnewfunds}    timeout=60s
         Click Element    ${${platformName}_${lang}_Addnewfunds}
 
@@ -150,6 +150,7 @@ Switch funds
             ...    chain=**/XCUIElementTypeOther[`label CONTAINS '${SIFund}'`][-2]/XCUIElementTypeOther/XCUIElementTypeOther[1]/XCUIElementTypeTextField
             ${Android_clickFundpercField}    Set Variable
             ...    xpath=//android.widget.TextView[@text='${SIFund}']/../../android.view.ViewGroup[2]/android.widget.EditText
+            Scroll Till Transaction Is Visible     ${${platformName}_clickFundpercField}  
             Wait Until Element Is Visible    ${${platformName}_clickFundpercField}    timeout=10s
             Click Element    ${${platformName}_clickFundpercField}
             Clear Text    ${${platformName}_clickFundpercField}

@@ -51,7 +51,7 @@ Upload Document BS
               Click Element    ${${platformName}_${lang}_obj_captureImage1}
         END
         Take Screenshot    Document Upload
-
+#       Pause Execution
         ${Status}     Run Keyword And Return Status   Wait Until Element Is Visible       ${${platformName}_${lang}_GalleryDone}             timeout=5s
         IF    '${Status}' == 'True'
                 Sleep    1s
@@ -63,7 +63,7 @@ Upload Document BS
         ${Status}    Run Keyword And Return Status
         ...    Wait Until Page Contains Element
         ...    ${${platformName}_${lang}_UploadDocument_JustConfirm_Yes}
-        ...    timeout=5s
+        ...    timeout=20s
         IF    '${status}' == 'True'
             Click Element    ${${platformName}_${lang}_UploadDocument_JustConfirm_Yes}
         END

@@ -8,7 +8,7 @@ Resource    OPUSInquiryPage.resource
 
 
 *** Keywords ***
-OPUS Payment frequency
+OPUS frequency
     TRY
         Change Decision Status if Non STP
         Wait Until Element Is Visible    ${EN_currentPaymentFrequency}            timeout=100s

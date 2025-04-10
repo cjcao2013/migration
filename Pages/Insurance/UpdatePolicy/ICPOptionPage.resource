@@ -14,7 +14,7 @@ ${VP_Prodct_Name_PayCashoutapgr}    ${EMPTY}
 
 
 *** Keywords ***
-Change preferred payout
+Preferred payout
     TRY
         Select Policy
         Take Screenshot    ICP_Option_page

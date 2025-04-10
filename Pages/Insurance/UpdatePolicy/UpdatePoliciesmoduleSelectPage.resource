@@ -34,7 +34,7 @@ Manage
         #      Select Insurance Flow
         ${Android_EN_Insurance_Module}    Set Variable     android=new UiSelector().textContains("${Insurance_Flow}")
         ${iOS_EN_Insurance_Module}        Set Variable     chain=**/XCUIElementTypeOther[`label CONTAINS '${Insurance_Flow}'`][-1]
-        Wait Until Element Is Visible    ${${platformName}_${lang}_Insurance_Module}        timeout=5s
+        Wait Until Element Is Visible    ${${platformName}_${lang}_Insurance_Module}        timeout=10s
         Click Element    ${${platformName}_${lang}_Insurance_Module}
 
         ${status}       Run Keyword And Return Status    Wait Until Element Is Visible    ${${platformName}_${lang}_OKPopup}        timeout=5s

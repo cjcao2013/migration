@@ -168,7 +168,8 @@ Submit
         Take Screenshot    Claim_ThanksPage
         #transaction page
         IF    '${Successmsg}' != 'All Done!'
-            Claim Feedback
+#            Claim Feedback
+            Pause Execution
             Wait Until Element Is Visible    ${${platformName}_${lang}_SeeAll}   timeout=20s
             Click Element    ${${platformName}_${lang}_SeeAll}
             Take Screenshot    Transaction_Page

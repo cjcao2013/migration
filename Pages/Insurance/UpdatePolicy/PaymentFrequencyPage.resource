@@ -8,11 +8,11 @@ Resource    ../Common/AddOTP.resource
 
 
 *** Keywords ***
-Payment frequency
+frequency
     TRY
-        Select Policy
+#        Select Policy
         # select chnaged frequency
-        ${Status}       Run Keyword And Return Status       Wait Until Page Contains Element        ${iOS_EN_PayerPolicy}       timeout=5s
+        ${Status}       Run Keyword And Return Status       Wait Until Page Contains Element        ${iOS_EN_PayerPolicy}       timeout=50s
         IF    '${Status}' != 'True'
 
                 ${Android_SelectChangedfrequecny}    Set Variable       android=new UiSelector().textContains("${Change_Payment_mode}")

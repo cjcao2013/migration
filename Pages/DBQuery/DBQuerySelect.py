@@ -391,10 +391,10 @@ class DBQuerySelect:
                     f"        WHEN bph.BenefitType = 'Maturity Process' THEN 'Policy anniversary payment' " \
                     f"        WHEN bph.BenefitType = 'Annuity Payment Processing' THEN 'Annuity' " \
                     f"        ELSE NULL  " \
-                    f"    END AS BenefitTypeDisplay, " \
-                    f"    cp.PremiumCurrency AS Currency, " \
-                    f"    bph.BenefitAmount, " \
-                    f"   bph.PayoutMethod, " \
+                    f"        END AS BenefitTypeDisplay, " \
+                    f"        cp.PremiumCurrency AS Currency, " \
+                    f"         bph.BenefitAmount, " \
+                    f"       bph.PayoutMethod, " \
                     f"    CASE  " \
                     f"        WHEN bph.PayoutMethod IN ('DCP', 'MCL', 'IDC') THEN 'Bank transfer' " \
                     f"        WHEN bph.PayoutMethod IN ('PPY', 'IPP') THEN 'Promptpay Transfer' " \
@@ -412,7 +412,7 @@ class DBQuerySelect:
                     f" JOIN benefitpayouthistories bph ON  " \
                     f"    cp.ExternalRemoteId = bph.PaymentReferenceNumber " \
                     f"    AND cp.Market = bph.Market " \
-                    f" WHERE cp.market = 2 " \
+                    f"    WHERE cp.market = 2 " \
                     f"    AND cp.ExternalRemoteId = '" + encrypt_policynumber + "' " \
                     f"    AND bph.PayoutMethod IN ('DCP', 'MCL', 'IDC', 'PPY', 'IPP', 'DDP', 'CCP', 'MCP', 'CPO') " \
                     f"    AND bph.PayoutStatus IN ('Fail', 'Success') ;"
@@ -420,10 +420,12 @@ class DBQuerySelect:
             print(query)
             df = pd.read_sql(query, conn)
             # print (type(df))
+            print(f"Test")
             print(df)
+            print(f"Test")
             screenshot = screenshotdir
             print(query)
-
+            print(f"Test")
             f = open(screenshot + "/Selected_Policy_Benefitpayout.txt", "a")
             f.write(query)
             f.close()

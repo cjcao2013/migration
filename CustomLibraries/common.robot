@@ -50,7 +50,8 @@ Get Details from Qrace Environment
     ${buildversion}     Get From List    ${releaseNamelist}    0
     ${buildid}     Get From List    ${releaseNamelist}    1
     ${testtype}    Get TestType
-
+    ${testCaseId}         Get TestCaseId
+    Set Global Variable    ${testCaseId}
     Set Global Variable    ${testtype}
     Set Global Variable    ${runId}
     Set Global Variable    ${release}
@@ -78,12 +79,11 @@ Launch OMNE Application
     ${accessKey}    Get Environment Attribute    BS_accessKey
     Set Global Variable    ${user}
     Set Global Variable    ${accessKey}
-#    Log    ${appBS}
+
     ${udid}    Set Variable    NA
     ${releaseName}      Get ReleaseName
-#   ${bs_app}   Upload Build in BS      ${user}     ${accessKey}   ${releaseName}
-#    ${appBS}        Set Variable    ${bs_app}
-    ${appBS}        Set Variable      bs://b7cc89c4bf03cdc702475696afc7d6f9045a987c
+
+    ${appBS}        Set Variable        bs://e72113355d3b26262e7f450e011811d889bbc00b
     IF    '${udid}' == 'NA'
         # BS Capabilites
         &{bstackOption}    Create Dictionary
@@ -101,7 +101,7 @@ Launch OMNE Application
         ...    deviceName=${deviceName}
         ...    project=OMNE
         ...    build=${buildName}
-        ...    name=Update_Policy
+        ...    name=${runId}
         ...    app=${appBS}
         ...    ensureWebviewsHavePages=true
         ...    nativeWebScreenshot=true

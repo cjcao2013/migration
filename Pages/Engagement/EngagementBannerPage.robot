@@ -66,8 +66,9 @@ Timely services link redirection
     ${status}    Run Keyword And Return Status    Wait Until Page Contains Element    ${${platformName}_${lang}_HelpUsProvideInfoQuickLink}    timeout=30s
     IF    '${status}' == 'True'
         Click Element   ${${platformName}_${lang}_HelpUsProvideInfoQuickLink}
+        Pause Execution
         Take Screenshot     update_Personal_details_page
-        Click Element   ${${platformName}_${lang}_UpdatePolicyBackButton}
+#        Click Element   ${${platformName}_${lang}_UpdatePolicyBackButton}
     END
     Take Screenshot    Engagement Banner
 

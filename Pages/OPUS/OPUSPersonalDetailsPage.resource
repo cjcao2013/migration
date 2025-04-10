@@ -120,10 +120,6 @@ Change Name VP
                 Sleep    5s
                 Wait Until Element Is Visible    ${EN_MemoCode}    timeout=2s
                 Click Element    ${EN_MemoCode}
-
-    #            Wait Until Element Is Visible    ${EN_Select_Memocode}    timeout=2s
-    #            Click Element    ${EN_Select_Memocode}
-
                 Wait Until Element Is Visible    ${EN_ReasonCode}    timeout=2s
                 Click Element    ${EN_ReasonCode}
                 Wait Until Element Is Visible    ${EN_SelectReasonCode}    timeout=2s
