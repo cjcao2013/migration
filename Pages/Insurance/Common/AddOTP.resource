@@ -98,6 +98,7 @@ Insert OTP
             Wait Until Element Is Visible    ${${platformName}_${lang}_InputOTPField}   timeout=3s
             Input Text    ${${platformName}_${lang}_InputOTPField}    ${Current_OTP}\n
         ELSE
+             Wait Until Element Is Visible    ${${platformName}_${lang}_InputOTPField}      timeout=5s
              IF    '${platformName}' == 'iOS'
                  Input Password    ${${platformName}_${lang}_InputOTPField}    ${Current_OTP}\n
              ELSE

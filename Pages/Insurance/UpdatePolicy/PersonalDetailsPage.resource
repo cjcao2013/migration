@@ -39,13 +39,15 @@ Personal details
         IF    '${PersonalDetails_WhatChange}' == 'MobileNo' and '${platformName}' == 'iOS'
             Click Element    chain=**/XCUIElementTypeOther[`label CONTAINS 'mobile'`][-1]
         ELSE
-            Click Element    ${${platformName}_PersonalDetail_WhatChange}
+            ${iOS_Select_Personal_Detail_FLow}      Set Variable        chain=**/XCUIElementTypeOther[`label CONTAINS '${PersonalDetails_WhatChange}'`][-1]
+            ${Android_Select_Personal_Detail_FLow}      Set Variable        xpath= xpath=//android.widget.TextView[contains(@text,'${PersonalDetails_WhatChange}')]
+            Click Element               ${${platformName}_Select_Personal_Detail_FLow}
         END
         IF    '${PersonalDetails_WhatChange}' == 'Mailing address'    Address Change
         IF    '${PersonalDetails_WhatChange}' == 'Name'    Name Change
         IF    '${PersonalDetails_WhatChange}' == 'Email'    Email And Mobile Change
         IF    '${PersonalDetails_WhatChange}' == 'MobileNo'
-            Email And Mobile Change
+                Email And Mobile Change
         END
     EXCEPT     AS  ${reason}
         Set Failed Actual Result and VP    Omne_Flow   ${reason}   FWD Insurance Flow of ${Insurance_Flow}
@@ -148,6 +150,7 @@ Email And Mobile Change
         # Capture existing email and mobile details
         ${oldUsername}    Get Text    ${${platformName}_${lang}_updateemailfield}
         Set Global Variable    ${oldUsername}
+        Sleep   2s
         Wait Until Element Is Visible    ${${platformName}_${lang}_CountryCode}    timeout=10s
         ${CCode}    Get Text    ${${platformName}_${lang}_CountryCode}
         ${CCode}    Replace String    ${CCode}    +    ${EMPTY}
@@ -351,9 +354,12 @@ Email And Mobile Change
         # New All Done Confirmation Page
         Run Keyword    Check Transaction Status
         Run Keyword    Handle Feedback
+#        Run Keyword     Transaction Success Page
+
         Run Keyword    Capture Personal Details Transaction for ${platformName}    Pre
         Take Screenshot    Update_Details
         Set Global Variable    ${result}    Personal Details ${PersonalDetails_WhatChange} Changed Successfully
+
     EXCEPT     AS  ${reason}
         Set Failed Actual Result and VP    Omne_Flow   ${reason}   Email And Mobile Change
     END
@@ -453,8 +459,14 @@ Capture Personal Details Transaction for iOS
 Capture Personal Details Transaction for Android
     [Arguments]    ${Transaction_Info}
     TRY
-        Wait Until Element Is Visible    ${${platformName}_${lang}_ViewTransaction}    timeout=20s
-        Click Element    ${${platformName}_${lang}_ViewTransaction}
+        Take Screenshot    Transaction Page
+        Wait Until Element Is Visible    ${${platformName}_${lang}_SeeAll}   timeout=50s
+        Click Element    ${${platformName}_${lang}_SeeAll}
+        Take Screenshot    Transaction_Page
+        Wait Until Page Contains Element    ${${platformName}_${lang}_ServiceReuest}    timeout=50s
+        Click Element    ${${platformName}_${lang}_ServiceReuest}
+#        Wait Until Element Is Visible    ${${platformName}_${lang}_ViewTransaction}    timeout=20s
+#        Click Element    ${${platformName}_${lang}_ViewTransaction}
         Take Screenshot    Transaction Page
         IF    '${Transaction_Info}'== 'Pre'
 
@@ -517,15 +529,17 @@ Capture Personal Details Transaction for Android
         ...    ${mTransactionstatus.strip()}
         ...    ${mTransactionstatus.strip()}
         ...    OMNE_Application
+        ${OPUSTransactionstatus}    Set Variable    Completed
+        Set Global Variable    ${OPUSTransactionstatus}
     EXCEPT     AS  ${reason}
         Set Failed Actual Result and VP    Omne_Flow   ${reason}   Capture Personal Details Transaction for Android
     END
 Address Change
     TRY
         ${Android_SelectPolicyNo}    Set Variable
-        ...    xpath=//android.view.ViewGroup[contains(@content-desc,"${Policy_No}")]/android.widget.TextView[4]
+        ...    xpath=//android.widget.TextView[contains(@text,'${Policy_No}')]/following-sibling::android.widget.TextView[2]
         ${iOS_SelectPolicyNo}    Set Variable    chain=**/XCUIElementTypeOther[`label CONTAINS '${Policy_No}'`][-1]
-        Wait Until Page Contains Element    ${${platformName}_SelectPolicyNo}           timeout=3s
+        Wait Until Page Contains Element    ${${platformName}_SelectPolicyNo}           timeout=10s
         Take Screenshot    Update Details
         Click Element    ${${platformName}_SelectPolicyNo}
 
@@ -950,6 +964,11 @@ Capture Address Transaction Details for iOS
         Set Failed Actual Result and VP    Omne_Flow   ${reason}   Address Change
     END
 Capture Address Transaction Details for Android
+    Take Screenshot    Transaction Page
+    Wait Until Element Is Visible    ${${platformName}_${lang}_SeeAll}   timeout=50s
+    Click Element    ${${platformName}_${lang}_SeeAll}
+    Take Screenshot    Transaction_Page
+    Wait Until Page Contains Element    ${${platformName}_${lang}_ServiceReuest}    timeout=50s
     Wait Until Page Contains Element    ${${platformName}_${lang}_ServiceReuest}    timeout=50s
     Click Element    ${${platformName}_${lang}_ServiceReuest}
     Take Screenshot    Transaction_Page
@@ -965,6 +984,8 @@ Capture Address Transaction Details for Android
     ${mTransactionstatus}    Set Variable    ${strtransactionstatus.strip()}
     IF    '${mTransactionstatus}' == 'Completed'
         ${mTransactionstatus}    Set Variable    Approve
+        ${OPUSTransactionstatus}    Set Variable    Completed
+        Set Global Variable    ${OPUSTransactionstatus}
     END
     Click Element    ${${platformName}_selectCurrentTransaction1}
     Take Screenshot    Transaction Page
@@ -1141,6 +1162,7 @@ Name Change
             Click Element    ${${platformName}_${lang}_txtTitle}
             Click Element    ${${platformName}_Title}
         END
+        Wait Until Element Is Visible   ${${platformName}_${lang}_txtFirstName}     timeout=5s
         Click Element    ${${platformName}_${lang}_txtFirstName}
         Input Text    ${${platformName}_${lang}_txtFirstName}    ${fname}
         ${Status}    Run Keyword And Return Status
@@ -1222,13 +1244,13 @@ Name Change
         Set Global Variable    ${Previous_OTP}
         Wait Until Page Contains Element    ${${platformName}_${lang}_Submit_btn}    timeout=20s
         Click Text    Submit    exact_match=true
-        ${status}    Run Keyword And Return Status
-        ...    Wait Until Element Is Visible
-        ...    ${${platformName}_${lang}_Submit_btn}
-        ...    timeout=5s
-        IF    '${status}' == 'True'
-            Click Element    ${${platformName}_${lang}_Submit_btn}
-        END
+#        ${status}    Run Keyword And Return Status
+#        ...    Wait Until Element Is Visible
+#        ...    ${${platformName}_${lang}_Submit_btn}
+#        ...    timeout=5s
+#        IF    '${status}' == 'True'
+#            Click Element    ${${platformName}_${lang}_Submit_btn}
+#        END
         Take Screenshot    Update_Name/MaritalStatus
         ${status}    Run Keyword And Return Status    Element Should Be Disabled    ${${platformName}_${lang}_Verify_btn}
         IF    '${status}' == 'True'
@@ -1268,7 +1290,6 @@ Capture Change Name Transaction Details for iOS
         Click Element    ${${platformName}_${lang}_TransactionServiceRequest}
     #    Log    ${${platformName}_selectCurrentTransaction1}
         RefreshPage
-
         Scroll Till Transaction Is Visible    ${${platformName}_selectCurrentTransaction1}
         Wait Until Element Is Visible    ${${platformName}_selectCurrentTransaction1}    timeout=300s
         Take Screenshot    Transaction Page
@@ -1527,7 +1548,31 @@ Capture Change Name Transaction Details for Android
     ${VP_FirstName}    Get Text    ${${platformName}_${lang}_TransactionFirstName}
     ${VP_MiddleName}    Get Text    ${${platformName}_${lang}_TransactionMiddleName}
     ${VP_LastName}    Get Text    ${${platformName}_${lang}_TransactionLastName}
-#    ${VP_MaritalStatus}    Get Text    ${EN_TransactionMarital}
+    ${status}    Run Keyword And Return Status
+    ...    Wait Until Element Is Visible
+    ...    ${${platformName}_${lang}_TransactionMarital}
+    ...    timeout=10s
+    IF    '${status}' == 'True'
+        ${VP_MaritalStatus}    Get Text    ${${platformName}_${lang}_TransactionMarital}
+        IF    '${VP_MaritalStatus}' != ''
+            Set Calc VP Expected Result With Original And Source
+            ...    NEW_MaritalStatus
+            ...    ${VP_MaritalStatus}
+            ...    ${VP_MaritalStatus}
+            ...    OMNE_Transaction_Page
+        END
+         Set Calc VP Expected Result With Original And Source
+        ...    NEW_MaritalStatus_DB
+        ...    ${PersonalDetails_MaritalStatus}
+        ...    ${PersonalDetails_MaritalStatus}
+        ...    OMNE_NameChangePage
+         Set Calc VP Actual Result With Original And Source
+        ...    Post_OWB_NEW_MaritalStatus
+        ...    ${VP_MaritalStatus.strip()}
+        ...    ${VP_MaritalStatus}
+        ...    OMNE_Transaction_Page
+    END
+
 #    ${VP_Completion_Date}    Get Text    ${EN_Completion_Date}
     ${requeststatus}    Get Text    ${${platformName}_${lang}_TransactionStatus}
     IF    '${requeststatus}' == 'Completed'
@@ -1537,6 +1582,9 @@ Capture Change Name Transaction Details for Android
     IF    '${requeststatus}' == 'In progress'
         ${m_requeststatus}    Set Variable    In Progress
         Set Global Variable    ${m_requeststatus}
+        ${OPUSTransactionstatus}    Set Variable    In progress
+        Set Global Variable    ${OPUSTransactionstatus}
+        Log     ${OPUSTransactionstatus}
     END
     Set Calc VP With Source And Original Values
     ...    Transaction_NEW_FirstName
@@ -1575,13 +1623,7 @@ Capture Change Name Transaction Details for Android
     ...    ${VP_LastName.strip()}
     ...    ${VP_LastName}
     ...    OMNE_Transaction_Page
-    IF    '${VP_MaritalStatus}' != ''
-        Set Calc VP Expected Result With Original And Source
-        ...    NEW_MaritalStatus
-        ...    ${VP_MaritalStatus}
-        ...    ${VP_MaritalStatus}
-        ...    OMNE_Transaction_Page
-    END
+
 
     Set Calc VP Expected Result With Original And Source
     ...    NEW_FirstName_DB
@@ -1598,11 +1640,7 @@ Capture Change Name Transaction Details for Android
     ...    ${VP_LastName.strip()}
     ...    ${VP_LastName}
     ...    OMNE_NameChangePage
-    Set Calc VP Expected Result With Original And Source
-    ...    NEW_MaritalStatus_DB
-    ...    ${PersonalDetails_MaritalStatus}
-    ...    ${PersonalDetails_MaritalStatus}
-    ...    OMNE_NameChangePage
+
 
     Set Calc VP Actual Result With Original And Source
     ...    Post_OWB_NEW_FirstName
@@ -1619,8 +1657,4 @@ Capture Change Name Transaction Details for Android
     ...    ${VP_LastName.strip()}
     ...    ${VP_LastName}
     ...    OMNE_Transaction_Page
-    Set Calc VP Actual Result With Original And Source
-    ...    Post_OWB_NEW_MaritalStatus
-    ...    ${VP_MartialStatus.strip()}
-    ...    ${VP_MartialStatus}
-    ...    OMNE_Transaction_Page
+

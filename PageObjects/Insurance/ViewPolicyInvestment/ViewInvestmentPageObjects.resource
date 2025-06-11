@@ -22,6 +22,7 @@ ${Android_EN_policynumber}              xpath=(//android.view.ViewGroup/android.
 ${Android_EN_policytype}                xpath=(//android.view.ViewGroup/android.widget.TextView)[5]
 ${Android_EN_PolicyStatus}              xpath=(//android.view.ViewGroup/android.widget.TextView)[6]
 ${Android_EN_gainorloassvalue_txt}      xpath=(//android.widget.TextView[@text='Current value'])[1]/following-sibling::android.widget.TextView[1]
-${Android_EN_listoffunds}               xpath=(//android.widget.TextView[@text='Current value (THB)']/preceding-sibling::android.widget.TextView[2])
+${Android_EN_listoffunds}               xpath=(//android.widget.TextView[@text='Current value (THB)']/preceding-sibling::android.widget.TextView[1])
 ${Android_EN_totalperc}                 xpath=//android.widget.TextView[@text='Total']
 ${Android_EN_totalcurrentvalue}         xpath=(//android.widget.TextView[@text='Current value'])[1]/following-sibling::android.widget.TextView[2]
+${Android_EN_Investment_Policy_List}    xpath=(//android.widget.TextView[@text="Current investment"])

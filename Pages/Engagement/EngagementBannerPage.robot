@@ -39,7 +39,11 @@ Tax Season Banner Link Redirection
     Take Screenshot    Engagement Banner
 
     Wait Until Element Is Visible       ${${platformName}_${lang}_TaxDeducationBanner}       timeout=10s
-    Click Element At Coordinates    183    400
+    IF    '${platformName}' == 'iOS'
+        Click Element At Coordinates    183    400
+    ELSE
+        Click Element    ${${platformName}_${lang}_TaxDeducationBanner}
+    END
     Set or enter PIN
 
     Take Screenshot    Engagement Banner
@@ -66,7 +70,7 @@ Timely services link redirection
     ${status}    Run Keyword And Return Status    Wait Until Page Contains Element    ${${platformName}_${lang}_HelpUsProvideInfoQuickLink}    timeout=30s
     IF    '${status}' == 'True'
         Click Element   ${${platformName}_${lang}_HelpUsProvideInfoQuickLink}
-        Pause Execution
+        Sleep    3s
         Take Screenshot     update_Personal_details_page
 #        Click Element   ${${platformName}_${lang}_UpdatePolicyBackButton}
     END
@@ -76,6 +80,7 @@ Health Journey Link Redirection
     Take Screenshot    Engagement Banner
 
     Scroll Till Transaction Is Visible      ${${platformName}_${lang}_HealthBeginsWithYouQuickLink}
+    Scroll Till Transaction Is Visible      ${${platformName}_${lang}_HealthBeginsWithYouQuickLink_LetsStart}
     Click Element    ${${platformName}_${lang}_HealthBeginsWithYouQuickLink_LetsStart}
     Take Screenshot    Engagement Banner
     Click Element   ${${platformName}_${lang}_UpdatePolicyBackButton}
@@ -93,6 +98,7 @@ Geolocator Link redirection
     IF    '${status}' == 'True'
         Click Element   ${${platformName}_${lang}_GeolocatorLink}
         Take Screenshot    Engagement Banner
+
         ${Status}    Run Keyword And Return Status
         ...    Wait Until Page Contains Element
         ...    ${${platformName}_${lang}_dontallow_access}
@@ -100,7 +106,9 @@ Geolocator Link redirection
         IF    '${Status}' == 'True'
             Click Element    ${${platformName}_${lang}_dontallow_access}
         END
+        Wait Until Element Is Visible    ${${platformName}_${lang}_CountineWithoutSharing}   timeout=30s
         Click Element   ${${platformName}_${lang}_CountineWithoutSharing}
+
         Take Screenshot    Engagement Banner
-        Click Element   ${${platformName}_${lang}_UpdatePolicyBackButton}
+#        Click Element   ${${platformName}_${lang}_UpdatePolicyBackButton}
     END

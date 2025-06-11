@@ -231,9 +231,15 @@ TransactionDetails for CV Loan iOS
             ${OPUSTransactionstatus}    Set Variable    Completed
             Set Global Variable    ${OPUSTransactionstatus}
         ELSE
-            ${OPUSTransactionstatus}    Set Variable    In progress
-             Set Global Variable    ${OPUSTransactionstatus}
+            IF     '${Add_Payment_Method_Type}' == 'PromptPay'
+                ${OPUSTransactionstatus}    Set Variable    Completed
+                Set Global Variable    ${OPUSTransactionstatus}
+            ELSE
+                 ${OPUSTransactionstatus}    Set Variable    In progress
+                Set Global Variable    ${OPUSTransactionstatus}
+            END
         END
+
 
         Set Calc VP Expected Result With Original And Source
         ...    Transaction_Status

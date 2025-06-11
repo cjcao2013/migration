@@ -38,10 +38,11 @@ Renewal premium
             Take Screenshot    RenewalPremium
             Click Element    ${${platformName}_${lang}_CreditCard}
             Take Screenshot    RenewalPremiumPage
-            Wait Until Element Is Visible    ${${platformName}_${lang}_lang}       timeout=50s
-            Click Element       ${${platformName}_${lang}_lang}
-            Wait Until Element Is Visible    ${${platformName}_${lang}_Englang}       timeout=3s
-            Click Element       ${${platformName}_${lang}_Englang}
+            Wait Until Element Is Visible    ${${platformName}_${lang}_lang}       timeout=100s
+#            Click Element       ${${platformName}_${lang}_lang}
+            Pause Execution
+#            Wait Until Element Is Visible    ${${platformName}_${lang}_Englang}       timeout=3s
+#            Click Element       ${${platformName}_${lang}_Englang}
             Wait Until Element Is Visible    ${${platformName}_${lang}_RP_CreditCardNumber}       timeout=3s
             Input Text    ${${platformName}_${lang}_RP_CreditCardNumber}    ${CrediCardNumber}
             Close keyboard
@@ -52,12 +53,18 @@ Renewal premium
             Input Text    ${${platformName}_${lang}_RP_CVV}    ${CrediCardCVVNumber}
             Close keyboard
             Input Text    ${${platformName}_${lang}_RP_CardHolderName}    ${CrediCardHolderName}
-
-            Click Text      Done    exact_match=True
-
+            TRY
+                Click Text      Done    exact_match=True
+            EXCEPT
+                 Close keyboard
+            END
             Input Text    ${${platformName}_${lang}_RP_EmailAddress}    ${Email}
 
-            Click Text      Done    exact_match=True
+            TRY
+                Click Text      Done    exact_match=True
+            EXCEPT
+                 Close keyboard
+            END
 
             Take Screenshot    RenewalPremiumPage
             ${status}    Run Keyword And Return Status
@@ -71,11 +78,15 @@ Renewal premium
             Wait Until Element Is Visible    ${${platformName}_${lang}_SecureValidation}       timeout=10s
             Input Text    ${${platformName}_${lang}_OTPField}    ${OTP}
 
-            Click Text      Done    exact_match=True
+            TRY
+                Click Text      Done    exact_match=True
+            EXCEPT
+                 Close keyboard
+            END
 
             Take Screenshot    RenewalPremiumPage
             Wait Until Element Is Visible    ${${platformName}_${lang}_SubmitButton}        timeout=10s
-            Click Element       ${${platformName}_${lang}_SubmitButton}
+#            Click Element       ${${platformName}_${lang}_SubmitButton}
             Pause Execution
             ${status}    Run Keyword And Return Status
             ...    Wait Until Element Is Visible
@@ -184,6 +195,55 @@ Capture Renewal Premium Details For iOS
         ${VP_Payment_Reference_number}    Get From List    ${substrings6}    1
 
 
+            Set Calc VP Expected Result With Original And Source
+            ...    Transaction_Status
+            ...    ${mTransactionstatus.strip()}
+            ...    ${mTransactionstatus.strip()}
+            ...    OMNE_Application
+            Set Calc VP Expected Result With Original And Source
+            ...    Completion_Date
+            ...    ${VP_Date_Of_Payment.strip()}
+            ...    ${VP_Date_Of_Payment.strip()}
+            ...    OMNE_TransactionPage
+            Set Calc VP Expected Result With Original And Source
+            ...    Payment_Reference_Number
+            ...    ${VP_Payment_Reference_number.strip()}
+            ...    ${VP_Payment_Reference_number.strip()}
+            ...    OMNE_TransactionPage
+            Set Calc VP Expected Result With Original And Source
+            ...    Payment_Method
+            ...    ${VP_Payment_Method.strip()}
+            ...    ${VP_Payment_Method.strip()}
+            ...    OMNE_TransactionPage
+            Set Calc VP Expected Result With Original And Source
+            ...    Premium_Payment_Amount
+            ...    ${VP_Premium_Payment_amount.strip()}
+            ...    ${VP_Premium_Payment_amount.strip()}
+            ...    OMNE_TransactionPage
+    EXCEPT     AS  ${reason}
+        Set Failed Actual Result and VP    Omne_Flow   ${reason}   Capture Renewal Premium Details For iOS
+    END
+
+
+Capture Renewal Premium Details For Android
+    [Arguments]    ${Transaction_Info}
+    TRY
+            ${Android_selectCurrentTransaction1}    Set Variable
+            ...   xpath=(//android.widget.TextView[@text='${current_day}']/following-sibling::android.widget.TextView[@text='${current_month}']/parent::android.view.ViewGroup/following-sibling::android.widget.TextView[@text='Pay renewal premium'])[1]
+
+            Wait Until Element Is Visible    ${${platformName}_selectCurrentTransaction1}    timeout=90s
+            Take Screenshot    Transaction Page
+            ${VP_TransactionStatus}         Get Text    xpath=(//android.widget.TextView[@text='${current_day}']/following-sibling::android.widget.TextView[@text='${current_month}']/parent::android.view.ViewGroup/following-sibling::android.widget.TextView[@text='Pay renewal premium'])[1]//following-sibling::android.view.ViewGroup/android.widget.TextView
+            ${mTransactionstatus}       Run Keyword And Return Status    Should Contain     ${VP_TransactionStatus}       Paid
+            IF    '${mTransactionstatus}' == 'True'
+                ${mTransactionstatus}     Set Variable    Paid
+                ${OPUSTransactionstatus}    Set Variable    Completed
+                Set Global Variable    ${OPUSTransactionstatus}
+            END
+            ${VP_Date_Of_Payment}         Get Text          xpath=(//android.widget.TextView[@text='Date of payment']/following-sibling::android.widget.TextView)
+            ${VP_Payment_Reference_number}         Get Text     xpath=(//android.widget.TextView[@text='Payment reference no.']/following-sibling::android.widget.TextView)
+            ${VP_Payment_Method}         Get Text           xpath=(//android.widget.TextView[@text='Payment method']/following-sibling::android.widget.TextView)
+            ${VP_Premium_Payment_amount}         Get Text       xpath=(//android.widget.TextView[@text='Premium payment amount']/following-sibling::android.widget.TextView)
             Set Calc VP Expected Result With Original And Source
             ...    Transaction_Status
             ...    ${mTransactionstatus.strip()}

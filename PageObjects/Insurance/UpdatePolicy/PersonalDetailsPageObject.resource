@@ -89,7 +89,7 @@ ${Android_EN_txtCity}                                   xpath=//android.widget.T
 ${Android_EN_txtState}                                  xpath=//android.widget.TextView[contains(@text,'State')]//preceding::android.widget.EditText[1]
 ${Android_EN_AddressViewSummaryPage}                    android=new UiSelector().textContains("View summary")
 ${Android_EN_SummaryPage_newAddress}                    xpath=//android.widget.TextView[@text='New mailing address']/following-sibling::android.widget.TextView
-
+${Android_EN_CountryCodeHK}                             xpath=//android.widget.TextView[@text="Hong Kong"]
 ${Android_EN_EmailerrorMessage}                         android=new UiSelector().textContains("You cannot change user info")
 ${Android_EN_PolicyOwnerName}                           xpath=//android.widget.TextView[@text='Policy owner name']/following-sibling::android.widget.TextView
 ${Android_EN_Policyownername_txt}                       xpath=//android.widget.TextView[@text='Policy owner name']

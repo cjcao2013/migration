@@ -25,6 +25,7 @@ ${EN_Date}                                          xpath=(//android.widget.Text
 ${iOS_EN_FundTransactionDetails}                    chain=**/XCUIElementTypeOther[`label CONTAINS 'Switch out amount'`][-1]
 
 # ------- Android Objects -------
+${Android_EN_Accept}                                xpath=//android.widget.TextView[@text='Accept']
 ${Android_EN_ErrorMsgForFundNoEligiblePolicy}       xpath=//android.widget.TextView[@text='No eligible policy']
 ${Android_EN_FundpolicyName}                        xpath=(//android.view.ViewGroup/android.widget.TextView)[2]
 ${Android_EN_Fundpolicyreisklevel}                  xpath=(//android.view.ViewGroup/android.widget.TextView)[1]
@@ -49,3 +50,4 @@ ${EN_Trans_INFundValue}                             xpath=//android.widget.TextV
 ${Android_EN_confirm}                               xpath=//android.widget.TextView[contains(@text,'I confirm')]
 
 # ${Android_EN_FundpolicyName}    xpath=//android.widget.TextView[@text='Current value']/../../android.view.ViewGroup[1]/../../android.view.ViewGroup/../../android.view.ViewGroup//android.widget.TextView[2]
+${Android_EN_fundSwitchacknowledgeChkBox}           android=new UiSelector().resourceId("FundSwitch-terms-checkbox")

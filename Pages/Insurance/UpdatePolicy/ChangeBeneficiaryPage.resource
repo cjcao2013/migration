@@ -30,12 +30,14 @@ Beneficiary(s) details
             ELSE IF    '${Edit_Beneficiary_${counter}}' == 'Change'
                 #    Change First Beneficiary Allocation
                 IF    '${platformName}' == 'Android'
-                    Wait Until Element Is Visible    ${${platformName}_${lang}_Beneficiary_Allocation_Field}
+                    ${Android_EN_change_existingbene_Perc}  Set Variable
+                    ...    xpath=(//android.widget.TextView[@text='${Existing_Beneficiary_Name_${counter}}']/following::android.widget.EditText[@resource-id='beneficiary-ratio'])[1]
+                    Wait Until Element Is Visible    ${${platformName}_${lang}_change_existingbene_Perc}    timeout=5s
                     Take Screenshot    Existing Beneficiary
-                    Clear Text    ${${platformName}_${lang}_Beneficiary_Allocation_Field}
-                    Click Element    ${${platformName}_${lang}_Beneficiary_Allocation_Field}
-                    @{Bene_Allocation_Field}    Split String To Characters    ${Change_Beneficiary_Percentage_${counter}}
-                    FOR    ${char}    IN    @{Bene_Allocation_Field}
+                    Clear Text    ${${platformName}_${lang}_change_existingbene_Perc}
+                    Click Element    ${${platformName}_${lang}_change_existingbene_Perc}
+                    @{CustID_len}    Split String To Characters     ${Change_Beneficiary_Percentage_${counter}}
+                    FOR    ${char}    IN    @{CustID_len}
                         Input Text Into Current Element    ${char}
                     END
                     Close keyboard
@@ -222,6 +224,7 @@ Capture Beneficiary Transaction Details for Android
     RefreshPage
     ${Android_selectCurrentTransaction1}    Set Variable
     ...    xpath=(//android.widget.TextView[@text='${current_day}']/following-sibling::android.widget.TextView[@text='${current_month}']/parent::android.view.ViewGroup/following-sibling::android.widget.TextView[@text='Change of beneficiary(s) details'])[1]
+    Scroll Till Transaction Is Visible  ${${platformName}_selectCurrentTransaction1}
     Wait Until Page Contains Element    ${${platformName}_selectCurrentTransaction1}    timeout=50s
     Click Element    ${${platformName}_selectCurrentTransaction1}
 
@@ -232,9 +235,13 @@ Capture Beneficiary Transaction Details for Android
     ${VP_Transaction_Status}    Get Text    ${${platformName}_${lang}_Policy_Status}
     ${mTransactionstatus}    Convert To Title Case    ${VP_Transaction_Status}
     ${mTransactionstatus}    Strip String    ${mTransactionstatus}
-    IF    '${VP_Transaction_Status}' == 'Completed'
-        ${mTransactionstatus}    Set Variable    Approve
-        Set Global Variable    ${mTransactionstatus}
+    IF    '${mTransactionstatus}' == 'Completed'
+                ${mTransactionstatus}    Set Variable    Approve
+                ${OPUSTransactionstatus}        Set Variable    Completed
+                Set Global Variable    ${OPUSTransactionstatus}
+    ELSE
+                ${OPUSTransactionstatus}        Set Variable    In progress
+                Set Global Variable    ${OPUSTransactionstatus}
     END
     ${Total_beneCountelements}      Get Webelements    ${${platformName}_${lang}_totalBenecountinTransaction}
     ${Total_beneCount}      Get Length    ${Total_beneCountelements}
@@ -258,28 +265,20 @@ Capture Beneficiary Transaction Details for Android
             ${Existing_Bene}   Run Keyword And Return Status    List Should Contain Value    ${Existing_bene_dict}    ${existingbenename}
             IF    '${Existing_Bene}' == 'False'
                 IF   '${Transaction_Info}' == 'Pre'
-                    Set Calc VP Expected Result With Original And Source    New_Beneficiary_${new_beneficiary_count}_First_Name    ${Beneficiary_First_Name}    ${Beneficiary_First_Name}    OMNE_View_Transaction
-                    Set Calc VP Expected Result With Original And Source    New_Beneficiary_${new_beneficiary_count}_Last_Name    ${Beneficiary_Last_Name}    ${Beneficiary_Last_Name}    OMNE_View_Transaction
-                    Set Calc VP Expected Result With Original And Source    New_Beneficiary_${new_beneficiary_count}_Relationship    ${Beneficiary_Relationship}    ${Beneficiary_Relationship}    OMNE_View_Transaction
-                    Set Calc VP Expected Result With Original And Source    New_Beneficiary_${new_beneficiary_count}_Allocation    ${Beneficiary_Allocation}    ${Beneficiary_Allocation}    OMNE_View_Transaction
+                    Set Calc VP Expected Result With Original And Source    ${Beneficiary_First_Name}_${Beneficiary_Last_Name}_Relationship    ${Beneficiary_Relationship}    ${Beneficiary_Relationship}    OMNE_View_Transaction
+                    Set Calc VP Expected Result With Original And Source    ${Beneficiary_First_Name}_${Beneficiary_Last_Name}_Allocation    ${Beneficiary_Allocation}    ${Beneficiary_Allocation}    OMNE_View_Transaction
                 ELSE IF   '${Transaction_Info}' == 'Post'
-                    Set Calc VP Actual Result With Original And Source    Post_Transaction_New_Beneficiary_${new_beneficiary_count}_First_Name    ${Beneficiary_First_Name}    ${Beneficiary_First_Name}    OMNE_View_Transaction
-                    Set Calc VP Actual Result With Original And Source    Post_Transaction_New_Beneficiary_${new_beneficiary_count}_Last_Name    ${Beneficiary_Last_Name}    ${Beneficiary_Last_Name}    OMNE_View_Transaction
-                    Set Calc VP Actual Result With Original And Source    Post_Transaction_New_Beneficiary_${new_beneficiary_count}_Relationship    ${Beneficiary_Relationship}    ${Beneficiary_Relationship}    OMNE_View_Transaction
-                    Set Calc VP Actual Result With Original And Source    Post_Transaction_New_Beneficiary_${new_beneficiary_count}_Allocation    ${Beneficiary_Allocation}    ${Beneficiary_Allocation}    OMNE_View_Transaction
+                    Set Calc VP Actual Result With Original And Source    Post_${Beneficiary_First_Name}_${Beneficiary_Last_Name}_Relationship    ${Beneficiary_Relationship}    ${Beneficiary_Relationship}    OMNE_View_Transaction
+                    Set Calc VP Actual Result With Original And Source    Post_${Beneficiary_First_Name}_${Beneficiary_Last_Name}_Allocation    ${Beneficiary_Allocation}    ${Beneficiary_Allocation}    OMNE_View_Transaction
                 END
                 ${new_beneficiary_count}    Evaluate    ${new_beneficiary_count}+1
             ELSE
                 IF   '${Transaction_Info}' == 'Pre'
-                    Set Calc VP Expected Result With Original And Source    Updated_Beneficiary_${update_beneficiary_count}_First_Name    ${Beneficiary_First_Name}    ${Beneficiary_First_Name}    OMNE_View_Transaction
-                    Set Calc VP Expected Result With Original And Source    Updated_Beneficiary_${update_beneficiary_count}_Last_Name    ${Beneficiary_Last_Name}    ${Beneficiary_Last_Name}    OMNE_View_Transaction
-                    Set Calc VP Expected Result With Original And Source    Updated_Beneficiary_${update_beneficiary_count}_Relationship    ${Beneficiary_Relationship}    ${Beneficiary_Relationship}    OMNE_View_Transaction
-                    Set Calc VP Expected Result With Original And Source    Updated_Beneficiary_${update_beneficiary_count}_Allocation    ${Beneficiary_Allocation}    ${Beneficiary_Allocation}    OMNE_View_Transaction
+                    Set Calc VP Expected Result With Original And Source    ${Beneficiary_First_Name}_${Beneficiary_Last_Name}_Relationship    ${Beneficiary_Relationship}    ${Beneficiary_Relationship}    OMNE_View_Transaction
+                    Set Calc VP Expected Result With Original And Source    ${Beneficiary_First_Name}_${Beneficiary_Last_Name}_Allocation    ${Beneficiary_Allocation}    ${Beneficiary_Allocation}    OMNE_View_Transaction
                 ELSE IF     '${Transaction_Info}' == 'Post'
-                    Set Calc VP Actual Result With Original And Source    Post_Transaction_Updated_Beneficiary_${update_beneficiary_count}_First_Name    ${Beneficiary_First_Name}    ${Beneficiary_First_Name}    OMNE_View_Transaction
-                    Set Calc VP Actual Result With Original And Source    Post_Transaction_Updated_Beneficiary_${update_beneficiary_count}_Last_Name    ${Beneficiary_Last_Name}    ${Beneficiary_Last_Name}    OMNE_View_Transaction
-                    Set Calc VP Actual Result With Original And Source    Post_Transaction_Updated_Beneficiary_${update_beneficiary_count}_Relationship    ${Beneficiary_Relationship}    ${Beneficiary_Relationship}    OMNE_View_Transaction
-                    Set Calc VP Actual Result With Original And Source    Post_Transaction_Updated_Beneficiary_${update_beneficiary_count}_Allocation    ${Beneficiary_Allocation}    ${Beneficiary_Allocation}    OMNE_View_Transaction
+                    Set Calc VP Actual Result With Original And Source    Post_${Beneficiary_First_Name}_${Beneficiary_Last_Name}_Relationship    ${Beneficiary_Relationship}    ${Beneficiary_Relationship}    OMNE_View_Transaction
+                    Set Calc VP Actual Result With Original And Source    Post_${Beneficiary_First_Name}_${Beneficiary_Last_Name}_Allocation    ${Beneficiary_Allocation}    ${Beneficiary_Allocation}    OMNE_View_Transaction
                 END
                 ${update_beneficiary_count}     Evaluate    ${update_beneficiary_count}+1
             END

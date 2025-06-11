@@ -4,3 +4,12 @@ ${iOS_EN_PaymentReceiptNumber}          chain=**/XCUIElementTypeOther[`name BEGI
 ${iOS_EN_PaymentDueDate}          chain=**/XCUIElementTypeOther[`name BEGINSWITH "Due date:"`][-1]/XCUIElementTypeStaticText[-1]
 ${iOS_EN_PaymentAmount}          chain=**/XCUIElementTypeOther[`name BEGINSWITH "Amount:"`][-1]/XCUIElementTypeStaticText[-1]
 ${iOS_EN_PaymentHistoryList}        chain=**/XCUIElementTypeOther[`name == "premium-payments-flatlist"`]/XCUIElementTypeScrollView/XCUIElementTypeOther/XCUIElementTypeOther
+
+
+
+
+${Android_EN_PaymentHistoryTitleText}        android=new UiSelector().text("Premium payment history")
+${Android_EN_PaymentReceiptNumber}          chain=**/XCUIElementTypeOther[`name BEGINSWITH "Receipt number:"`][-1]/XCUIElementTypeStaticText[-1]
+${Android_EN_PaymentDueDate}          chain=**/XCUIElementTypeOther[`name BEGINSWITH "Due date:"`][-1]/XCUIElementTypeStaticText[-1]
+${Android_EN_PaymentAmount}          chain=**/XCUIElementTypeOther[`name BEGINSWITH "Amount:"`][-1]/XCUIElementTypeStaticText[-1]
+${Android_EN_PaymentHistoryList}        xpath=//android.widget.ScrollView[@resource-id="premium-payments-flatlist"]/android.view.ViewGroup/android.view.ViewGroup

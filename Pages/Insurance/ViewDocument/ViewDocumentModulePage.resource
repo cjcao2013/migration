@@ -15,24 +15,20 @@ Resource    ../../../PageObjects/Insurance/ViewDocument/ViewDocumentModulePageOb
 View Document
     TRY
         #navigate to my policy page
-        ${Android_EN_InsurnacePage}       Set Variable    android=new UiSelector().text("Insurance")
+        ${Android_EN_InsurnacePage}       Set Variable    android=new UiSelector().text("${Flow_Flag}")
         ${iOS_EN_InsurnacePage}           Set Variable    chain=**/XCUIElementTypeButton[`label == '${Flow_Flag}'`]
         Wait Until Element Is Visible      ${${platformName}_${lang}_InsurnacePage}            timeout=30s
         Take Screenshot     FWD_Insurance_Page
         Click Element       ${${platformName}_${lang}_InsurnacePage}
         Set or enter PIN
-        ${Android_EN_Insurance_Module}    Set Variable    android=new UiSelector().textContains("Manage")
-        ${iOS_EN_Insurance_Module}    Set Variable
-        ...    chain=**/XCUIElementTypeOther[`label CONTAINS 'View'`][-1]
+        ${Android_EN_Insurance_Module}    Set Variable    android=new UiSelector().textContains("View")
+        ${iOS_EN_Insurance_Module}    Set Variable        chain=**/XCUIElementTypeOther[`label CONTAINS 'View'`][-1]
     #    ...    chain=**/XCUIElementTypeOther[`label == "${Insurance_Flow}"`]
         Wait Until Element Is Visible    ${${platformName}_${lang}_Insurance_Module}
         Click Element    ${${platformName}_${lang}_Insurance_Module}
 
         #select policy
-        ${Android_SelectPolicyNo}    Set Variable    android=new UiSelector().textContains("${Policy_No}")
-        ${iOS_SelectPolicyNo}    Set Variable    chain=**/XCUIElementTypeOther[`name CONTAINS "Policy no: ${Policy_No}"`][-1]
-        Wait Until Page Contains Element    ${${platformName}_SelectPolicyNo}
-        Click Element    ${${platformName}_SelectPolicyNo}
+        Select Policy
         Sleep    3s
         Take Screenshot    Select Policy
         Wait Until Element Is Visible    ${${platformName}_${lang}_NextButton}
@@ -40,10 +36,11 @@ View Document
 
         #select document
         ${iOS_EN_selectDocument}   Set Variable    chain=**/XCUIElementTypeOther[`name == "${DocumentTypeName}"`]
+        ${Android_EN_selectDocument}    Set Variable    android=new UiSelector().textContains("${DocumentTypeName}")
         Wait Until Element Is Visible    ${${platformName}_${lang}_selectDocument}
         Click Element    ${${platformName}_${lang}_selectDocument}
         Take Screenshot    Document Type Select Page
-        Document Preview And Download for iOS
+        Run Keyword        Document Preview And Download for ${platformName}
         Set Global Variable    ${result}    Document Download Completed Successfully for policy No: ${Policy_No}
     EXCEPT     AS  ${reason}
         Set Failed Actual Result and VP       Omne_Flow   ${reason}   FWD Insurance Flow of ${Insurance_Flow}
@@ -84,6 +81,78 @@ Document Preview And Download for iOS
         Wait Until Element Is Visible    ${${platformName}_${lang}_previewDocument_backBtn}        timeout=100s
         Click Element    ${${platformName}_${lang}_previewDocument_backBtn}
         Take Screenshot    ViewPolicy_Documents_Download_Page
+    EXCEPT     AS  ${reason}
+        Set Failed Actual Result and VP       Omne_Flow   ${reason}   Document Preview And Download for iOS
+    END
+
+Document Preview And Download for Android
+    # Document Preview & Download
+    TRY
+            Wait Until Element Is Visible    xpath=//android.widget.TextView[@text='${Preview_Document_Name}']
+            Take Screenshot    View Policy Document Page
+            Click Element    xpath=//android.widget.TextView[@text='${Preview_Document_Name}']
+
+            Wait Until Element Is Visible    ${${platformName}_${lang}_Document_Preview_Document}    timeout=10s
+            Take Screenshot    ViewPolicy_Documents_Preview_Page
+
+            Wait Until Element Is Visible    ${${platformName}_${lang}_Document_Download_Button}     timeout=10s
+            Click Element    ${${platformName}_${lang}_Document_Download_Button}
+
+            Wait Until Element Is Visible    ${${platformName}_${lang}_Document_Popup_Download_Button}   timeout=10s
+            Take Screenshot    ViewPolicy_Documents_Download_Page
+            Click Element    ${${platformName}_${lang}_Document_Popup_Download_Button}
+
+            Wait Until Element Is Visible    ${${platformName}_${lang}_Document_Download_Document_Name}  timeout=10s
+            ${Document_Download_Name}       Get Text        ${${platformName}_${lang}_Document_Download_Document_Name}
+            ${Document_Download_Name}      Strip String     ${Document_Download_Name}
+
+            Take Screenshot    ViewPolicy_Documents_Download_Name_${Document_Download_Name}
+
+            #            CommonMethod.Scroll Till Transaction Is Visible    ${${platformName}_${lang}_Document_Print_Button}
+            ${Status}   Run Keyword And Return Status    Wait Until Element Is Visible    ${${platformName}_${lang}_Document_Print_Button}    timeout=10s
+            WHILE    '${Status}' != 'True'
+                ${hight}    Get Window Height
+                ${width}    Get Window Width
+                ${mid}    Evaluate    ${hight}/2
+                ${hight}    Evaluate    ${hight}/1.1
+                ${width}    Evaluate    ${width}/2
+                Swipe    ${width}    ${hight}    ${width}    ${mid}
+                ${Status}   Run Keyword And Return Status    Wait Until Element Is Visible    ${${platformName}_${lang}_Document_Print_Button}    timeout=10s
+            END
+            Wait Until Element Is Visible    ${${platformName}_${lang}_Document_Print_Button}    timeout=10s
+            Click Element    ${${platformName}_${lang}_Document_Print_Button}
+
+            Wait Until Element Is Visible    ${${platformName}_${lang}_Document_Dropdown_List}   timeout=10s
+            Click Element    ${${platformName}_${lang}_Document_Dropdown_List}
+
+            Wait Until Element Is Visible    ${${platformName}_${lang}_Document_SaveAsPDF_txt}   timeout=10s
+            Click Element    ${${platformName}_${lang}_Document_SaveAsPDF_txt}
+
+            Take Screenshot    Save_Documents_As_PDF
+
+            Wait Until Element Is Visible    ${${platformName}_${lang}_Document_Save_To_PDF}   timeout=10s
+            Click Element    ${${platformName}_${lang}_Document_Save_To_PDF}
+            Sleep    10s
+            Take Screenshot    Save_PDF_File_Path
+
+            Wait Until Element Is Visible    ${${platformName}_${lang}_Document_PDF_Name_TextBox}    timeout=10s
+            Clear Text    ${${platformName}_${lang}_Document_PDF_Name_TextBox}
+            Click Element    ${${platformName}_${lang}_Document_PDF_Name_TextBox}
+            Input Text Into Current Element    ${Document_Download_Name}
+            Hide Keyboard
+            Take Screenshot    Download_Document_Name_Change
+            Wait Until Element Is Visible    ${${platformName}_${lang}_Document_SAVE_Button}     timeout=10s
+            Click Element    ${${platformName}_${lang}_Document_SAVE_Button}
+            Sleep    1s
+            Take Screenshot    Save_PDF_File_Name
+
+            # Move File From Mobile Storage To Screenshot Folder
+            Sleep    5s
+            ${file}      Pull File              path=/storage/emulated/0/Download/${Document_Download_Name}
+            Convert Base64 To File              ${Document_Download_Name}     ${file}    ${screenshotPath}
+
+            Wait Until Element Is Visible    ${${platformName}_${lang}_previewDocument_backBtn}
+            Click Element    ${${platformName}_${lang}_previewDocument_backBtn}
     EXCEPT     AS  ${reason}
         Set Failed Actual Result and VP       Omne_Flow   ${reason}   Document Preview And Download for iOS
     END

@@ -77,33 +77,34 @@ Tax consent
 #    Pause Execution
     Take Screenshot    Tax_Consent_Page
 
-    IF    '${TaxConsent_acknowledgement_status}' == 'Yes'
-
-        IF    '${platformName}' == 'Android'
-            ${Status}    Run Keyword And Return Status
-            ...    Element Should Be Enabled
-            ...    ${${platformName}_${lang}_TaxConsent_SubmitButton}
-            IF    '${Status}' == 'True'
-                Click Element    ${${platformName}_PolicyNo}
-            END
-        ELSE
-            ${Status}    Run Keyword And Return Status
-            ...    Element Should Be Enabled
-            ...    ${${platformName}_${lang}_TaxConsent_SubmitButton}
-            IF    '${Status}' != 'True'
+#    IF    '${TaxConsent_acknowledgement_status}' == 'Yes'
+#
+#        IF    '${platformName}' == 'Android'
+#            ${Status}    Run Keyword And Return Status
+#            ...    Element Should Be Enabled
+#            ...    ${${platformName}_${lang}_TaxConsent_SubmitButton}
+#            IF    '${Status}' == 'True'
 #                Click Element    ${${platformName}_PolicyNo}
-                 Click Text    ${Policy_No}
-            END
-        END
-
-        Take Screenshot    Tax_Consent_Page
-    END
+#            END
+#        ELSE
+#            ${Status}    Run Keyword And Return Status
+#            ...    Element Should Be Enabled
+#            ...    ${${platformName}_${lang}_TaxConsent_SubmitButton}
+#            IF    '${Status}' != 'True'
+##                Click Element    ${${platformName}_PolicyNo}
+#                 Click Text    ${Policy_No}
+#            END
+#        END
+#
+#        Take Screenshot    Tax_Consent_Page
+#    END
     Wait Until Page Contains Element    ${${platformName}_${lang}_TaxConsent_NextButton}        timeout=2s
     Click Element    ${${platformName}_${lang}_TaxConsent_NextButton}
     Take Screenshot    Tax_Consent_Page
-    Wait Until Element Is Visible    ${${platformName}_${lang}_TaxConsent_proceedBtn}       timeout=2s
-    Click Element    ${${platformName}_${lang}_TaxConsent_proceedBtn}
-
+     ${Status}    Run Keyword And Return Status             Wait Until Element Is Visible    ${${platformName}_${lang}_TaxConsent_proceedBtn}       timeout=2s
+     IF    '${Status}' == 'True'
+        Click Element    ${${platformName}_${lang}_TaxConsent_proceedBtn}
+     END
     # Previous OTP from DB
     Get Details from DB
     ${Previous_OTP}    Set Variable    ${OTPNumber}
@@ -276,28 +277,41 @@ Capture Tax Consent Transaction Details for iOS
 Capture Tax Consent Transaction Details for Android
     [Arguments]    ${Transaction_Info}
     Take Screenshot    Transaction Page
-    Wait Until Element Is Visible    ${${platformName}_${lang}_ViewTransaction}    timeout=20s
-    Click Element    ${${platformName}_${lang}_ViewTransaction}
+
     Take Screenshot    Transaction Page
     #    ${Android_selectCurrentTransaction}    Set Variable    xpath
     IF    '${Transaction_Info}'== 'Pre'
 
         RefreshPage
         ${Android_selectCurrentTransaction1}    Set Variable
-        ...    xpath=(//android.widget.TextView[@text='${current_day}']/following-sibling::android.widget.TextView[@text='${current_month}']/parent::android.view.ViewGroup/following-sibling::android.widget.TextView[@text='Tax consent'])[1]
+        ...    xpath=(//android.widget.TextView[@text='${current_day}']/following-sibling::android.widget.TextView[@text='${current_month}']/parent::android.view.ViewGroup/following-sibling::android.widget.TextView[@text='Change of tax consent'])[1]
     END
     Wait Until Page Contains Element    ${Android_selectCurrentTransaction1}    timeout=50s
     ${VP_Transaction_Status}    Get Text    ${${platformName}_${lang}_TransactionStatusTaxConsent}
     Click Element    ${Android_selectCurrentTransaction1}
 
-    Wait Until Element Is Visible    ${${platformName}_${lang}_TaxConsent_Options}    timeout=20s
-    ${VP_TaxConsent_Option}    Get Text    ${${platformName}_${lang}_TaxConsent_Options}
-    ${VP_TaxConsent_PolicyNumber}    Get Text    ${${platformName}_${lang}_TSTaxConsent_PolicyNumber}
-    ${VP_TaxConsent_CompletionDate}    Get Text    ${${platformName}_${lang}_TSTaxConsent_Completiondate}
 
+    IF    '${TaxConsent_acknowledgement_status}' == 'Yes'
+        Wait Until Element Is Visible    ${${platformName}_${lang}_Transaction_Tax_Yes_Option}      timeout=5s
+        ${VP_TaxConsent_Option}    Get Text    ${${platformName}_${lang}_Transaction_Tax_Yes_Option}
+        ${VP_TaxConsent_PolicyNumber}    Get Text    ${${platformName}_${lang}_TSTaxConsent_PolicyNumber}
+        IF    '${VP_TaxConsent_Option}' == 'Policy(s) applied for tax exemption'
+                ${VP_TaxConsent_Option}         Set Variable            Yes
+        END
+    ELSE
+          Wait Until Element Is Visible    ${${platformName}_${lang}_Transaction_Tax_No_Option}     timeout=5s
+          ${VP_TaxConsent_Option}    Get Text    ${${platformName}_${lang}_Transaction_Tax_No_Option}
+          ${VP_TaxConsent_PolicyNumber}    Get Text    ${${platformName}_${lang}_TSTaxConsent_PolicyNumber}
+           IF    '${VP_TaxConsent_Option}' == 'Policy(s) not applied for tax exemption'
+                ${VP_TaxConsent_Option}         Set Variable            No
+           END
+    END
     IF    '${VP_Transaction_Status}' == 'Completed'
         ${mTransactionstatus}    Set Variable    Approve
         Set Global Variable    ${mTransactionstatus}
+        ${OPUSTransactionstatus}    Set Variable    Completed
+        Set Global Variable    ${OPUSTransactionstatus}
+
     END
     IF    '${CoreSystem_Flag}' == 'Yes'
         Set Calc VP Expected Result With Original And Source
@@ -312,14 +326,7 @@ Capture Tax Consent Transaction Details for Android
         ...    ${mTransactionstatus.strip()}
         ...    ${mTransactionstatus.strip()}
         ...    OMNE_Application
-        Set Calc VP With Source And Original Values
-        ...    TransactionPage_TaxConsent_Option
-        ...    ${TaxConsent_acknowledgement_status}
-        ...    ${VP_TaxConsent_Option.strip()}
-        ...    TestData
-        ...    OMNE_TransactionPage
-        ...    ${TaxConsent_acknowledgement_status}
-        ...    ${VP_TaxConsent_Option.strip()}
+
         Set Calc VP Expected Result With Original And Source
         ...    TaxConsent_Option
         ...    ${VP_TaxConsent_Option.strip()}

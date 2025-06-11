@@ -39,17 +39,5 @@ ${iOS_EN_TransactionPremiumRequest}                     chain=**/XCUIElementType
 ${Android_EN_BackArrow}                                 xpath=//android.widget.Button[@resource-id='back-button']
 ${Android_EN_TransactionTab}                            android=new UiSelector().textContains("View transactions")
 ${Android_EN_TransactionServiceRequest}                 android=new UiSelector().textContains("Service request(s)")
-
-# ${Android_EN_Change_Beneficiary}    android=new UiSelector().text("Change of beneficiary")
-#
-# ${Android_EN_Product_Name}    xpath=//android.widget.TextView[@text='Policy applied']/following-sibling::android.view.ViewGroup/android.widget.TextView[1]
-# ${Android_EN_Policy_No}    xpath=//android.widget.TextView[@text='Policy applied']/following-sibling::android.view.ViewGroup/android.widget.TextView[2]
-# ${Android_EN_Policy_Status}    xpath=//android.widget.TextView[@text='Change of beneficiary']/following-sibling::android.view.ViewGroup/android.widget.TextView
-# ${Android_EN_Current_Month}    xpath=//android.widget.TextView[@text='Change of beneficiary']/preceding-sibling::android.view.ViewGroup/android.widget.TextView[1]
-# ${Android_EN_Current_Date}    xpath=//android.widget.TextView[@text='Change of beneficiary']/preceding-sibling::android.view.ViewGroup/android.widget.TextView[2]
-# ${Android_EN_Current_Year}    xpath=//android.widget.TextView[@text='Change of beneficiary']/preceding-sibling::android.view.ViewGroup/android.widget.TextView[3]
-# ${Android_EN_Fatca_Status}    xpath=//android.widget.TextView[@text='FATCA']/following-sibling::android.widget.TextView[1]
-# ${Android_EN_Address}    xpath=//android.widget.TextView[@text='Address']/following-sibling::android.widget.TextView[1]
-# ${Android_EN_capture_US_ID_passport_no}    xpath=//android.widget.TextView[@text='U.S. ID/Passport No. or Green card']/following-sibling::android.widget.TextView[1]
-# ${Android_EN_capture_US_tax_id_social_security}    xpath=//android.widget.TextView[@text='U.S. Tax ID No. /Social Security No.']/following-sibling::android.widget.TextView[1]
-# ${Android_EN_Expand_Details_Icon}    xpath=//android.widget.TextView[@text='Change of beneficiary']/following-sibling::android.view.ViewGroup[last()]
+${Android_EN_SeeAll}                                    xpath=//android.widget.TextView[@text='My transaction(s)']/following-sibling::android.view.ViewGroup
+${Android_EN_TransactionPremiumRequest}                 xpath=//android.widget.TextView[@text="Premium payment(s)"]

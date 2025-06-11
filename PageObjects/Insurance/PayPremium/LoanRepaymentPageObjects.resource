@@ -18,5 +18,20 @@ ${iOS_EN_BackToDashboard}        chain=**/XCUIElementTypeOther[`label == "Back t
 ${iOS_EN_QRCodeSaved_txt}        chain=**/XCUIElementTypeOther[`label == "QR code is saved to your device album"`][5]
 
 
-
-
+${Android_EN_PolicyLoanRepayment_txt}           android=new UiSelector().text("Policy loan repayment")
+${Android_EN_Loanoutstanding}                   xpath=//android.widget.TextView[@text="Loan outstanding"]//following-sibling::android.widget.TextView
+${Android_EN_Loaninterest}                      xpath=//android.widget.TextView[@text="Loan interest"]//following-sibling::android.widget.TextView
+${Android_EN_Interestrate}                      xpath=//android.widget.TextView[@text="Interest rate"]//following-sibling::android.widget.TextView
+${Android_EN_Totalasoftoday}                    xpath=//android.widget.TextView[@text="Total as of today"]//following-sibling::android.widget.TextView
+${Android_EN_PolicyLoanAmt}                         xpath=//android.widget.EditText[@text="Enter amount here"]
+${Android_EN_Max_LoanLimit_Error}                   xpath=//android.widget.TextView[@text="The inputted amount cannot be greater than the total as of today"]
+${Android_EN_Totalasoftoday_txt}                    xpath=(//android.widget.TextView[@text="Total as of today"][last()])[2]
+${Android_EN_PayNow}                                xpath=//android.widget.Button[@content-desc="Pay now"]
+${Android_EN_QRcode_txt}                            xpath=//android.widget.TextView[@text="QR code for bank transfer"]
+${Android_EN_PaymentDetails_txt}                 android=new UiSelector().text("Payment details")
+${Android_EN_PolicyNumber_txt}        xpath=//android.widget.TextView[@text="Policy number"]//following-sibling::android.widget.TextView
+${Android_EN_PaymentAmount_txt}        xpath=//android.widget.TextView[@text="Payment amount"]//following-sibling::android.widget.TextView
+${Android_EN_PremiumAmount_txt}        xpath=//android.widget.TextView[@text="Premium amount"]//following-sibling::android.widget.TextView
+${Android_EN_DownloadQRCode}            xpath=//android.widget.TextView[@text="Download QR code"]
+${Android_EN_BackToDashboard}       xpath=//android.widget.TextView[@text="Back to dashboard"]
+${Android_EN_QRCodeSaved_txt}       xpath=//android.widget.TextView[@text="QR code is saved to your device albu"]

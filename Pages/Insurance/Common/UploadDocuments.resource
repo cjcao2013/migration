@@ -14,6 +14,10 @@ Upload Document BS
         IF    '${Status}' == 'True'
              Click Element    ${${platformName}_${lang}_while_using_app}
         END
+#        ${Status}       Run Keyword And Return Status    Wait Until Page Contains Element   ${${platformName}_${lang}_allow_access}     timeout=2s
+#        IF    '${Status}' == 'True'
+#             Click Element    ${${platformName}_${lang}_allow_access}
+#        END
 
         ${Status}       Run Keyword And Return Status    Wait Until Page Contains Element   ${${platformName}_${lang}_dontallow_access}     timeout=2s
         IF    '${Status}' == 'True'
@@ -51,22 +55,22 @@ Upload Document BS
               Click Element    ${${platformName}_${lang}_obj_captureImage1}
         END
         Take Screenshot    Document Upload
-#       Pause Execution
-        ${Status}     Run Keyword And Return Status   Wait Until Element Is Visible       ${${platformName}_${lang}_GalleryDone}             timeout=5s
-        IF    '${Status}' == 'True'
-                Sleep    1s
-                Click Element       ${${platformName}_${lang}_GalleryDone}
-        ELSE
-                Click Element       ${${platformName}_${lang}_GalleyNext}
-        END
-
-        ${Status}    Run Keyword And Return Status
-        ...    Wait Until Page Contains Element
-        ...    ${${platformName}_${lang}_UploadDocument_JustConfirm_Yes}
-        ...    timeout=20s
-        IF    '${status}' == 'True'
-            Click Element    ${${platformName}_${lang}_UploadDocument_JustConfirm_Yes}
-        END
+        Pause Execution
+#        ${Status}     Run Keyword And Return Status   Wait Until Element Is Visible       ${${platformName}_${lang}_GalleryDone}             timeout=5s
+#        IF    '${Status}' == 'True'
+#                Sleep    1s
+#                Click Element       ${${platformName}_${lang}_GalleryDone}
+#        ELSE
+#                Click Element       ${${platformName}_${lang}_GalleyNext}
+#        END
+#
+#        ${Status}    Run Keyword And Return Status
+#        ...    Wait Until Page Contains Element
+#        ...    ${${platformName}_${lang}_UploadDocument_JustConfirm_Yes}
+#        ...    timeout=20s
+#        IF    '${status}' == 'True'
+#            Click Element    ${${platformName}_${lang}_UploadDocument_JustConfirm_Yes}
+#        END
 
 
      EXCEPT     AS  ${reason}

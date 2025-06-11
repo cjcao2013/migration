@@ -30,12 +30,8 @@ Pay now
           Take Screenshot    Update_Policies_Page
           Click Element    ${${platformName}_${lang}_Update_Policy_Module}
 
-        ${sOutput}    Run Keyword And Ignore Error    ${Update_Policy_Module}
-        IF    ${sOutput} != ('PASS', None)
-            Take Screenshot    Update Policy
-            ${failure_reason}    Fetch Reason    ${sOutput}
-            RETURN    ${failure_reason}
-        END
+           Run Keyword    ${Update_Policy_Module}
+
         Set Global Variable    ${result}    ${Update_Policy_Module} Completed Successfully for policy No: ${Policy_No}
     EXCEPT     AS  ${reason}
         Set Failed Actual Result and VP    Omne_Flow   ${reason}   FWD Insurance Flow of ${Insurance_Flow}
@@ -44,6 +40,7 @@ Pay now
 
 Loan repayment
     TRY
+        Pause Execution
         ${status}    Run Keyword And Return Status
         ...    Wait Until Element Is Visible
         ...    ${${platformName}_EN_PolicyNotAvailable}
@@ -55,11 +52,12 @@ Loan repayment
         ${Android_SelectPolicyNo}    Set Variable    android=new UiSelector().textContains("${Policy_No}")
         ${iOS_SelectPolicyNo}    Set Variable    chain=**/XCUIElementTypeOther[`label CONTAINS '${Policy_No}'`][2]
         ${iOS_EN_PolicyLoan_RequestAmount}    Set Variable    chain=**/XCUIElementTypeOther[`label == "${Request_Amount}"`]
-    #    Scroll Till Transaction Is Visible    ${${platformName}_SelectPolicyNo}
-        Wait Until Page Contains Element    ${${platformName}_SelectPolicyNo}       timeout=3s
+        ${Android_EN_PolicyLoan_RequestAmount}    Set Variable      xpath=//android.widget.TextView[@text="${Request_Amount}"]
+
+        Wait Until Page Contains Element    ${${platformName}_SelectPolicyNo}       timeout=5s
         Take Screenshot    Select Policy
         Click Element    ${${platformName}_SelectPolicyNo}
-        Pause Execution
+          Pause Execution
         ${PolicyDetails}    Get Text    ${${platformName}_SelectPolicyNo}
         Set Global Variable    ${${platformName}_SelectPolicyNo}
 
@@ -86,6 +84,7 @@ Loan repayment
             ${Loanlimitasoftoday}    Convert To Number    ${mVP_Totalasoftoday}
             # Calculate Policy Max Limit
             ${Max_LoanLimit}    Evaluate    ${Loanlimitasoftoday} + 100
+            Wait Until Element Is Visible    ${${platformName}_${lang}_PolicyLoanAmt}       timeout=5s
             Input Text    ${${platformName}_${lang}_PolicyLoanAmt}    ${Max_LoanLimit}\n
             # Capture Policy Max limit Error
             ${status}    Run Keyword And Return Status
@@ -126,7 +125,7 @@ Loan repayment
 QR Code
     # QR Scan Page
     TRY
-        Wait Until Element Is Visible    ${${platformName}_${lang}_QRcode_txt}      timeout=5s
+        Wait Until Element Is Visible    ${${platformName}_${lang}_QRcode_txt}      timeout=10s
         ${VP_PolicyNumber}      Get Text    ${${platformName}_${lang}_PolicyNumber_txt}
         ${VP_PolicyNumber}      Remove String    ${VP_PolicyNumber}     Policy number
 
@@ -141,12 +140,18 @@ QR Code
         Take Screenshot    Loan_Repayment_Details
         Click Element    ${${platformName}_${lang}_DownloadQRCode}
         Sleep     3s
-        Pause Execution
-        Click Text    OK    exact_match=true
+
+        TRY
+              Click Text    OK    exact_match=true
+        EXCEPT
+               Click Text    Allow    exact_match=true
+#               Click Text    OK    exact_match=true
+        END
+
 
         ${status}    Run Keyword And Return Status
         ...    Wait Until Page Contains
-        ...    QR code is saved to your device album        timeout=2s
+        ...    QR code is saved to your device album        timeout=5s
         IF    '${status}' == 'True'
             Take Screenshot    QRCodeSaved
             Set Calc VP With Source And Original Values

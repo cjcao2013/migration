@@ -53,3 +53,6 @@ ${iOS_EN_Start_Camera}                          chain=**/XCUIElementTypeButton[`
 ${iOS_EN_obj_captureImage1}                     chain=**/XCUIElementTypeOther[`label CONTAINS 'Gallery'`]/XCUIElementTypeOther[-3]
 ${iOS_EN_GalleyNext}            chain=**/XCUIElementTypeOther[`label == 'Next'`]
 ${iOS_EN_GalleryDone}           chain=**/XCUIElementTypeOther[`label == 'Done'`][-1]
+${Android_EN_GalleyNext}            android=new UiSelector().description("Next")
+${Android_EN_GalleryDone}           android=new UiSelector().description("Done")
+${Android_EN_obj_captureImage1}         xpath=(//android.view.ViewGroup[@content-desc="Gallery"]//following-sibling::android.view.ViewGroup[1])[2]

@@ -5,10 +5,10 @@ ${Android_EN_Response_select}                       xpath=//android.widget.TextV
 ${Android_EN_Skip}                                  xpath=(//android.widget.TextView[@text='Skip'])
 ${Android_EN_Done}                                  xpath=(//android.widget.TextView[@text='Done'])
 ${Android_EN_Submit_btn}                            android=new UiSelector().textContains("Submit")
-${Android_EN_AddImage}                              xpath=//android.view.ViewGroup[@resource-id='iBank-add-image']
+${Android_EN_AddImage}                              xpath=//android.view.ViewGroup[@resource-id="add-more-photo-button"]
 ${Android_EN_BankName}                              xpath=//android.widget.TextView[@text='Bank name']
-${Android_EN_BankAccNo}                             xpath=//android.widget.TextView[@text='Bank account no.']
-${Android_EN_BankAccountNoInput}                    xpath=//android.view.ViewGroup[@class='android.view.ViewGroup']/android.widget.EditText
+${Android_EN_BankAccNo}                             xpath=//android.widget.EditText[@resource-id="account-number-text-input"]
+${Android_EN_BankAccountNoInput}                    xpath=//android.widget.EditText[@resource-id="account-number-text-input"]
 ${Android_EN_SearchBankName}                        xpath=//android.widget.EditText[@text='Search here']
 ${Android_EN_btnSave}                               android=new UiSelector().text("Save")
 ${Android_EN_btnDone}                               xpath=//android.widget.TextView[@text='Done']
@@ -95,16 +95,16 @@ ${iOS_EN_Feedback_Txt}              chain=**/XCUIElementTypeStaticText[`label ==
 ${iOS_EN_Seven_Txt}                 chain=**/XCUIElementTypeOther[`label == "7"`][2]
 ${iOS_EN_Feedback_Claim_CheckBox}             chain=**/XCUIElementTypeOther[`label == "Ease of claim submission"`][2]/XCUIElementTypeOther
 
-
+${Android_EN_Submitted_Txt}                 android=new UiSelector().text("Submitted")
 
 ${iOS_EN_SetPinButton}                          chain=**/XCUIElementTypeButton[`name == "Set Now"`]
 ${iOS_EN_PIN_input}                 chain=**/XCUIElementTypeTextField
 ${iOS_Next_button}              chain=**/XCUIElementTypeOther[`label == "Next"`][-1]
 ${iOS_EN_Confirm_button}            chain=**/XCUIElementTypeButton[`name == "Confirm"`]
 ${iOS_EN_PaymentRequestTransaction}                     chain=**/XCUIElementTypeButton[`name == "View payments history"`]
-
-
-
+${Android_EN_ConfirmButton}               xpath=//android.widget.TextView[@text="Confirm"]
+${Android_Next_button}              xpath=//android.widget.Button[@content-desc="Next"]
+${Android_EN_PaymentRequestTransaction}         xpath=//android.widget.TextView[@text="View payments history"]
 
 #pin page objects
 ${iOS_EN_SetPin}               chain=**/XCUIElementTypeButton[`name == "Set Now"`]
@@ -113,6 +113,11 @@ ${iOS_EN_EnterPinField}         chain=**/XCUIElementTypeOther[`name CONTAINS "yo
 ${iOS_EN_ConfirmPinField}       chain=**/XCUIElementTypeOther[`name CONTAINS "Almost there"`][-2]/XCUIElementTypeOther[2]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeTextField
 ${iOS_EN_SkipButton}            chain=**/XCUIElementTypeOther[`name == "Skip"`]
 
+${Android_EN_SetPin}            android=new UiSelector().textContains("Set Now")
+${Android_EN_SetPinField}       xpath=(//android.widget.TextView[contains(@text,"Set up your PIN code")]//ancestor::android.view.ViewGroup)[last()-2]//following-sibling::android.widget.EditText
+${Android_EN_EnterPinField}         xpath=(//android.widget.TextView[contains(@text,"your pin")]//ancestor::android.view.ViewGroup)[last()-2]//following-sibling::android.widget.EditText
+${Android_EN_ConfirmPinField}       xpath=(//android.widget.TextView[contains(@text,"Almost there")]//ancestor::android.view.ViewGroup)[last()-2]//following-sibling::android.widget.EditText
+${Android_EN_SkipButton}            android=new UiSelector().textContains("Skip")
 
 ${iOS_EN_FeedbackRangeoption}       chain=**/XCUIElementTypeOther[`label == "8"`][2]
 ${iOS_EN_FeedbackReviewOption}       chain=**/XCUIElementTypeOther[`label == "Ease of claims submission"`][2]/XCUIElementTypeOther
@@ -144,3 +149,18 @@ ${iOS_EN_Regestration_StartFeedback}        chain=**/XCUIElementTypeOther[`name 
 #monthly Reminder and extra popup
 ${iOS_EN_Popup_Confirm_btn}           accessibility_id=Confirm
 ${iOS_EN_Popup_SKIP}                            accessibility_id=Skip
+
+${Android_EN_Popup_Confirm_btn}          android=new UiSelector().text("Confirm")
+${Android_EN_Popup_SKIP}                            android=new UiSelector().text("Skip")
+${Android_EN_DisPageNextButton}         xpath=//android.widget.Button[@content-desc="Next"]
+
+${Android_EN_UpdatePolicyBackButton}           xpath=//android.widget.Button[@resource-id="back-button"]
+${Androdi_EN_DeleteRider_AddImage}              xpath=//android.widget.Button[@content-desc="Next"]
+${Android_EN_FeedbackPage_Title}            android=new UiSelector().text("We’d love to hear from you")
+${Android_EN_FeebackEmoji_Option}           xpath=//android.view.ViewGroup[@content-desc="Good"]
+${Android_EN_Feedback_CheckBox}             xpath=//android.widget.TextView[@text="Ease of performing my request"]/parent::android.view.ViewGroup/child::android.view.ViewGroup
+${Android_EN_FeedbackSubmit_Btn}            android=new UiSelector().text("Submit")
+${Android_EN_FeedbackSkip_Btn}              android=new UiSelector().text("Skip")
+${Android_EN_FeedbackDone_Btn}              android=new UiSelector().text("Done")
+${Android_EN_FeedbackComment_Txt}               android=new UiSelector().text("Type here")
+${Android_EN_TellUsMoreTxt}                     android=new UiSelector().text("Tell us more")

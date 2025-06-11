@@ -15,3 +15,23 @@ ${iOS_EN_promtpaySaveButton}                                accessibility_id=pro
 ${iOS_EN_ChequeCancelNextButton}                            chain=**/XCUIElementTypeButton[`name == "ChequeCancelDetails-Next"`]
 ${iOS_EN_SummaryPage}                                       chain=**/XCUIElementTypeStaticText[`name == "Cheque cancellation request"`]
 ${iOS_EN_SummaryPageNextButton}                             chain=**/XCUIElementTypeButton[`name == "Submit"`]
+
+
+
+${Android_EN_Title}                                         android=new UiSelector().text("Cheque cancellation request")
+${Android_EN_Type_Of_Cheque_Title}                          android=new UiSelector().text("Type of cheque")
+${Android_EN_Type_Of_Cheque}                                android=new UiSelector().text("Type of cheque")
+${Android_EN_Done_Button}                                   android=new UiSelector().text("Done")
+${Android_EN_ReasonForCancellation}                         android=new UiSelector().text("Reason for cancellation")
+${Android_EN_AmountPayable}                                 android=new UiSelector().resourceId("currency-input")
+${Android_EN_AddPaymentMethod}                              android=new UiSelector().text("Add payment method")
+${Android_EN_addPaymentMethodTitle}                         android=new UiSelector().text("Add payment method")
+${Android_EN_PromtPayCheckBox}                              xpath=(//android.widget.CheckBox[@content-desc="PromptPay-CheckBox"])[1]
+${Android_EN_promtpaySaveButton}                            android=new UiSelector().text("Save")
+${Android_EN_ChequeCancelNextButton}                        android=new UiSelector().text("Next")
+${Android_EN_SummaryPage}                                   android=new UiSelector().text("Cheque cancellation request")
+${Android_EN_SummaryPageNextButton}                         android=new UiSelector().description("Submit")
+
+
+
+

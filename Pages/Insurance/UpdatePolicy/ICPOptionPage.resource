@@ -5,6 +5,7 @@ Library    SeleniumLibrary
 
 Resource    ../Common/CommonMethod.resource
 Resource    ../../../PageObjects/Insurance/UpdatePolicy/ICPOptionPageobjects.resource
+Resource      ../../../PageObjects/Insurance/Common/CommonObjects.resource
 Resource    ../Common/AddOTP.resource
 Resource    ../../../CustomLibraries/common.robot
 
@@ -29,19 +30,22 @@ Preferred payout
             VP For Cash Payout Option Page
         END
         #check the current cashout method is same with data
+        ${Android_EN_CaspayoutOption}            Set Variable      android=new UiSelector().textContains("${CashPayout_Option}")
+        ${iOS_EN_CaspayoutOption}            Set Variable       chain=**/XCUIElementTypeOther[`label == '${CashPayout_Option}'`][-1]
         IF    '${VP_CureenPayoutOption.strip()}' != '${CashPayout_Option.strip()}'
-            Wait Until Element Is Visible    chain=**/XCUIElementTypeOther[`label == '${CashPayout_Option}'`][-1]       timeout=2s
-            Click Element    chain=**/XCUIElementTypeOther[`label == '${CashPayout_Option}'`][-1]
+            Wait Until Element Is Visible    ${${platformName}_${lang}_CaspayoutOption}        timeout=20s
+            Click Element           ${${platformName}_${lang}_CaspayoutOption}
         END
         Take Screenshot    Cash_Payout_Option_page
         IF    '${CashPayout_Option}' == 'Bank transfer' or '${CashPayout_Option}' == 'Premium settlement'
+            Sleep    2s
             ${Status}    Run Keyword And Return Status
             ...    Wait Until Element Is Visible
-            ...    ${${platformName}_${lang}_Change_Button}     timeout=2s
+            ...    ${${platformName}_${lang}_Change_Button}     timeout=20s
             IF    '${Status}' == 'True'
                 Click Element    ${${platformName}_${lang}_Change_Button}
             ELSE
-                Wait Until Element Is Visible    ${${platformName}_${lang}_AddPaymentMethod_Button}    timeout=2s
+                Wait Until Element Is Visible    ${${platformName}_${lang}_AddPaymentMethod_Button}    timeout=20s
                 Click Element    ${${platformName}_${lang}_AddPaymentMethod_Button}
             END
             Take Screenshot    Cash_Payout_Option_Bank_page
@@ -51,7 +55,7 @@ Preferred payout
                 Click Element    ${${platformName}_${lang}_Checkbox_Promatpay}
         END
 
-        Wait Until Page Contains Element    ${${platformName}_Next_button}    timeout=2s
+        Wait Until Page Contains Element    ${${platformName}_Next_button}    timeout=20s
         Click Element    ${${platformName}_Next_button}
         Take Screenshot    Cash_Payout_Option_page
         # Previous OTP from DB
@@ -59,8 +63,8 @@ Preferred payout
         ${Previous_OTP}    Set Variable    ${OTPNumber}
         Set Global Variable    ${Previous_OTP}
 
-        Wait Until Element Is Visible    ${${platformName}_${lang}_Submit_Button}    timeout=5s
-        Click Element    ${${platformName}_${lang}_Submit_Button}
+        Wait Until Element Is Visible    ${${platformName}_${lang}_SubmitButton}   timeout=15s
+        Click Element    ${${platformName}_${lang}_SubmitButton}
         Take Screenshot    Cash_Payout_Option_page
 
         Insert OTP      ${Transaction_OTP_Source}       ${Transaction_OTP_Expiry_Flag}      ${Transaction_OTP_Resend_Flag}
@@ -86,7 +90,13 @@ Preferred payout
         # New All Done Confirmation Page
         Check Transaction Status
         Completion Popup
-        Capture ICP Transaction Details for iOS
+        Wait Until Element Is Visible    ${${platformName}_${lang}_SeeAll}   timeout=10s
+        Click Element    ${${platformName}_${lang}_SeeAll}
+        Take Screenshot    Transaction_Page
+        Wait Until Page Contains Element    ${${platformName}_${lang}_ServiceReuest}    timeout=20s
+        Click Element    ${${platformName}_${lang}_ServiceReuest}
+        Take Screenshot    Transaction_Page
+        Run Keyword      Capture ICP Transaction Details for ${platformName}
         Take Screenshot    Update_Details
         Set Global Variable    ${result}    ICP Option Changed Successfully For Policy No :${Policy_No}
     EXCEPT     AS  ${reason}
@@ -151,13 +161,6 @@ VP For Cash Payout Option Page
 
 Capture ICP Transaction Details for iOS
     TRY
-        Wait Until Element Is Visible    ${${platformName}_${lang}_SeeAll}   timeout=10s
-        Click Element    ${${platformName}_${lang}_SeeAll}
-        Take Screenshot    Transaction_Page
-        Wait Until Page Contains Element    ${${platformName}_${lang}_ServiceReuest}    timeout=3s
-        Click Element    ${${platformName}_${lang}_ServiceReuest}
-        Take Screenshot    Transaction_Page
-
         RefreshPage
         Scroll Till Transaction Is Visible    chain=**/XCUIElementTypeOther[`label CONTAINS '${currdate}' and label CONTAINS 'Change of preferred payout' and label CONTAINS 'Policy no: ${Policy_No}'`][27]
         Wait Until Page Contains Element
@@ -269,3 +272,72 @@ Capture ICP Transaction Details for iOS
         Set Failed Actual Result and VP    Omne_Flow   ${reason}   FWD Insurance Flow of ${Insurance_Flow}
     END
 
+Capture ICP Transaction Details for Android
+    TRY
+
+         ${Android_selectCurrentTransaction}    Set Variable
+        ...    xpath=(//android.widget.TextView[@text='${current_day}']/following-sibling::android.widget.TextView[@text='${current_month}']/parent::android.view.ViewGroup/following-sibling::android.widget.TextView[@text='Change of preferred payout'])[1]
+
+        Scroll Till Transaction Is Visible    ${${platformName}_selectCurrentTransaction}
+
+        ${transactionstatus}    Get Text
+        ...    xpath=(//android.widget.TextView[@text='${current_day}']/following-sibling::android.widget.TextView[@text='${current_month}']/parent::android.view.ViewGroup/following-sibling::android.widget.TextView[@text='Change of preferred payout']/following-sibling::android.view.ViewGroup/android.widget.TextView)[1]
+        ${transactionstatus}    Convert To Title Case    ${transactionstatus}
+        ${policyno}    Get Text
+        ...    xpath=//android.widget.TextView[@text='${current_day}']/following-sibling::android.widget.TextView[@text='${current_month}']/parent::android.view.ViewGroup/following-sibling::android.widget.TextView[@text='Change of preferred payout']/following-sibling::android.widget.TextView[contains(@text,'Policy no:')]
+        @{policyno}    Split String    ${policyno}    Policy no:
+        ${policyno}    Get From List    ${policyno}    -1
+
+        IF    '${transactionstatus}' == 'Completed'
+            ${transactionstatus}    Set Variable    Approve
+            ${OPUSTransactionstatus}    Set Variable    Completed
+            Set Global Variable    ${OPUSTransactionstatus}
+        ELSE
+                ${OPUSTransactionstatus}    Set Variable    In progress
+                Set Global Variable    ${OPUSTransactionstatus}
+        END
+        Set Calc VP Expected Result With Original And Source
+        ...    Transaction_Status
+        ...    ${OPUSTransactionstatus}
+        ...    ${transactionstatus}
+        ...    OMNE_TransactionPage
+        Click Element    ${${platformName}_selectCurrentTransaction}
+        Wait Until Element Is Visible       ${${platformName}_${lang}_New_Payout_Option}
+        ${VP_New_Payout_Option}         Get Text                 ${${platformName}_${lang}_New_Payout_Option}
+        IF    '${VP_New_Payout_Option}' == 'Bank transfer'
+                ${Bank_Name}            Get Text            ${${platformName}_${lang}_ICPBankNameVP}
+                ${AccountNo}             Get Text            ${${platformName}_${lang}_ICPAccountNoVP}
+
+                ${mAccountNo}    Get Substring    ${AccountNo}    -4
+                ${mBank_Account_No}    Get Substring    ${Bank_Book_Number}    -4
+                ${mVP_New_Payout_Option}        Convert To Title Case            ${VP_New_Payout_Option}
+                Set Calc VP Expected Result With Original And Source
+                ...    New_Payout_Option
+                ...    ${mVP_New_Payout_Option.strip()}
+                ...    ${VP_New_Payout_Option}
+                ...    OMNE_TransactionPage
+                Set Calc VP Expected Result With Original And Source
+                ...    Bank_Name
+                ...    ${Bank_Name.strip()}
+                ...    ${Bank_Name}
+                ...    OMNE_TransactionPage
+                Set Calc VP With Source And Original Values
+                ...    Transaction_Page_Cashpayout_AccountNo
+                ...    ${mAccountNo.strip()}
+                ...    ${AccountNo.strip()}
+                ...    Test_Data
+                ...    OMNE_TransactionPage
+                ...    ${mBank_Account_No.strip()}
+                ...    ${Bank_Account_No}
+
+                Set Calc VP Expected Result With Original And Source
+                ...    Account_No
+                ...    ${AccountNo.strip()}
+                ...    ${mAccountNo.strip()}
+                ...    OMNE_TransactionPage
+        END
+
+
+    EXCEPT     AS  ${reason}
+        Set Failed Actual Result and VP    Omne_Flow   ${reason}   FWD Insurance Flow of ${Insurance_Flow}
+    END

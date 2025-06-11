@@ -34,7 +34,7 @@ Manage
         #      Select Insurance Flow
         ${Android_EN_Insurance_Module}    Set Variable     android=new UiSelector().textContains("${Insurance_Flow}")
         ${iOS_EN_Insurance_Module}        Set Variable     chain=**/XCUIElementTypeOther[`label CONTAINS '${Insurance_Flow}'`][-1]
-        Wait Until Element Is Visible    ${${platformName}_${lang}_Insurance_Module}        timeout=10s
+        Wait Until Element Is Visible    ${${platformName}_${lang}_Insurance_Module}        timeout=20s
         Click Element    ${${platformName}_${lang}_Insurance_Module}
 
         ${status}       Run Keyword And Return Status    Wait Until Element Is Visible    ${${platformName}_${lang}_OKPopup}        timeout=5s
@@ -47,6 +47,7 @@ Manage
         IF    '${Update_Policy_Module}' != 'Personal details'
              ${Android_EN_Update_Policy_Module}  Set Variable     android=new UiSelector().textContains("${Update_Policy_Module}")
             ${iOS_EN_Update_Policy_Module}      Set Variable     chain=**/XCUIElementTypeOther[`label CONTAINS '${Update_Policy_Module}'`][-1]
+            Scroll Till Transaction Is Visible          ${${platformName}_${lang}_Update_Policy_Module}
             Wait Until Element Is Visible    ${${platformName}_${lang}_Update_Policy_Module}    timeout=10s
             Take Screenshot    Update_Policies_Page
             Click Element     ${${platformName}_${lang}_Update_Policy_Module}

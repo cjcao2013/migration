@@ -1,6 +1,4 @@
 *** Variables ***
-${Android_EN_Document_Preview_Document}             xpath=//android.widget.TextView[@text='Preview document']
-${Android_EN_Document_Download_Button}              xpath=//android.widget.TextView[@text='Preview document']/following-sibling::android.view.ViewGroup[1]/android.view.ViewGroup
 ${iOS_EN_Document_Download_Button}                  chain=**/XCUIElementTypeOther[`label == "Preview document"`]/XCUIElementTypeOther
 
 ${Android_EN_Document_Popup_Download_Button}        xpath=//android.widget.TextView[@text='Download']
@@ -14,6 +12,9 @@ ${Android_EN_Document_SaveAsPDF_txt}                xpath=//android.widget.TextV
 ${Android_EN_Document_Save_To_PDF}                  accessibility_id=Save to PDF
 ${Android_EN_Document_PDF_Name_TextBox}             xpath=//android.widget.EditText[@resource-id='android:id/title']
 ${Android_EN_Document_SAVE_Button}                  xpath=//android.widget.Button[@text='SAVE']
+${Android_EN_Document_Preview_Document}             xpath=//android.widget.TextView[@text='Preview document']
+${Android_EN_Document_Download_Button}              xpath=//android.widget.TextView[@text='Preview document']/following-sibling::android.view.ViewGroup[1]/android.view.ViewGroup
+
 
 ${iOS_EN_Document_Download_SaveFiles}               accessibility_id=Save to Files
 ${iOS_EN_Document_Download_BackBtn}                 chain=**/XCUIElementTypeButton[`label == "Browse"`]

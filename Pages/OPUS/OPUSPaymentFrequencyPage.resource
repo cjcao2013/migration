@@ -56,10 +56,14 @@ OPUS frequency
             ...    ${VP_New_Payment_Frequency}
             ...    OPUS Application
         END
+        IF    '${VP_currentFrequency}' == 'Half Annual'
+            ${mVP_currentFrequency}    Set Variable    Half yearly
+
+        END
 
         Set Calc VP Actual Result With Original And Source
         ...    OLD_Payment_Frequency
-        ...    ${VP_currentFrequency}
+        ...    ${mVP_currentFrequency}
         ...    ${VP_currentFrequency}
         ...    OPUS Application
         Set Calc VP Actual Result With Original And Source
@@ -69,12 +73,12 @@ OPUS frequency
         ...    OPUS Application
         Set Calc VP Actual Result With Original And Source
         ...    Transaction_New_Premium_Amount
-        ...    ${MVP_NewModalPremium}
+        ...    ${MVP_NewModalPremium.strip()}
         ...    ${VP_NewModalPremium}
         ...    OPUS Application
         Set Calc VP Expected Result With Original And Source
         ...    Post Transaction New_Premium_Amount
-        ...    ${MVP_NewModalPremium}
+        ...    ${MVP_NewModalPremium.strip()}
         ...    ${VP_NewModalPremium}
         ...    OPUS Application
         ${Approved_Status}    Get Element Attribute    ${EN_frequencyStatus}       attribute=title
@@ -88,7 +92,7 @@ OPUS frequency
         ...    ${Approved_Status}
         ...    OPUS_Application
         Click Element    xpath=//button[@data-trigger='submit']
-        Sleep    2s
+        Sleep    5s
         Take OPUS Screenshot    OPUS Inquiry
     EXCEPT     AS  ${reason}
         Set Failed Actual Result and VP       OPUS_Flow   ${reason}   OPUS  ${Insurance_Flow}

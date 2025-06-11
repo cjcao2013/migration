@@ -21,11 +21,11 @@ ${HOSTNAME}     10.16.95.21
 *** Keywords ***
 Log in to application
     TRY
-        ${HOSTNAME}    Get Environment Attribute    10.16.95.21
+        ${HOSTNAME}    Get Environment Attribute    CATHLA01.TH.INTRANET
         Set Global Variable    ${HOSTNAME}
         ${listarg}    Create List    -codepage    thai
         Log    ${listarg}    WARN
-        Open Connection    Y:L:10.16.95.21    port=992    extra_args=${listarg}
+        Open Connection    Y:L:CATHLA01.TH.INTRANET    port=992    extra_args=${listarg}
         Sleep    10s
         Wait Field Detected
         Sleep    2s

@@ -150,4 +150,13 @@ ${iOS_EN_AccountBackButton_Arrow}            accessibility_id=back-button
 ${iOS_EN_Logout_btn}            accessibility_id=log_out.icon
 ${iOS_EN_Confirm_btn}           accessibility_id=Confirm
 
-
+${iOS_EN_would_you_like}                    accessibility_id=What would you like to do on Omne?
+${Android_EN_would_you_like}                android=new UiSelector().text("What would you like to do on Omne?")
+${iOS_EN_MangeYourInsurance}                chain=**/XCUIElementTypeOther[`label == "Manage Your Insurance"`][2]
+${Android_EN_MangeYourInsurance}            android=new UiSelector().text("Manage Your Insurance")
+${iOS_EN_Option_Get_Filter}                 chain=**/XCUIElementTypeOther[`label == "Get Fitter"`][2]
+${Android_EN_Option_Get_Filter}             android=new UiSelector().text("Get Fitter")
+${iOS_EN_Option_Sleep_Better}               chain=**/XCUIElementTypeOther[`label == "Sleep Better"`][2]
+${Android_EN_Option_Sleep_Better}           android=new UiSelector().text("Sleep Better")
+${iOS_EN_Ok_button_popupPage}               chain=**/XCUIElementTypeButton[`label == "OK"`]
+${Android_EN_Ok_button_popupPage}           android=new UiSelector().description("OK")

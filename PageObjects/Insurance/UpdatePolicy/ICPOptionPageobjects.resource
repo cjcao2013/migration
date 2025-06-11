@@ -28,9 +28,16 @@ ${iOS_EN_ICPBackButton_Arrow}               chain=**/XCUIElementTypeButton[`name
 ${iOS_EN_TransactionTab}                    chain=**/XCUIElementTypeOther[`label CONTAINS 'View transactions'`][-1]
 ${iOS_EN_ServiceReuest}                     chain=**/XCUIElementTypeOther[`label CONTAINS 'Service request'`][-1]
 ${iOS_EN_Transactions_ICP}                  xpath=(//android.widget.TextView[@text='Change ICP'])[1]
-${iOS_EN_New_tPayout_Option}                xpath=(//android.widget.TextView[@text='New payout option']/following-sibling::android.widget.TextView)[1]
 ${iOS_EN_Curent_Payout_Option}              xpath=(//android.widget.TextView[@text='Current payout option']/following-sibling::android.widget.TextView)[1]
 ${iOS_EN_Transaction_ComplettionDate}       xpath=(//android.widget.TextView[@text='Completion date']/following-sibling::android.widget.TextView)[1]
 ${iOS_EN_Transaction_Bank_Name}             chain=**/XCUIElementTypeOther[`label CONTAINS 'Bank details'`][-1]
 ${iOS_EN_Transactiondetails}                chain=**/XCUIElementTypeOther[`label CONTAINS 'Policy applied'`][-1]
 ${iOS_EN_ICPAddImage}                       chain=**/XCUIElementTypeOther[`name == "add-more-photo-button"`]
+
+
+${Android_EN_CurrentPayoutOption}               android=new UiSelector().textContains("Current ICP option")
+${Android_EN_Change_Button}                     xpath=//android.widget.TextView[@text="Change"]
+${Android_EN_AddPaymentMethod_Button}           android=new UiSelector().textContains("Add payment method")
+${Android_EN_New_Payout_Option}                xpath=(//android.widget.TextView[@text='New ICP option']/following-sibling::android.widget.TextView)[1]
+${Android_EN_ICPBankNameVP}                        xpath=(//android.widget.TextView[@text='Payout method']/following-sibling::android.view.ViewGroup/android.widget.TextView)[3]
+${Android_EN_ICPAccountNoVP}                   xpath=(//android.widget.TextView[@text='Payout method']/following-sibling::android.view.ViewGroup/android.widget.TextView)[2]

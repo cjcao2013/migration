@@ -28,7 +28,7 @@ OPUS Preferred payout
             ${mVP_Account_No}    Get Substring    ${VP_Account_No}    -4
         END
 
-        ${mVP_PayoutOption}    Convert To Lower Case    ${VP_PayoutOption}
+        ${mVP_PayoutOption}    Convert To Title Case    ${VP_PayoutOption}
 
         ${VP_TransactionStatus}    Get Text    ${EN_TransactionStatus}
         Take OPUS Screenshot    OPUS ICP Page

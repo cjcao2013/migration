@@ -26,14 +26,20 @@ Premium payment history
         #fetch Details of premium history
         FOR    ${counter}    IN RANGE    1    ${HistoryListcount}+1
             Log    ${counter}
-        ${VP_PaymentHistory_ReceiptNumber}  Get Text    chain=**/XCUIElementTypeOther[`name BEGINSWITH "Receipt number:"`][-${counter}]/XCUIElementTypeStaticText[-1]
-        ${VP_PaymentHistory_PaymentDueDate}  Get Text    chain=**/XCUIElementTypeOther[`name BEGINSWITH "Due date:"`][-${counter}]/XCUIElementTypeStaticText[-1]
-        ${VP_PaymentHistory_PaymentAmount}  Get Text    chain=**/XCUIElementTypeOther[`name BEGINSWITH "Amount:"`][-${counter}]/XCUIElementTypeStaticText[-1]
-        ${VP_PaymentHistory_PaymentAmount}      Remove String    ${VP_PaymentHistory_PaymentAmount}     ,
-        ${VP_PaymentHistory_PaymentAmount}      Remove String    ${VP_PaymentHistory_PaymentAmount}     THB
-        Set Calc VP Actual Result With Original And Source    Receipt Number_${counter}    ${VP_PaymentHistory_ReceiptNumber.strip()}    ${VP_PaymentHistory_ReceiptNumber.strip()}    OMNE Payment History Page
-        Set Calc VP Actual Result With Original And Source    Due Date_${counter}    ${VP_PaymentHistory_PaymentDueDate.strip()}    ${VP_PaymentHistory_PaymentDueDate.strip()}    OMNE Payment History Page
-        Set Calc VP Actual Result With Original And Source    Payment Amount_${counter}    ${VP_PaymentHistory_PaymentAmount.strip()}    ${VP_PaymentHistory_PaymentAmount.strip()}    OMNE Payment History Page
+            IF    '${platformName}' == 'iOS'
+                ${${platformName}_${lang}_VP_PaymentHistory_ReceiptNumber}  Get Text    chain=**/XCUIElementTypeOther[`name BEGINSWITH "Receipt number:"`][-${counter}]/XCUIElementTypeStaticText[-1]
+                ${${platformName}_${lang}_VP_PaymentHistory_PaymentDueDate}  Get Text    chain=**/XCUIElementTypeOther[`name BEGINSWITH "Due date:"`][-${counter}]/XCUIElementTypeStaticText[-1]
+                ${${platformName}_${lang}_VP_PaymentHistory_PaymentAmount}  Get Text    chain=**/XCUIElementTypeOther[`name BEGINSWITH "Amount:"`][-${counter}]/XCUIElementTypeStaticText[-1]
+            ELSE
+                ${${platformName}_${lang}_VP_PaymentHistory_ReceiptNumber}  Get Text    xpath=(//android.widget.TextView[@text='Receipt number:']/following-sibling::android.widget.TextView)[${counter}]
+                ${${platformName}_${lang}_VP_PaymentHistory_PaymentDueDate}  Get Text    xpath=(//android.widget.TextView[@text='Due date:']/following-sibling::android.widget.TextView)[${counter}]
+                ${${platformName}_${lang}_VP_PaymentHistory_PaymentAmount}  Get Text   xpath=(//android.widget.TextView[@text='Amount:']/following-sibling::android.widget.TextView)[${counter}]
+            END
+            ${VP_PaymentHistory_PaymentAmount}      Remove String    ${${platformName}_${lang}_VP_PaymentHistory_PaymentAmount}     ,
+            ${VP_PaymentHistory_PaymentAmount}      Remove String    ${VP_PaymentHistory_PaymentAmount}     THB
+            Set Calc VP Actual Result With Original And Source    Receipt Number_${counter}    ${${platformName}_${lang}_VP_PaymentHistory_ReceiptNumber.strip()}    ${${platformName}_${lang}_VP_PaymentHistory_ReceiptNumber.strip()}    OMNE Payment History Page
+            Set Calc VP Actual Result With Original And Source    Due Date_${counter}    ${${platformName}_${lang}_VP_PaymentHistory_PaymentDueDate.strip()}    ${${platformName}_${lang}_VP_PaymentHistory_PaymentDueDate.strip()}    OMNE Payment History Page
+            Set Calc VP Actual Result With Original And Source    Payment Amount_${counter}    ${VP_PaymentHistory_PaymentAmount.strip()}    ${VP_PaymentHistory_PaymentAmount.strip()}    OMNE Payment History Page
         END
          #fetch Details of premium history from DB
         Get Policy Payment History Details from DB

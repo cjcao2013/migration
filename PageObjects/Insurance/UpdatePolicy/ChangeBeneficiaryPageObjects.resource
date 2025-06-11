@@ -77,3 +77,4 @@ ${Android_EN_OverviewTab}                                   xpath=//android.widg
 ${Android_EN_BeneficiarysTab}                               xpath=//android.widget.TextView[@text='Beneficiary(s)']
 ${Android_EN_ChangeBeneficiarydetails}                      xpath=//android.widget.TextView[@text='Change beneficiary(s) details']
 ${Android_EN_totalBenecountinTransaction}                   xpath=//android.widget.TextView[@text='New beneficiary(s) details']/following-sibling::android.widget.TextView
+${Android_EN_beneNextButton}                                xpath=//android.widget.Button[@content-desc="Next"]

@@ -110,7 +110,7 @@ ${iOS_EN_Riders_policy_status_txt}                      chain=**/XCUIElementType
 ${Android_EN_Details}                                   xpath=//android.widget.TextView[@text='Details']
 ${iOS_EN_Details}                                       chain=**/XCUIElementTypeOther[`label == "Details"`]
 
-${Android_EN_Details_MailingAddress_txt}                xpath=(//android.widget.TextView[@text="Mailing address"]/following-sibling::android.view.ViewGroup)[1]//android.widget.TextView
+${Android_EN_Details_MailingAddress_txt}                xpath=//android.widget.TextView[@text="Mailing address"]/following-sibling::android.widget.TextView[1]
 ${iOS_EN_Details_MailingAddress_txt}                    chain=**/XCUIElementTypeOther[`label BEGINSWITH "Mailing address"`][-1]/XCUIElementTypeOther[1]
 
 ${Android_EN_Details_EditAddress_Button}                xpath=//android.widget.TextView[@text="Mailing address"]/following-sibling::android.view.ViewGroup[1]//android.view.ViewGroup
@@ -237,7 +237,7 @@ ${iOS_EN_Confirm_Button}                                chain=**/XCUIElementType
 ${Android_EN_Email_Sent_Msg}                            xpath=//android.widget.TextView[contains(@text,'Email sent!')]
 ${iOS_EN_Email_Sent_Msg}                                chain=**/XCUIElementTypeStaticText[`label CONTAINS "Email sent!"`][-1]
 
-${Android_EN_Policy_List}                               xpath=//android.view.ViewGroup[@resource-id='clickable-card']
+${Android_EN_Policy_List}                               xpath=//android.widget.TextView[@text="More details"]
 ${iOS_EN_Policy_List}                                   chain=**/XCUIElementTypeButton[`label == "More details"`]
 #chain=**/XCUIElementTypeScrollView[-1]/XCUIElementTypeOther/XCUIElementTypeOther[2]/XCUIElementTypeOther
 

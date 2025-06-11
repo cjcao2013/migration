@@ -322,6 +322,10 @@ SignIn
             Click Text    Close    exact_match=true
             Take Screenshot    PostSignInHome_Page
         END
+            ${Status}    Run Keyword And Return Status    Wait Until Element Is Visible    ${${platformName}_${lang}_Popup_Confirm_btn}   timeout=3s
+        IF    '${status}' == 'True'
+            Click Element    ${${platformName}_${lang}_Popup_Confirm_btn}
+        END
     EXCEPT     AS  ${reason}
        Set Failed Actual Result and VP    Omne_Flow   ${reason}   Sign IN
     END
@@ -337,7 +341,7 @@ Additional Verification Page
     #            Select FWD Policy Holder
             ${iOS_FWDPolicyHolder}      Set Variable          chain=**/XCUIElementTypeOther[`label == "${IS_FWD_PolicyHolder}"`]
             ${Android_FWDPolicyHolder}      Set Variable      xpath=//android.widget.TextView[@text='${IS_FWD_PolicyHolder}']/preceding-sibling::android.view.ViewGroup
-            ${status}       Run Keyword And Return Status    Wait Until Element Is Visible       ${${platformName}_FWDPolicyHolder}
+            ${status}       Run Keyword And Return Status    Wait Until Element Is Visible       ${${platformName}_FWDPolicyHolder}     timeout=5s
             IF    '${status}' == 'True'
                  Click Element       ${${platformName}_FWDPolicyHolder}
             END
@@ -361,14 +365,15 @@ Additional Verification Page
                 Click Element    ${${platformName}_${lang}_Document_Number}
                 IF    '${platformName}' == 'iOS'
                      Input Text    ${${platformName}_${lang}_Document_Number}    ${Customer_ID}\n
+                     Close keyboard
                 ELSE
                     @{CustID_len}    Split String To Characters     ${Customer_ID}
                     FOR    ${char}    IN    @{CustID_len}
                         Input Text Into Current Element    ${char}
                     END
-                    Hide Keyboard
+                     Close keyboard
                 END
-                Click Element At Coordinates    61    800
+#                Click Element At Coordinates    61    800
                 ${status}    Run Keyword And Return Status    Wait Until Element Is Visible    ${${platformName}_${lang}_Error_Invalid_Document_No}    timeout=1s
                 IF    '${status}' == 'True'
                     Take Screenshot    Invalid_Document_Details
@@ -533,17 +538,15 @@ Login By Mobile
     END
 
 Omne Action Popup
-    ${status}   Run Keyword And Return Status    Wait Until Element Is Visible    accessibility_id=What would you like to do on Omne?          timeout=5s
+    ${status}   Run Keyword And Return Status    Wait Until Element Is Visible    ${${platformName}_${lang}_would_you_like}          timeout=5s
         IF    '${status}' == 'True'
-           ${status}   Run Keyword And Return Status    Wait Until Element Is Visible    chain=**/XCUIElementTypeOther[`label == "Manage Your Insurance"`][2]      timeout=5s
+           ${status}   Run Keyword And Return Status    Wait Until Element Is Visible    ${${platformName}_${lang}_MangeYourInsurance}      timeout=5s
            IF    '${status}' == 'True'
-                Click Element    chain=**/XCUIElementTypeOther[`label == "Manage Your Insurance"`][2]
+                Click Element    ${${platformName}_${lang}_MangeYourInsurance}
            END
-            Click Element    chain=**/XCUIElementTypeOther[`label == "Get Fitter"`][2]
-            Click Element    chain=**/XCUIElementTypeOther[`label == "Sleep Better"`][2]
-
-            Take Screenshot    Omne First Page
-
-           Click Element    chain=**/XCUIElementTypeButton[`label == "OK"`]
+             Click Element    ${${platformName}_${lang}_Option_Get_Filter}
+             Click Element    ${${platformName}_${lang}_Option_Sleep_Better}
+             Take Screenshot    Omne First Page
+             Click Element    ${${platformName}_${lang}_Ok_button_popupPage}
 
         END

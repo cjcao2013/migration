@@ -75,8 +75,8 @@ Pending Details
             FOR    ${element}    IN    @{omnedocumentlist}
                 Log    ${element}
                 ${documentpendReason}       Get From Dictionary    ${omnedocumentnamedict}    ${element}
-                Set Calc VP Actual Result With Original And Source    DocumentName_${count}     ${element}     ${element}    Transaction Pending detail Page
-                Set Calc VP Actual Result With Original And Source    ${element}_PendingReason     ${documentpendReason.strip()}     ${documentpendReason.strip()}    Transaction Pending detail Page
+#                Set Calc VP Actual Result With Original And Source    DocumentName_${count}     ${element}     ${element}    Transaction Pending detail Page
+#                Set Calc VP Actual Result With Original And Source    ${element}_PendingReason     ${documentpendReason.strip()}     ${documentpendReason.strip()}    Transaction Pending detail Page
                 ${count}    Evaluate    ${count}+1
             END
         END

@@ -116,6 +116,7 @@ Main Executor
     Insurance and Engagement Flow
     Set Calc VP With Source And Original Values    Omne_Flow    Flow_Successful    Flow_Successful    Static    Omne_Application_Flow   Flow_Successful    Flow_Successful
     Call OWB OPUS and LA IL
+
     Set Actual Result      ${actualResult}
 
 Insurance and Engagement Flow
@@ -159,7 +160,8 @@ Call OWB OPUS and LA IL
         END
 
     END
-
+    ${actualResult}    Catenate    ${actualResult}    |    ${result}
+    Set Global Variable    ${actualResult}
 Set Final TestCase Status
     ${status}   Run Keyword And Return Status    Should Contain    ${actualResult}    Failed due to
     IF    '${status}' == 'True'

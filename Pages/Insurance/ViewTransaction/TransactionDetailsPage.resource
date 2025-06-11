@@ -31,10 +31,11 @@ Transaction after Complete
             Set Global Variable    ${VP_Transaction_Status}
             Wait Until Element Is Visible    ${${platformName}_${lang}_BackArrow}   timeout=20s
             Click Element    ${${platformName}_${lang}_BackArrow}
+            Sleep    3s
             Wait Until Element Is Visible    ${${platformName}_${lang}_SeeAll}   timeout=20s
             Click Element    ${${platformName}_${lang}_SeeAll}
             Take Screenshot    Transaction_Page
-            Wait Until Page Contains Element    ${${platformName}_${lang}_TransactionServiceRequest}    timeout=50s
+            Wait Until Element Is Visible     ${${platformName}_${lang}_TransactionServiceRequest}    timeout=50s
             Click Element    ${${platformName}_${lang}_TransactionServiceRequest}
             Sleep    10s
             Take Screenshot    Transaction_Page
@@ -110,16 +111,13 @@ Transaction surrender policy
 Transaction Cheque cancellation
     ${iOS_Selectposttransaction}    Set Variable
     ...    chain=**/XCUIElementTypeOther[`label CONTAINS '${currdate}' and label CONTAINS 'Cheque cancellation request ${MCaseStatus}' and label CONTAINS 'Policy no: ${Policy_No}'`][27]
+    ${Android_Selectposttransaction}    Set Variable
+    ...    xpath=(//android.widget.TextView[@text='${current_day}']/following-sibling::android.widget.TextView[@text='${current_month}']/parent::android.view.ViewGroup/following-sibling::android.widget.TextView[@text='Cheque cancellation request']/following-sibling::android.view.ViewGroup/android.widget.TextView[@text='${MCaseStatus}'])[1]
     Scroll Till Transaction Is Visible    ${${platformName}_Selectposttransaction}
     ${CompleteStatus_List}    Get Text    ${${platformName}_Selectposttransaction}
     Set Global Variable    ${CompleteStatus_List}
-#    Click Element    ${${platformName}_Selectposttransaction}
+    Run Keyword     Capture Cheque Cancellation Transaction Details for ${platformName}    Post
 
-    ${sOutput}    Run Keyword And Ignore Error    Capture Cheque Cancellation Transaction Details for ${platformName}    Post
-    IF    ${sOutput} != ('PASS', None)
-        ${failure_reason}    Fetch Reason    ${sOutput}
-        RETURN    ${failure_reason}
-    END
 
 Transaction Cancel
     ${Android_Selectposttransaction}    Set Variable
@@ -137,24 +135,7 @@ Transaction Cancel
         RETURN    ${failure_reason}
     END
 
-# Transaction Personal details
-#    ${Android_Selectposttransaction}    Set Variable    xpath=(//android.widget.TextView[@text='${current_day}']/following-sibling::android.widget.TextView[@text='${current_month}']/parent::android.view.ViewGroup/following-sibling::android.widget.TextView[@text='${Change}']/following-sibling::android.view.ViewGroup/android.widget.TextView[@text='${CaseStatus}'])[1]
-#    ${iOS_Selectposttransaction}    Set Variable    chain=**/XCUIElementTypeOther[`label CONTAINS '${currdate}' and label CONTAINS '${Change}'`][27]
-#    Scroll Till Transaction Is Visible    ${${platformName}_Selectposttransaction}
-#    ${CompleteStatus_List}    Get Text    ${${platformName}_Selectposttransaction}
-#    @{CompleteStatus_List2}    Split String    ${CompleteStatus_List}    Last name (Kanji)
-#    ${CompleteStatus_List}    Get From List    ${CompleteStatus_List2}    0
-#    @{CompleteStatus_List2}    Split String    ${CompleteStatus_List}    New address
-#    ${CompleteStatus_List}    Get From List    ${CompleteStatus_List2}    0
-#    @{CompleteStatus_List2}    Split String    ${CompleteStatus_List}    Mobile number
-#    ${CompleteStatus_List}    Get From List    ${CompleteStatus_List2}    0
-#    Set Global Variable    ${CompleteStatus_List}
-#
-#    ${sOutput}    Run Keyword And Ignore Error    2 Capture Change Name Transaction Details for ${platformName}    Post
-#    IF    ${sOutput} != ('PASS', None)
-#    ${failure_reason}    Fetch Reason    ${sOutput}
-#    RETURN    ${failure_reason}
-#    END
+
 
 Transaction frequency
     ${Android_Selectposttransaction}    Set Variable
@@ -180,13 +161,7 @@ Transaction Beneficiary(s) details
     Scroll Till Transaction Is Visible    ${${platformName}_Selectposttransaction}
     ${CompleteStatus_List}    Get Text    ${${platformName}_Selectposttransaction}
     Set Global Variable    ${CompleteStatus_List}
-#    Click Element    ${${platformName}_Selectposttransaction}
-
-    ${sOutput}    Run Keyword And Ignore Error    Capture Beneficiary Transaction Details for ${platformName}    Post
-    IF    ${sOutput} != ('PASS', None)
-        ${failure_reason}    Fetch Reason    ${sOutput}
-        RETURN    ${failure_reason}
-    END
+    Run Keyword    Capture Beneficiary Transaction Details for ${platformName}    Post
 
 Transaction Delete rider(s)
     ${Android_Selectposttransaction}    Set Variable
@@ -283,8 +258,8 @@ Transaction Risk profile
     END
 
 Transaction Personal details
-    ${Android_Selectposttransaction}    Set Variable
-    ...    xpath=(//android.widget.TextView[@text='${current_day}']/following-sibling::android.widget.TextView[@text='${current_month}']/parent::android.view.ViewGroup/following-sibling::android.widget.TextView[@text='Change of personal details']/following-sibling::android.view.ViewGroup/android.widget.TextView[@text='${MCaseStatus}'])[1]
+   ${Android_Selectposttransaction}    Set Variable
+    ...    xpath=(//android.widget.TextView[@text='${current_day}']/following-sibling::android.widget.TextView[@text='${current_month}']/parent::android.view.ViewGroup/following-sibling::android.widget.TextView[@text='Change of personal details']/following-sibling::android.view.ViewGroup/android.widget.TextView[contains(@text,'${MCaseStatus}')])[1]
     ${iOS_Selectposttransaction}    Set Variable
     ...    chain=**/XCUIElementTypeOther[`label CONTAINS '${currdate}' and label CONTAINS 'Change of personal details ${MCaseStatus}' and label CONTAINS 'Policy no: ${Policy_No}'`][27]
     Scroll Till Transaction Is Visible    ${${platformName}_Selectposttransaction}
@@ -298,16 +273,12 @@ Transaction Personal details
         Wait Until Element Is Visible        ${${platformName}_pendingButton}        timeout=30s
         Click Element    ${${platformName}_pendingButton}
         ${iOS_EN_newstatusobject}      Set Variable    chain=**/XCUIElementTypeOther[`label CONTAINS '${currdate}' and label CONTAINS 'Change of personal details In progress' and label CONTAINS 'Policy no: ${Policy_No}'`][27]
-        ${Android_EN_newstatusobject}      Set Variable    xpath=(//android.widget.TextView[@text='${current_day}']/following-sibling::android.widget.TextView[@text='${current_month}']/parent::android.view.ViewGroup/following-sibling::android.widget.TextView[@text='personal details']/following-sibling::android.widget.TextView[contains(@text,'${Policy_No}')]/preceding::android.widget.TextView[contains(@text,'In progress')])[1]
+        ${Android_EN_newstatusobject}      Set Variable    xpath=(//android.widget.TextView[@text="${current_day}"]/following-sibling::android.widget.TextView[@text="${current_month}"]/parent::android.view.ViewGroup/following-sibling::android.widget.TextView[@text='Change of personal details']/following-sibling::android.widget.TextView[contains(@text,'${Policy_No}')]/preceding-sibling::android.view.ViewGroup[2]/android.widget.TextView[contains(@text,'In progress')])[1]
         Pending Details     ${${platformName}_${lang}_newstatusobject}
         Set Global Variable    ${MCaseStatus}       In progress
-#        Click Element        ${newstatusobject}
     END
-    ${sOutput}    Run Keyword And Ignore Error    Capture Change Name Transaction Details for ${platformName}    Post
-    IF    ${sOutput} != ('PASS', None)
-        ${failure_reason}    Fetch Reason    ${sOutput}
-        RETURN    ${failure_reason}
-    END
+    Run Keyword    Capture Change Name Transaction Details for ${platformName}    Post
+
 
 Transaction Switch funds
     ${iOS_Selectposttransaction}    Set Variable
@@ -317,15 +288,7 @@ Transaction Switch funds
     Scroll Till Transaction Is Visible    ${${platformName}_Selectposttransaction}
     ${CompleteStatus_List}    Get Text    ${${platformName}_Selectposttransaction}
     Set Global Variable    ${CompleteStatus_List}
-#    Take Screenshot    Post Transaction Page
-#    Sleep    3s
-#    Click Element    ${${platformName}_Selectposttransaction}
-    ${sOutput}    Run Keyword And Ignore Error    Capture Fund Switch Transaction Details    Post
-    IF    ${sOutput} != ('PASS', None)
-        ${failure_reason}    Fetch Reason    ${sOutput}
-        RETURN    ${failure_reason}
-    END
-#    Run Keyword    Capture Fund Switch Transaction Details    Post
+    Run Keyword    Capture Fund Switch Transaction Details    Post
 
 Capture Fund switch Transaction detail after Owb for Android
     Take Screenshot    FundSwitch_TransactionPage

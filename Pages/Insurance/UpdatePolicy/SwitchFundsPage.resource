@@ -10,6 +10,7 @@ Resource    ../Common/CommonMethod.resource
 Switch funds
     TRY
         Select Policy
+        RefreshPage
         # capture policy details
         ${iOS_EN_FundpolicyName}    Set Variable
         ...    chain=**/XCUIElementTypeOther[`label CONTAINS "${Policy_No}"`][-3]/XCUIElementTypeStaticText[-1]
@@ -52,7 +53,7 @@ Switch funds
             ${iOS_selectFundtoAddPerc}    Set Variable
             ...    xpath=//XCUIElementTypeOther[@name='${FundName}']/following-sibling::XCUIElementTypeOther[1]/XCUIElementTypeOther[2]/XCUIElementTypeOther/XCUIElementTypeTextField
             ${Android_selectFundtoAddPerc}    Set Variable
-            ...    xpath=//android.widget.TextView[@text='${FundName}']/../../android.view.ViewGroup[2]/android.view.ViewGroup[2]/android.widget.EditText
+            ...    xpath=//android.widget.TextView[@text='${FundName}']/parent::android.view.ViewGroup/parent::android.view.ViewGroup/following-sibling::android.view.ViewGroup[1]/child::android.view.ViewGroup[2]/android.widget.EditText
             Wait Until Element Is Visible    ${${platformName}_selectFundtoAddPerc}    timeout=5s
             Clear Text    ${${platformName}_selectFundtoAddPerc}
             IF    '${platformName}' == 'iOS'
@@ -64,7 +65,7 @@ Switch funds
             ${iOS_captureSelectedFundestimatedAmount}    Set Variable
             ...    xpath=//XCUIElementTypeOther[@name='${FundName}']/following-sibling::XCUIElementTypeOther[2]/XCUIElementTypeOther[2]
             ${Android_captureSelectedFundestimatedAmount}    Set Variable
-            ...    xpath=//android.widget.TextView[@text='${FundName}']/../../android.view.ViewGroup[3]/android.view.ViewGroup[2]/android.widget.TextView
+            ...    xpath=//android.widget.TextView[@text='SCBFP']/../../../android.view.ViewGroup[3]/android.view.ViewGroup[2]/android.widget.TextView
             ${VP_Estimatedswitchoutamount}    Get Text    ${${platformName}_captureSelectedFundestimatedAmount}
 
             ${VP_Estimatedswitchoutamount}    Remove String    ${VP_Estimatedswitchoutamount}    ,
@@ -89,15 +90,15 @@ Switch funds
         ...    ${VP_TotalEstimatedSwitchOutAmount}
     #    Take Screenshot    OMNE_SwitchFund_SwitchOutPage
         Click Element    ${${platformName}_${lang}_NextButton}
-       
+
 
         # switch in page
-        Scroll Till Transaction Is Visible     ${${platformName}_${lang}_Addnewfunds} 
+        Scroll Till Transaction Is Visible     ${${platformName}_${lang}_Addnewfunds}
         Wait Until Element Is Visible    ${${platformName}_${lang}_Addnewfunds}    timeout=60s
         Click Element    ${${platformName}_${lang}_Addnewfunds}
 
         # add new funds
-        
+
         @{SIdata_list}    Split String    ${SwitchFund_SwitchInFundName}    ,
         ${newfundLength}    Get Length    ${SIdata_list}
         Log    ${SIdata_list}
@@ -150,7 +151,7 @@ Switch funds
             ...    chain=**/XCUIElementTypeOther[`label CONTAINS '${SIFund}'`][-2]/XCUIElementTypeOther/XCUIElementTypeOther[1]/XCUIElementTypeTextField
             ${Android_clickFundpercField}    Set Variable
             ...    xpath=//android.widget.TextView[@text='${SIFund}']/../../android.view.ViewGroup[2]/android.widget.EditText
-            Scroll Till Transaction Is Visible     ${${platformName}_clickFundpercField}  
+            Scroll Till Transaction Is Visible     ${${platformName}_clickFundpercField}
             Wait Until Element Is Visible    ${${platformName}_clickFundpercField}    timeout=10s
             Click Element    ${${platformName}_clickFundpercField}
             Clear Text    ${${platformName}_clickFundpercField}
@@ -261,24 +262,29 @@ Switch funds
         Wait Until Element Is Visible    ${${platformName}_${lang}_confirm}    timeout=60s
         Click Element    ${${platformName}_${lang}_confirm}
         SwipePage
-        ${status}    Run Keyword And Return Status
-        ...    Wait Until Element Is Visible
-        ...    ${${platformName}_${lang}_acknowledgeChkBox}
-        ...    timeout=5s
-        IF    '${status}' != 'True'
-            WHILE    '${status}' != 'True'
-                SwipePage
-                ${status}    Run Keyword And Return Status
-                ...    Wait Until Element Is Visible
-                ...    ${${platformName}_${lang}_acknowledgeChkBox}
-                ...    timeout=5s
-                IF    '${status}' != 'True'
-                    Click Element    ${${platformName}_${lang}_acknowledgeChkBox}
+        IF    '${platformName}' == 'iOS'
+                      ${status}    Run Keyword And Return Status
+            ...    Wait Until Element Is Visible
+            ...    ${${platformName}_${lang}_acknowledgeChkBox}
+            ...    timeout=5s
+            IF    '${status}' != 'True'
+                WHILE    '${status}' != 'True'
+                    SwipePage
+                    ${status}    Run Keyword And Return Status
+                    ...    Wait Until Element Is Visible
+                    ...    ${${platformName}_${lang}_acknowledgeChkBox}
+                    ...    timeout=5s
+                    IF    '${status}' != 'True'
+                        Click Element    ${${platformName}_${lang}_acknowledgeChkBox}
+                    END
                 END
+            ELSE
+                Click Element    ${${platformName}_${lang}_acknowledgeChkBox}
             END
         ELSE
-            Click Element    ${${platformName}_${lang}_acknowledgeChkBox}
+             Click Element    ${${platformName}_${lang}_fundSwitchacknowledgeChkBox}
         END
+
         Take Screenshot    SwitchFund_SummaryPage
         Wait Until Element Is Visible    ${${platformName}_${lang}_SubmitButton}    timeout=10s
         # Previous OTP from DB
@@ -326,10 +332,14 @@ Capture Fund Switch Transaction Details
     IF    '${Transaction_Info}'== 'Pre'
         ${iOS_selectCurrentTransaction1}    Set Variable
         ...    chain=**/XCUIElementTypeOther[`label CONTAINS '${currdate}' and label CONTAINS 'Fund Switch' and label CONTAINS 'Policy no: ${Policy_No}'`][27]
+        ${Android_selectCurrentTransaction1}    Set Variable
+        ...    xpath=(//android.widget.TextView[@text='${current_day}']/following-sibling::android.widget.TextView[@text='${current_month}']/parent::android.view.ViewGroup/following-sibling::android.widget.TextView[@text='Fund Switch']/following-sibling::android.view.ViewGroup/android.widget.TextView)[1]
     ELSE IF    '${Transaction_Info}'== 'Post'
-        ${MCaseStatus}     Set Variable     Completed
+#        ${MCaseStatus}     Set Variable     Decline
         ${iOS_selectCurrentTransaction1}    Set Variable
         ...    chain=**/XCUIElementTypeOther[`label CONTAINS '${currdate}' and label CONTAINS 'Fund Switch ${MCaseStatus}' and label CONTAINS 'Policy no: ${Policy_No}'`][27]
+        ${Android_selectCurrentTransaction1}    Set Variable
+        ...    xpath=(//android.widget.TextView[@text='${current_day}']/following-sibling::android.widget.TextView[@text='${current_month}']/parent::android.view.ViewGroup/following-sibling::android.widget.TextView[@text='Fund Switch']/following-sibling::android.view.ViewGroup/android.widget.TextView[@text='${MCaseStatus}'])[1]
     END
     Log    ${${platformName}_selectCurrentTransaction1}
     RefreshPage
@@ -339,13 +349,21 @@ Capture Fund Switch Transaction Details
     Take Screenshot    Transaction Page
 
     ${transactionstatus}    Get Text    ${${platformName}_selectCurrentTransaction1}
-    @{Trans_FundSwitchStatus}    Split String    ${transactionstatus}    Fund Switch
-    ${FundTransactionStatusdata}    Get From List    ${Trans_FundSwitchStatus}    1
-    @{FundTransactionDetail}    Split String    ${FundTransactionStatusdata}    Policy no:
-    ${VP_Trans_FundSwitchStatus}    Get From List    ${FundTransactionDetail}    0
-    ${VP_Trans_PolicyNumber}    Get From List    ${FundTransactionDetail}    1
-    ${VP_Trans_PolicyNumber}    Split String    ${VP_Trans_PolicyNumber}    Switch out
-    ${VP_Trans_PolicyNumber}    Get From List    ${VP_Trans_PolicyNumber}    0
+    IF    '${platformName}' == 'iOS'
+         @{Trans_FundSwitchStatus}    Split String    ${transactionstatus}    Fund Switch
+        ${FundTransactionStatusdata}    Get From List    ${Trans_FundSwitchStatus}    1
+        @{FundTransactionDetail}    Split String    ${FundTransactionStatusdata}    Policy no:
+        ${VP_Trans_FundSwitchStatus}    Get From List    ${FundTransactionDetail}    0
+        ${VP_Trans_PolicyNumber}    Get From List    ${FundTransactionDetail}    1
+        ${VP_Trans_PolicyNumber}    Split String    ${VP_Trans_PolicyNumber}    Switch out
+        ${VP_Trans_PolicyNumber}    Get From List    ${VP_Trans_PolicyNumber}    0
+    ELSE
+        ${VP_Trans_FundSwitchStatus}    Get Text    ${${platformName}_selectCurrentTransaction1}
+        ${Trans_PolicyNumber}    Set Variable      xpath=//android.widget.TextView[@text='${current_day}']/following-sibling::android.widget.TextView[@text='${current_month}']/parent::android.view.ViewGroup/following-sibling::android.widget.TextView[@text='Fund Switch']/parent::android.view.ViewGroup/android.widget.TextView[2]
+        ${VP_Trans_PolicyNumber}        Get Text    ${Trans_PolicyNumber}
+        @{VP_Trans_PolicyNumber}    Split String    ${VP_Trans_PolicyNumber}    Policy no:
+        ${VP_Trans_PolicyNumber}     Get From List       ${VP_Trans_PolicyNumber}    1
+    END
     Set Calc VP Expected Result With Original And Source
     ...    Policy No
     ...    ${VP_Trans_PolicyNumber.strip()}
@@ -475,11 +493,11 @@ Capture Fund Switch Transaction Details
 #            ...    OMNE_TransactionPage
             #    Set Calc VP Actual Result With Original And Source    Post_Transaction_Summary_SwitchOutFundName_${fundCounterr}    ${FundName}    ${FundName}    OMNE_TransactionPage
             #    Set Calc VP Actual Result With Original And Source    Post_Transaction_Summary_EstimatedSwitchOutamount_${FundName}    ${switchinfundvalue}    ${switchinfundvalue}    OMNE_TransactionPage
-#            Set Calc VP Actual Result With Original And Source
-#            ...    Post_Transaction_switchOutPercentage_${FundName}
-#            ...    ${switchinfundperc}
-#            ...    ${switchinfundperc}
-#            ...    OMNE_TransactionPage
+            Set Calc VP Actual Result With Original And Source
+            ...    Post_Transaction_switchOutPercentage_${FundName}
+            ...    ${switchinfundperc}
+            ...    ${switchinfundperc}
+            ...    OMNE_TransactionPage
         END
         ${fundCounterr}    Evaluate    ${fundCounterr}+1
     END

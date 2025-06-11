@@ -10,8 +10,12 @@ Resource    ../../../PageObjects/Insurance/Common/CommonObjects.resource
 *** Keywords ***
 Completion Popup
     TRY
-        Sleep    5s
-        Click Element At Coordinates    199    95
+        Sleep    10s
+        IF    '${platformName}' == 'iOS'
+            Click Element At Coordinates    199    95
+        ELSE
+                Click Element At Coordinates    510    248
+        END
         Extra POP Up
         ${Android_EN_InsurancePage}    Set Variable    android=new UiSelector().text("${Flow_Flag}")
         ${iOS_EN_InsurancePage}    Set Variable    chain=**/XCUIElementTypeButton[`label == '${Flow_Flag}'`]
@@ -34,7 +38,7 @@ Add Payment Methods
                Set Calc VP With Source And Original Values    Bank_Name_Present    true    ${PreSelectionstatus}     Static   OMNE_Application    true    ${PreSelectionstatus}
         END
         TRY
-             Wait Until Element Is Visible   ${${platformName}_${lang}_DeleteRider_AddImage}     timeout=3s
+             Wait Until Element Is Visible   ${${platformName}_${lang}_DeleteRider_AddImage}     timeout=5s
              Click Element    ${${platformName}_${lang}_DeleteRider_AddImage}
         EXCEPT
             Wait Until Element Is Visible   ${${platformName}_${lang}_AddImage}     timeout=3s
@@ -296,7 +300,7 @@ Select Policy
         Wait Until Page Contains Element    ${${platformName}_SelectPolicyNo}       timeout=30s
         Take Screenshot    Select Policy
         Click Element    ${${platformName}_SelectPolicyNo}
-        ${PolicyDetails}    Get Text    ${${platformName}_SelectPolicyNo}
+#        ${PolicyDetails}    Get Text    ${${platformName}_SelectPolicyNo}
         Set Global Variable    ${${platformName}_SelectPolicyNo}
    EXCEPT     AS  ${reason}
         Set Failed Actual Result and VP    Omne_Flow   ${reason}   Select Policy ${Insurance_Flow}
@@ -400,8 +404,6 @@ Check Transaction Status
 Set or enter PIN
     TRY
         Take Screenshot    PIN PopUp
-
-
         ${status}       Run Keyword And Return Status    Wait Until Element Is Visible    ${${platformName}_${lang}_SetPin}     timeout=2s
         ${enterpinstatus}       Run Keyword And Return Status    Wait Until Element Is Visible    ${${platformName}_${lang}_EnterPinField}     timeout=2s
         ${enterpinFieldStatus}      Run Keyword And Return Status    Wait Until Element Is Visible      ${${platformName}_${lang}_SetPinField}  timeout=2s
@@ -409,35 +411,61 @@ Set or enter PIN
             IF    '${status}' == 'True'
                 Click Element    ${${platformName}_${lang}_SetPin}
             END
+            IF    '${enterpinFieldStatus}' == 'True'
+                Click Element    ${${platformName}_${lang}_SetPinField}
+            END
             Wait Until Element Is Visible    ${${platformName}_${lang}_SetPinField}       timeout=2s
-            Input Text    ${${platformName}_${lang}_SetPinField}    123456
+#            Input Text    ${${platformName}_${lang}_SetPinField}    123456
             FOR    ${counter}    IN RANGE    1    7
                Log    ${counter}
-                Click Element       chain=**/XCUIElementTypeOther[`name == "${counter}"`]
+               IF    '${platformName}' == 'iOS'
+                    Click Element       chain=**/XCUIElementTypeOther[`name == "${counter}"`]
+               ELSE
+                    ${counter}      Set Variable    0
+                    ${Android_EN_pin}           Set Variable    xpath=//android.view.ViewGroup[@content-desc="${counter}"]
+                    Click Element       ${${platformName}_${lang}_Pin}
+               END
             END
             Take Screenshot    enter new pin Page
             Click Element    ${${platformName}_${lang}_NextButton}
             Wait Until Element Is Visible    ${${platformName}_${lang}_ConfirmPinField}       timeout=2s
-            Input Text    ${${platformName}_${lang}_ConfirmPinField}    123456
+            Click Element   ${${platformName}_${lang}_ConfirmPinField}
+#            Input Text    ${${platformName}_${lang}_ConfirmPinField}    123456
             FOR    ${counter}    IN RANGE    1    7
                Log    ${counter}
-                Click Element       chain=**/XCUIElementTypeOther[`name == "${counter}"`]
+                IF    '${platformName}' == 'iOS'
+                    Click Element       chain=**/XCUIElementTypeOther[`name == "${counter}"`]
+               ELSE
+                    ${counter}      Set Variable    0
+                    ${Android_EN_pin}           Set Variable    xpath=//android.view.ViewGroup[@content-desc="${counter}"]
+                    Click Element       ${${platformName}_${lang}_Pin}
+               END
             END
             Take Screenshot    Re-enter pin page
             Click Element    ${${platformName}_${lang}_ConfirmButton}
-            Wait Until Element Is Visible    ${${platformName}_${lang}_SkipButton}       timeout=2s
-            Take Screenshot     Enable biometric popup
-            Click Element       ${${platformName}_${lang}_SkipButton}
+            ${status}   Run Keyword And Return Status       Wait Until Element Is Visible    ${${platformName}_${lang}_SkipButton}       timeout=2s
+            IF    '${status}' == 'True'
+                Take Screenshot     Enable biometric popup
+                Click Element       ${${platformName}_${lang}_SkipButton}
+            END
         ELSE IF     '${enterpinstatus}' == 'True'
             Wait Until Element Is Visible    ${${platformName}_${lang}_EnterPinField}       timeout=2s
-            Input Text    ${${platformName}_${lang}_EnterPinField}    123456
+            Click Element   ${${platformName}_${lang}_EnterPinField}
+#            Input Text    ${${platformName}_${lang}_EnterPinField}    123456
             FOR    ${counter}    IN RANGE    1    7
                Log    ${counter}
-                Click Element       chain=**/XCUIElementTypeOther[`name == "${counter}"`]
+                IF    '${platformName}' == 'iOS'
+                    Click Element       chain=**/XCUIElementTypeOther[`name == "${counter}"`]
+               ELSE
+                    ${counter}      Set Variable    0
+                    ${Android_EN_pin}           Set Variable    xpath=//android.view.ViewGroup[@content-desc="${counter}"]
+                    Click Element       ${${platformName}_${lang}_Pin}
+               END
             END
             Take Screenshot    enter new pin Page
             Click Element    ${${platformName}_${lang}_ConfirmButton}
         END
+#        Pause Execution
         Overall APP Experience
     EXCEPT     AS  ${reason}
        Set Failed Actual Result and VP    Omne_Flow   ${reason}   SET UP PIN
@@ -577,4 +605,10 @@ Extra POP Up
     ${Status}    Run Keyword And Return Status    Wait Until Element Is Visible    ${${platformName}_${lang}_Popup_Confirm_btn}   timeout=3s
     IF    '${status}' == 'True'
         Click Element    ${${platformName}_${lang}_Popup_Confirm_btn}
+    END
+
+    ${status}    Run Keyword And Return Status    Wait Until Page Contains    Continue    timeout=3s
+    IF    '${status}' == 'True'
+        Click Text    Continue    exact_match=true
+        Take Screenshot    PostSignInHome_Page
     END

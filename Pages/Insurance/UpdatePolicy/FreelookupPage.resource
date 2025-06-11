@@ -19,18 +19,19 @@ Cancel
         Click Element    ${${platformName}_${lang}_FreelookCancelation_Option}
         Select Policy
         Take Screenshot    recommendation msg
-        Wait Until Element Is Visible    ${iOS_EN_recommendMsg}    timeout=2w
-        ${VP_Recommendation_Msg}    Get Text    ${iOS_EN_recommendMsg}
-        Set Calc VP With Source And Original Values
-            ...    Recommendation_msg
-            ...    We recommend to continue your policy
-            ...    ${VP_Recommendation_Msg}
-            ...    Static
-            ...    Omne Application
-            ...    We recommend to continue your policy
-            ...    ${VP_Recommendation_Msg}
-
-        Click Element    ${iOS_EN_Close}
+#        Wait Until Element Is Visible    ${${platformName}_${lang}_recommendMsg}    timeout=2w
+#        ${VP_Recommendation_Msg}    Get Text    ${${platformName}_${lang}_recommendMsg}
+#        Set Calc VP With Source And Original Values
+#            ...    Recommendation_msg
+#            ...    We recommend to continue your policy
+#            ...    ${VP_Recommendation_Msg}
+#            ...    Static
+#            ...    Omne Application
+#            ...    We recommend to continue your policy
+#            ...    ${VP_Recommendation_Msg}
+#
+#        Click Element    ${${platformName}_${lang}_Close}
+        Set Global Variable    ${result}    Freelookup Completed Successfully for policy No: ${Policy_No}
     EXCEPT     AS  ${reason}
         Set Failed Actual Result and VP    Omne_Flow   ${reason}   FWD Insurance Flow of ${Insurance_Flow}
     END

@@ -27,12 +27,20 @@ Benefit payout
         #capture total list and check count
         ${TotalHistoryList}     Get Webelements    ${${platformName}_${lang}_BenefitPayoutHistoryList}
         ${TotalpyoutCount}      Get Length    ${TotalHistoryList}
-    
+        Run Keyword             Capture benefit payout details ${platformName}
+     EXCEPT     AS  ${reason}
+        Set Failed Actual Result and VP    Omne_Flow   ${reason}   FWD Insurance Flow of ${Insurance_Flow}
+    END
+
+Capture benefit payout details iOS
+    TRY
         #capture data of each payout from the list
         FOR    ${counter}    IN RANGE    1    ${TotalpyoutCount}-1
             Log    ${counter}
             #banktype and status
-            ${BenefitTypeAndStatus}     Get Text   chain=**/XCUIElementTypeOther[`name == "benefit-payout-flatlist"`]/XCUIElementTypeScrollView/XCUIElementTypeOther[${counter}]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[1]
+            ${iOS_EN_BenefitTypeAndStatus}          Set Variable            chain=**/XCUIElementTypeOther[`name == "benefit-payout-flatlist"`]/XCUIElementTypeScrollView/XCUIElementTypeOther[${counter}]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[1]
+            ${Android_EN_BenefitTypeAndStatus}          Set Variable        xpath=(//android.widget.TextView[@text="Interim cash payout"]//following-sibling::android.widget.TextView)[${counter}]
+            ${BenefitTypeAndStatus}     Get Text        ${${platformName}_${lang}_BenefitTypeAndStatus}
             @{splitbankData}    Split String    ${BenefitTypeAndStatus}
             ${BankPayoutStatus}     Get From List    ${splitbankData}    -1
             ${BenefitTypeValue}     Remove String    ${BenefitTypeAndStatus}    ${BankPayoutStatus}
@@ -70,6 +78,52 @@ Benefit payout
         Set Failed Actual Result and VP    Omne_Flow   ${reason}   FWD Insurance Flow of ${Insurance_Flow}
     END
     
+Capture benefit payout details Android
+     TRY
+        #capture data of each payout from the list
+        FOR    ${counter}    IN RANGE    1    ${TotalpyoutCount}-1
+            Log    ${counter}
+            #banktype and status
+            ${iOS_EN_BenefitTypeAndStatus}          Set Variable            chain=**/XCUIElementTypeOther[`name == "benefit-payout-flatlist"`]/XCUIElementTypeScrollView/XCUIElementTypeOther[${counter}]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[1]
+            ${Android_EN_BenefitTypeAndStatus}          Set Variable        xpath=(//android.widget.TextView[@text="Interim cash payout"]//following-sibling::android.widget.TextView)[${counter}]
+            ${BankPayoutStatus}     Get Text        ${${platformName}_${lang}_BenefitTypeAndStatus}
+
+            ${BenefitTypeValue}     Get Text        xpath=(//android.widget.ScrollView[@resource-id="benefit-payout-flatlist"]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[${counter}]/android.view.ViewGroup/android.widget.TextView[1])[1]
+            IF   '${BankPayoutStatus}' == 'Failed'
+                 ${mBankPayoutStatus}   Set Variable    Fail
+            END
+            Set Calc VP Actual Result With Original And Source    PayoutStatus_${counter}    ${mBankPayoutStatus.strip()}    ${BankPayoutStatus.strip()}    Omne_payoutHistory_Page
+            Set Calc VP Actual Result With Original And Source    BenefitType_${counter}    ${BenefitTypeValue.strip()}    ${BenefitTypeValue.strip()}    Omne_payoutHistory_Page
+
+            #Payout method and amount
+            ${payoutMethodValue}    Get Text        xpath=(//android.widget.ScrollView[@resource-id="benefit-payout-flatlist"]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[${counter}]/android.view.ViewGroup/android.widget.TextView[1])[2]
+            ${payoutAmountValue}     Get Text       xpath=//android.widget.TextView[@text="${payoutMethodValue}"]//following-sibling::android.widget.TextView
+            @{split_MethodandAmount}    Split String    ${payoutAmountValue}    THB
+            ${payoutAmountValue}    Get From List    ${split_MethodandAmount}    1
+            ${payoutAmountValue}    Remove String    ${payoutAmountValue}   ,
+
+            Set Calc VP Actual Result With Original And Source    Payout_Amount_${counter}    ${payoutAmountValue.strip()}     ${payoutAmountValue.strip()}    Omne_payoutHistory_Page
+            Set Calc VP Actual Result With Original And Source    Payout_Method_${counter}    ${payoutMethodValue.strip()}     ${payoutMethodValue.strip()}    Omne_payoutHistory_Page
+
+            #bank acc details
+            ${payoutBankNameValue}     Get Text    xpath=(//android.widget.TextView[@text="${payoutMethodValue}"][${counter}]]/parent::android.view.ViewGroup/following-sibling::android.view.ViewGroup[1]/android.view.ViewGroup/android.widget.TextView[1])[1]
+            ${payoutBankAccNumber}     Get Text    xpath=(//android.widget.TextView[@text="${payoutMethodValue}"][${counter}]/parent::android.view.ViewGroup/following-sibling::android.view.ViewGroup[1]/android.view.ViewGroup/android.widget.TextView[2])
+            ${PayoutDateValue}         Get Text         xpath=(//android.widget.TextView[@text="${payoutMethodValue}"][${counter}]/parent::android.view.ViewGroup/following-sibling::android.view.ViewGroup[1]/android.view.ViewGroup/android.widget.TextView[1])[2]
+
+            ${mpayoutBankAccNumber}     Get Substring       ${payoutBankAccNumber}      -4
+            ${PayoutDateValue}      Remove String    ${PayoutDateValue}     ${payoutBankAccNumber}
+            Set Calc VP Actual Result With Original And Source    Payout_BankName_${counter}    ${payoutBankNameValue.strip()}     ${payoutBankNameValue.strip()}    Omne_payoutHistory_Page
+            Set Calc VP Actual Result With Original And Source    Payout_BankAcc_Number_${counter}    ${mpayoutBankAccNumber.strip()}     ${payoutBankAccNumber.strip()}    Omne_payoutHistory_Page
+            Set Calc VP Actual Result With Original And Source    Payout_Date_${counter}    ${PayoutDateValue.strip()}     ${PayoutDateValue.strip()}    Omne_payoutHistory_Page
+
+        END
+        Get Benefit Payout History from DB
+        Set Global Variable    ${result}    Benefit Payout History for Policy No: ${Policy_No}
+    EXCEPT     AS  ${reason}
+        Set Failed Actual Result and VP    Omne_Flow   ${reason}   FWD Insurance Flow of ${Insurance_Flow}
+    END
+
+
 
 Get Benefit Payout History from DB
     TRY

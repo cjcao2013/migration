@@ -481,23 +481,26 @@ Capture RCC Transaction Details for Android
     Sleep    10s
     RefreshPage
     ${Android_selectCurrentTransaction}    Set Variable
-    ...    xpath=(//android.widget.TextView[@text='${current_day}']/following-sibling::android.widget.TextView[@text='${current_month}']/parent::android.view.ViewGroup/following-sibling::android.widget.TextView[@text='Change of recurring payment'])[1]
+        ...    xpath=(//android.widget.TextView[@text='${current_day}']/following-sibling::android.widget.TextView[@text='${current_month}']/parent::android.view.ViewGroup/following-sibling::android.widget.TextView[@text='Change of recurring payment'])[1]
 
     Scroll Till Transaction Is Visible    ${${platformName}_selectCurrentTransaction}
 
-    ${VP_Transaction_Status}    Get Text
+    ${transactionstatus}    Get Text
     ...    xpath=(//android.widget.TextView[@text='${current_day}']/following-sibling::android.widget.TextView[@text='${current_month}']/parent::android.view.ViewGroup/following-sibling::android.widget.TextView[@text='Change of recurring payment']/following-sibling::android.view.ViewGroup/android.widget.TextView)[1]
-    ${VP_Transaction_Status}    Convert To Title Case    ${VP_Transaction_Status}
+    ${transactionstatus}    Convert To Title Case    ${transactionstatus}
     ${policyno}    Get Text
     ...    xpath=//android.widget.TextView[@text='${current_day}']/following-sibling::android.widget.TextView[@text='${current_month}']/parent::android.view.ViewGroup/following-sibling::android.widget.TextView[@text='Change of recurring payment']/following-sibling::android.widget.TextView[contains(@text,'Policy no:')]
     @{policyno}    Split String    ${policyno}    Policy no:
     ${policyno}    Get From List    ${policyno}    -1
 
-    IF    '${VP_Transaction_Status}' == 'Completed'
-        ${VP_Transaction_Status}    Set Variable    Approve
+    IF    '${transactionstatus}' == 'Completed'
+        ${transactionstatus}    Set Variable    Approve
+        ${OPUSTransactionstatus}    Set Variable    Completed
+        Set Global Variable    ${OPUSTransactionstatus}
+    ELSE
+            ${OPUSTransactionstatus}    Set Variable    In progress
+            Set Global Variable    ${OPUSTransactionstatus}
     END
-
-    Wait Until Page Contains Element    ${${platformName}_selectCurrentTransaction}    timeout=50s
     Click Element    ${${platformName}_selectCurrentTransaction}
     Sleep    10s
     Wait Until Page Contains Element    ${${platformName}_${lang}_Transaction_PaymentMethod}    timeout=20s

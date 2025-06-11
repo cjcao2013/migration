@@ -35,7 +35,7 @@ Investment(s)
           Click Element       ${${platformName}_${lang}_InsurnacePage}
           Set or enter PIN
           #      Select Insurance Flow
-          ${Android_EN_Insurance_Module}    Set Variable     android=new UiSelector().textContains("${Insurance_Flow}")
+          ${Android_EN_Insurance_Module}    Set Variable      xpath=//android.widget.TextView[@text="My policy(s)"]//following-sibling::android.view.ViewGroup[@content-desc="See all"]
           ${iOS_EN_Insurance_Module}        Set Variable     chain=**/XCUIElementTypeOther[`label == "My policy(s) See all"`]/XCUIElementTypeOther[-1]
           Wait Until Element Is Visible    ${${platformName}_${lang}_Insurance_Module}
           Click Element    ${${platformName}_${lang}_Insurance_Module}
@@ -52,45 +52,67 @@ Investment(s)
           Take Screenshot     My policy Page
           FOR    ${counter}    IN RANGE    1    ${Pcount}
             Log    ${counter}
-            Scroll Till Transaction Is Visible      xpath=(//XCUIElementTypeStaticText[@name="My policy(s)"]/following::XCUIElementTypeScrollView/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther)[${counter}]
+            ${Android_EN_PolicyDetails}    Set Variable    xpath=(//android.widget.TextView[@text="Current investment"])[${counter}]/ancestor::android.view.ViewGroup[2]/android.view.ViewGroup[1]
+            ${iOS_EN_PolicyDetails}    Set variable    xpath=(//XCUIElementTypeStaticText[@name="My policy(s)"]/following::XCUIElementTypeScrollView/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther)[${counter}]
+
+            Scroll Till Transaction Is Visible       ${${platformName}_${lang}_PolicyDetails}
             Sleep   1s
-            Wait Until Element Is Visible       xpath=(//XCUIElementTypeStaticText[@name="My policy(s)"]/following::XCUIElementTypeScrollView/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther)[${counter}]      timeout=10s
-            ${PolicyDetail}    Get Text         xpath=(//XCUIElementTypeStaticText[@name="My policy(s)"]/following::XCUIElementTypeScrollView/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther)[${counter}]
-            Log    ${PolicyDetail}
-            @{PolicyDetailsSplit}   Split String    ${PolicyDetail}     |
-            ${PolicyDetailfirstSplitData}     Get From List    ${PolicyDetailsSplit}    0
-            @{PolicyDetailfirstSplit}   Split String    ${PolicyDetailfirstSplitData}
-            ${PolicyNumber}     Get From List   ${PolicyDetailfirstSplit}       -1
-            ${PolicyNumber}     Strip String    ${PolicyNumber}
-            ${PolicyName}   Remove String    ${PolicyDetailfirstSplitData}      ${PolicyNumber}
-            ${PolicyName}       Strip String        ${PolicyName}
-            ${policyStatusDetail}    Get From List   ${PolicyDetailsSplit}    1
-            @{Policystatusdetail}   Split String    ${policyStatusDetail}       Covered for:
-            ${policy_status}        Get From List    ${Policystatusdetail}    0
-            @{policy_statusdata}        Split String    ${policy_status}
-            ${policy_status}    Get From List    ${policy_statusdata}    -1
-            ${policy_status}        Strip String    ${policy_status}
+            Wait Until Element Is Visible        ${${platformName}_${lang}_PolicyDetails}      timeout=10s
+            IF    '${platformName}' == 'Android'
+                ${PolicyName}   Get Text    xpath=(//android.widget.TextView[@text="Current investment"])[${counter}]/ancestor::android.view.ViewGroup[2]/android.view.ViewGroup[1]/android.widget.TextView[1]
+                ${PolicyName}       Strip String        ${PolicyName}
+                ${policydata}    Set Variable    ${PolicyName}
+                Set Global Variable    ${policydata}
+                ${PolicyNumber}   Get Text    xpath=(//android.widget.TextView[@text="Current investment"])[${counter}]/ancestor::android.view.ViewGroup[2]/android.view.ViewGroup[1]/android.widget.TextView[2]
+                @{PolicyDetailsSplit}   Split String    ${PolicyNumber}     |
+                ${PolicyNumber}     Get From List    ${PolicyDetailsSplit}    0
+                ${PolicyNumber}     Strip String    ${PolicyNumber}
+
+            ELSE
+                ${PolicyDetail}    Get Text          ${${platformName}_${lang}_PolicyDetails}
+                Log    ${PolicyDetail}
+                @{PolicyDetailsSplit}   Split String    ${PolicyDetail}     |
+                ${PolicyDetailfirstSplitData}     Get From List    ${PolicyDetailsSplit}    0
+                @{PolicyDetailfirstSplit}   Split String    ${PolicyDetailfirstSplitData}
+                ${PolicyNumber}     Get From List   ${PolicyDetailfirstSplit}       -1
+                ${PolicyNumber}     Strip String    ${PolicyNumber}
+                ${PolicyName}   Remove String    ${PolicyDetailfirstSplitData}      ${PolicyNumber}
+                ${PolicyName}       Strip String        ${PolicyName}
+                ${policyStatusDetail}    Get From List   ${PolicyDetailsSplit}    1
+                @{Policystatusdetail}   Split String    ${policyStatusDetail}       Covered for:
+                ${policy_status}        Get From List    ${Policystatusdetail}    0
+                @{policy_statusdata}        Split String    ${policy_status}
+                ${policy_status}    Get From List    ${policy_statusdata}    -1
+                ${policy_status}        Strip String    ${policy_status}
+            END
             Set Calc VP Expected Result With Original And Source    Policy${counter}_ProductName      ${PolicyName}    ${PolicyName}    OMNE_InvestmentsPage
+
             IF    '${PolicyNumber}' == '${Policy_No}'
                 ${SelectedPolicyNumber}     Set Variable        ${PolicyNumber}
-                ${SelectedPolicy_Moredetail_Element}        Set Variable    chain=**/XCUIElementTypeButton[`label == "Current investment"`][${counter}]
+                ${Android_EN_SelectedMoreDetails}    Set Variable    xpath=//android.widget.TextView[@text="Current investment"][${counter}]
+                ${iOS_EN_SelectedMoreDetails}       Set Variable    chain=**/XCUIElementTypeButton[`label == "Current investment"`][${counter}]
+                ${SelectedPolicy_Moredetail_Element}        Set Variable        ${${platformName}_${lang}_SelectedMoreDetails}
                 Set Global Variable    ${SelectedPolicy_Moredetail_Element}
                 Set Global Variable     ${SelectedPolicyNumber}
                 ${SelectedPolicyName}   Set Variable    ${PolicyName}
                 Set Global Variable    ${SelectedPolicyName}
-             END
+            END
           END
           Take Screenshot     My policy Page
           RefreshPage
           Sleep    2s
           Scroll Till Transaction Is Visible    ${SelectedPolicy_Moredetail_Element}
           Click Element     ${SelectedPolicy_Moredetail_Element}
+          ${Android_EN_policyName}  Set Variable    xpath=//android.widget.TextView[@resource-id="header-product-name"]
           ${iOS_EN_policyName}    Set Variable
           ...    xpath=(//XCUIElementTypeOther[contains(@label, '${Policy_No}')])[last()-2]//XCUIElementTypeStaticText[2]
+          ${Android_EN_policyrisklevel}     Set Variable    xpath=//android.widget.TextView[contains(@text,"RISK LEVEL")]
           ${iOS_EN_policyrisklevel}    Set Variable
           ...    xpath=((//XCUIElementTypeOther[contains(@label, '${Policy_No}')])[last()-2]//XCUIElementTypeStaticText)[last()-2]
+          ${Android_EN_policytype}      Set Variable    xpath=(//android.widget.TextView[@resource-id="header-product-name"]/following-sibling::android.view.ViewGroup[2]/android.view.ViewGroup/android.widget.TextView)[2]
           ${iOS_EN_policytype}    Set Variable
           ...    xpath=((//XCUIElementTypeOther[contains(@label, '${Policy_No}')])[last()-2]//XCUIElementTypeStaticText)[last()]
+          ${Android_EN_PolicyStatus}    Set Variable    xpath=//android.widget.TextView[@text="Active" or @text="Inactive"]
           ${iOS_EN_PolicyStatus}    Set Variable
           ...     chain=**/XCUIElementTypeStaticText[`label == "Active" OR label == "Inactive"`]
           Wait Until Element Is Visible    ${${platformName}_${lang}_gainorloassvalue_txt}    timeout=20s
@@ -186,17 +208,14 @@ Investment(s)
             FOR    ${counter}    IN RANGE    0    ${totfundCount}
                 ${webelement}    Get From List    ${totalfundelements}    ${counter}
                 ${funddata}    Get Element Attribute    ${webelement}    attribute=name
-                @{fundsvalue}    Split String    ${funddata}    %
-                ${fundvalue}    Get From List     ${fundsvalue}    1
-                ${fundvalue}    Strip String    ${fundvalue}
-                ${fundvalue}    Split String    ${fundvalue}    ${SPACE}
-                ${funddata1}    Get From List     ${fundvalue}    0
-                ${funddata1}    Replace String       ${funddata1}    -A     ${Space}
-                ${funddata1}    Strip String    ${funddata1}
-                Log    ${funddata1}
-                ${fundnameMerge}    Set Variable    ${funddata1}
-                ${Fund_dic}    Set To Dictionary    ${Fund_dic}    ${fundnameMerge}=${counter}
+
                 IF    '${platformName}' == 'Android'
+                    ${objectcounter}    Evaluate    ${counter}+1
+                    ${funddata1}    Get Text       xpath=(//android.widget.TextView[@text="Current value (THB)"])[${objectcounter}]/preceding-sibling::android.widget.TextView[2]
+                    ${funddata1}    Strip String    ${funddata1}
+                    Log    ${funddata1}
+                    ${fundnameMerge}    Set Variable    ${funddata1}
+                    ${Fund_dic}    Set To Dictionary    ${Fund_dic}    ${fundnameMerge}=${counter}
                     ${fundgainorloassvalues}    Get Text
                     ...    xpath=(//android.widget.TextView[@text='${fundnameMerge}']/..//android.widget.TextView)[1]
                     ${fundgainorloassvalues}    Split String    ${fundgainorloassvalues}
@@ -221,6 +240,7 @@ Investment(s)
                     ${fundunitprice}    Get Text
                     ...    xpath=//android.widget.TextView[@text='${fundnameMerge}']/..//android.widget.TextView[@text='Unit price (THB)']/following-sibling::android.widget.TextView[1]
                     ${fundunitprice}    Strip String    ${fundunitprice}
+                    ${fundunitpricemsg}    Convert To Number    ${fundunitprice}
                     ${fundate}    Get Text
                     ...    xpath=//android.widget.TextView[@text='${fundnameMerge}']/..//android.widget.TextView[@text='Date']/following-sibling::android.widget.TextView[1]
                     ${fundate}    Strip String    ${fundate}
@@ -251,7 +271,7 @@ Investment(s)
                     ...    OMNE_InvestmentsPage
                     Set Calc VP Expected Result With Original And Source
                     ...    Fund${counter}_UnitHolding
-                    ...    ${fundunitholding}
+                    ...    ${fundunitholdingmsg}
                     ...    ${fundunitholding}
                     ...    OMNE_InvestmentsPage
                     Set Calc VP Expected Result With Original And Source
@@ -265,6 +285,16 @@ Investment(s)
                     ...    ${fundate}
                     ...    OMNE_InvestmentsPage
                 ELSE
+                    @{fundsvalue}    Split String    ${funddata}    %
+                    ${fundvalue}    Get From List     ${fundsvalue}    1
+                    ${fundvalue}    Strip String    ${fundvalue}
+                    ${fundvalue}    Split String    ${fundvalue}    ${SPACE}
+                    ${funddata1}    Get From List     ${fundvalue}    0
+                    ${funddata1}    Replace String       ${funddata1}    -A     ${Space}
+                    ${funddata1}    Strip String    ${funddata1}
+                    Log    ${funddata1}
+                    ${fundnameMerge}    Set Variable    ${funddata1}
+                    ${Fund_dic}    Set To Dictionary    ${Fund_dic}    ${fundnameMerge}=${counter}
                     @{fundsvalue}    Split String    ${funddata}    %
                     # currentvalue of gainorlossvalue and percentage
                     ${gainorlossvalueandper}    Get From List    ${fundsvalue}    0

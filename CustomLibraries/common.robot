@@ -83,7 +83,7 @@ Launch OMNE Application
     ${udid}    Set Variable    NA
     ${releaseName}      Get ReleaseName
 
-    ${appBS}        Set Variable        bs://e72113355d3b26262e7f450e011811d889bbc00b
+#    ${appBS}        Set Variable        bs://8ac60c393229be6d0cbdf85f470d3f9b103e0dc1
     IF    '${udid}' == 'NA'
         # BS Capabilites
         &{bstackOption}    Create Dictionary

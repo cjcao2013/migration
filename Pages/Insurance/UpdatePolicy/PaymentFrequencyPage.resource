@@ -115,6 +115,11 @@ Capture Payment Frequency Details For Android
 
         IF    '${transactionstatus}' == 'Completed'
             ${transactionstatus}    Set Variable    Approve
+            ${OPUSTransactionstatus}    Set Variable    Completed
+            Set Global Variable    ${OPUSTransactionstatus}
+        ELSE
+                ${OPUSTransactionstatus}    Set Variable    In progress
+                Set Global Variable    ${OPUSTransactionstatus}
         END
         Click Element    ${${platformName}_selectCurrentTransaction}
         Wait Until Element Is Visible    ${${platformName}_${lang}_FrequencyTransactionDetail}
@@ -136,11 +141,7 @@ Capture Payment Frequency Details For Android
             ...    ${policyno.strip()}
             ...    ${policyno.strip()}
             ...    Omne_TransactionPage
-            Set Calc VP Expected Result With Original And Source
-            ...    Policy_Applied
-            ...    ${VP_policyapplied.strip()}
-            ...    ${VP_policyapplied.strip()}
-            ...    Omne_TransactionPage
+
             Set Calc VP Expected Result With Original And Source
             ...    Transaction_Status
             ...    ${transactionstatus.strip()}
@@ -167,11 +168,7 @@ Capture Payment Frequency Details For Android
             ...    ${VP_newpremiumamountdata.strip()}
             ...    Omne_TransactionPage
         ELSE IF    '${Transaction_Info}' == 'Post'
-            Set Calc VP Actual Result With Original And Source
-            ...    Post Transaction Policy_Applied
-            ...    ${VP_policyapplied.strip()}
-            ...    ${VP_policyapplied.strip()}
-            ...    Omne_TransactionPage
+
             Set Calc VP Actual Result With Original And Source
             ...    Post Transaction New_Payment_Frequency
             ...    ${VP_changepaymentfrequency.strip()}

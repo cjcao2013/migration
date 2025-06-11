@@ -27,6 +27,9 @@ OPUS Cheque cancellation
         IF    '${Payment_Method}' == 'PromptPay'
             ${promtpay}    Set Variable    Prompt Pay
             ${VP_Paymethod}    Get Text    xpath=//span[text()='${promtpay}']
+            IF    '${VP_Paymethod}' == 'Prompt Pay'
+                 ${VP_Paymethod}    Set Variable    PromptPay
+            END
         ELSE
              ${VP_Paymethod}    Get Text    xpath=//span[text()='${Payment_Method}']
         END
@@ -50,8 +53,38 @@ OPUS Cheque cancellation
         ...    ${VP_Paymethod.strip()}
         ...    ${VP_Paymethod.strip()}
         ...    OPUS Application
+        Set Calc VP Expected Result With Original And Source
+        ...    Post Transaction_CancellationReason
+        ...    ${m_OPUS_CancellationReason.strip()}
+        ...    ${m_OPUS_CancellationReason.strip()}
+        ...    OPUS Application
+        Set Calc VP Expected Result With Original And Source
+        ...    Post Transaction_ChequeType
+        ...    ${VP_OPUS_ChequeType.strip()}
+        ...    ${VP_OPUS_ChequeType.strip()}
+        ...    OPUS Application
+        Set Calc VP Expected Result With Original And Source
+        ...    Post Transaction_AmountPayable
+        ...    ${VP_OPUS_Payable_Amount.strip()}
+        ...    ${VP_OPUS_Payable_Amount.strip()}
+        ...    OPUS Application
+        Set Calc VP Expected Result With Original And Source
+        ...    Post Transaction_PaymentMethod
+        ...    ${VP_Paymethod.strip()}
+        ...    ${VP_Paymethod.strip()}
+        ...    OPUS Application
 
         Change Decision Status if Non STP
+        ${Approved_Status}    Get Element Attribute    ${EN_frequencyStatus}       attribute=title
+        Set Global Variable    ${Approved_Status}
+        ${Final_Approve_Status}         Set Variable                 ${Approved_Status}
+        Set Global Variable    ${Final_Approve_Status}
+        Set Global Variable    ${Approved_Status}
+        Set Calc VP Expected Result With Original And Source
+        ...    Transaction_Status_After_OPUS
+        ...    ${Approved_Status.strip()}
+        ...    ${Approved_Status}
+        ...    OPUS_Application
         Wait Until Page Contains Element    xpath=//button[@data-trigger='submit']      timeout=20s
         Click Element    xpath=//button[@data-trigger='submit']
         Sleep    5s

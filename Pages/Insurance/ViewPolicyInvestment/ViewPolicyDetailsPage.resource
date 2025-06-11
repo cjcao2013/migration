@@ -27,7 +27,7 @@ My policy(s)
           Click Element       ${${platformName}_${lang}_InsurnacePage}
           Set or enter PIN
           #      Select Insurance Flow
-          ${Android_EN_Insurance_Module}    Set Variable     android=new UiSelector().textContains("${Insurance_Flow}")
+          ${Android_EN_Insurance_Module}    Set Variable     xpath=//android.widget.TextView[@text="${Insurance_Flow}"]//following-sibling::android.view.ViewGroup[@content-desc="See all"]
           ${iOS_EN_Insurance_Module}        Set Variable     chain=**/XCUIElementTypeOther[`label == "${Insurance_Flow} See all"`]/XCUIElementTypeOther[-1]
           Wait Until Element Is Visible    ${${platformName}_${lang}_Insurance_Module}
           Click Element    ${${platformName}_${lang}_Insurance_Module}
@@ -44,29 +44,44 @@ My policy(s)
           Take Screenshot     My policy Page
           FOR    ${counter}    IN RANGE    1    ${Pcount}
              Log    ${counter}
-             Scroll Till Transaction Is Visible      xpath=(//XCUIElementTypeStaticText[@name="My policy(s)"]/following::XCUIElementTypeScrollView/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther)[${counter}]
-             Wait Until Element Is Visible   xpath=(//XCUIElementTypeStaticText[@name="My policy(s)"]/following::XCUIElementTypeScrollView/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther)[${counter}]      timeout=10s
-             ${PolicyDetail}    Get Text     xpath=(//XCUIElementTypeStaticText[@name="My policy(s)"]/following::XCUIElementTypeScrollView/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther)[${counter}]
-             Log    ${PolicyDetail}
-             @{PolicyDetailsSplit}   Split String    ${PolicyDetail}     |
-             ${PolicyDetailfirstSplitData}     Get From List    ${PolicyDetailsSplit}    0
-             @{PolicyDetailfirstSplit}   Split String    ${PolicyDetailfirstSplitData}
-             ${PolicyNumber}     Get From List   ${PolicyDetailfirstSplit}       -1
-             ${PolicyNumber}     Strip String    ${PolicyNumber}
-             ${PolicyName}   Remove String    ${PolicyDetailfirstSplitData}      ${PolicyNumber}
-             ${PolicyName}       Strip String        ${PolicyName}
-             ${policyStatusDetail}    Get From List   ${PolicyDetailsSplit}    1
-             @{Policystatusdetail}   Split String    ${policyStatusDetail}       Covered for:
-             ${policy_status}        Get From List    ${Policystatusdetail}    0
-             @{policy_statusdata}        Split String    ${policy_status}
-             ${policy_status}    Get From List    ${policy_statusdata}    -1
-             ${policy_status}        Strip String    ${policy_status}
-             ${policydata}    Set Variable    ${PolicyName}
-             Set Global Variable    ${policydata}
+             ${Android_EN_PolicyDetails}    Set Variable    xpath=//android.widget.ScrollView/android.view.ViewGroup/android.view.ViewGroup[${counter}]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[1]
+             ${iOS_EN_PolicyDetails}    Set variable    xpath=(//XCUIElementTypeStaticText[@name="My policy(s)"]/following::XCUIElementTypeScrollView/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther)[${counter}]
+             Scroll Till Transaction Is Visible      ${${platformName}_${lang}_PolicyDetails}
+             Wait Until Element Is Visible           ${${platformName}_${lang}_PolicyDetails}      timeout=10s
+             IF    '${platformName}' == 'Android'
+                    ${PolicyName}   Get Text    xpath=//android.widget.ScrollView/android.view.ViewGroup/android.view.ViewGroup[${counter}]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[1]/android.widget.TextView[1]
+                    ${PolicyName}       Strip String        ${PolicyName}
+                    ${policydata}    Set Variable    ${PolicyName}
+                    Set Global Variable    ${policydata}
+                    ${PolicyNumber}   Get Text    xpath=//android.widget.ScrollView/android.view.ViewGroup/android.view.ViewGroup[${counter}]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[1]/android.widget.TextView[2]
+                    @{PolicyDetailsSplit}   Split String    ${PolicyNumber}     |
+                    ${PolicyNumber}     Get From List    ${PolicyDetailsSplit}    0
+                    ${PolicyNumber}     Strip String    ${PolicyNumber}
+             ELSE
+                 ${PolicyDetail}    Get Text             ${${platformName}_${lang}_PolicyDetails}
+                 Log    ${PolicyDetail}
+                 @{PolicyDetailsSplit}   Split String    ${PolicyDetail}     |
+                 ${PolicyDetailfirstSplitData}     Get From List    ${PolicyDetailsSplit}    0
+                 @{PolicyDetailfirstSplit}   Split String    ${PolicyDetailfirstSplitData}
+                 ${PolicyNumber}     Get From List   ${PolicyDetailfirstSplit}       -1
+                 ${PolicyNumber}     Strip String    ${PolicyNumber}
+                 ${PolicyName}   Remove String    ${PolicyDetailfirstSplitData}      ${PolicyNumber}
+                 ${PolicyName}       Strip String        ${PolicyName}
+                 ${policyStatusDetail}    Get From List   ${PolicyDetailsSplit}    1
+                 @{Policystatusdetail}   Split String    ${policyStatusDetail}       Covered for:
+                 ${policy_status}        Get From List    ${Policystatusdetail}    0
+                 @{policy_statusdata}        Split String    ${policy_status}
+                 ${policy_status}    Get From List    ${policy_statusdata}    -1
+                 ${policy_status}        Strip String    ${policy_status}
+                 ${policydata}    Set Variable    ${PolicyName}
+                 Set Global Variable    ${policydata}
+             END
              Set Calc VP Expected Result With Original And Source    PolicyName${counter}      ${PolicyName}    ${PolicyName}    OMNE_View Policy
              IF    '${PolicyNumber}' == '${Policy_No}'
                 ${SelectedPolicyNumber}     Set Variable        ${PolicyNumber}
-                ${SelectedPolicy_Moredetail_Element}        Set Variable    chain=**/XCUIElementTypeButton[`label == "More details"`][${counter}]
+                ${Android_EN_SelectedMoreDetails}    Set Variable    xpath=//android.widget.TextView[@text="More details"][${counter}]
+                ${iOS_EN_SelectedMoreDetails}       Set Variable    chain=**/XCUIElementTypeButton[`label == "More details"`][${counter}]
+                ${SelectedPolicy_Moredetail_Element}        Set Variable        ${${platformName}_${lang}_SelectedMoreDetails}
                 Set Global Variable    ${SelectedPolicy_Moredetail_Element}
                 Set Global Variable     ${SelectedPolicyNumber}
                 ${SelectedPolicyName}   Set Variable    ${PolicyName}
@@ -97,29 +112,43 @@ My policy(s)
           IF    '${ChangeAddress_Flag}' == 'Yes'
              FOR    ${counter}    IN RANGE    1    ${Pcount}
                   Log    ${counter}
-                  Scroll Till Transaction Is Visible      xpath=(//XCUIElementTypeStaticText[@name="My policy(s)"]/following::XCUIElementTypeScrollView/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther)[${counter}]
-                  Wait Until Element Is Visible   xpath=(//XCUIElementTypeStaticText[@name="My policy(s)"]/following::XCUIElementTypeScrollView/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther)[${counter}]      timeout=10s
-                   ${PolicyDetail}    Get Text     xpath=(//XCUIElementTypeStaticText[@name="My policy(s)"]/following::XCUIElementTypeScrollView/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther)[${counter}]
-    #            chain=**/XCUIElementTypeOther[`name='fwd-mypolicies-flatlist'`]/XCUIElementTypeScrollView/XCUIElementTypeOther/XCUIElementTypeOther[${counter}]/XCUIElementTypeOther/XCUIElementTypeOther[1]
-                    Log    ${PolicyDetail}
-                    @{PolicyDetailsSplit}   Split String    ${PolicyDetail}     |
-                    ${PolicyDetailfirstSplitData}     Get From List    ${PolicyDetailsSplit}    0
-                    @{PolicyDetailfirstSplit}   Split String    ${PolicyDetailfirstSplitData}
-                    ${PolicyNumber}     Get From List   ${PolicyDetailfirstSplit}       -1
-                    ${PolicyNumber}     Strip String    ${PolicyNumber}
-                    ${PolicyName}   Remove String    ${PolicyDetailfirstSplitData}      ${PolicyNumber}
-                    ${PolicyName}       Strip String        ${PolicyName}
-                    ${policyStatusDetail}    Get From List   ${PolicyDetailsSplit}    1
-                    @{Policystatusdetail}   Split String    ${policyStatusDetail}       Covered for:
-                    ${policy_status}        Get From List    ${Policystatusdetail}    0
-                    @{policy_statusdata}        Split String    ${policy_status}
-                    ${policy_status}    Get From List    ${policy_statusdata}    -1
-                    ${policy_status}        Strip String    ${policy_status}
-                    ${policydata}    Set Variable    ${PolicyName}
-                    Set Global Variable    ${policydata}
+                   ${Android_EN_PolicyDetails}    Set Variable    xpath=//android.widget.ScrollView/android.view.ViewGroup/android.view.ViewGroup[${counter}]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[1]
+                 ${iOS_EN_PolicyDetails}    Set variable    xpath=(//XCUIElementTypeStaticText[@name="My policy(s)"]/following::XCUIElementTypeScrollView/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther)[${counter}]
+                 Scroll Till Transaction Is Visible      ${${platformName}_${lang}_PolicyDetails}
+                 Wait Until Element Is Visible           ${${platformName}_${lang}_PolicyDetails}      timeout=10s
+                 IF    '${platformName}' == 'Android'
+                        ${PolicyName}   Get Text    xpath=//android.widget.ScrollView/android.view.ViewGroup/android.view.ViewGroup[${counter}]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[1]/android.widget.TextView[1]
+                        ${PolicyName}       Strip String        ${PolicyName}
+                        ${policydata}    Set Variable    ${PolicyName}
+                        Set Global Variable    ${policydata}
+                        ${PolicyNumber}   Get Text    xpath=//android.widget.ScrollView/android.view.ViewGroup/android.view.ViewGroup[${counter}]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[1]/android.widget.TextView[2]
+                        @{PolicyDetailsSplit}   Split String    ${PolicyNumber}     |
+                        ${PolicyNumber}     Get From List    ${PolicyDetailsSplit}    0
+                        ${PolicyNumber}     Strip String    ${PolicyNumber}
+                 ELSE
+                     ${PolicyDetail}    Get Text             ${${platformName}_${lang}_PolicyDetails}
+                     Log    ${PolicyDetail}
+                     @{PolicyDetailsSplit}   Split String    ${PolicyDetail}     |
+                     ${PolicyDetailfirstSplitData}     Get From List    ${PolicyDetailsSplit}    0
+                     @{PolicyDetailfirstSplit}   Split String    ${PolicyDetailfirstSplitData}
+                     ${PolicyNumber}     Get From List   ${PolicyDetailfirstSplit}       -1
+                     ${PolicyNumber}     Strip String    ${PolicyNumber}
+                     ${PolicyName}   Remove String    ${PolicyDetailfirstSplitData}      ${PolicyNumber}
+                     ${PolicyName}       Strip String        ${PolicyName}
+                     ${policyStatusDetail}    Get From List   ${PolicyDetailsSplit}    1
+                     @{Policystatusdetail}   Split String    ${policyStatusDetail}       Covered for:
+                     ${policy_status}        Get From List    ${Policystatusdetail}    0
+                     @{policy_statusdata}        Split String    ${policy_status}
+                     ${policy_status}    Get From List    ${policy_statusdata}    -1
+                     ${policy_status}        Strip String    ${policy_status}
+                     ${policydata}    Set Variable    ${PolicyName}
+                     Set Global Variable    ${policydata}
+                 END
                     IF    '${PolicyNumber}' == '${Policy_No}'
                         ${SelectedPolicyNumber}     Set Variable        ${PolicyNumber}
-                        ${SelectedPolicy_Moredetail_Element}        Set Variable    chain=**/XCUIElementTypeButton[`label == "More details"`][${counter}]
+                        ${Android_EN_SelectedMoreDetails}    Set Variable    xpath=//android.widget.TextView[@text="More details"][${counter}]
+                        ${iOS_EN_SelectedMoreDetails}       Set Variable    chain=**/XCUIElementTypeButton[`label == "More details"`][${counter}]
+                        ${SelectedPolicy_Moredetail_Element}        Set Variable        ${${platformName}_${lang}_SelectedMoreDetails}
                         Set Global Variable    ${SelectedPolicy_Moredetail_Element}
                         Set Global Variable     ${SelectedPolicyNumber}
                         ${SelectedPolicyName}   Set Variable    ${PolicyName}
@@ -129,18 +158,18 @@ My policy(s)
 
                          Scroll Till Transaction Is Visible    ${SelectedPolicy_Moredetail_Element}
                          Click Element     ${SelectedPolicy_Moredetail_Element}
-                            Wait Until Element Is Visible       ${${platformName}_${lang}_Overview}       timeout=30s
-                            Click Element                       ${${platformName}_${lang}_Overview}
-                            Scroll Till Transaction Is Visible    ${${platformName}_${lang}_Details}
-                            Take Screenshot    Overview page
-                            Click Element    ${${platformName}_${lang}_Details}
+                        Wait Until Element Is Visible       ${${platformName}_${lang}_Overview}       timeout=30s
+                        Click Element                       ${${platformName}_${lang}_Overview}
+                        Scroll Till Transaction Is Visible    ${${platformName}_${lang}_Details}
+                        Take Screenshot    Overview page
+                        Click Element    ${${platformName}_${lang}_Details}
 
-                            Click Element    ${${platformName}_${lang}_Details_EditAddress_Button}
-                            ${sOutput}  Run Keyword And Ignore Error    Address Change
-                            IF    ${sOutput} != ('PASS', None)
-                                   ${failure_reason}    Fetch Reason    ${sOutput}
-                                   RETURN       ${failure_reason}
-                            END
+                        Click Element    ${${platformName}_${lang}_Details_EditAddress_Button}
+                        ${sOutput}  Run Keyword And Ignore Error    Address Change
+                        IF    ${sOutput} != ('PASS', None)
+                               ${failure_reason}    Fetch Reason    ${sOutput}
+                               RETURN       ${failure_reason}
+                        END
                            #Exit for loop
                     END
                    END
@@ -466,6 +495,7 @@ Overview
                             Take Screenshot    View_Policy_Riders
                             ${ridercounter}    Evaluate    ${ridercounter}+1
                             Horizontal Swipe Rider    &{coordinateDict}
+                            Pause Execution
                         END
                     END
                 END

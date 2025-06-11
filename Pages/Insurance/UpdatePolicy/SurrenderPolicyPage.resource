@@ -12,7 +12,9 @@ surrender policy
         Take Screenshot    Surrender Page
         Wait Until Element Is Visible    ${${platformName}_${lang}_SurrenderPolicy_SelectOption}    timeout=40s
         Click Element    ${${platformName}_${lang}_SurrenderPolicy_SelectOption}
+        Sleep    1s
         Take Screenshot    Surrender Page
+        Set Global Variable    ${result}    Tax Consent Completed Successfully for policy No: ${Policy_No}
     EXCEPT     AS  ${reason}
         Set Failed Actual Result and VP    Omne_Flow   ${reason}   FWD Insurance Flow of ${Insurance_Flow}
     END
