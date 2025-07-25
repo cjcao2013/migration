@@ -14,6 +14,8 @@ Policy loan
         ${iOS_EN_PolicyLoan_RequestAMount}    Set Variable    chain=**/XCUIElementTypeOther[`label == "${Request_Amount}"`]
         ${iOS_AddPaymentTypeSelect}    Set Variable
         ...    chain=**/XCUIElementTypeOther[`label == "${Add_Payment_Method_Type}"`][2]
+        ${Android_EN_PolicyLoan_RequestAMount}    Set Variable      xpath=//android.widget.TextView[@text="${Request_Amount}"]/preceding-sibling::android.view.ViewGroup
+        ${Android_AddPaymentTypeSelect}    Set Variable     xpath=//android.widget.TextView[@text="${Add_Payment_Method_Type}"]
         Select Policy
         Wait Until Element Is Visible    ${${platformName}_${lang}_PolicyCashValue}    timeout=20
         ${VP_PolicyCashValue}    Get Text    ${${platformName}_${lang}_PolicyCashValue}
@@ -98,7 +100,7 @@ Policy loan
                 Click Element    ${${platformName}_${lang}_Change_BankDetails}
             END
             Sleep    1s
-            Click Element    ${iOS_AddPaymentTypeSelect}
+            Click Element    ${${platformName}_AddPaymentTypeSelect}
             IF    '${Add_Payment_Method_Type}' == 'PromptPay'
                 Click Element    ${${platformName}_${lang}_PromentpayCheckbox}
                 Wait Until Element Is Visible    ${${platformName}_${lang}_saveBtn}
@@ -131,12 +133,13 @@ Policy loan
         Take Screenshot    Policy_Loan
         Click Text    Submit    exact_match=true
         ${iOS_PolicyLoanConfirmEmailPopup}    Set Variable    chain=**/XCUIElementTypeOther[`label == "Yes"`]
+        ${Android_PolicyLoanConfirmEmailPopup}    Set Variable    xpath=//android.view.ViewGroup[@content-desc="Yes"]
         ${status}    Run Keyword And Return Status
         ...    Wait Until Element Is Visible
-        ...    ${iOS_PolicyLoanConfirmEmailPopup}
-        ...    timeout=2s
+        ...    ${${platformName}_PolicyLoanConfirmEmailPopup}
+        ...    timeout=7s
         IF    '${status}' == 'True'
-            Click Element    ${iOS_PolicyLoanConfirmEmailPopup}
+            Click Element    ${${platformName}_PolicyLoanConfirmEmailPopup}
         END
         Take Screenshot    Policy_Loan
         ${status}    Run Keyword And Return Status    Wait Until Element Is Visible    ${${platformName}_${lang}_OTP_email}
@@ -309,11 +312,11 @@ TransactionDetails for CV Loan Android
     IF    '${Transaction_Info}'== 'Pre'
         Sleep    3s
         RefreshPage
-        ${Android_selectCurrentTransaction1}    Set Variable
-        ...    xpath=(//android.widget.TextView[@text='${current_day}']/following-sibling::android.widget.TextView[@text='${current_month}']/parent::android.view.ViewGroup/following-sibling::android.widget.TextView[@text='Policy Loan Request']/following-sibling::android.view.ViewGroup/android.widget.TextView)[1]
+        ${Android_Selectposttransaction}    Set Variable
+        ...    xpath=(//android.widget.TextView[@text='${current_day}']/following-sibling::android.widget.TextView[@text='${current_month}']/parent::android.view.ViewGroup/following-sibling::android.widget.TextView[@text='Policy Loan Request'])[1]
     ELSE IF    '${Transaction_Info}'== 'Post'
-        ${Android_selectCurrentTransaction1}    Set Variable
-        ...    xpath=(//android.widget.TextView[@text='${current_day}']/following-sibling::android.widget.TextView[@text='${current_month}']/parent::android.view.ViewGroup/following-sibling::android.widget.TextView[@text='Policy Loan Request']/following-sibling::android.view.ViewGroup/android.widget.TextView)[1]
+        ${Android_Selectposttransaction}    Set Variable
+        ...    xpath=(//android.widget.TextView[@text='${current_day}']/following-sibling::android.widget.TextView[@text='${current_month}']/parent::android.view.ViewGroup/following-sibling::android.widget.TextView[@text='Policy Loan Request'])[1]
     END
     Sleep    10s
     Scroll Till Transaction Is Visible    ${${platformName}_Selectposttransaction}
@@ -332,8 +335,8 @@ TransactionDetails for CV Loan Android
     ...    Omne_Transaction Page
 
     # capture transaction detail
-    Log    ${${platformName}_selectCurrentTransaction1}
-    Click Element    ${${platformName}_selectCurrentTransaction1}
+    Log    ${${platformName}_Selectposttransaction}
+    Click Element    ${${platformName}_Selectposttransaction}
     Take Screenshot    Transaction Page
     ${status}    Run Keyword And Return Status
     ...    Wait Until Element Is Visible
@@ -341,7 +344,7 @@ TransactionDetails for CV Loan Android
     ...    timeout=5s
     IF    '${status}' != 'True'    SwipePage
 
-    Click Element    ${${platformName}_Selectposttransaction}
+#    Click Element    ${${platformName}_Selectposttransaction}
     Take Screenshot    Transaction Page
     ${VP_RequestAmount}    Get Text    ${${platformName}_${lang}_TransactionRequestAmount}
     ${mVP_RequestAmount}    Remove String    ${VP_RequestAmount}    THB
@@ -370,7 +373,19 @@ TransactionDetails for CV Loan Android
     ${accountnumber}    Get Text    ${${platformName}_${lang}_TransactionPayoutmethodAccounNo}
     ${massagedaccnumber}    Get Substring    ${accountnumber}    -4
     ${Bank_Name}    Get Text    ${${platformName}_${lang}_TransactionPayoutmethodBankName}
-
+    IF    '${mTransactionstatus}' == 'Completed'
+            ${mTransactionstatus}    Set Variable    Approve
+            ${OPUSTransactionstatus}    Set Variable    Completed
+            Set Global Variable    ${OPUSTransactionstatus}
+        ELSE
+            IF     '${Add_Payment_Method_Type}' == 'PromptPay'
+                ${OPUSTransactionstatus}    Set Variable    Completed
+                Set Global Variable    ${OPUSTransactionstatus}
+            ELSE
+                 ${OPUSTransactionstatus}    Set Variable    In progress
+                Set Global Variable    ${OPUSTransactionstatus}
+            END
+    END
 
     IF    '${Transaction_Info}' == 'Pre'
         Set Calc VP Expected Result With Original And Source

@@ -465,6 +465,7 @@ Set or enter PIN
             Take Screenshot    enter new pin Page
             Click Element    ${${platformName}_${lang}_ConfirmButton}
         END
+
 #        Pause Execution
         Overall APP Experience
     EXCEPT     AS  ${reason}
@@ -539,7 +540,7 @@ Biometric Check
              Take Screenshot     Biometric_Enable_Page
              Wait Until Element Is Visible    ${${platformName}_${lang}_setting_Btn}    timeout=30s
              Click Element    ${${platformName}_${lang}_setting_Btn}
-              Take Screenshot     Biometric_Enable_Page
+             Take Screenshot     Biometric_Enable_Page
              Wait Until Element Is Visible       ${${platformName}_${lang}_Biometric_toggle}     timeout=20s
              Click Element    ${${platformName}_${lang}_Biometric_toggle}
              Wait Until Element Is Visible          ${${platformName}_${lang}_Biometric_Status}     timeout=20s
@@ -549,9 +550,7 @@ Biometric Check
               ELSE
                     Click Element    ${${platformName}_${lang}_Biometric_Status}
               END
-
-    #         Click Element    ${${platformName}_${lang}_Biometric_Status}
-             Click Element    ${${platformName}_${lang}_BAck_Btn}
+            Click Element    ${${platformName}_${lang}_BAck_Btn}
              Sleep      2s
               Take Screenshot     Biometric_Enable_Page
               Click Element    ${${platformName}_${lang}_BAck_Btn}

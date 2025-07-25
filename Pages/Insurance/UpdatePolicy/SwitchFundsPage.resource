@@ -292,6 +292,7 @@ Switch funds
         ${Previous_OTP}    Set Variable    ${OTPNumber}
         Set Global Variable    ${Previous_OTP}
         Click Element    ${${platformName}_${lang}_SubmitButton}
+        Sleep   2s
         IF    '${Fatca_Status}' == 'Yes'    Run Keywords    FATCA Status Change
         Run Keyword
         ...    Insert OTP

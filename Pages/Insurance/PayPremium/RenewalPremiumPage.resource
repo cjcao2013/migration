@@ -236,14 +236,14 @@ Capture Renewal Premium Details For Android
             ${VP_TransactionStatus}         Get Text    xpath=(//android.widget.TextView[@text='${current_day}']/following-sibling::android.widget.TextView[@text='${current_month}']/parent::android.view.ViewGroup/following-sibling::android.widget.TextView[@text='Pay renewal premium'])[1]//following-sibling::android.view.ViewGroup/android.widget.TextView
             ${mTransactionstatus}       Run Keyword And Return Status    Should Contain     ${VP_TransactionStatus}       Paid
             IF    '${mTransactionstatus}' == 'True'
-                ${mTransactionstatus}     Set Variable    Paid
-                ${OPUSTransactionstatus}    Set Variable    Completed
+               ${OPUSTransactionstatus}    Set Variable    Completed
                 Set Global Variable    ${OPUSTransactionstatus}
             END
             ${VP_Date_Of_Payment}         Get Text          xpath=(//android.widget.TextView[@text='Date of payment']/following-sibling::android.widget.TextView)
             ${VP_Payment_Reference_number}         Get Text     xpath=(//android.widget.TextView[@text='Payment reference no.']/following-sibling::android.widget.TextView)
             ${VP_Payment_Method}         Get Text           xpath=(//android.widget.TextView[@text='Payment method']/following-sibling::android.widget.TextView)
             ${VP_Premium_Payment_amount}         Get Text       xpath=(//android.widget.TextView[@text='Premium payment amount']/following-sibling::android.widget.TextView)
+
             Set Calc VP Expected Result With Original And Source
             ...    Transaction_Status
             ...    ${mTransactionstatus.strip()}

@@ -6,6 +6,7 @@ ${iOS_EN_PolicyOption}                              chain=**/XCUIElementTypeOthe
 #${iOS_EN_ClaimchkBox}                               chain=**/XCUIElementTypeOther[`label CONTAINS 'I received'`][-1]
 ${iOS_EN_ClaimchkBox}                               chain=**/XCUIElementTypeOther[`name == "PromptPay-CheckBox"`]
 ${iOS_EN_declareChkBox}                             chain=**/XCUIElementTypeOther[`label CONTAINS 'All details'`]/XCUIElementTypeOther[-2]
+${iOS_EN_ClaimCheckBox}                             chain=**/XCUIElementTypeOther[`name == "PromptPay-CheckBox"`]
 # add payment method
 ${iOS_EN_select_Bank_Account}                       chain=**/XCUIElementTypeOther[`label == "Bank account"`][2]
 ${iOS_EN_Add_payment_method}                        chain=**/XCUIElementTypeOther[`label == 'Add payment method'`]
@@ -79,7 +80,7 @@ ${iOS_EN_cancer_relatedChkBox}                      chain=**/XCUIElementTypeOthe
 
 # dob selection from calender
 ${iOS_EN_currentmonthandyear}                       accessibility_id=claimDetails.durationHospitalStay-calendar.header
-${iOS_EN_currentYear}                               accessibility_id=claimDetails.durationHospitalStay-year-month-selector-month-year-header-text
+${iOS_EN_hospitalcurrentYear}                       accessibility_id=claimDetails.durationHospitalStay-year-month-selector-month-year-header-text
 ${iOS_EN_PreviousyearArrow}                         accessibility_id=claimDetails.durationHospitalStay-year-month-selector-previous-year-arrow-button
 ${iOS_EN_nextyearArrow}                             accessibility_id=claimDetails.durationHospitalStay-year-month-selector-next-year-arrow-button
 ${iOS_EN_DobDoneBtn}                                accessibility_id=claimDetails.durationHospitalStay-done-button
@@ -87,7 +88,7 @@ ${iOS_EN_claimementsingle}                          xpath=//XCUIElementTypeOther
 
 # dob selection from calender
 ${Android_EN_currentmonthandyear}                   xpath=//android.view.ViewGroup[@resource-id='claimDetails.durationHospitalStay-calendar.header.leftArrow']/following-sibling::android.view.ViewGroup[@resource-id='claimDetails.durationHospitalStay-touchable-header']
-${Android_EN_currentYear}                           xpath=(//android.view.ViewGroup[@resource-id='claimDetails.durationHospitalStay-year-month-selector-previous-year-arrow-button']/following-sibling::android.widget.TextView)[1]
+${Android_EN_hospitalcurrentYear}                   xpath=(//android.view.ViewGroup[@resource-id='claimDetails.durationHospitalStay-year-month-selector-previous-year-arrow-button']/following-sibling::android.widget.TextView)[1]
 ${Android_EN_PreviousyearArrow}                     xpath=//android.view.ViewGroup[@resource-id='claimDetails.durationHospitalStay-year-month-selector-previous-year-arrow-button']
 ${Android_EN_nextyearArrow}                         xpath=//android.view.ViewGroup[@resource-id='claimDetails.durationHospitalStay-year-month-selector-next-year-arrow-button']
 ${Android_EN_DobDoneBtn}                            xpath=//android.widget.TextView[@text='Done']
@@ -108,14 +109,14 @@ ${Android_EN_captueconfirmerrmsg3}                  xpath=//android.widget.TextV
 ${Android_EN_claimantOption}                        xpath=//android.widget.TextView[@text='Claimant']
 ${Android_EN_select_claimant}                       xpath=//android.widget.TextView[@text='Select claimant']
 # ${Android_EN_claimant}
-${Android_EN_claimantlist}                          xpath=//android.widget.TextView[@text='Select claimant']/following::android.view.ViewGroup/android.view.ViewGroup
+${Android_EN_claimantlist}                          xpath=//android.widget.TextView[@text='Select claimant']/following-sibling::android.widget.ScrollView/android.view.ViewGroup
 ${Android_EN_claimantfield}                         xpath=//android.widget.TextView[@text='Claimant']
 ${Android_EN_ClaimTypeOption}                       xpath=//android.widget.TextView[@text='Claim type']
 ${Android_EN_claimtypefield}                        xpath=//android.widget.TextView[@text='Select claim type']
 ${Android_EN_policyfield}                           xpath=//android.widget.TextView[contains(@text,'Policy number')]
 ${Android_EN_PolicyOption}                          xpath=//android.widget.TextView[@text='Policy']
-${Android_EN_ClaimchkBox}                           xpath=(//android.widget.CheckBox[@content-desc="claim-checkbox-I received reimbursement from another insurer for this claim"])[2]
-${Android_EN_ClaimCheckBox}                         xpath=(//android.widget.CheckBox[@content-desc="claim-checkbox-I received ICU treatment"])[1]
+${Android_EN_ClaimchkBox}                           xpath=//android.widget.TextView[contains(@text,"I received")]/preceding-sibling::android.widget.CheckBox[@content-desc="PromptPay-CheckBox"][last()]
+${Android_EN_ClaimCheckBox}                         xpath=//android.widget.TextView[contains(@text,"I received")]/preceding-sibling::android.widget.CheckBox[@content-desc="PromptPay-CheckBox"][last()-1]
 ${Android_EN_treatmentdate}                         xpath=//android.widget.TextView[contains(@text,'Treatment date')]/preceding-sibling::android.view.ViewGroup/android.widget.EditText
 ${Android_EN_Disabilitytreatmentdate}               xpath=//android.widget.TextView[contains(@text,'Treatment date')]/preceding-sibling::android.view.ViewGroup/android.widget.EditText
 ${Android_EN_DiagnosisOption}                       xpath=//android.widget.TextView[@text='Diagnosis']
@@ -130,15 +131,15 @@ ${Android_EN_medicalcentreDoneBtn}                  xpath=//android.widget.TextV
 ${Android_EN_medicalCenterselectOption}             xpath=//android.widget.TextView[contains(@text,'Medical centre')]
 ${Android_EN_reviewtreatmentitems}                  chain=**/XCUIElementTypeOther[`label CONTAINS 'Treatment'`][-3]/XCUIElementTypeOther[2]
 ${Android_EN_treatmentitemsDoneBtn}                 xpath=//android.widget.TextView[contains(@text,'Done')]
-${Android_EN_medicalcertificate}                    xpath=(//android.view.ViewGroup[@resource-id='preview-photo-remove-button'])[2]
+${Android_EN_medicalcertificate}                    xpath=//android.view.ViewGroup[@resource-id='preview-photo-remove-button']
 ${Android_EN_medicalreceipt}                        xpath=//android.view.ViewGroup[@resource-id='preview-photo-remove-button']
 # -------------------------------- Add Payment Method -------------------------------
 ${Android_EN_Changepayment_method}                  xpath=//android.widget.TextView[@text='Change']
 ${Android_EN_Add_payment_method}                    xpath=//android.widget.TextView[@text='Add payment method']
 ${Android_EN_uploadBankBookclaim}                   xpath=(//android.view.ViewGroup[@resource-id='add-more-photo-button'])[1]
 ${Android_EN_select_Bank_Account}                   xpath=//android.widget.TextView[@text='Bank account']
-${Android_EN_bankName}                              xpath=//android.widget.TextView[@text='Bank name']
-${Android_EN_BankAccNoInput}                        xpath=(//android.view.ViewGroup[@class='android.view.ViewGroup']/android.widget.EditText)[1]
+${Android_EN_bankNameclaim}                              xpath=//android.widget.TextView[@text='Bank name']
+${Android_EN_bankAccNoclaim}                        xpath=//android.widget.EditText[@resource-id="account-number-text-input"]
 ${Android_EN_BankAccNo}                             xpath=//android.widget.TextView[@text='Bank account no.']
 ${Android_EN_SearchBankName}                        xpath=//android.widget.EditText[@resource-id='text-input']
 
@@ -178,8 +179,8 @@ ${Android_EN_hospitalsaty}                          xpath=//android.widget.TextV
 ${Android_EN_totalcostPaid}                         xpath=//android.widget.EditText[@resource-id='currency-input']
 # ----------------------------------Hospita Duration Vps --------------------------
 
-${Android_EN_reviewDurationofStay}                  xpath=(//android.widget.TextView[@text='Duration of hospital stay']/following::android.widget.TextView)[1]
-${Android_EN_cancer_relatedChkBox}                  xpath=(//android.widget.CheckBox[@content-desc="claim-checkbox-This claim is cancer related"])[1]
+${Android_EN_reviewDurationofStay}                  xpath=//android.widget.TextView[@text="Duration of hospital stay"]/following-sibling::android.widget.TextView[1]
+${Android_EN_cancer_relatedChkBox}                  xpath=//android.widget.TextView[contains(@text,"This claim")]/preceding-sibling::android.widget.CheckBox[@content-desc="PromptPay-CheckBox"]
 
 ${Android_EN_AddAdditionalDocuments}                xpath=//android.widget.TextView[@text='Add additional documents']
 ${Android_EN_AddClaimSettlementLetter}              xpath=(//android.view.ViewGroup[@resource-id='add-more-photo-button'])[2]

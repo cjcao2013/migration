@@ -152,6 +152,7 @@ Partial withdrawal
         ${Previous_OTP}    Set Variable    ${OTPNumber}
         Set Global Variable    ${Previous_OTP}
         Click Element    ${${platformName}_${lang}_SubmitButton}
+        Sleep   2s
         Insert OTP      ${Transaction_OTP_Source}       ${Transaction_OTP_Expiry_Flag}      ${Transaction_OTP_Resend_Flag}
         # New All Done Confirmation Page
         Run Keywords     Check Transaction Status
@@ -168,21 +169,27 @@ Partial withdrawal
     END
 
 Capture Partial Withdrawal Transaction Details For Android
+    [Arguments]    ${Transaction_Info}
     TRY
-        Wait Until Element Is Visible
-        ...    xpath=(//android.widget.TextView[@text='${current_day}']/following-sibling::android.widget.TextView[@text='${current_month}']/parent::android.view.ViewGroup/following-sibling::android.widget.TextView[@text='Partial Withdrawal']/following-sibling::android.widget.TextView[@text='Policy no: ${Policy_No}'])[1]
-        ...    timeout=120s
+        ${Android_selectCurrentTransaction1}    Set Variable
+        ...     xpath=(//android.widget.TextView[@text='${current_day}']/following-sibling::android.widget.TextView[@text='${current_month}']/parent::android.view.ViewGroup/following-sibling::android.widget.TextView[@text='Partial Withdrawal']/following-sibling::android.view.ViewGroup/android.widget.TextView)[1]
+        Wait Until Element Is Visible   ${Android_selectCurrentTransaction1}    timeout=120s
         Take Screenshot    Partial Withdrawal Transaction
-        Click Element
-        ...    xpath=(//android.widget.TextView[@text='${current_day}']/following-sibling::android.widget.TextView[@text='${current_month}']/parent::android.view.ViewGroup/following-sibling::android.widget.TextView[@text='Partial Withdrawal']/following-sibling::android.widget.TextView[@text='Policy no: ${Policy_No}'])[1]
-    #    Wallet Exception    xpath=(//android.widget.TextView[@text='${current_day}']/following-sibling::android.widget.TextView[@text='${current_month}']/parent::android.view.ViewGroup/following-sibling::android.widget.TextView[@text='Partial Withdrawal']/following-sibling::android.widget.TextView[@text='Policy no: ${Policy_No}'])[1]
+        Click Element   ${Android_selectCurrentTransaction1}
         Take Screenshot    Partial Withdrawal Transaction
         ${Transaction_Policy_Status}    Get Text    ${${platformName}_${lang}_Transaction_Policy_Status}
         ${Transaction_Policy_Status}    Convert To Title Case    ${Transaction_Policy_Status}
-        ${Transaction_Policy_No}    Get Text    ${${platformName}_${lang}_Transaction_Policy_No}
-        ${Transaction_Policy_No}    Remove String    ${Transaction_Policy_No}    Policy no:
-        ${Transaction_Policy_No}    Strip String    ${Transaction_Policy_No}
-
+        ${Trans_PolicyNumber}       Set Variable    xpath=//android.widget.TextView[@text='${current_day}']/following-sibling::android.widget.TextView[@text='${current_month}']/parent::android.view.ViewGroup/following-sibling::android.widget.TextView[@text='Partial Withdrawal']/parent::android.view.ViewGroup/android.widget.TextView[2]
+        ${Transaction_Policy_No}    Get Text    ${Trans_PolicyNumber}
+        @{Transaction_Policy_No}    Split String    ${Transaction_Policy_No}    Policy no:
+        ${Transaction_Policy_No}    Get From List    ${Transaction_Policy_No}   1
+        IF    '${Transaction_Policy_Status}' == 'Completed'
+            ${mTransactionstatus}    Set Variable    Approve
+            ${OPUSTransactionstatus}    Set Variable    Completed
+        ELSE
+            ${OPUSTransactionstatus}    Set Variable    In progress
+        END
+        Set Global Variable    ${OPUSTransactionstatus}
         Set Calc VP Expected Result With Original And Source
         ...    Transaction_Status
         ...    ${Transaction_Policy_Status}

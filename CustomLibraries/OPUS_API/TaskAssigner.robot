@@ -3,19 +3,20 @@ Documentation    Suite description
 Library    RequestsLibrary
 Library    Collections
 Resource        ../common.robot
+Resource        ../../Pages/OPUS/OPUSTaskInquiryPage.resource
 #Resource        ../Pages/TaskInquiry.robot
 
 
 *** Variables ***
-${login_url}         https://uat-owb.fwd.com.ph/api/workspace/user/login
-${adb_search}        https://uat-owb.fwd.com.ph/api/dw/task/inquiry/advSearch
-${assign_task}       https://uat-owb.fwd.com.ph/api/bpm/task/assignTask
+${login_url}         https://uat-owb.fwd.com.th/api/workspace/user/login
+${adb_search}        https://uat-owb.fwd.com.th/api/dw/task/inquiry/advSearch
+${assign_task}       https://uat-owb.fwd.com.th/api/bpm/task/assignTask
 
 
 *** Keywords ***
 OWB API
     TRY
-        Create Session    OWB    url=https://opus-uat.fwd.com/api/
+        Create Session    OWB    url=https://opus-staging.fwd.com/api/
         Sleep    10s
         ${login_token}      Login To OWB API
         ${task_Id}   Advance Search      ${login_token}
@@ -51,13 +52,13 @@ Advance Search
         ...     policyNo=${policy_no}
         ...     remainingTime={},
         ...     defaultSortName=inquiryBusinessNo
-        ...    regionCode=PH
+        ...    regionCode=TH
         &{advSearch_req}        Create Dictionary
         ...     params=${param}
         ...     currentPage= 1
-        ...     pageSize=200
+        ...     pageSize=10
         ...     sortName=procInstId
-        ...     sortOrder=asc
+        ...     sortOrder=desc
         ...     sortOrders=[]
         ...     defaultSortName=policyNo
 
@@ -71,17 +72,18 @@ Advance Search
     #        ${row_size}     Evaluate    ${row_size}-1
             &{temp}     Get From List    ${rows}     ${counter}
             ${taskStatus}     Get From Dictionary    ${temp}    taskStatus
-            IF    '${taskStatus}' == 'todo' or '${taskStatus}' == 'pending'
+            ${procInstId}     Get From Dictionary    ${temp}    procInstId
+            IF    '${taskStatus}' == 'todo' or '${taskStatus}' == 'pending' and '${procInstId}' == '${OPUS_Case_No}'
                  ${taskID}      Get From Dictionary    ${temp}    taskId
                  ${task_category}      Get From Dictionary    ${temp}    caseCategory
                  log        ${task_category}
                  Set Global Variable    ${task_category}
-    #             Exit For Loop
+                 Exit For Loop
             END
         END
         RETURN       ${taskID}
     EXCEPT     AS  ${reason}
-        Set Failed Actual Result and VP    Omne_Flow   ${reason}   FWD Insurance Flow of ${Insurance_Flow}
+        Set Failed Actual Result and VP    Omne_Flow   ${reason}   Advance Search
     END
 
 

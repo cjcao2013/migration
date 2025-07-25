@@ -180,7 +180,7 @@ Transaction Delete rider(s)
     END
 
 Transaction Partial withdrawal
-    ${Android_Selectposttransaction}    Set Variable
+      ${Android_Selectposttransaction}    Set Variable
     ...    xpath=(//android.widget.TextView[@text='${current_day}']/following-sibling::android.widget.TextView[@text='${current_month}']/parent::android.view.ViewGroup/following-sibling::android.widget.TextView[@text='Partial Withdrawal']/following-sibling::android.widget.TextView[@text='Policy no: ${Policy_No}']/preceding-sibling::android.view.ViewGroup//android.widget.TextView[@text='${MCaseStatus}'])[1]
     ${iOS_Selectposttransaction}    Set Variable
     ...    chain=**/XCUIElementTypeOther[`label CONTAINS '${currdate}' and label CONTAINS 'Partial Withdrawal ${MCaseStatus}' and label CONTAINS 'Policy no: ${Policy_No}'`][27]
@@ -190,20 +190,8 @@ Transaction Partial withdrawal
     Set Global Variable    ${CompleteStatus_List}
     Take Screenshot    Post Transaction Page
     Click Element    ${${platformName}_Selectposttransaction}
-    Sleep    2s
-#    ${status}    Run Keyword And Return Status
-#    ...    Wait Until Element Is Visible
-#    ...    ${${platformName}_${lang}_Transaction_Total_Estimated_Amount}
-#    ...    timeout=5s
-#    IF    '${status}' != 'True'    SwipePage
-#    Take Screenshot    OMNE_Post_Transaction
-
-    ${sOutput}    Run Keyword And Ignore Error
-    ...    Capture Partial Withdrawal Transaction detail after Owb for ${platformName}
-    IF    ${sOutput} != ('PASS', None)
-        ${failure_reason}    Fetch Reason    ${sOutput}
-        RETURN    ${failure_reason}
-    END
+    Sleep    1s
+    Run Keyword     Capture Partial Withdrawal Transaction detail after Owb for ${platformName}
 
 Capture Partial Withdrawal Transaction detail after Owb for Android
     Scroll Till Transaction Is Visible    ${${platformName}_${lang}_Transaction_Total_Estimated_Amount}
@@ -242,20 +230,14 @@ Capture Partial Withdrawal Transaction detail after Owb for iOS
     ...    OMNE_View_Transaction
 
 Transaction Risk profile
-    ${Android_Selectposttransaction}    Set Variable
+      ${Android_Selectposttransaction}    Set Variable
     ...    xpath=(//android.widget.TextView[@text='${current_day}']/following-sibling::android.widget.TextView[@text='${current_month}']/parent::android.view.ViewGroup/following-sibling::android.widget.TextView[@text='Change of personal details']/following-sibling::android.view.ViewGroup/android.widget.TextView[@text='${MCaseStatus}'])[1]
     ${iOS_Selectposttransaction}    Set Variable
     ...    chain=**/XCUIElementTypeOther[`label CONTAINS '${currdate}' and label CONTAINS 'Change of personal details ${MCaseStatus}' and label CONTAINS 'Policy no: ${Policy_No}'`][27]
     Scroll Till Transaction Is Visible    ${${platformName}_Selectposttransaction}
     ${CompleteStatus_List}    Get Text    ${${platformName}_Selectposttransaction}
     Set Global Variable    ${CompleteStatus_List}
-#    Click Element    ${${platformName}_Selectposttransaction}
-
-    ${sOutput}    Run Keyword And Ignore Error    Capture Risk Profile Transaction Details for ${platformName}    Post
-    IF    ${sOutput} != ('PASS', None)
-        ${failure_reason}    Fetch Reason    ${sOutput}
-        RETURN    ${failure_reason}
-    END
+    Run Keyword    Capture Risk Profile Transaction Details for ${platformName}    Post
 
 Transaction Personal details
    ${Android_Selectposttransaction}    Set Variable

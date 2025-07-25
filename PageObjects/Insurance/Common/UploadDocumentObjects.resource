@@ -51,8 +51,11 @@ ${iOS_EN_Obj_doneNext}                          chain=**/XCUIElementTypeOther[`l
 ${iOS_EN_make_claim}                            chain=**/XCUIElementTypeButton[`label == "Make a claim"`]
 ${iOS_EN_Start_Camera}                          chain=**/XCUIElementTypeButton[`name == "Start camera"`]
 ${iOS_EN_obj_captureImage1}                     chain=**/XCUIElementTypeOther[`label CONTAINS 'Gallery'`]/XCUIElementTypeOther[-3]
+${iOS_EN_obj_captureImageforPersonal}           chain=**/XCUIElementTypeOther[`label CONTAINS 'Gallery'`]/XCUIElementTypeOther[-2]
 ${iOS_EN_GalleyNext}            chain=**/XCUIElementTypeOther[`label == 'Next'`]
-${iOS_EN_GalleryDone}           chain=**/XCUIElementTypeOther[`label == 'Done'`][-1]
-${Android_EN_GalleyNext}            android=new UiSelector().description("Next")
+${iOS_EN_GalleryDone}           chain=**/XCUIElementTypeOther[`label == "Gallery Done"`]/XCUIElementTypeOther[3]
+${Android_EN_GalleyNext}            xpath=//android.widget.TextView[@text="Next"]
 ${Android_EN_GalleryDone}           android=new UiSelector().description("Done")
 ${Android_EN_obj_captureImage1}         xpath=(//android.view.ViewGroup[@content-desc="Gallery"]//following-sibling::android.view.ViewGroup[1])[2]
+${Android_EN_make_claim}                        android=new UiSelector().description("Make a claim")
+${Android_EN_Start_Camera}                      android=new UiSelector().description("Start camera")

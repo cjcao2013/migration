@@ -21,12 +21,12 @@ ${Android_EN_PersonalDetails_LastName}                          xpath=//android.
 ${Android_EN_PersonalDetails_DOB}                               xpath=//android.widget.TextView[@text='Date of birth (dd/mm/yyyy)']/../..//android.widget.EditText
 ${Android_EN_PersonalDetails_Citizenship}                       xpath=//android.widget.TextView[@text='Citizenship']/../..//android.widget.EditText
 ${Android_EN_PersonalDetails_NoOfDependent}                     xpath=//android.widget.TextView[@text='Number of dependents (Optional)']/../..//android.widget.EditText
-${Android_EN_PersonalDetails_MartialStatus}                     xpath=//android.widget.TextView[@text='Marital status (Optional)']/android.widget.TextView
+${Android_EN_PersonalDetails_MartialStatus}                     xpath=//android.widget.TextView[@text="Marital status (Optional)"]
 ${Android_EN_Next_Button}                                       xpath=//android.widget.TextView[@text='Next']
 
 ${Android_EN_PersonalParticularsTxt}                            xpath=//android.widget.TextView[@text='Personal particulars']
 ${Android_EN_PleaseProvideTxt}                                  xpath=//android.widget.TextView[contains(@text,'ID card')]
-${Android_EN_AddImage}                                          xpath=//android.view.ViewGroup[@resource-id='add-image']
+${Android_EN_RiskAddImage}                                      xpath=//android.view.ViewGroup[@resource-id='iBank-add-image']
 ${Android_EN_Save_Button}                                       xpath=//android.widget.TextView[@text='Save']
 
 ${Android_EN_PleaseCheckUpdateParticularsTxt}                   xpath=//android.widget.TextView[@text='Please check and update your particulars']
@@ -41,7 +41,7 @@ ${Android_EN_Others}                                            xpath=//android.
 ${Android_EN_MonthlyIncome}                                     xpath=//android.widget.TextView[@text='Monthly income (Optional)']
 ${Android_EN_MonthlyExpenses}                                   xpath=//android.widget.TextView[@text='Monthly expenses in THB (Optional)']/..//android.widget.EditText
 ${Android_EN_CurrentAsset}                                      xpath=//android.widget.TextView[@text='Source of current assets']
-${Android_EN_Estimated_Asset_Value}                             xpath=//android.widget.TextView[@text='Estimated assets value in THB']/preceding-sibling::android.view.ViewGroup/android.widget.EditText
+${Android_EN_Estimated_Asset_Value}                             xpath=//android.widget.TextView[@text='Estimated assets value in THB']/preceding-sibling::android.view.ViewGroup//android.widget.EditText
 ${Android_EN_Objective_Investment}                              xpath=(//android.widget.TextView[@text='Objectives of investment'])[2]
 
 # ----------------------------MArtial Status-----------------------------------------------------
@@ -113,7 +113,7 @@ ${iOS_EN_Next_Button}                                           chain=**/XCUIEle
 
 ${iOS_EN_PersonalParticularsTxt}                                chain=**/XCUIElementTypeStaticText[`label == "Personal particulars"`]
 ${iOS_EN_PleaseProvideTxt}                                      chain=**/XCUIElementTypeStaticText[`label CONTAINS "ID card"`][1]
-${iOS_EN_AddImage}                                              chain=**/XCUIElementTypeOther[`name == "iBank-add-image"`]
+${iOS_EN_RiskAddImage}                                              chain=**/XCUIElementTypeOther[`name == "iBank-add-image"`]
 ${iOS_EN_Save_Button}                                           chain=**/XCUIElementTypeButton[`label == "Save"`]
 
 ${iOS_EN_PleaseCheckUpdateParticularsTxt}                       chain=**/XCUIElementTypeStaticText[`label CONTAINS "Please check and update your particulars"`]

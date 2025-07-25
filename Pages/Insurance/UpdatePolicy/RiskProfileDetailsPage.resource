@@ -5,7 +5,8 @@ Library     FakerLibrary
 Resource    PersonalDetailsPage.resource
 Library     QraceHelper
 Library     SeleniumLibrary
-Library    common
+Resource    ../Common/AddOTP.resource
+Resource    ../../../PageObjects/Insurance/ViewTransactions/TransactionDetailsPageObjects.resource
 
 
 *** Keywords ***
@@ -322,7 +323,7 @@ Update Particulars
         ...    ${VP_PleaseProvideDetails}
         ...    ${VP_PleaseProvideDetails}
 
-        Click Element    ${${platformName}_${lang}_AddImage}
+        Click Element    ${${platformName}_${lang}_RiskAddImage}
         ${path}    Set Variable    ${EXECDIR}/CustomLibraries/ClaimImages/hospClaim.png
         Upload Document BS    ${path}
         Wait Until Element Is Visible    ${${platformName}_${lang}_Save_Button}     timeout=5s
@@ -431,7 +432,7 @@ Update Particulars
 
                 Click Element    xpath=//android.widget.TextView[@text='${Update_Risk_Profile_Occupation}']
             ELSE
-                Scroll Till Transaction Is Visible     ${${platformName}_${lang}_Others} 
+                Scroll Till Transaction Is Visible     ${${platformName}_${lang}_Others}
                 Wait Until Element Is Visible     ${${platformName}_${lang}_Others}     timeout=2s
                 Clear Text    ${${platformName}_${lang}_Others}
                 Wait Until Element Is Visible    ${${platformName}_${lang}_Others}      timeout=2s
@@ -525,6 +526,7 @@ Suitablity Assessmaent
         ...    ${VP_SuitablityAssment_YourAgeGroup}
         # Question One
         FOR    ${counter}    IN RANGE    1    11
+            RefreshPage
             ${Android_Question_Anwser}    Set Variable
             ...    xpath=//android.widget.TextView[@text='${Suitablity_Assessment_Question_${counter}}']
             ${IOS_Question_Anwser}    Set Variable
@@ -575,8 +577,11 @@ Suitablity Assessmaent
         Wait Until Page Contains Element    ${${platformName}_${lang}_Back_Button}    timeout=30s
         Click Element    ${${platformName}_${lang}_Back_Button}
 
-        Wait Until Element Is Visible    ${${platformName}_${lang}_SeeAll}   timeout=20s
-        Click Element    ${${platformName}_${lang}_SeeAll}
+        ${status}    Run Keyword And Return Status  Wait Until Element Is Visible    ${${platformName}_${lang}_SeeAll}   timeout=20s
+        IF    '${status}' == 'True'
+            Click Element    ${${platformName}_${lang}_SeeAll}
+        END
+        Pause Execution
         Take Screenshot    Transaction_Page
         Wait Until Page Contains Element    ${${platformName}_${lang}_TransactionServiceRequest}    timeout=20s
         Click Element    ${${platformName}_${lang}_TransactionServiceRequest}
@@ -711,10 +716,10 @@ Capture Risk Profile Transaction Details For Android
     Take Screenshot    Transaction_Page
     IF    '${Transaction_Info}'== 'Pre'
         ${Android_selectCurrentTransaction1}    Set Variable
-        ...    xpath=(//android.widget.TextView[@text='${current_day}']/following-sibling::android.widget.TextView[@text='${current_month}']/parent::android.view.ViewGroup/following-sibling::android.widget.TextView[@text='Change of personal details'])[1]
+        ...    xpath=(//android.widget.TextView[@text='${current_day}']/following-sibling::android.widget.TextView[@text='${current_month}']/parent::android.view.ViewGroup/following-sibling::android.widget.TextView[@text='Change of personal details']/following-sibling::android.view.ViewGroup/android.widget.TextView)[1]
     ELSE IF    '${Transaction_Info}'== 'Post'
         ${Android_selectCurrentTransaction1}    Set Variable
-        ...    xpath=(//android.widget.TextView[@text='${current_day}']/following-sibling::android.widget.TextView[@text='${current_month}']/parent::android.view.ViewGroup/following-sibling::android.widget.TextView[@text='Change of personal details'])[1]
+        ...    xpath=xpath=(//android.widget.TextView[@text='${current_day}']/following-sibling::android.widget.TextView[@text='${current_month}']/parent::android.view.ViewGroup/following-sibling::android.widget.TextView[@text='Change of personal details']/following-sibling::android.view.ViewGroup/android.widget.TextView[@text='${MCaseStatus}'])[1]
     END
     Wait Until Page Contains Element    ${Android_selectCurrentTransaction1}
     Click Element    ${Android_selectCurrentTransaction1}
@@ -728,11 +733,16 @@ Capture Risk Profile Transaction Details For Android
     IF    '${requeststatus}' == 'In progress'
         ${m_Vp}    Set Variable    In Progress
         ${m_Vp1}    Convert To Lower Case    ${m_Vp}
+        ${OPUSTransactionstatus}    Set Variable    In progress
+        Set Global Variable    ${OPUSTransactionstatus}
+        Log     ${OPUSTransactionstatus}
     END
     IF    '${VP_Transaction_Status}' == 'Completed'
         ${m_Vp}    Set Variable    Approve
         ${PreTxnStatus}    Set Variable    approve
         Set Global Variable    ${PreTxnStatus}
+        ${OPUSTransactionstatus}    Set Variable    Completed
+        Set Global Variable    ${OPUSTransactionstatus}
     END
     Sleep    2s
     IF    '${Transaction_Info}' == 'Pre'

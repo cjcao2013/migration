@@ -33,8 +33,8 @@ Log in to application
         Change Wait Time After Write    2
         ${USERNAME}    Get Environment Attribute    LA_USERNAME
         ${PASSWORD}    Get Environment Attribute    LA_UPASSWORD
-        Write Bare In position    ${USERNAME}    9    62
-        Write Bare In position    ${PASSWORD}    10    62
+        Write Bare In position    ${USERNAME}    6    53
+        Write Bare In position    ${PASSWORD}    7    53
         Take AS400 Screenshot
         Send Enter
         ${errmsg}    Capture Message    24    1    30

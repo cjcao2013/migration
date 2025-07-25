@@ -22,7 +22,7 @@ ${Android_EN_View_Transactions}                     android=new UiSelector().tex
 # Transaction
 ${Android_EN_Partial_Withdrawal}                    android=new UiSelector().text("Partial Withdrawal").instance(0)
 ${Android_EN_Transaction_Total_Estimated_Amount}    xpath=//android.widget.TextView[@text='Total estimated withdrawal amount']/following-sibling::android.view.ViewGroup//android.widget.TextView
-${Android_EN_Transaction_Policy_Status}             xpath=//android.widget.TextView[@text='Partial Withdrawal']/following-sibling::android.view.ViewGroup/android.widget.TextView
+${Android_EN_Transaction_Policy_Status}             xpath=(//android.widget.TextView[@text='Partial Withdrawal']/following-sibling::android.view.ViewGroup/android.widget.TextView)[1]
 ${Android_EN_Transaction_Policy_No}                 android=new UiSelector().textContains("Policy no")
 ${Android_EN_Transaction_Bank_No}                   xpath=//android.widget.TextView[@text='Payout method']/following-sibling::android.widget.TextView[1]
 ${Android_EN_Transaction_Bank_Name}                 xpath=//android.widget.TextView[@text='Payout method']/following-sibling::android.widget.TextView[2]

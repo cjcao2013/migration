@@ -164,3 +164,4 @@ ${Android_EN_FeedbackSkip_Btn}              android=new UiSelector().text("Skip"
 ${Android_EN_FeedbackDone_Btn}              android=new UiSelector().text("Done")
 ${Android_EN_FeedbackComment_Txt}               android=new UiSelector().text("Type here")
 ${Android_EN_TellUsMoreTxt}                     android=new UiSelector().text("Tell us more")
+${Android_EN_All_Done_Txt}                          xpath=//android.widget.TextView[@text='All Done!']

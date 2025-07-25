@@ -19,7 +19,7 @@ ${LoginPrevious_OTP}    ${EMPTY}
 Insert OTP
     [Arguments]     ${OTP_Source}    ${Expiry_Flag}     ${Resend_Flag}
     TRY
-
+          ${Previous_OTP}     Set Variable       567892
     #     Check for OTP expired scenario
         IF      '${Expiry_Flag}' != ''
             ${Expiry_Flag}      Convert To Number    ${Expiry_Flag}
@@ -31,7 +31,6 @@ Insert OTP
             IF    '${status}' == 'True'
                 ${VP_OTP_Expired}    Get Text    ${${platformName}_${lang}_Code_Expired}
                 Set Calc VP With Source And Original Values    Code Expiry Message    Code expired    ${VP_OTP_Expired}    Static    OMNE_OTPPage    Code expired    ${VP_OTP_Expired}
-    #            Set Calc VP Actual Result With Original And Source      Code Expiry Message    ${VP_OTP_Expired}   ${VP_OTP_Expired}   OMNE_OTPPage
             END
         END
     #     Check for scenario where OTP is to be resend
@@ -53,6 +52,7 @@ Insert OTP
             Set Calc VP With Source And Original Values   OTP_Page_EmailID    ${m_Email}    ${VP_OTP_Page_EmailID}[5]    Test_Data    OMNE_Application    ${Email}    ${VP_OTP_Page_EmailID}[5]
             Get OTP
             ${LoginCurrent_OTP}      Set Variable    ${OTPNumber}
+            ${LoginPrevious_OTP}      Set Variable          567653
             IF    '${LoginPrevious_OTP}' != '${LoginCurrent_OTP}'
                 ${Current_OTP}     Set Variable        ${LoginCurrent_OTP}
             ELSE
@@ -107,6 +107,7 @@ Insert OTP
              END
         END
         Take Screenshot    OTP Entry
+#        Pause Execution
         Wait Until Element Is Visible    ${${platformName}_${lang}_Verify}
         Click Element    ${${platformName}_${lang}_Verify}
         Take Screenshot    OTP Submit

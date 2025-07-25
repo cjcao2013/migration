@@ -382,11 +382,6 @@ Additional Verification Page
                     Set Calc VP With Source And Original Values    Invalid_Document_Number    ${ValidationErrorMsg}    ${VP_Document_No_Pass}    Static    OMNE_SignInDocumentPage    ${ValidationErrorMsg}    ${VP_Document_No_Pass}
                     Fail    ${errormsg}
                 END
-            ELSE IF    '${Country}' == 'Philippines'
-                    Wait Until Element Is Visible    ${${platformName}_${lang}_Customer_ID}
-                    Click Element    ${${platformName}_${lang}_Customer_ID}
-                    Input Text    ${${platformName}_${lang}_Customer_ID}     ${Customer_ID}
-                    Close keyboard
             END
             Wait Until Element Is Visible    ${${platformName}_${lang}_Verify_btn}
             Take Screenshot    Document_Details
@@ -399,7 +394,7 @@ Additional Verification Page
         END
         Take Screenshot    SignIn_OTP_Page
         Insert OTP      ${OTP_Source}    ${OTP_Expiry_Flag}     ${OTP_Resend_Flag}
-#         Pause Execution
+
         Omne Action Popup
     EXCEPT     AS  ${reason}
        Set Failed Actual Result and VP    Omne_Flow   ${reason}   Additional Verification Page

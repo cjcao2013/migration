@@ -27,15 +27,15 @@ ${Android_EN_Loanlimitasoftoday}                    xpath=(//android.widget.Text
 ${Android_EN_Loanoutstanding}                       xpath=(//android.widget.TextView[contains(@text,'Loan outstanding')]/following-sibling::android.widget.TextView)[1]
 ${Android_EN_Loaninterestrateperyear}               xpath=(//android.widget.TextView[contains(@text,'Loan interest rate per year')]/following-sibling::android.widget.TextView)[1]
 ${Android_EN_Totalasoftoday}                        xpath=(//android.widget.TextView[contains(@text,'Total as of today')]/following-sibling::android.widget.TextView)[1]
-${Android_EN_PolicyLoanAMountInput}                 xpath=//android.view.ViewGroup[@content-desc="Enter amount here"]/android.widget.EditText
-${Android_EN_PromentpayCheckbox}                    xpath=(//android.widget.CheckBox[@content-desc="claim-checkbox-I've registered my PromptPay account with my national ID."])[2]
+${Android_EN_PolicyLoanAMountInput}                 android=new UiSelector().resourceId("-new-currency-input")
+${Android_EN_PromentpayCheckbox}                    xpath=(//android.widget.CheckBox[@content-desc="PromptPay-CheckBox"])[1]
 ${Android_EN_uploadDocPlusButton}                   xpath=//android.view.ViewGroup[@resource-id='add-more-photo-button']
 ${Android_EN_BankName_DropDown}                     xpath=//android.view.ViewGroup[@content-desc="Bank name"]/android.view.ViewGroup/android.widget.TextView
 ${Android_EN_Done_Button}                           xpath=//android.widget.TextView[@text="Done"]
 ${Android_EN_Bank_Account_No}                       xpath=//android.widget.EditText[@text="Bank account no."]
-${Android_EN_TermsandConCheckbox}                   xpath=(//android.widget.CheckBox[@content-desc="fwd-checkbox-terms"])[2]
+${Android_EN_TermsandConCheckbox}                   xpath=//android.widget.CheckBox[@resource-id="CashValueLoan-terms-checkbox"]/android.view.ViewGroup
 ${Android_EN_CVLoanTransaction}                     xpath=//android.view.ViewGroup[@content-desc="View servicing request transactions"]/android.widget.TextView
-${Android_EN_TransactionDetailspolicyloan}          chain=**/XCUIElementTypeOther[`label CONTAINS "Request Amount "`][-1]
+${Android_EN_TransactionDetailspolicyloan}          xpath=//android.widget.TextView[@text="Request Amount"]
 ${Android_EN_PolicyLoanConfirmEmailPopup}           xpath=//android.view.ViewGroup[@content-desc="Yes"]
 ${Android_EN_TransactionStatus}                     xpath=(//android.widget.TextView[contains(@text,'Policy Loan Request')]/following-sibling::android.view.ViewGroup/android.widget.TextView)[1]
 ${Android_EN_TransactionRequestAmount}              xpath=(//android.widget.TextView[contains(@text,'Request Amount')]/following-sibling::android.widget.TextView)[1]
@@ -44,3 +44,6 @@ ${Android_EN_TransactionPayoutmethodAccounNo}       xpath=(//android.widget.Text
 ${Android_EN_TransactionPayoutmethodBankName}       xpath=(//android.widget.TextView[contains(@text,'Payout method')]/following-sibling::android.widget.TextView)[3]
 ${Android_EN_AddPaymentMethod}                      xpath=//android.widget.TextView[@text='Add payment method']
 ${Android_EN_Change_Button}                         xpath=(//android.widget.TextView[@text='Change'])
+${Android_EN_Error_Max_LoanLimit}                       xpath=//android.widget.TextView[contains(@text,"Maximum loan limit")]
+${Android_EN_HighestLoanLimit}                          xpath=//android.widget.TextView[contains(@text,"Highest loan limit")]
+${Android_EN_Change_BankDetails}                     xpath=//android.widget.TextView[@text='Change']

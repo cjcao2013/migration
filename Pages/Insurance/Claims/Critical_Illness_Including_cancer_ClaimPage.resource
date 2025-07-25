@@ -24,7 +24,7 @@ Claim Critical illness including cancer
     SwipePage
     Wait Until Element Is Visible    ${${platformName}_${lang}_cancer_relatedChkBox}    timeout=120s
     Click Element    ${${platformName}_${lang}_cancer_relatedChkBox}
-    Wait Until Element Is Visible    ${${platformName}_${lang}_ClaimchkBox}    timeout=20s
-    Click Element    ${${platformName}_${lang}_ClaimchkBox}
+    Wait Until Element Is Visible    ${${platformName}_${lang}_ClaimCheckBox}    timeout=20s
+    Click Element    ${${platformName}_${lang}_ClaimCheckBox}
     Take Screenshot    Claim_Step2_Page
     Click Element    ${${platformName}_${lang}_nextBtn}

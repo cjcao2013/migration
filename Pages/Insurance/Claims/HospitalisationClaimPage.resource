@@ -58,7 +58,11 @@ Select CheckIN and CheckOut Date
     ${checkinmonth}    Get From List    ${checkindatevalues}    1
     ${checkinmonthsubstring}    Get Substring    ${checkinmonth}    0    3
     ${checkinyear}    Get From List    ${checkindatevalues}    2
+    @{checkoutdatevalues}    Split String    ${checkoutDate}
+    ${checkoutday}    Get From List    ${checkoutdatevalues}    0
+    ${checkoutmonth}    Get From List    ${checkoutdatevalues}    1
 
+    Wait Until Element Is Visible    ${${platformName}_${lang}_currentmonthandyear}
     &{dict}    Get Element Rect    ${${platformName}_${lang}_currentmonthandyear}
     ${x}    Get From Dictionary    ${dict}    x
     ${y}    Get From Dictionary    ${dict}    y
@@ -67,7 +71,12 @@ Select CheckIN and CheckOut Date
     ${y}    Evaluate    ${y}+24    # 659
     ${y}    Convert To Integer    ${y}
     Click Element At Coordinates    ${x}    ${y}
-    ${givenyearvalue}    Get Element Attribute    ${${platformName}_${lang}_currentYear}    attribute=value
+    IF  '${platformName}' == 'iOS'
+        ${givenyearvalue}    Get Element Attribute    ${${platformName}_${lang}_hospitalcurrentYear}    attribute=value
+    ELSE
+        ${givenyearvalue}    Get Text    ${${platformName}_${lang}_hospitalcurrentYear}
+    END
+
     ${LoopValue}    Evaluate    int(${givenyearvalue})-int(${checkinyear})
     Log To Console    ${LoopValue}
 
@@ -84,7 +93,7 @@ Select CheckIN and CheckOut Date
     ${iOS_CheckinDate}    Set Variable    chain=**/XCUIElementTypeButton[`label CONTAINS '${checkinDate}'`]
     ${Android_CheckinDate}    Set Variable    xpath=//android.widget.TextView[@text='${checkinday}']
     ${iOS_CheckoutDate}    Set Variable    chain=**/XCUIElementTypeButton[`label CONTAINS '${checkoutDate}'`]
-    ${Android_CheckoutDate}    Set Variable    xpath=//android.widget.TextView[@text='${checkoutDate}']
+    ${Android_CheckoutDate}    Set Variable    xpath=//android.widget.TextView[@text='${checkoutday}']
     Click Element    ${${platformName}_MonthString}
     Sleep    2s
     Click Element    ${${platformName}_CheckinDate}
@@ -110,14 +119,18 @@ Select CheckIN and CheckOut Date
         ${checkoutmonth}    Get From List    ${checkoutdatevalues}    1
         ${checkoutmonthsubstring}    Get Substring    ${checkoutmonth}    0    3
         ${checkoutyear}    Get From List    ${checkoutdatevalues}    2
-        ${givenyearvalue}    Get Element Attribute    ${${platformName}_${lang}_currentYear}    attribute=value
+        IF  '${platformName}' == 'iOS'
+            ${givenyearvalue}    Get Element Attribute    ${${platformName}_${lang}_hospitalcurrentYear}    attribute=value
+        ELSE
+            ${givenyearvalue}    Get Text    ${${platformName}_${lang}_hospitalcurrentYear}
+        END
         ${LoopValue}    Evaluate    int(${givenyearvalue})-int(${checkoutyear})
         Log To Console    ${LoopValue}
         IF    ${LoopValue}<0
             WHILE    '${givenyearvalue}' != '${checkoutyear}'
                 Click Element    ${${platformName}_${lang}_nextyearArrow}
                 Sleep    1s
-                ${givenyearvalue}    Get Element Attribute    ${${platformName}_${lang}_currentYear}    attribute=value
+                ${givenyearvalue}    Get Element Attribute    ${${platformName}_${lang}_hospitalcurrentYear}    attribute=value
             END
         ELSE
             FOR    ${counter}    IN RANGE    0    ${LoopValue}

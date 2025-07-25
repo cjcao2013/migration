@@ -495,7 +495,7 @@ Overview
                             Take Screenshot    View_Policy_Riders
                             ${ridercounter}    Evaluate    ${ridercounter}+1
                             Horizontal Swipe Rider    &{coordinateDict}
-                            Pause Execution
+
                         END
                     END
                 END
