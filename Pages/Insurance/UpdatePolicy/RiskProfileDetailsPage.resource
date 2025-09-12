@@ -231,7 +231,7 @@ Update Particulars
         ${Status}    Run Keyword And Return Status
         ...    Element Should Be Enabled
         ...    ${${platformName}_${lang}_Next_Button}
-        ...    timeout=20s
+
         #    _________________PersoanlDetails_Update_---------------
         IF    '${VP_PersonalDetails_FirstName}' != ''
             Clear Text    ${${platformName}_${lang}_PersonalDetails_FirstName}
@@ -526,7 +526,7 @@ Suitablity Assessmaent
         ...    ${VP_SuitablityAssment_YourAgeGroup}
         # Question One
         FOR    ${counter}    IN RANGE    1    11
-            RefreshPage
+
             ${Android_Question_Anwser}    Set Variable
             ...    xpath=//android.widget.TextView[@text='${Suitablity_Assessment_Question_${counter}}']
             ${IOS_Question_Anwser}    Set Variable

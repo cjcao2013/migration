@@ -33,8 +33,9 @@ ${iOS_EN_updatemobilefield}                             chain=**/XCUIElementType
 ${iOS_EN_updateemailfield}                              chain=**/XCUIElementTypeTextField[`name == "email-field-input"`]
 ${iOS_EN_btnSave}                                       chain=**/XCUIElementTypeButton[`label == 'Save'`]
 ${iOS_EN_btnSave}                                       chain=**/XCUIElementTypeButton[`label == 'Save'`]
-${iOS_EN_countryCode}                                   chain=**/XCUIElementTypeOther[`name == "select-country-pressable"`]
+${iOS_EN_countryCode}                                   xpath=//XCUIElementTypeOther[@name="select-country-pressable"]/parent::XCUIElementTypeOther
 ${iOS_EN_countryCodeHK}                                 xpath=//XCUIElementTypeOther[@name="select-country-HKG"]
+${iOS_EN_CountryCodeTH}                                 chain=**/XCUIElementTypeOther[`name == "select-country-THA"`]
 # update address
 ${iOS_EN_selectpolicy}                                  chain=**/XCUIElementTypeOther[`label CONTAINS 'FWD Hospital Care Protection'`][-1]
 ${iOS_EN_btnNext}                                       chain=**/XCUIElementTypeButton[`label == 'Next'`][-1]
@@ -62,7 +63,7 @@ ${iOS_EN_Error_Messgage_FirstName}                      chain=**/XCUIElementType
 ${iOS_EN_Error_Messgage_LasttName}                      chain=**/XCUIElementTypeStaticText[`label == "Last name is a required field"`]
 ${IOS_EN_View_Servicing_Request_Transactions}           chain=**/XCUIElementTypeStaticText[`label == "View servicing request transactions"`]
 ${iOS_EN_EmailerrorMessage}                             chain=**/XCUIElementTypeOther[`label CONTAINS 'You cannot change user info'`][-1]
-
+${iOS_EN_AddresserrorMessage}                           chain=**/XCUIElementTypeOther[`label CONTAINS 'You cannot change address as same as PolicyAgent address'`][-1]
 ${iOS_EN_Current_Address}                               xpath=//XCUIElementTypeStaticText[@name="Current address"]/following-sibling::XCUIElementTypeStaticText
 ${iOS_EN_AddressLineOne}                                chain=**/XCUIElementTypeStaticText[`label == "Address line 1"`]
 ${iOS_EN_AddressLineTwo}                                chain=**/XCUIElementTypeStaticText[`label == "Address line 2"`]

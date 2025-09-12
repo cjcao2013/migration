@@ -38,10 +38,11 @@ Add Payment Methods
                Set Calc VP With Source And Original Values    Bank_Name_Present    true    ${PreSelectionstatus}     Static   OMNE_Application    true    ${PreSelectionstatus}
         END
         TRY
-             Wait Until Element Is Visible   ${${platformName}_${lang}_DeleteRider_AddImage}     timeout=5s
+            Sleep    1s
+             Wait Until Element Is Visible   ${${platformName}_${lang}_DeleteRider_AddImage}     timeout=10s
              Click Element    ${${platformName}_${lang}_DeleteRider_AddImage}
         EXCEPT
-            Wait Until Element Is Visible   ${${platformName}_${lang}_AddImage}     timeout=3s
+            Wait Until Element Is Visible   ${${platformName}_${lang}_AddImage}     timeout=10s
             Click Element    ${${platformName}_${lang}_AddImage}
         END
         ${path}     Set Variable    ${EXECDIR}/CustomLibraries/ClaimImages/Certificate.PNG
@@ -300,7 +301,7 @@ Select Policy
         Wait Until Page Contains Element    ${${platformName}_SelectPolicyNo}       timeout=30s
         Take Screenshot    Select Policy
         Click Element    ${${platformName}_SelectPolicyNo}
-#        ${PolicyDetails}    Get Text    ${${platformName}_SelectPolicyNo}
+        #        ${PolicyDetails}    Get Text    ${${platformName}_SelectPolicyNo}
         Set Global Variable    ${${platformName}_SelectPolicyNo}
    EXCEPT     AS  ${reason}
         Set Failed Actual Result and VP    Omne_Flow   ${reason}   Select Policy ${Insurance_Flow}
@@ -366,7 +367,7 @@ Check Transaction Status
          ${status}    Run Keyword And Return Status
         ...    Wait Until Element Is Visible
         ...    ${${platformName}_${lang}_All_Done_Txt}
-        ...    timeout=30s
+        ...    timeout=20s
 
         IF    '${status}' == 'True'
             Take Screenshot    TransactionStatusPage
@@ -382,7 +383,7 @@ Check Transaction Status
             ...    ${VP_All_Done}
         ELSE
             Take Screenshot    TransactionStatusPage
-            Wait Until Element Is Visible           ${${platformName}_${lang}_Submitted_Txt}     timeout=3s
+            Wait Until Element Is Visible           ${${platformName}_${lang}_Submitted_Txt}     timeout=10s
             ${VP_Submitted}    Get Text    ${${platformName}_${lang}_Submitted_Txt}
             Set Global Variable    ${Successmsg}    ${VP_Submitted}
             Set Calc VP With Source And Original Values

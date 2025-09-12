@@ -144,11 +144,44 @@ Add new beneficiary
         #beneficiary Dodcument Type
         Wait Until Element Is Visible    ${${platformName}_selectDocumentType}    timeout=20s
         Click Element    ${${platformName}_selectDocumentType}
-        Wait Until Element Is Visible    ${${platformName}_${lang}_document_number_text_field}   timeout=20s
-        Click Element    ${${platformName}_${lang}_document_number_text_field}
-        Input Text
-        ...    ${${platformName}_${lang}_document_number_text_field}
-        ...    ${Change_Beneficiary_Document_Number_${counter}}
+        IF    '${Change_Beneficiary_Document_${counter}}' == 'Password'
+            ${Invalid_Passport_Number}      Get Substring    ${Change_Beneficiary_Document_Number_${counter}}    5
+            Wait Until Element Is Visible    ${${platformName}_${lang}_document_number_text_field}   timeout=20s
+            Click Element    ${${platformName}_${lang}_document_number_text_field}
+            Input Text
+            ...    ${${platformName}_${lang}_document_number_text_field}
+            ...    ${Invalid_Passport_Number} 
+            ${Status}       Run Keyword And Return Status    Wait Until Element Is Visible    ${${platformName}_${lang}_bene_Inavlid_Passport_Error}
+            IF    '${Status} ' == True
+                 ${Error_Message}       Get Text    ${${platformName}_${lang}_bene_Inavlid_Passport_Error}
+                 ${VP_Message}      Set Variable        Please enter a valid Passport Number
+                 Set Calc VP With Source And Original Values    Invalid_Passport_Number_Eror_With_5_Digit_Number   ${VP_Message.strip()}     ${Error_Message.strip()}    Static    OMNE_SignInDocumentPage    ${VP_Message.strip()}     ${Error_Message.strip()}
+            END
+            ${Invalid_Passport_Number}      Set Variable    12345678901234567
+            Click Element    ${${platformName}_${lang}_document_number_text_field}
+            Clear Text    ${${platformName}_${lang}_document_number_text_field}
+            Input Text
+            ...    ${${platformName}_${lang}_document_number_text_field}
+            ...    ${Invalid_Passport_Number}
+            ${Status}       Run Keyword And Return Status    Wait Until Element Is Visible    ${${platformName}_${lang}_bene_Inavlid_Passport_Error}
+            IF    '${Status} ' == True
+                 ${Error_Message}       Get Text    ${${platformName}_${lang}_bene_Inavlid_Passport_Error}
+                 ${VP_Message}      Set Variable        Please enter a valid Passport Number
+                 Set Calc VP With Source And Original Values    Invalid_Passport_Number_Eror_With_17_Digit_Number   ${VP_Message.strip()}     ${Error_Message.strip()}    Static    OMNE_SignInDocumentPage    ${VP_Message.strip()}     ${Error_Message.strip()}
+            END
+            Click Element    ${${platformName}_${lang}_document_number_text_field}
+            Clear Text    ${${platformName}_${lang}_document_number_text_field}
+            Input Text
+            ...    ${${platformName}_${lang}_document_number_text_field}
+            ...    ${Change_Beneficiary_Document_Number_${counter}}
+        ELSE
+            Wait Until Element Is Visible    ${${platformName}_${lang}_document_number_text_field}   timeout=20s
+            Click Element    ${${platformName}_${lang}_document_number_text_field}
+            Input Text
+            ...    ${${platformName}_${lang}_document_number_text_field}
+            ...    ${Change_Beneficiary_Document_Number_${counter}}
+        END
+
         #beneficiary Last Name
         Wait Until Element Is Visible    ${${platformName}_${lang}_beneficiary_last_name}   timeout=20s
         Click Element    ${${platformName}_${lang}_beneficiary_last_name}

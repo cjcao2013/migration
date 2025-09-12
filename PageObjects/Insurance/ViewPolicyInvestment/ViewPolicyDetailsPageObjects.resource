@@ -30,7 +30,7 @@ ${Android_EN_policyName_txt}                            xpath=((//android.view.V
 ${iOS_EN_policyName_txt}                                xpath=(//XCUIElementTypeOther[contains(@name,'Overview Document(s)')])[last()-4]/preceding::XCUIElementTypeOther[7]/XCUIElementTypeStaticText[2]
 
 ${Android_EN_YouAreCoveredFor_txt}                      xpath=(//android.widget.TextView[@text="You’re covered for"]/following-sibling::android.widget.TextView)[1]
-${iOS_EN_YouAreCoveredFor_txt}                          chain=**/XCUIElementTypeOther[`label CONTAINS "You’re covered for"`][-1]/XCUIElementTypeStaticText[2]
+${iOS_EN_YouAreCoveredFor_txt}                          chain**/XCUIElementTypeOther[`label CONTAINS "Sum assured"`][-1]/XCUIElementTypeStaticText[2]
 
 ${Android_EN_InsuredFor_txt}                            xpath=//android.widget.TextView[@text="Insured for"]/following-sibling::android.view.ViewGroup//android.widget.TextView
 ${iOS_EN_InsuredFor_txt}                                chain=**/XCUIElementTypeOther[`label CONTAINS "You’re covered for"`][-1]/XCUIElementTypeOther/XCUIElementTypeStaticText

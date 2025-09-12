@@ -10,6 +10,7 @@ ${iOS_EN_Biometric_toggle}              chain=**/XCUIElementTypeSwitch[`name == 
 ${iOS_EN_Biometric_Status}              chain=**/XCUIElementTypeButton[`label == "Pass"`]
 ${iOS_EN_MyPolicy_SeeAll}               chain=**/XCUIElementTypeOther[`label == "See all"`][1]
 ${iOS_EN_OKPopup}                       chain=**/XCUIElementTypeButton[`name == "Okay"`]
+${iOS_EN_ClosePopup}                       chian=**/XCUIElementTypeButton[`name == "Close"`]
 ${Android_EN_BiometricEnable_Txt}            xpath=//android.widget.TextView[@text="Enable Biometric"]
 ${Android_EN_TakeMEHere_Btn}                 xpath=//android.widget.TextView[@text="Take me there"]
 ${Android_EN_BAck_Btn}                       xpath=//android.widget.Button[@resource-id="back-button"]

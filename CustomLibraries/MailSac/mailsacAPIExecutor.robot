@@ -19,22 +19,22 @@ ${messageId}
 Get OTP
 #    Set Screenshot Directory     ${screenshotPath}\\
     TRY
-#        ${mailId}       Set Variable    ${Email}
-#        Set Global Variable    ${base_url}
-#        ${mailSacKey}       Get Environment Attribute    mailSacKey
-#        Set Global Variable    ${mailSacKey}
-#        Set Global Variable     ${mailId}
-#        Set Global Variable    ${screenshotPath}
-#    #    Set Global Variable    ${messageId}
-#        Get Latest Message ID
-#        IF    '${messageId}' != '${EMPTY}'
-#            Get OTP from Message ID
-#        ELSE
-#            ${OTPNumber}    Set Variable
-#            Set Global Variable    ${OTPNumber}
-#        END
-        ${OTPNumber}    Set Variable    123456
-        Set Global Variable    ${OTPNumber}
+        ${mailId}       Set Variable    ${Email}
+        Set Global Variable    ${base_url}
+        ${mailSacKey}       Get Environment Attribute    mailSacKey
+        Set Global Variable    ${mailSacKey}
+        Set Global Variable     ${mailId}
+        Set Global Variable    ${screenshotPath}
+    #    Set Global Variable    ${messageId}
+        Get Latest Message ID
+        IF    '${messageId}' != '${EMPTY}'
+            Get OTP from Message ID
+        ELSE
+            ${OTPNumber}    Set Variable
+            Set Global Variable    ${OTPNumber}
+        END
+#        ${OTPNumber}    Set Variable    123456
+#        Set Global Variable    ${OTPNumber}
     EXCEPT     AS  ${reason}
         Set Failed Actual Result and VP    Omne_Flow   ${reason}   Capture Change Name Transaction Details for iOS
     END

@@ -30,6 +30,7 @@ ${iOS_EN_beneficiary_total}                                 chain=**/XCUIElement
 ${iOS_EN_beneNextButton}                                        chain=**/XCUIElementTypeOther[`label == "Next"`][-1]
 ${iOS_EN_ChangeBeneficiarydetails}                          chain=**/XCUIElementTypeStaticText[`label == "Change beneficiary(s) details"`]
 ${iOS_EN_DeleteBeneBtn}                                     chain=**/XCUIElementTypeOther[`name == "beneficiary-delete-button"`]
+${iOS_EN_bene_Inavlid_Passport_Error}                       chain=**/XCUIElementTypeStaticText[`name == "Please enter a valid Passport Number"`]
 # delete beneficiary
 ${iOS_EN_yesBtn}                                            chain=**/XCUIElementTypeButton[`label == 'Yes'`]
 ${Android_EN_editbeneficiaryBtn}                            android=new UiSelector().textContains("Edit beneficiary(s)")
@@ -48,7 +49,7 @@ ${Android_EN_document_number_text_field}                    xpath=//android.widg
 ${Android_EN_add_document_btn}                              android=new UiSelector().resourceId("add-image")
 ${Android_EN_beneficiary_save_btn}                          android=new UiSelector().text("Save")
 ${Android_EN_Beneficiary_Allocation_Field}                  android=new UiSelector().className("android.widget.EditText")
-${Android_EN_Last_Beneficiary_Allocation}                   xpath:(//android.widget.EditText)[last()]
+${Android_EN_Last_Beneficiary_Allocation}                   xpath=(//android.widget.EditText)[last()]
 ${Android_EN_Fatca_Yes}                                     android=new UiSelector().text("Yes")
 ${Android_EN_Fatca_No}                                      android=new UiSelector().text("No")
 ${Android_EN_terms_checkbox}                                android=new UiSelector().description("fwd-checkbox-terms")

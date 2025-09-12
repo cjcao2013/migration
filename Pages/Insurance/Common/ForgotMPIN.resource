@@ -33,9 +33,8 @@ Additional Verification
         ${status}    Run Keyword And Return Status    Wait Until Element Is Visible    ${${platformName}_${lang}_DD_dropdown}    timeout=5s
         IF    '${status}' == 'True'
             Take Screenshot    SignIn_Details_Page
-
             Select DOB
-    #            Select FWD Policy Holder
+            # Select FWD Policy Holder
             ${iOS_FWDPolicyHolder}      Set Variable          chain=**/XCUIElementTypeOther[`label == "${IS_FWD_PolicyHolder}"`]
             ${Android_FWDPolicyHolder}      Set Variable      xpath=//android.widget.TextView[@text='${IS_FWD_PolicyHolder}']/preceding-sibling::android.view.ViewGroup
             ${status}       Run Keyword And Return Status    Wait Until Element Is Visible       ${${platformName}_FWDPolicyHolder}     timeout=5s
@@ -43,7 +42,7 @@ Additional Verification
                  Click Element       ${${platformName}_FWDPolicyHolder}
             END
 
-    #           Select Country
+            # Select Country
              ${iOS_CountryObj}   Set Variable           chain=**/XCUIElementTypeOther[`label == "${Country}"`]
              ${iOS_DocuType}     Set Variable           chain=**/XCUIElementTypeOther[`label == "${DocumentType}"`]
              ${Android_CountryObj}   Set Variable    android=new UiSelector().textContains("${Country}")
@@ -70,7 +69,6 @@ Additional Verification
                 END
                  Close keyboard
             END
-#            Click Element At Coordinates    61    800
             ${status}    Run Keyword And Return Status    Wait Until Element Is Visible    ${${platformName}_${lang}_Error_Invalid_Document_No}    timeout=1s
             IF    '${status}' == 'True'
                 Take Screenshot    Invalid_Document_Details

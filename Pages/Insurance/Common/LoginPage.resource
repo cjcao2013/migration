@@ -33,7 +33,6 @@ Logout From OMNE
             Click Element At Coordinates    340    163
         END
         ${status}    Run Keyword And Return Status   Wait Until Element Is Visible    ${${platformName}_${lang}_SettingIcon}    timeout=10s
-
         Click Element    ${${platformName}_${lang}_SettingIcon}
         Wait Until Element Is Visible    ${${platformName}_${lang}_Logout_btn}    timeout=5s
         Click Element    ${${platformName}_${lang}_Logout_btn}
@@ -101,133 +100,65 @@ Onboard Insurance
         Click Element    ${${platformName}_${lang}_Country}
         Wait Until Element Is Visible    ${${platformName}_${lang}_CountryObj}    timeout=10s
         Click Element    ${${platformName}_${lang}_CountryObj}
-        IF    '${Country}' == 'Thailand' or '${Country}' == 'Indonesia'
-            ${status}    Run Keyword And Return Status         Wait Until Element Is Visible    ${iOS_PolicyType}      timeout=5s
-            IF    '${status}' == 'True'
-                   Click Element    ${iOS_PolicyType}
-            END
-            ${status}    Run Keyword And Return Status    Element Should Be Visible    ${${platformName}_${lang}_Document_Type}     timeout=10s
-            ${status}    Run Keyword And Return Status    Element Should Be Visible    ${${platformName}_${lang}_Document_Number}       timeout=10s
-            IF    '${PolicyType}' != 'Employee benfit'
-                Wait Until Element Is Visible    ${${platformName}_${lang}_Document_Type}    timeout=10s
-                Click Element    ${${platformName}_${lang}_Document_Type}
-                Wait Until Element Is Visible    ${${platformName}_${lang}_DocuType}    timeout=10s
-                Click Element   ${${platformName}_${lang}_DocuType}
-                Wait Until Element Is Visible    ${${platformName}_${lang}_Document_Number}    timeout=10s
+        ${status}    Run Keyword And Return Status    Element Should Be Visible    ${${platformName}_${lang}_Document_Type}     timeout=10s
+        ${status}    Run Keyword And Return Status    Element Should Be Visible    ${${platformName}_${lang}_Document_Number}       timeout=10s
+
+        Wait Until Element Is Visible    ${${platformName}_${lang}_Document_Type}    timeout=10s
+        Click Element    ${${platformName}_${lang}_Document_Type}
+        Wait Until Element Is Visible    ${${platformName}_${lang}_DocuType}    timeout=10s
+        Click Element   ${${platformName}_${lang}_DocuType}
+        Wait Until Element Is Visible    ${${platformName}_${lang}_Document_Number}    timeout=10s
+        Click Element    ${${platformName}_${lang}_Document_Number}
+        IF    '${platformName}' != 'iOS'
+              @{CustID_len}    Split String To Characters     ${Customer_ID}
+             FOR    ${char}    IN    @{CustID_len}
+                    Input Text Into Current Element    ${char}
+             END
+        ELSE
+            IF    '${DocumentType}' == 'Passport
+                ${Wrong_PasswordNumber}     Get Substring    ${Customer_ID}    5
+                Input Text    ${${platformName}_${lang}_Document_Number}    ${Wrong_PasswordNumber}
+                Close keyboard
+                ${status}    Run Keyword And Return Status    Wait Until Element Is Visible    ${${platformName}_${lang}_Error_Invalid_Document_No}    timeout=2s
+                IF    '${status}' == 'True'
+                    Take Screenshot    Invalid_Document_Details
+                    ${VP_Document_No_Pass}    Get Text    ${${platformName}_${lang}_Error_Invalid_Document_No}
+                    Set Global Variable    ${errormsg}    ${VP_Document_No_Pass}
+                    Set Calc VP With Source And Original Values    Invalid_Document_Number_Eror_With_5_Digit_Number   ${ValidationErrorMsg}    ${VP_Document_No_Pass}    Static    OMNE_SignInDocumentPage    ${ValidationErrorMsg}    ${VP_Document_No_Pass}
+                END
+                ${Wrong_PasswordNumber}     Set Variable    ABCD5678901234567
+                Clear Text    ${${platformName}_${lang}_Document_Number}
+                Input Text    ${${platformName}_${lang}_Document_Number}    ${Wrong_PasswordNumber}
+                Close keyboard
+                ${status}    Run Keyword And Return Status    Wait Until Element Is Visible    ${${platformName}_${lang}_Error_Invalid_Document_No}    timeout=2s
+                IF    '${status}' == 'True'
+                    Take Screenshot    Invalid_Document_Details
+                    ${VP_Document_No_Pass}    Get Text    ${${platformName}_${lang}_Error_Invalid_Document_No}
+                    Set Global Variable    ${errormsg}    ${VP_Document_No_Pass}
+                    Set Calc VP With Source And Original Values    Invalid_Document_Number_Eror_With_17_Digit_Number   ${ValidationErrorMsg}    ${VP_Document_No_Pass}    Static    OMNE_SignInDocumentPage    ${ValidationErrorMsg}    ${VP_Document_No_Pass}
+                END
+                 Click Element    ${${platformName}_${lang}_Document_Number}
+                 Clear Text    ${${platformName}_${lang}_Document_Number}
+                 Input Text    ${${platformName}_${lang}_Document_Number}    ${Customer_ID}
+                 Close keyboard
+            ELSE
+                ${Wrong_PasswordNumber}     Get Substring    ${Customer_ID}    10
+                Input Text    ${${platformName}_${lang}_Document_Number}    ${Wrong_PasswordNumber}
+                Close keyboard
+                ${status}    Run Keyword And Return Status    Wait Until Element Is Visible    ${${platformName}_${lang}_Error_Invalid_Document_No}    timeout=2s
+                IF    '${status}' == 'True'
+                    Take Screenshot    Invalid_Document_Details
+                    ${VP_Document_No_Pass}    Get Text    ${${platformName}_${lang}_Error_Invalid_Document_No}
+                    Set Global Variable    ${errormsg}    ${VP_Document_No_Pass}
+                    Set Calc VP With Source And Original Values    Invalid_Document_Number_Eror_With_10_Digit_Number   ${ValidationErrorMsg}    ${VP_Document_No_Pass}    Static    OMNE_SignInDocumentPage    ${ValidationErrorMsg}    ${VP_Document_No_Pass}
+                END
                 Click Element    ${${platformName}_${lang}_Document_Number}
-                IF    '${platformName}' != 'iOS'
-                      @{CustID_len}    Split String To Characters     ${Customer_ID}
-                     FOR    ${char}    IN    @{CustID_len}
-                            Input Text Into Current Element    ${char}
-                     END
-                ELSE
-                    Input Text    ${${platformName}_${lang}_Document_Number}    ${Customer_ID}
-                    Close keyboard
-                END
-            ELSE
-                Wait Until Element Is Visible    ${${platformName}_${lang}_EmployeeBenefitOption}
-                Click Element    ${${platformName}_${lang}_EmployeeBenefitOption}
-                IF    '${platformName}' != 'iOS'
-                    Wait Until Element Is Visible    ${${platformName}_${lang}_PolicyNumberBenfit}      timeout=5s
-                    Click Element    ${${platformName}_${lang}_PolicyNumberBenfit}
-                    @{CustID_len}    Split String To Characters     ${EB_Policy_Number}
-                    FOR    ${char}    IN    @{CustID_len}
-                        Input Text Into Current Element    ${char}
-                    END
-                    Close keyboard
-                    Wait Until Element Is Visible    ${${platformName}_${lang}_MemeberIDBenfit}      timeout=5s
-                    Click Element    ${${platformName}_${lang}_MemeberIDBenfit}
-                    @{CustID_len}    Split String To Characters     ${EB_Policy_Number}
-                    FOR    ${char}    IN    @{CustID_len}
-                        Input Text Into Current Element    ${char}
-                    END
-                    Close keyboard
-                ELSE
-                    Input Text    ${${platformName}_${lang}_PolicyNumberBenfit}   ${EB_Policy_Number}
-                    Input Text    ${${platformName}_${lang}_MemeberIDBenfit}    ${EB_Member_ID}\n
-                END
-            END
-            ${status}    Run Keyword And Return Status    Wait Until Element Is Visible    ${${platformName}_${lang}_Error_Invalid_Document_No}    timeout=2s
-            IF    '${status}' == 'True'
-                Take Screenshot    Invalid_Document_Details
-                ${VP_Document_No_Pass}    Get Text    ${${platformName}_${lang}_Error_Invalid_Document_No}
-                Set Global Variable    ${errormsg}    ${VP_Document_No_Pass}
-                Set Calc VP With Source And Original Values    Invalid_Document_Number    ${ValidationErrorMsg}    ${VP_Document_No_Pass}    Static    OMNE_SignInDocumentPage    ${ValidationErrorMsg}    ${VP_Document_No_Pass}
-                Fail    ${errormsg}
-            END
-                #    Take Screenshot    Document_Details
-        ELSE IF    '${Country}' == 'Philippines'
-            Wait Until Element Is Visible    ${${platformName}_${lang}_Customer_ID}
-            #enter incorrect customer id
-            ${Incorrect_documentNumber}    Set Variable     88888888
-            Click Element    ${${platformName}_${lang}_Customer_ID}
-            Input Text    ${${platformName}_${lang}_Customer_ID}     ${Incorrect_documentNumber}
-            Close keyboard
-            Take Screenshot    Incorrect Data
-            Click Element    ${${platformName}_${lang}_Verify_btn}
-            Wait Until Element Is Visible    ${${platformName}_${lang}_IncorrectDataValidationMsg}      timeout=10s
-            ${IncorrectData_errorMSg}     Get Text    ${${platformName}_${lang}_IncorrectDataValidationMsg}
-            Take Screenshot    Incorrect Data Validation MSg
-            Click Element At Coordinates    705    282
-            Set Calc VP With Source And Original Values    Incorrect Data Validation MSg    ${IncorrectData_errorMSg}    ${IncorrectData_errorMSg}    static    Omne onboard Page    ${IncorrectData_errorMSg}    ${IncorrectData_errorMSg}
-
-            #enter correct customer id
-            Click Element    ${${platformName}_${lang}_Customer_ID}
-            Clear Text    ${${platformName}_${lang}_Customer_ID}
-            Input Text    ${${platformName}_${lang}_Customer_ID}     ${Customer_ID}
-            Close keyboard
-        ELSE IF     '${Country}' == 'Cambodia'
-            Wait Until Element Is Visible    ${${platformName}_${lang}_Document_Type}    timeout=10s
-            Click Element    ${${platformName}_${lang}_Document_Type}
-            Wait Until Element Is Visible    ${${platformName}_${lang}_DocuType}    timeout=10s
-            Click Element   ${${platformName}_${lang}_DocuType}
-            Wait Until Element Is Visible    ${${platformName}_${lang}_Document_Number}    timeout=10s
-            #enter wrong documentnumber to capture error msg
-            ${Wrong_customerID}     Get Substring    ${Customer_ID}    4
-            Click Element    ${${platformName}_${lang}_Document_Number}
-            IF    '${platformName}' != 'iOS'
-                Input Text    ${${platformName}_${lang}_Document_Number}    ${Wrong_customerID}
-                Hide Keyboard
-            ELSE
-                Input Text    ${${platformName}_${lang}_Document_Number}    ${Wrong_customerID}
-                Close keyboard
-            END
-            Wait Until Element Is Visible    ${${platformName}_${lang}_InvaildNumberError}
-            ${Invalid_documenterrorMSg}     Get Text    ${${platformName}_${lang}_InvaildNumberError}
-            Take Screenshot    Document Number Validation MSg
-            Set Calc VP With Source And Original Values    Document Number Validation MSg    Invalid document number    ${Invalid_documenterrorMSg}    static    Omne onboard Page    Invalid document number    ${Invalid_documenterrorMSg}
-
-            #enter incorrect details to capture msg
-            ${Incorrect_documentNumber}    Set Variable     888888888
-            Click Element    ${${platformName}_${lang}_Document_Number}
-            Clear Text    ${${platformName}_${lang}_Document_Number}
-            IF    '${platformName}' != 'iOS'
-                Input Text    ${${platformName}_${lang}_Document_Number}    ${Incorrect_documentNumber}
-                Hide Keyboard
-            ELSE
-                Input Text    ${${platformName}_${lang}_Document_Number}    ${Incorrect_documentNumber}
-                Close keyboard
-            END
-            Take Screenshot    Incorrect Data
-            Click Element    ${${platformName}_${lang}_Verify_btn}
-            Wait Until Element Is Visible    ${${platformName}_${lang}_IncorrectDataValidationMsg}      timeout=10s
-            ${IncorrectData_errorMSg}     Get Text    ${${platformName}_${lang}_IncorrectDataValidationMsg}
-            Take Screenshot    Incorrect Data Validation MSg
-            Click Element At Coordinates    705    282
-            Set Calc VP With Source And Original Values    Incorrect Data Validation MSg    ${IncorrectData_errorMSg}    ${IncorrectData_errorMSg}    static    Omne onboard Page    ${IncorrectData_errorMSg}    ${IncorrectData_errorMSg}
-
-
-            #enter correct documnet number
-            Click Element    ${${platformName}_${lang}_Document_Number}
-            Clear Text    ${${platformName}_${lang}_Document_Number}
-            IF    '${platformName}' != 'iOS'
-                Input Text    ${${platformName}_${lang}_Document_Number}    ${Customer_ID}
-                Hide Keyboard
-            ELSE
+                Clear Text    ${${platformName}_${lang}_Document_Number}
                 Input Text    ${${platformName}_${lang}_Document_Number}    ${Customer_ID}
                 Close keyboard
             END
         END
+
         Wait Until Element Is Visible    ${${platformName}_${lang}_Verify_btn}          timeout=10s
         Take Screenshot    Document_Details
         # Previous OTP from Mailsac
@@ -302,7 +233,7 @@ SignIn
             END
             Set Calc VP With Source And Original Values    By_Default_EN_Language    EN    ${VP_ByDefault_Lang}    Static    OMNE_Application    EN    ${VP_ByDefault_Lang}
 
-    #       Login by Email or Mobile
+            #       Login by Email or Mobile
             Run Keyword    Login By ${LoginType}
             Additional Verification Page
             Extra POP Up
@@ -338,7 +269,7 @@ Additional Verification Page
             Take Screenshot    SignIn_Details_Page
 
             Select DOB
-    #            Select FWD Policy Holder
+            # Select FWD Policy Holder
             ${iOS_FWDPolicyHolder}      Set Variable          chain=**/XCUIElementTypeOther[`label == "${IS_FWD_PolicyHolder}"`]
             ${Android_FWDPolicyHolder}      Set Variable      xpath=//android.widget.TextView[@text='${IS_FWD_PolicyHolder}']/preceding-sibling::android.view.ViewGroup
             ${status}       Run Keyword And Return Status    Wait Until Element Is Visible       ${${platformName}_FWDPolicyHolder}     timeout=5s
@@ -346,13 +277,13 @@ Additional Verification Page
                  Click Element       ${${platformName}_FWDPolicyHolder}
             END
 
-    #           Select Country
+            #  Select Country
              ${iOS_CountryObj}   Set Variable           chain=**/XCUIElementTypeOther[`label == "${Country}"`]
              ${iOS_DocuType}     Set Variable           chain=**/XCUIElementTypeOther[`label == "${DocumentType}"`]
              ${Android_CountryObj}   Set Variable    android=new UiSelector().textContains("${Country}")
              ${Android_DocuType}     Set Variable    xpath=//android.widget.TextView[@text='${DocumentType}']
             Wait Until Element Is Visible    ${${platformName}_${lang}_Country}    timeout=10s
-    #            Sleep    1s
+            #            Sleep    1s
             Click Element    ${${platformName}_${lang}_Country}
             Wait Until Element Is Visible    ${${platformName}_CountryObj}    timeout=5s
             Click Element    ${${platformName}_CountryObj}
@@ -373,7 +304,7 @@ Additional Verification Page
                     END
                      Close keyboard
                 END
-#                Click Element At Coordinates    61    800
+                #                Click Element At Coordinates    61    800
                 ${status}    Run Keyword And Return Status    Wait Until Element Is Visible    ${${platformName}_${lang}_Error_Invalid_Document_No}    timeout=1s
                 IF    '${status}' == 'True'
                     Take Screenshot    Invalid_Document_Details

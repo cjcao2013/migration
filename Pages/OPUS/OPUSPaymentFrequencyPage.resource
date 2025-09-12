@@ -91,6 +91,7 @@ OPUS frequency
         ...    ${Approved_Status.strip()}
         ...    ${Approved_Status}
         ...    OPUS_Application
+        Wait Until Page Contains Element    xpath=//button[@data-trigger='submit']              timeout=20s
         Click Element    xpath=//button[@data-trigger='submit']
         Sleep    5s
         Take OPUS Screenshot    OPUS Inquiry

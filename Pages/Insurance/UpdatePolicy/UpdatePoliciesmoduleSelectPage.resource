@@ -38,11 +38,16 @@ Manage
         Wait Until Element Is Visible    ${${platformName}_${lang}_Insurance_Module}        timeout=20s
         Click Element    ${${platformName}_${lang}_Insurance_Module}
         Sleep   1s
+        ${status}       Run Keyword And Return Status    Wait Until Element Is Visible    ${${platformName}_${lang}_ClosePopup}        timeout=5s
+        IF    '${status}' == 'True'
+             Click Element    ${${platformName}_${lang}_ClosePopup}
+        END
+
+
         ${status}       Run Keyword And Return Status    Wait Until Element Is Visible    ${${platformName}_${lang}_OKPopup}        timeout=5s
         IF    '${status}' == 'True'
              Click Element    ${${platformName}_${lang}_OKPopup}
         END
-
 
         #      Select Update Policy Module
         IF    '${Update_Policy_Module}' != 'Personal details'

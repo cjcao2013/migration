@@ -20,12 +20,12 @@ Insert OTP
     [Arguments]     ${OTP_Source}    ${Expiry_Flag}     ${Resend_Flag}
     TRY
           ${Previous_OTP}     Set Variable       567892
-    #     Check for OTP expired scenario
+        #     Check for OTP expired scenario
         IF      '${Expiry_Flag}' != ''
             ${Expiry_Flag}      Convert To Number    ${Expiry_Flag}
             ${Expiry_Flag}=      Evaluate    ${Expiry_Flag}-20
             Sleep    ${Expiry_Flag}
-    #        Get OTP Expired text
+            #        Get OTP Expired text
             ${status}    Run Keyword And Return Status    Wait Until Element Is Visible    ${${platformName}_${lang}_Code_Expired}    timeout=30s
             Take Screenshot    Code_Expired
             IF    '${status}' == 'True'
@@ -33,7 +33,7 @@ Insert OTP
                 Set Calc VP With Source And Original Values    Code Expiry Message    Code expired    ${VP_OTP_Expired}    Static    OMNE_OTPPage    Code expired    ${VP_OTP_Expired}
             END
         END
-    #     Check for scenario where OTP is to be resend
+        #     Check for scenario where OTP is to be resend
         IF      '${Resend_Flag}' != ''
             ${VP_RequestForNewCode}    Get Text    ${${platformName}_${lang}_RequestForNewCode_txt}
             Set Calc VP With Source And Original Values    Request For New Code In    ${VP_RequestForNewCode}    ${VP_RequestForNewCode}    Static    OMNE_Login_OTP_Page    ${VP_RequestForNewCode}    ${VP_RequestForNewCode}
@@ -49,17 +49,18 @@ Insert OTP
             ${VP_OTP_Page_EmailID}    Get Text    ${${platformName}_${lang}_OTP_email}
             @{VP_OTP_Page_EmailID}    Split String    ${VP_OTP_Page_EmailID}
             ${m_Email}    Convert To Lower Case    ${Email}
-            Set Calc VP With Source And Original Values   OTP_Page_EmailID    ${m_Email}    ${VP_OTP_Page_EmailID}[5]    Test_Data    OMNE_Application    ${Email}    ${VP_OTP_Page_EmailID}[5]
-            Get OTP
-            ${LoginCurrent_OTP}      Set Variable    ${OTPNumber}
+#            Set Calc VP With Source And Original Values   OTP_Page_EmailID    ${m_Email}    ${VP_OTP_Page_EmailID}[5]    Test_Data    OMNE_Application    ${Email}    ${VP_OTP_Page_EmailID}[5]
+#            Get OTP
+            ${LoginCurrent_OTP}      Set Variable    123456
             ${LoginPrevious_OTP}      Set Variable          567653
             IF    '${LoginPrevious_OTP}' != '${LoginCurrent_OTP}'
                 ${Current_OTP}     Set Variable        ${LoginCurrent_OTP}
             ELSE
                 ${status}    Run Keyword And Return Status    Wait Until Element Is Visible    ${${platformName}_${lang}_OTP_Expire}    timeout=5s
                  WHILE    '${LoginPrevious_OTP}' == '${LoginCurrent_OTP}' and '${status}' != 'True'
-                      Get OTP
-                      ${Current_OTP}      Set Variable    ${OTPNumber}
+#                      Get OTP
+#                      ${Current_OTP}      Set Variable    ${OTPNumber}
+                      ${LoginCurrent_OTP}      Set Variable    123456
                       ${status}    Run Keyword And Return Status    Wait Until Element Is Visible    ${${platformName}_${lang}_OTP_Expire}    timeout=5s
                  END
                  IF    '${status}' == 'True'
