@@ -19,3 +19,4 @@ ${obj_Extra_Details}                xpath://a[text()="Extra Details"]
 ${obj_Despatch_addr}                xpath://a[text()="Despatch Addr"]
 ${obj_Fund_Portfolio}               xpath://a[text()="Fund Portfolio"]
 ${obj_investment_list}              xpath://div[contains(@id,"SZ448_SHORTDESC" )]
+

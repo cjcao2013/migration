@@ -5,27 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8ff2f2f0-a2e2-4b9a-9a67-5a537c476714" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CustomLibraries/MailSac/mailsacAPIExecutor.robot" beforeDir="false" afterPath="$PROJECT_DIR$/CustomLibraries/MailSac/mailsacAPIExecutor.robot" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PageObjects/Insurance/Common/LoginPageObjects.resource" beforeDir="false" afterPath="$PROJECT_DIR$/PageObjects/Insurance/Common/LoginPageObjects.resource" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PageObjects/Insurance/Common/UploadDocumentObjects.resource" beforeDir="false" afterPath="$PROJECT_DIR$/PageObjects/Insurance/Common/UploadDocumentObjects.resource" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PageObjects/Insurance/UpdatePolicy/ChangeBeneficiaryPageObjects.resource" beforeDir="false" afterPath="$PROJECT_DIR$/PageObjects/Insurance/UpdatePolicy/ChangeBeneficiaryPageObjects.resource" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PageObjects/Insurance/UpdatePolicy/PersonalDetailsPageObject.resource" beforeDir="false" afterPath="$PROJECT_DIR$/PageObjects/Insurance/UpdatePolicy/PersonalDetailsPageObject.resource" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PageObjects/Insurance/UpdatePolicy/UpdatePoliciesmoduleSelectPageObject.resource" beforeDir="false" afterPath="$PROJECT_DIR$/PageObjects/Insurance/UpdatePolicy/UpdatePoliciesmoduleSelectPageObject.resource" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PageObjects/IL/ClientEnquiryObjects.robot" beforeDir="false" afterPath="$PROJECT_DIR$/PageObjects/IL/ClientEnquiryObjects.robot" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PageObjects/Insurance/ViewPolicyInvestment/ViewPolicyDetailsPageObjects.resource" beforeDir="false" afterPath="$PROJECT_DIR$/PageObjects/Insurance/ViewPolicyInvestment/ViewPolicyDetailsPageObjects.resource" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pages/Insurance/Common/AddOTP.resource" beforeDir="false" afterPath="$PROJECT_DIR$/Pages/Insurance/Common/AddOTP.resource" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pages/Insurance/Common/CommonMethod.resource" beforeDir="false" afterPath="$PROJECT_DIR$/Pages/Insurance/Common/CommonMethod.resource" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pages/Insurance/Common/ForgotMPIN.resource" beforeDir="false" afterPath="$PROJECT_DIR$/Pages/Insurance/Common/ForgotMPIN.resource" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pages/Insurance/Common/LoginPage.resource" beforeDir="false" afterPath="$PROJECT_DIR$/Pages/Insurance/Common/LoginPage.resource" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pages/Insurance/PayPremium/LoanRepaymentPage.resource" beforeDir="false" afterPath="$PROJECT_DIR$/Pages/Insurance/PayPremium/LoanRepaymentPage.resource" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pages/Insurance/UpdatePolicy/ChangeBeneficiaryPage.resource" beforeDir="false" afterPath="$PROJECT_DIR$/Pages/Insurance/UpdatePolicy/ChangeBeneficiaryPage.resource" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pages/Insurance/UpdatePolicy/ChangeMobileAndEmailPage.resource" beforeDir="false" afterPath="$PROJECT_DIR$/Pages/Insurance/UpdatePolicy/ChangeMobileAndEmailPage.resource" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pages/Insurance/UpdatePolicy/PersonalDetailsPage.resource" beforeDir="false" afterPath="$PROJECT_DIR$/Pages/Insurance/UpdatePolicy/PersonalDetailsPage.resource" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pages/Insurance/UpdatePolicy/RiskProfileDetailsPage.resource" beforeDir="false" afterPath="$PROJECT_DIR$/Pages/Insurance/UpdatePolicy/RiskProfileDetailsPage.resource" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pages/Insurance/UpdatePolicy/UpdatePoliciesmoduleSelectPage.resource" beforeDir="false" afterPath="$PROJECT_DIR$/Pages/Insurance/UpdatePolicy/UpdatePoliciesmoduleSelectPage.resource" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pages/OPUS/OPUSPaymentFrequencyPage.resource" beforeDir="false" afterPath="$PROJECT_DIR$/Pages/OPUS/OPUSPaymentFrequencyPage.resource" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Qrace/QraceHelper.py" beforeDir="false" afterPath="$PROJECT_DIR$/Qrace/QraceHelper.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,7 +32,7 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;TH__Enhancement__Automation__Script&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/223741/OneDrive - FWD Group Management Holdings Limited/QKFolder/Automation_Script/JP_OPUS_Code_WIth_Excel&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/223741/OneDrive - FWD Group Management Holdings Limited/QKFolder/Automation_Script/TH Code&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
   }
 }</component>
