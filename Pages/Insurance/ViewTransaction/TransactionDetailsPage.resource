@@ -542,11 +542,11 @@ Transaction Policy loan
         RETURN    ${failure_reason}
     END
 
-Transaction Recurring payment
+Transaction Credit card recurring payment
     ${Android_Selectposttransaction}    Set Variable
-    ...    xpath=(//android.widget.TextView[@text='${current_day}']/following-sibling::android.widget.TextView[@text='${current_month}']/parent::android.view.ViewGroup/following-sibling::android.widget.TextView[@text='Change of recurring payment']/following-sibling::android.view.ViewGroup/android.widget.TextView[@text='${MCaseStatus}'])[1]
+    ...    xpath=(//android.widget.TextView[@text='${current_day}']/following-sibling::android.widget.TextView[@text='${current_month}']/parent::android.view.ViewGroup/following-sibling::android.widget.TextView[@text='Credit card recurring payment']/following-sibling::android.view.ViewGroup/android.widget.TextView[@text='${MCaseStatus}'])[1]
     ${iOS_Selectposttransaction}    Set Variable
-    ...    chain=**/XCUIElementTypeOther[`label CONTAINS '${currdate}' and label CONTAINS 'Change of recurring payment ${MCaseStatus}' and label CONTAINS 'Policy no: ${Policy_No}'`][27]
+    ...    chain=**/XCUIElementTypeOther[`label CONTAINS '${currdate}' and label CONTAINS 'Credit card recurring payment ${MCaseStatus}' and label CONTAINS 'Policy no: ${Policy_No}'`][27]
     Scroll Till Transaction Is Visible    ${${platformName}_Selectposttransaction}
     ${CompleteStatus_List}    Get Text    ${${platformName}_Selectposttransaction}
     Set Global Variable    ${CompleteStatus_List}

@@ -115,7 +115,7 @@ Onboard Insurance
                     Input Text Into Current Element    ${char}
              END
         ELSE
-            IF    '${DocumentType}' == 'Passport
+            IF    '${DocumentType}' == 'Passport'
                 ${Wrong_PasswordNumber}     Get Substring    ${Customer_ID}    5
                 Input Text    ${${platformName}_${lang}_Document_Number}    ${Wrong_PasswordNumber}
                 Close keyboard
@@ -166,6 +166,14 @@ Onboard Insurance
         ${LoginPrevious_OTP}     Set Variable      ${OTPNumber}
         Set Global Variable    ${LoginPrevious_OTP}
         Click Element    ${${platformName}_${lang}_Verify_btn}
+        #unlik policy code
+        ${status}   Run Keyword And Return Status   Wait Until Element Is Visible      ${${platformName}_${lang}_UnlinkPolicy_chkBox}            timeout=10s
+        IF    '${status}' == 'True'
+            Click Element       ${${platformName}_${lang}_UnlinkPolicy_chkBox}
+            Wait Until Element Is Visible      ${${platformName}_${lang}_ConfirmBtn}
+            Take Screenshot     Onboard Unlik Policy Popup
+            Click Element       ${${platformName}_${lang}_ConfirmBtn}
+        END
         Sleep    5s
         Get SignUp OTP
         ${OTP}      Set Variable    ${OTPNumber}
@@ -324,8 +332,8 @@ Additional Verification Page
             Click Element    ${${platformName}_${lang}_Verify_btn}
         END
         Take Screenshot    SignIn_OTP_Page
-        Insert OTP      ${OTP_Source}    ${OTP_Expiry_Flag}     ${OTP_Resend_Flag}
-
+#        Insert OTP      ${OTP_Source}    ${OTP_Expiry_Flag}     ${OTP_Resend_Flag}
+        Pause Execution
         Omne Action Popup
     EXCEPT     AS  ${reason}
        Set Failed Actual Result and VP    Omne_Flow   ${reason}   Additional Verification Page

@@ -11,7 +11,7 @@ Library     ../../Qrace/QraceHelper.py
 Resource    ../../../PageObjects/Insurance/UpdatePolicy/PaymentMethodDetailsPageObjects.resource
 
 *** Keywords ***
-Recurring payment
+Credit card recurring payment
     TRY
         ${status}    Run Keyword And Return Status
         ...    Wait Until Element Is Visible
@@ -350,19 +350,19 @@ Capture RCC Transaction Details for iOS
         IF    '${Transaction_Info}'== 'Pre'
             RefreshPage
             ${iOS_selectCurrentTransaction1}    Set Variable
-            ...    chain=**/XCUIElementTypeOther[`label CONTAINS '${currdate}' and label CONTAINS 'Change of recurring payment' and label CONTAINS 'Policy no: ${Policy_No}'`][27]
+            ...    chain=**/XCUIElementTypeOther[`label CONTAINS '${currdate}' and label CONTAINS 'Credit card recurring payment' and label CONTAINS 'Policy no: ${Policy_No}'`][27]
         ELSE IF    '${Transaction_Info}'== 'Post'
             ${iOS_selectCurrentTransaction1}    Set Variable
-            ...    chain=**/XCUIElementTypeOther[`label CONTAINS '${currdate}' and label CONTAINS 'Change of recurring payment ${MCaseStatus}' and label CONTAINS 'Policy no: ${Policy_No}'`][27]
+            ...    chain=**/XCUIElementTypeOther[`label CONTAINS '${currdate}' and label CONTAINS 'Credit card recurring payment ${MCaseStatus}' and label CONTAINS 'Policy no: ${Policy_No}'`][27]
             ${iOS_transactionstatusobject}    Set Variable
-            ...    chain=**/XCUIElementTypeOther[`label CONTAINS '${currdate}' and label CONTAINS 'Change of recurring payment ${MCaseStatus}' and label CONTAINS 'Policy no: ${Policy_No}'`][26]/XCUIElementTypeOther/XCUIElementTypeOther
+            ...    chain=**/XCUIElementTypeOther[`label CONTAINS '${currdate}' and label CONTAINS 'Credit card recurring payment ${MCaseStatus}' and label CONTAINS 'Policy no: ${Policy_No}'`][26]/XCUIElementTypeOther/XCUIElementTypeOther
         END
         Wait Until Element Is Visible    ${${platformName}_selectCurrentTransaction1}    timeout=300s
         Take Screenshot    Transaction Page
         ${transactionstatus}    Get Text    ${${platformName}_selectCurrentTransaction1}
         @{transactionstatusdetail}    Split String    ${transactionstatus}    Policy no
         ${transactionstatus}    Get From List    ${transactionstatusdetail}    0
-        @{transactionstatusdetail}    Split String    ${transactionstatus}    Change of recurring payment
+        @{transactionstatusdetail}    Split String    ${transactionstatus}    Credit card recurring payment
         ${transactionstatus}    Get From List    ${transactionstatusdetail}    1
         ${strtransactionstatus}    Convert To Title Case    ${transactionstatus}
         ${mTransactionstatus}    Set Variable    ${strtransactionstatus.strip()}
@@ -481,15 +481,15 @@ Capture RCC Transaction Details for Android
     Sleep    10s
     RefreshPage
     ${Android_selectCurrentTransaction}    Set Variable
-        ...    xpath=(//android.widget.TextView[@text='${current_day}']/following-sibling::android.widget.TextView[@text='${current_month}']/parent::android.view.ViewGroup/following-sibling::android.widget.TextView[@text='Change of recurring payment'])[1]
+        ...    xpath=(//android.widget.TextView[@text='${current_day}']/following-sibling::android.widget.TextView[@text='${current_month}']/parent::android.view.ViewGroup/following-sibling::android.widget.TextView[@text='Credit card recurring payment'])[1]
 
     Scroll Till Transaction Is Visible    ${${platformName}_selectCurrentTransaction}
 
     ${transactionstatus}    Get Text
-    ...    xpath=(//android.widget.TextView[@text='${current_day}']/following-sibling::android.widget.TextView[@text='${current_month}']/parent::android.view.ViewGroup/following-sibling::android.widget.TextView[@text='Change of recurring payment']/following-sibling::android.view.ViewGroup/android.widget.TextView)[1]
+    ...    xpath=(//android.widget.TextView[@text='${current_day}']/following-sibling::android.widget.TextView[@text='${current_month}']/parent::android.view.ViewGroup/following-sibling::android.widget.TextView[@text='Credit card recurring payment']/following-sibling::android.view.ViewGroup/android.widget.TextView)[1]
     ${transactionstatus}    Convert To Title Case    ${transactionstatus}
     ${policyno}    Get Text
-    ...    xpath=//android.widget.TextView[@text='${current_day}']/following-sibling::android.widget.TextView[@text='${current_month}']/parent::android.view.ViewGroup/following-sibling::android.widget.TextView[@text='Change of recurring payment']/following-sibling::android.widget.TextView[contains(@text,'Policy no:')]
+    ...    xpath=//android.widget.TextView[@text='${current_day}']/following-sibling::android.widget.TextView[@text='${current_month}']/parent::android.view.ViewGroup/following-sibling::android.widget.TextView[@text='Credit card recurring payment']/following-sibling::android.widget.TextView[contains(@text,'Policy no:')]
     @{policyno}    Split String    ${policyno}    Policy no:
     ${policyno}    Get From List    ${policyno}    -1
 

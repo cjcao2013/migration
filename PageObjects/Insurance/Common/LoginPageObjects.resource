@@ -132,7 +132,7 @@ ${iOS_EN_MobileISDCode}                         chain=**/XCUIElementTypeOther[`l
 ${iOS_EN_SignUp_CreateAnAccountText}            chain=**/XCUIElementTypeOther[`label BEGINSWITH "Create an account"`][-1]
 ${iOS_EN_Country}                               chain=**/XCUIElementTypeOther[`label == "Country"`][2]
 ${iOS_EN_Document_Type}                         chain=**/XCUIElementTypeOther[`label == "Document type"`][-1]
-${iOS_EN_Document_Number}                       chain=**/XCUIElementTypeOther[`name == "Document number"`][2]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeTextField
+${iOS_EN_Document_Number}                       chain=**/XCUIElementTypeOther[`name == "Document number"`]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeTextField
 ${iOS_EN_InvaildNumberError}                        chain=**/XCUIElementTypeStaticText[`label == "Invalid document number"`]
 ${iOS_EN_IncorrectDataValidationMsg}            chain=**/XCUIElementTypeStaticText[`label CONTAINS "We are unable to find your information"`][-1]
 ${iOS_EN_MMM_dropdown}                chain=**/XCUIElementTypeOther[`label == 'MMM'`]
@@ -160,3 +160,7 @@ ${iOS_EN_Option_Sleep_Better}               chain=**/XCUIElementTypeOther[`label
 ${Android_EN_Option_Sleep_Better}           android=new UiSelector().text("Sleep Better")
 ${iOS_EN_Ok_button_popupPage}               chain=**/XCUIElementTypeButton[`label == "OK"`]
 ${Android_EN_Ok_button_popupPage}           android=new UiSelector().description("OK")
+
+#1 insurance link policy objects
+${iOS_EN_UnlinkPolicy_chkBox}       chain=**/XCUIElementTypeOther[`name BEGINSWITH "Unlink policy"`][1]/XCUIElementTypeOther[1]
+${iOS_EN_AnothersignIn_Link}        chain=**/XCUIElementTypeOther[`name == "Sign in with another account"`][2]

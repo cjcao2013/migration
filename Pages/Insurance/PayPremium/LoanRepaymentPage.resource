@@ -81,41 +81,67 @@ Loan repayment
 
             Take Screenshot    Loan_Repayment
             IF    '${Request_Amount}' == 'Specify amount (THB)'
-            Click Element    ${${platformName}_${lang}_PolicyLoan_RequestAmount}
-            ${Loanlimitasoftoday}    Convert To Number    ${mVP_Totalasoftoday}
-            # Calculate Policy Max Limit
-            ${Max_LoanLimit}    Evaluate    ${Loanlimitasoftoday} + 100
-            Wait Until Element Is Visible    ${${platformName}_${lang}_PolicyLoanAmt}       timeout=5s
-            Input Text    ${${platformName}_${lang}_PolicyLoanAmt}    ${Max_LoanLimit}\n
-            # Capture Policy Max limit Error
-            ${status}    Run Keyword And Return Status
-            ...    Element Should Be Visible
-            ...    ${${platformName}_${lang}_Max_LoanLimit_Error}
-            IF    '${status}' == 'True'
-                Take Screenshot    Policy_Loan_Max_Limit_Error
-                ${Error_MaxLoanLimit}    Get Text    ${${platformName}_${lang}_Max_LoanLimit_Error}
-                Set Calc VP With Source And Original Values
-                ...    PolicyLoan_MaxLimit_ErrorMsg
-                ...    ${Error_MaxLoanLimit}
-                ...    ${Error_MaxLoanLimit}
-                ...    static
-                ...    Omne Application
-                ...    ${Error_MaxLoanLimit}
-                ...    ${Error_MaxLoanLimit}
+                Click Element    ${${platformName}_${lang}_PolicyLoan_RequestAmount}
+                ${Loanlimitasoftoday}    Convert To Number    ${mVP_Totalasoftoday}
+                # Calculate Policy Max Limit
+                ${Max_LoanLimit}    Evaluate    ${Loanlimitasoftoday} + 100
+                Wait Until Element Is Visible    ${${platformName}_${lang}_PolicyLoanAmt}       timeout=5s
+                Input Text    ${${platformName}_${lang}_PolicyLoanAmt}    ${Max_LoanLimit}\n
+                # Capture Policy Max limit Error
+                ${status}    Run Keyword And Return Status
+                ...    Element Should Be Visible
+                ...    ${${platformName}_${lang}_Max_LoanLimit_Error}
+                IF    '${status}' == 'True'
+                    Take Screenshot    Policy_Loan_Max_Limit_Error
+                    ${Error_MaxLoanLimit}    Get Text    ${${platformName}_${lang}_Max_LoanLimit_Error}
+                    Set Calc VP With Source And Original Values
+                    ...    PolicyLoan_MaxLimit_ErrorMsg
+                    ...    ${Error_MaxLoanLimit}
+                    ...    ${Error_MaxLoanLimit}
+                    ...    static
+                    ...    Omne Application
+                    ...    ${Error_MaxLoanLimit}
+                    ...    ${Error_MaxLoanLimit}
+                END
+                Wait Until Element Is Visible    ${${platformName}_${lang}_Totalasoftoday_txt}  timeout=1s
+                Click Element    ${${platformName}_${lang}_Totalasoftoday_txt}
+                Wait Until Element Is Visible    ${${platformName}_${lang}_PolicyLoan_RequestAmount}       timeout=1s
+                Click Element    ${${platformName}_${lang}_PolicyLoan_RequestAmount}
+                Input Text    ${${platformName}_${lang}_PolicyLoanAmt}    ${Min_LoanLimit}\n
+                Take Screenshot    Min Loan Limit
+                # Capture Policy Min limit Error
+                ${status}    Run Keyword And Return Status
+                ...    Element Should Be Visible
+                ...    ${${platformName}_${lang}_Min_LoanLimit_Error}
+                IF    '${status}' == 'True'
+                    Take Screenshot    Policy_Loan_Max_Limit_Error
+                    ${Error_MinLoanLimit}    Get Text    ${${platformName}_${lang}_Min_LoanLimit_Error}
+                    Set Calc VP With Source And Original Values
+                    ...    PolicyLoan_MinLimit_ErrorMsg
+                    ...    ${Error_MinLoanLimit}
+                    ...    ${Error_MinLoanLimit}
+                    ...    static
+                    ...    Omne Application
+                    ...    ${Error_MinLoanLimit}
+                    ...    ${Error_MinLoanLimit}
+                END
+                Wait Until Element Is Visible    ${${platformName}_${lang}_Totalasoftoday_txt}  timeout=1s
+                Click Element    ${${platformName}_${lang}_Totalasoftoday_txt}
+                Wait Until Element Is Visible    ${${platformName}_${lang}_PolicyLoan_RequestAmount}       timeout=1s
+                Click Element    ${${platformName}_${lang}_PolicyLoan_RequestAmount}
+                Input Text    ${${platformName}_${lang}_PolicyLoanAmt}    ${Loan_Amount}\n
+            ELSE
+                Click Element   ${${platformName}_${lang}_PolicyLoan_RequestAmount}
+                ${status}    Run Keyword And Return Status  Wait Until Element Is Visible    ${${platformName}_${lang}_PolicyLoanAmt}   timeout=5s
+                IF    '${status}' == 'False'
+                    ${status}   Run Keyword And Return Status   Element Should Be Disabled    chain=**/XCUIElementTypeOther[`label == "Specify amount (THB)"`]
+                END
             END
-            Wait Until Element Is Visible    ${${platformName}_${lang}_Totalasoftoday_txt}  timeout=1s
-            Click Element    ${${platformName}_${lang}_Totalasoftoday_txt}
-            Wait Until Element Is Visible    ${${platformName}_${lang}_PolicyLoan_RequestAmount}       timeout=1s
-            Click Element    ${${platformName}_${lang}_PolicyLoan_RequestAmount}
-            Input Text    ${${platformName}_${lang}_PolicyLoanAmt}    ${Loan_Amount}\n
-        ELSE
-            Click Element    ${${platformName}_${lang}_PolicyLoanAmt}
-        END
             Take Screenshot    Loan_Repayment
-        SwipePage
-        Click Element    ${${platformName}_${lang}_PayNow}
-        # QR Scan Page
-         QR Code
+            SwipePage
+            Click Element    ${${platformName}_${lang}_PayNow}
+            # QR Scan Page
+             QR Code
     EXCEPT     AS  ${reason}
         Set Failed Actual Result and VP    Omne_Flow   ${reason}   Loan repayment ${Insurance_Flow}
     END
