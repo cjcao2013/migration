@@ -4,28 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8ff2f2f0-a2e2-4b9a-9a67-5a537c476714" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+    <list default="true" id="e4bc5f1d-9a4d-4678-a894-5563ed4f5550" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/thailand.iml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CustomLibraries/MailSac/mailsacAPIExecutor.robot" beforeDir="false" afterPath="$PROJECT_DIR$/CustomLibraries/MailSac/mailsacAPIExecutor.robot" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PageObjects/Insurance/Common/LoginPageObjects.resource" beforeDir="false" afterPath="$PROJECT_DIR$/PageObjects/Insurance/Common/LoginPageObjects.resource" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PageObjects/Insurance/Common/UploadDocumentObjects.resource" beforeDir="false" afterPath="$PROJECT_DIR$/PageObjects/Insurance/Common/UploadDocumentObjects.resource" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PageObjects/Insurance/UpdatePolicy/ChangeBeneficiaryPageObjects.resource" beforeDir="false" afterPath="$PROJECT_DIR$/PageObjects/Insurance/UpdatePolicy/ChangeBeneficiaryPageObjects.resource" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PageObjects/Insurance/UpdatePolicy/PersonalDetailsPageObject.resource" beforeDir="false" afterPath="$PROJECT_DIR$/PageObjects/Insurance/UpdatePolicy/PersonalDetailsPageObject.resource" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PageObjects/Insurance/UpdatePolicy/UpdatePoliciesmoduleSelectPageObject.resource" beforeDir="false" afterPath="$PROJECT_DIR$/PageObjects/Insurance/UpdatePolicy/UpdatePoliciesmoduleSelectPageObject.resource" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PageObjects/Insurance/ViewPolicyInvestment/ViewPolicyDetailsPageObjects.resource" beforeDir="false" afterPath="$PROJECT_DIR$/PageObjects/Insurance/ViewPolicyInvestment/ViewPolicyDetailsPageObjects.resource" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pages/Insurance/Common/AddOTP.resource" beforeDir="false" afterPath="$PROJECT_DIR$/Pages/Insurance/Common/AddOTP.resource" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pages/Insurance/Common/CommonMethod.resource" beforeDir="false" afterPath="$PROJECT_DIR$/Pages/Insurance/Common/CommonMethod.resource" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pages/Insurance/Common/ForgotMPIN.resource" beforeDir="false" afterPath="$PROJECT_DIR$/Pages/Insurance/Common/ForgotMPIN.resource" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PageObjects/Insurance/PayPremium/LoanRepaymentPageObjects.resource" beforeDir="false" afterPath="$PROJECT_DIR$/PageObjects/Insurance/PayPremium/LoanRepaymentPageObjects.resource" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Pages/Insurance/Common/LoginPage.resource" beforeDir="false" afterPath="$PROJECT_DIR$/Pages/Insurance/Common/LoginPage.resource" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Pages/Insurance/PayPremium/LoanRepaymentPage.resource" beforeDir="false" afterPath="$PROJECT_DIR$/Pages/Insurance/PayPremium/LoanRepaymentPage.resource" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pages/Insurance/UpdatePolicy/ChangeBeneficiaryPage.resource" beforeDir="false" afterPath="$PROJECT_DIR$/Pages/Insurance/UpdatePolicy/ChangeBeneficiaryPage.resource" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pages/Insurance/UpdatePolicy/ChangeMobileAndEmailPage.resource" beforeDir="false" afterPath="$PROJECT_DIR$/Pages/Insurance/UpdatePolicy/ChangeMobileAndEmailPage.resource" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pages/Insurance/UpdatePolicy/PersonalDetailsPage.resource" beforeDir="false" afterPath="$PROJECT_DIR$/Pages/Insurance/UpdatePolicy/PersonalDetailsPage.resource" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pages/Insurance/UpdatePolicy/RiskProfileDetailsPage.resource" beforeDir="false" afterPath="$PROJECT_DIR$/Pages/Insurance/UpdatePolicy/RiskProfileDetailsPage.resource" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pages/Insurance/UpdatePolicy/UpdatePoliciesmoduleSelectPage.resource" beforeDir="false" afterPath="$PROJECT_DIR$/Pages/Insurance/UpdatePolicy/UpdatePoliciesmoduleSelectPage.resource" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pages/OPUS/OPUSPaymentFrequencyPage.resource" beforeDir="false" afterPath="$PROJECT_DIR$/Pages/OPUS/OPUSPaymentFrequencyPage.resource" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Qrace/QraceHelper.py" beforeDir="false" afterPath="$PROJECT_DIR$/Qrace/QraceHelper.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pages/Insurance/UpdatePolicy/RecurringPaymentPage.resource" beforeDir="false" afterPath="$PROJECT_DIR$/Pages/Insurance/UpdatePolicy/RecurringPaymentPage.resource" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pages/Insurance/ViewTransaction/TransactionDetailsPage.resource" beforeDir="false" afterPath="$PROJECT_DIR$/Pages/Insurance/ViewTransaction/TransactionDetailsPage.resource" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,70 +27,31 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
   &quot;associatedIndex&quot;: 7
 }</component>
-  <component name="ProjectId" id="2rHuUhcLHZkdKvJu9tLtwOV8x1g" />
+  <component name="ProjectId" id="32j8l8qBo78ZX8PP1QSBxz8C2sH" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Robot Framework.run [DemoQA Sample Flow].executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;TH__Enhancement__Automation__Script&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/223741/OneDrive - FWD Group Management Holdings Limited/QKFolder/Automation_Script/JP_OPUS_Code_WIth_Excel&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "TH__Enhancement__Automation__Script",
+    "last_opened_file_path": "C:/Users/227255/OneDrive - FWD Group Management Holdings Limited/TH Code_17Sep25"
   }
-}</component>
-  <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\223741\OneDrive - FWD Group Management Holdings Limited\QKFolder\Automation_Script\TH Code\Pages\Insurance\PayorOnbording" />
-      <recent name="C:\Users\223741\OneDrive - FWD Group Management Holdings Limited\QKFolder\Automation_Script\TH Code\Pages\Insurance\TrueOnbording" />
-      <recent name="C:\Users\223741\OneDrive - FWD Group Management Holdings Limited\QKFolder\Automation_Script\TH Code\CustomLibraries\ClaimImages" />
-      <recent name="C:\Users\223741\OneDrive - FWD Group Management Holdings Limited\QKFolder\Automation_Script\TH Code\Pages\OWB" />
-      <recent name="C:\Users\223741\OneDrive - FWD Group Management Holdings Limited\QKFolder\Automation_Script\TH Code\Pages\Insurance" />
-    </key>
-  </component>
-  <component name="SharedIndexes">
-    <attachedChunks>
-      <set>
-        <option value="bundled-python-sdk-4f4e415b4190-aa17d162503b-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-243.26053.29" />
-      </set>
-    </attachedChunks>
-  </component>
+}]]></component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="8ff2f2f0-a2e2-4b9a-9a67-5a537c476714" name="Changes" comment="" />
-      <created>1736228338296</created>
+      <changelist id="e4bc5f1d-9a4d-4678-a894-5563ed4f5550" name="Changes" comment="" />
+      <created>1757922770336</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1736228338296</updated>
+      <updated>1757922770336</updated>
     </task>
     <servers />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="robot-line">
-          <url>file://$PROJECT_DIR$/Pages/OWB/OwbLoginPage.resource</url>
-          <line>17</line>
-          <option name="timeStamp" value="8" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="robot-line">
-          <url>file://$PROJECT_DIR$/Pages/Insurance/UpdatePolicy/PaymentMethodDetailsPage.resource</url>
-          <line>223</line>
-          <option name="timeStamp" value="9" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="robot-line">
-          <url>file://$PROJECT_DIR$/CustomLibraries/common.robot</url>
-          <line>74</line>
-          <option name="timeStamp" value="10" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

@@ -6,6 +6,7 @@ ${iOS_EN_Interestrate}                   chain=**/XCUIElementTypeOther[`label BE
 ${iOS_EN_Totalasoftoday}                            chain=**/XCUIElementTypeOther[`label BEGINSWITH "Total as of today"`]/XCUIElementTypeStaticText[2]
 ${iOS_EN_PolicyLoanAmt}                     chain=**/XCUIElementTypeOther[`label BEGINSWITH "Enter amount here"`]
 ${iOS_EN_Max_LoanLimit_Error}                       chain=**/XCUIElementTypeStaticText[`label == "The inputted amount cannot be greater than the total as of today"`]
+${iOS_EN_Min_LoanLimit_Error}                       chain=**/XCUIElementTypeStaticText[`label == "Please ensure that the minimum amount is equal or greater than THB 500.00"`]
 ${iOS_EN_Totalasoftoday_txt}                     chain=**/XCUIElementTypeOther[`label == "Total as of today"`]
 ${iOS_EN_PayNow}                     chain=**/XCUIElementTypeButton[`label == "Pay now"`]
 ${iOS_EN_QRcode_txt}                   chain=**/XCUIElementTypeStaticText[`label == "QR code for bank transfer"`]
