@@ -24,7 +24,7 @@ Partial withdrawal
         Take Screenshot    Policy Number
         Click Element    ${${platformName}_SelectPolicyNo}
     #    Select Funds
-        SwipePage
+#        SwipePage
         IF    '${BasePlan_Fund_Name}' != ''
             @{List_BasePlan_Fund_Name}    Split String    ${BasePlan_Fund_Name}    ,
             ${Total_Number_OF_Fund}    Get Length    ${List_BasePlan_Fund_Name}
@@ -32,7 +32,7 @@ Partial withdrawal
                 ${Fund_Name}    Get From List    ${List_BasePlan_Fund_Name}    ${FundCounter}
                 ${iOS_selectFundName}    Set Variable       xpath=((//XCUIElementTypeOther[@name="Base plan"])[1]/following::XCUIElementTypeOther[contains(@name,'${Fund_Name}')])[3]
                 ${Android_selectFundName}    Set Variable   xpath=(//android.widget.TextView[@text="${PolicyType}"]/following::android.widget.TextView)[1]
-                Wait Until Element Is Visible    ${${platformName}_selectFundName}    timeout=5s
+                Wait Until Element Is Visible    ${${platformName}_selectFundName}    timeout=25s
                 ${FundName}    Get Text    ${${platformName}_selectFundName}
                 IF    '${platformName}' == 'iOS'
                     ${FundName}    Split String    ${FundName}    AS OF

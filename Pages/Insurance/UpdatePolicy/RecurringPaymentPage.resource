@@ -58,6 +58,7 @@ Credit card recurring payment
             ...    ${${platformName}_${lang}_RecurringPayment_DisclaimerContent}
             #    Set Calc VP With Source And Original Values    Recurring_Payment_DisclaimerContent    ${DisclaimerContent.strip()}    ${VP_RecurringPayment_DisclaimerContent.strip()}    Static    OMNE_Recurring_Payment_Page    ${DisclaimerContent.strip()}    ${VP_RecurringPayment_DisclaimerContent.strip()}
         END
+
         Wait Until Element Is Visible    ${${platformName}_SelectPolicyNo}    timeout=20s
         ${VP_RecurringPayment_PolicyDetails}    Get Text    ${${platformName}_SelectPolicyNo}
         IF    '${platformName}' == 'iOS'
@@ -117,6 +118,7 @@ Credit card recurring payment
             ...    false
             ...    ${Status}
         END
+
         Click Element    ${${platformName}_${lang}_NextButton}
         Take Screenshot   Disclaimer Page
         ${status}    Run Keyword And Return Status
@@ -127,6 +129,16 @@ Credit card recurring payment
             Click Element    ${${platformName}_${lang}_DisPageNextButton}
         END
         Wait Until Element Is Visible    ${${platformName}_${lang}_HeaderText}    timeout=30s
+        ${VP_RecurringPayment_Note}    Get Text    ${${platformName}_${lang}_RecurringPayment_NoteText}
+         ${Static_Text}     Set Variable        Requests to update credit card information or cancel recurring payment must be submitted at least 10 days before the due date.
+            Set Calc VP With Source And Original Values
+            ...    Recurring_Payment_Note_Text
+            ...    ${Static_Text}
+            ...    ${VP_RecurringPayment_Note}
+            ...    Static
+            ...    OMNE_Recurring_Payment_Page
+            ...    ${Static_Text}
+            ...    ${VP_RecurringPayment_Note}
         Run Keyword    Add Payment Method RCC
         SwipePage
         ${status}    Run Keyword And Return Status

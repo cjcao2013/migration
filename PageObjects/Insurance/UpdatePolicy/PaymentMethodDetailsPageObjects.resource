@@ -32,8 +32,9 @@ ${iOS_EN_ServiceRequest_section}                                    chain=**/XCU
 ${iOS_EN_TransactionVPRCC}                                          chain=**/XCUIElementTypeOther[`label CONTAINS "Policy applied"`][27]
 ${iOS_EN_Required_Error_TXT}                                        chain=**/XCUIElementTypeStaticText[`label == "Required"`]
 ${iOS_EN_No_SingleCharAllow_Error_TXT}                              chain=**/XCUIElementTypeStaticText[`label == "No single character input allowed"`]
+${iOS_EN_RecurringPayment_NoteText}                                 accessibility_id=RecurringPayment-note-text
 
-
+${Android_EN_RecurringPayment_NoteText}                             android=new UiSelector().resourceId("RecurringPayment-note-text")
 ${Android_EN_Add_payment_method}                                    xpath=(//android.widget.TextView[contains(@text,'Add payment method')])
 ${Android_EN_cardHolderName}                                        xpath=//android.widget.EditText[@resource-id='RecurringPayment-card-holder-name-input']
 ${Android_EN_cardNumber}                                            xpath=//android.widget.EditText[@resource-id='RecurringPayment-credit-card-number-input']

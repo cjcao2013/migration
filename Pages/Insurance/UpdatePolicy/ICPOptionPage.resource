@@ -36,6 +36,8 @@ Preferred payout
             Wait Until Element Is Visible    ${${platformName}_${lang}_CaspayoutOption}        timeout=20s
             Click Element           ${${platformName}_${lang}_CaspayoutOption}
         END
+#        Wait Until Element Is Visible    ${${platformName}_${lang}_CaspayoutOption}        timeout=20s
+#        Click Element           ${${platformName}_${lang}_CaspayoutOption}
         Take Screenshot    Cash_Payout_Option_page
         IF    '${CashPayout_Option}' == 'Bank transfer' or '${CashPayout_Option}' == 'Premium settlement'
             Sleep    2s

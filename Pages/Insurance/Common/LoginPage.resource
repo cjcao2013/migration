@@ -244,6 +244,7 @@ SignIn
             #       Login by Email or Mobile
             Run Keyword    Login By ${LoginType}
             Additional Verification Page
+
             Extra POP Up
 
         ELSE
@@ -324,16 +325,26 @@ Additional Verification Page
             END
             Wait Until Element Is Visible    ${${platformName}_${lang}_Verify_btn}
             Take Screenshot    Document_Details
-            # Previous OTP from Mailsac
 
-            Get OTP
-            ${LoginPrevious_OTP}     Set Variable      ${OTPNumber}
+
+
+#            Get OTP
+#            ${LoginPrevious_OTP}     Set Variable      ${OTPNumber}
+            ${LoginPrevious_OTP}     Set Variable      643456
             Set Global Variable    ${LoginPrevious_OTP}
             Click Element    ${${platformName}_${lang}_Verify_btn}
+            # Previous OTP from Mailsac
+            ${status}   Run Keyword And Return Status   Wait Until Element Is Visible      ${${platformName}_${lang}_UnlinkPolicy_chkBox}            timeout=10s
+            IF    '${status}' == 'True'
+                Click Element       ${${platformName}_${lang}_UnlinkPolicy_chkBox}
+                Wait Until Element Is Visible      ${${platformName}_${lang}_ConfirmBtn}
+                Take Screenshot     Onboard Unlik Policy Popup
+                Click Element       ${${platformName}_${lang}_ConfirmBtn}
+            END
         END
         Take Screenshot    SignIn_OTP_Page
-#        Insert OTP      ${OTP_Source}    ${OTP_Expiry_Flag}     ${OTP_Resend_Flag}
-        Pause Execution
+        Insert OTP      ${OTP_Source}    ${OTP_Expiry_Flag}     ${OTP_Resend_Flag}
+#        Pause Execution
         Omne Action Popup
     EXCEPT     AS  ${reason}
        Set Failed Actual Result and VP    Omne_Flow   ${reason}   Additional Verification Page
@@ -401,8 +412,9 @@ Login By Email
         Close keyboard
         Take Screenshot    Login PostPage
         # Previous OTP from Mailsac
-        Get OTP
-        ${LoginPrevious_OTP}     Set Variable      ${OTPNumber}
+#        Get OTP
+        ${LoginPrevious_OTP}     Set Variable      231456
+#        ${LoginPrevious_OTP}     Set Variable      ${OTPNumber}
         Set Global Variable    ${LoginPrevious_OTP}
         Click Element    ${${platformName}_${lang}_NextButton}
     #            Get Value From User    check

@@ -17,7 +17,7 @@ ${headless}         false
 #    ...    plugins.always_open_pdf_externally: True
 
 ${capabilities}     ${EMPTY.join(${_tmp})}
-${remote_url}       http://localhost:4444/wd/hub
+${remote_url}       http://localhost:4445/wd/hub
 
 
 *** Keywords ***

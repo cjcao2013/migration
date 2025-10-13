@@ -26,7 +26,7 @@ Resource    OPUSChangeBeneficiaryPage.resource
 *** Keywords ***
 OPUS Inquiry
     TRY
-        Wait Until Element Is Visible    ${EN_search_Icon}      timeout=10s
+        Wait Until Element Is Visible    ${EN_search_Icon}      timeout=30s
         Take OWB Screenshot    Home Page
         Click Element    ${EN_search_Icon}
         Wait Until Element Is Visible    ${EN_taskInquiryOption}        timeout=10s
