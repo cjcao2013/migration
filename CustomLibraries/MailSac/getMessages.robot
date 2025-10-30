@@ -22,7 +22,7 @@ Get Latest Message ID
         END
         Set Global Variable    ${messageId}
         Log To Console    ${response.status_code}
-       ${ResBody}   Evaluate       json.dumps(${Response.json()})
+        ${ResBody}   Evaluate       json.dumps(${Response.json()})
         ${response_body}   Convert To String    ${Res_body}
         Create File     ${screenshotPath}\\getMessages_response.json     ${response_body}
     EXCEPT     AS  ${reason}

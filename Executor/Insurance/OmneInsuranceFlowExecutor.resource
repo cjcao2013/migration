@@ -141,6 +141,7 @@ Call OWB OPUS and LA IL
         Set Global Variable    ${actualResult}
 
         IF    '${failstatus}' == 'False'
+#            Pause Execution
             Run Keyword   Transaction after Complete
             ${actualResult}=    Catenate    ${actualResult}  |  ${result}
             Set Global Variable    ${actualResult}

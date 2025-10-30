@@ -344,7 +344,7 @@ Additional Verification Page
         END
         Take Screenshot    SignIn_OTP_Page
         Insert OTP      ${OTP_Source}    ${OTP_Expiry_Flag}     ${OTP_Resend_Flag}
-#        Pause Execution
+       #   Pause Execution
         Omne Action Popup
     EXCEPT     AS  ${reason}
        Set Failed Actual Result and VP    Omne_Flow   ${reason}   Additional Verification Page

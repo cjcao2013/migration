@@ -455,7 +455,7 @@ Claim Payment Method
 Add Diagnosis
     Wait Until Element Is Visible       ${${platformName}_${lang}_DiagnosisOption}      timeout=10s
     Click Element    ${${platformName}_${lang}_DiagnosisOption}
-    ${iOS_SelectDiagnosis}    Set Variable    chain=**/XCUIElementTypeOther[`label CONTAINS '${Diagnosis}'`][-1]
+    ${iOS_SelectDiagnosis}    Set Variable    chain=**/XCUIElementTypeOther[`label CONTAINS "${Diagnosis}"`][-1]
     ${Android_SelectDiagnosis}    Set Variable    xpath=//android.widget.TextView[contains(@text,'${Diagnosis}')]
     ${status}    Run Keyword And Return Status
     ...    Wait Until Element Is Visible

@@ -31,20 +31,26 @@ Mobile and Email Change
             Take Screenshot    Update_Details
             IF    '${PersonalDetails_WhatChange}' == 'MobileNo'
                 Mobile Change
+                ${Static_Message}        Set Variable            FWD has successfully updated your mobile number as requested.
             ELSE
                 Email Change
+                ${Static_Message}        Set Variable            We are delighted to confirm that we have completed your Change of Email address request.
             END
+            Set Global Variable    ${Static_Message}
+
             Get Details from DB
             ${Previous_OTP}    Set Variable    ${OTPNumber}
             Set Global Variable    ${Previous_OTP}
             Wait Until Element Is Visible    ${${platformName}_${lang}_btnSave}    timeout=10s
             Click Element    ${${platformName}_${lang}_btnSave}
             Take Screenshot    Update_Details
-
+            
             ${status}    Run Keyword And Return Status    Wait Until Element Is Visible    ${${platformName}_${lang}_OTP_email}
             IF    '${status}' == 'True'
                 Insert OTP    ${Transaction_OTP_Source}    ${Transaction_OTP_Expiry_Flag}    ${Transaction_OTP_Resend_Flag}
             END
+            #Check confirmation emaik
+            Get Email
             # New All Done Confirmation Page
             Run Keyword    Check Transaction Status
             Run Keyword    Handle Feedback
@@ -112,7 +118,7 @@ Email Change
     ...    ${email}
     ...    OmneApplication
     Set Calc VP Expected Result With Original And Source    MailID_DB    ${email}    ${email}    OmneApplication
-
+    
 Mobile Change
 
 

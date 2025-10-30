@@ -186,4 +186,33 @@ Get COI Information from mail
         Set Failed Actual Result and VP    Omne_Flow   ${reason}   Capture Change Name Transaction Details for iOS
     END
 
+Get Transaction Confirmation Email
+    [Documentation]         read the email from mailsac for confirmation after email and mobile change
+        ${url}      Set Variable      ${base_url}api/dirty/${oldUsername}/${messageId}
+        &{header}=    Create Dictionary       Mailsac-Key=${mailSacKey}
+        ${response}=     GET         url=${url}     headers=${header}       verify=${False}
+
+        Log To Console    ${response.status_code}
+        Log    ${response.text}
+        ${response_body}        Set Variable        ${response.text}
+
+        Create File     ${screenshotPath}\\Confirmation_Email_Body_response.html     ${response_body}
+
+        # Capture the Header
+        ${Confirmation_Email_Header}      Split String    ${response_body}            h2>
+        ${Email_Header}      Set Variable      ${Confirmation_Email_Header}[1]
+        ${Email_Header}      Fetch From Left    ${Email_Header}    </h>
+
+        ${Static_Header}        Set Variable            We’ve completed your request.
+        Set Calc VP With Source And Original Values    Confimation_Email_header    ${Static_Header}    ${Email_Header}    Static    Mailsac_API    ${Static_Header}    ${Email_Header}
+
+        # Capture the  Email Messgae
+        ${Confirmation_Email_Message}      Split String    ${response_body}            16px;">
+        ${Email_Message}      Set Variable      ${Confirmation_Email_Message}[1]
+        ${Email_Message}      Fetch From Left    ${Email_Message}    </span>
+
+
+
+        Set Calc VP With Source And Original Values    Confimation_Email_header    ${Static_Message}    ${Email_Message}    Static    Mailsac_API    ${Static_Message}    ${Email_Message}
+
 
