@@ -268,3 +268,25 @@ ${iOS_EN_Document_SaveButton}                           chain=**/XCUIElementType
 ${iOS_EN_SaveNotificationPopUp}                         chain=**/XCUIElementTypeButton[`label == "Replace"`]
 
 ${iOS_EN_Policy_List}                       chain=**/XCUIElementTypeOther[`name='fwd-mypolicies-flatlist'`]/XCUIElementTypeScrollView/XCUIElementTypeOther/XCUIElementTypeOther
+
+#Indicative_dividend
+${iOS_EN_Indicative_dividend}							chain=**/XCUIElementTypeOther[`name == "Indicative dividend"`]
+${iOS_EN_Indicative_dividend_View details}				chain=**/XCUIElementTypeButton[`name == "View details"`]
+
+${iOS_EN_first30PerPortion_1}							xpath=(//XCUIElementTypeOther[@name="Indicative dividend"]//parent::XCUIElementTypeOther//descendant::XCUIElementTypeStaticText)[1]
+${iOS_EN_first70PerPortion_1}							xpath=(//XCUIElementTypeOther[@name="Indicative dividend"]//parent::XCUIElementTypeOther//descendant::XCUIElementTypeStaticText)[2]
+
+${iOS_EN_Indicative_dividend_Page_Title}			chain=**/XCUIElementTypeStaticText[`name == "Indicative dividend"`]
+
+${iOS_EN_Data_as_per_initial_valuation_date_of}		xpath=//XCUIElementTypeStaticText[@name="Data as per initial valuation date of"]//parent::XCUIElementTypeOther//child::XCUIElementTypeStaticText[2]
+${iOS_EN_Underlying_index_level}					xpath=//XCUIElementTypeStaticText[@name="Data as per initial valuation date of"]//parent::XCUIElementTypeOther//following-sibling::XCUIElementTypeOther[1]//child::XCUIElementTypeOther[1]//XCUIElementTypeStaticText[last()]
+${iOS_EN_Exchange_rate_from_USD_to_THB_1}				xpath=//XCUIElementTypeStaticText[@name="Data as per initial valuation date of"]//parent::XCUIElementTypeOther//following-sibling::XCUIElementTypeOther[1]//child::XCUIElementTypeOther[2]//XCUIElementTypeStaticText[last()]
+${iOS_EN_Participation_rate_(PR)}					xpath=//XCUIElementTypeStaticText[@name="Data as per initial valuation date of"]//parent::XCUIElementTypeOther//following-sibling::XCUIElementTypeOther[1]//child::XCUIElementTypeOther[3]//XCUIElementTypeStaticText[last()]
+
+${iOS_EN_Index_data_as_of}							xpath=//XCUIElementTypeStaticText[@name="Index data as of"]//parent::XCUIElementTypeOther//child::XCUIElementTypeStaticText[2]
+${iOS_EN_Index_level_of}							xpath=//XCUIElementTypeStaticText[@name="Index data as of"]//parent::XCUIElementTypeOther//following-sibling::XCUIElementTypeOther[1]//child::XCUIElementTypeOther[1]//XCUIElementTypeStaticText[last()]
+${iOS_EN_Exchange_rate_from_USD_to_THB_2}		    xpath=//XCUIElementTypeStaticText[@name="Index data as of"]//parent::XCUIElementTypeOther//following-sibling::XCUIElementTypeOther[1]//child::XCUIElementTypeOther[2]//XCUIElementTypeStaticText[last()]
+${iOS_EN_first30PerPortion_2}                       xpath=(//XCUIElementTypeStaticText[@name="Indicative dividend amount overview"]//following-sibling::XCUIElementTypeOther[1]//child::XCUIElementTypeStaticText)[1]
+${iOS_EN_first70PerPortion_2}                       xpath=(//XCUIElementTypeStaticText[@name="Indicative dividend amount overview"]//following-sibling::XCUIElementTypeOther[1]//child::XCUIElementTypeStaticText)[4]
+
+${iOS_EN_Indicative_dividend_BackArrow}             xpath=(//XCUIElementTypeOther[@name="Indicative dividend"])[3]/XCUIElementTypeOther[1]/XCUIElementTypeOther

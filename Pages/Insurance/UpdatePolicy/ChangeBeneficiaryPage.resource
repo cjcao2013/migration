@@ -67,6 +67,7 @@ Beneficiary(s) details
         Set Global Variable    ${Previous_OTP}
         Take Screenshot    Beneficiary_View_Summary
         Click Element    ${${platformName}_${lang}_SubmitButton}
+        Sleep    3s
         ${sOutput}    Run Keyword And Ignore Error
         ...    Insert OTP
         ...    ${Transaction_OTP_Source}

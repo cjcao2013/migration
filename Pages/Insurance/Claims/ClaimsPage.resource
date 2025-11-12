@@ -136,7 +136,7 @@ Submit
             ${totCount}    Get Webelements    ${${platformName}_${lang}_medicalreceipt}
             ${totCount}    Get Length    ${totCount}
         END
-#        Set Calc VP Expected Result With Original And Source    TotalDocument    ${totCount}    ${totCount}    Claim
+#       Set Calc VP Expected Result With Original And Source    TotalDocument    ${totCount}    ${totCount}    Claim
         Wait Until Element Is Visible    ${${platformName}_${lang}_nextBtn}    timeout=10s
         Take Screenshot    Claim_Step2_Page
         SwipePage
@@ -273,6 +273,19 @@ Capture Review Page Details
         ...    ${convertaccidentdate}
         ...    OMNE_ClaimReviewPage
     END
+      ${status}    Run Keyword And Return Status
+    ...    Wait Until Element Is Visible
+    ...    ${${platformName}_${lang}_Recipt_Number}
+    ...    timeout=2s
+    IF    '${status}' == 'True'
+        ${VP_Recipt_Number}     Get Element Attribute    ${${platformName}_${lang}_Recipt_Number}   attribute=name
+        Set Calc VP Expected Result With Original And Source
+        ...    DateOfAccident
+        ...    ${VP_Recipt_Number}
+        ...    ${VP_Recipt_Number}
+        ...    OMNE_ClaimReviewPage
+    END
+
     ${status}    Run Keyword And Return Status
     ...    Wait Until Element Is Visible
     ...    ${${platformName}_${lang}_reviewDiagnosis}

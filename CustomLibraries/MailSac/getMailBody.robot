@@ -187,6 +187,7 @@ Get COI Information from mail
     END
 
 Get Transaction Confirmation Email
+    [Arguments]    ${oldUsername}   ${EmailType}
     [Documentation]         read the email from mailsac for confirmation after email and mobile change
         ${url}      Set Variable      ${base_url}api/dirty/${oldUsername}/${messageId}
         &{header}=    Create Dictionary       Mailsac-Key=${mailSacKey}
@@ -203,16 +204,27 @@ Get Transaction Confirmation Email
         ${Email_Header}      Set Variable      ${Confirmation_Email_Header}[1]
         ${Email_Header}      Fetch From Left    ${Email_Header}    </h>
 
-        ${Static_Header}        Set Variable            We’ve completed your request.
-        Set Calc VP With Source And Original Values    Confimation_Email_header    ${Static_Header}    ${Email_Header}    Static    Mailsac_API    ${Static_Header}    ${Email_Header}
+        ${Static_Message_From_New_EmailMobile}        Set Variable            We are delighted to confirm that we have completed your Change of Mobile number & Email address request.
+        ${Static_Message_From_Old_EmailMobile}        Set Variable            Your mobile number and email address linked to your insurance policy(s) were recently updated as requested. You're receiving this message to your previous email address for safety. If you did not request this update, please contact us on 087 339 982
 
-        # Capture the  Email Messgae
-        ${Confirmation_Email_Message}      Split String    ${response_body}            16px;">
-        ${Email_Message}      Set Variable      ${Confirmation_Email_Message}[1]
-        ${Email_Message}      Fetch From Left    ${Email_Message}    </span>
+        ${Static_Header_Old}        Set Variable            We’ve completed your request.
+        ${Static_Header_New}        Set Variable            We’ve completed your Change of Mobile number & Email address request.
+        Set Calc VP With Source And Original Values    Confimation_Email_header_${oldUsername}    ${Static_Header_${EmailType}}    ${Email_Header}    Static    Mailsac_API    ${Static_Header_${EmailType}}    ${Email_Header}
 
+        IF    '${EmailType}' == 'Old'
+                # Capture the  Email Message for old Email
+                ${Confirmation_Email_Message}      Split String    ${response_body}            16px;">
+                ${Email_Message}      Set Variable      ${Confirmation_Email_Message}[3]
+                ${Email_Message}      Fetch From Left    ${Email_Message}    </span>
 
+                Set Calc VP With Source And Original Values    Confimation_Email_Message_${oldUsername}    ${Static_Message_From_${EmailType}_EmailMobile}    ${Email_Message}    Static    Mailsac_API    ${Static_Message_From_${EmailType}_EmailMobile}    ${Email_Message}
 
-        Set Calc VP With Source And Original Values    Confimation_Email_header    ${Static_Message}    ${Email_Message}    Static    Mailsac_API    ${Static_Message}    ${Email_Message}
+        ELSE
+                # Capture the  Email Message for New email
+                ${Confirmation_Email_Message}      Split String    ${response_body}            16px;">
+                ${Email_Message}      Set Variable      ${Confirmation_Email_Message}[2]
+                ${Email_Message}      Fetch From Left    ${Email_Message}    </span>
 
+                Set Calc VP With Source And Original Values    Confimation_Email_Message_${oldUsername}    ${Static_Message_From_${EmailType}_EmailMobile}    ${Email_Message}    Static    Mailsac_API    ${Static_Message_From_${EmailType}_EmailMobile}    ${Email_Message}
 
+        END

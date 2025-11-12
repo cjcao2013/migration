@@ -90,6 +90,13 @@ My policy(s)
                 RefreshPage
                 Scroll Till Transaction Is Visible    ${SelectedPolicy_Moredetail_Element}
                 Click Element     ${SelectedPolicy_Moredetail_Element}
+                ${sOutput}  Run Keyword And Ignore Error    Get View Policy DB VPs
+                IF    ${sOutput} != ('PASS', None)
+                    ${failure_reason}    Fetch Reason    ${sOutput}
+                    RETURN       ${failure_reason}
+                ELSE
+                    Set Global Variable    ${result}    ${result} | View Policy DB Query is successful
+                END
                 ${sOutput}  Run Keyword And Ignore Error    Capture Policy Details
                 IF    ${sOutput} != ('PASS', None)
                     ${failure_reason}    Fetch Reason    ${sOutput}
@@ -98,13 +105,7 @@ My policy(s)
                     Set Global Variable    ${result}    View Policy Passed Successfully for ${Policy_No}
                 END
                 #view specific tab in viewpolicy module
-                ${sOutput}  Run Keyword And Ignore Error    Get View Policy DB VPs
-                IF    ${sOutput} != ('PASS', None)
-                    ${failure_reason}    Fetch Reason    ${sOutput}
-                    RETURN       ${failure_reason}
-                ELSE
-                    Set Global Variable    ${result}    ${result} | View Policy DB Query is successful
-                END
+
                 Click Element    ${${platformName}_${lang}_PolicyBackArrow}
              END
           END
@@ -183,6 +184,7 @@ Capture Policy Details
        Overview
        Document(s)
        Beneficiarys
+       Indicative dividend
     EXCEPT     AS  ${reason}
         Set Failed Actual Result and VP    Omne_Flow   ${reason}   Capture Policy Details
     END
@@ -579,7 +581,7 @@ Beneficiarys
     EXCEPT     AS  ${reason}
         Set Failed Actual Result and VP    Omne_Flow   ${reason}   Beneficiarys Tab
     END
-    
+
 
 Document(s)
     TRY
@@ -696,7 +698,9 @@ Get View Policy DB VPs
             ${ProductName}    Strip String    ${ProductName}
             Log    ${ProductName}
             ${ProductCategory}    Set Variable    ${list}[${index4}]
-            ${ProductCategory}    Strip String    ${ProductCategory}
+            IF    '${ProductCategory}' != 'None'
+                ${ProductCategory}    Strip String    ${ProductCategory}
+            END
             Log    ${ProductCategory}
             ${ProductNameFinal}    Set Variable    ${ProductCategory} ${ProductName}
             ${ProductNameFinal}    Convert To Uppercase    ${ProductNameFinal}
@@ -757,6 +761,8 @@ Get View Policy DB VPs
             Log    ${index9}
             ${index10}    Get Index From List    ${list0}    premiuminstallmentPremium
             Log    ${index10}
+            ${index11}    Get Index From List    ${list0}    policyissuedate
+            Log    ${index11}
             ${counter}    Set Variable    1
             #    Log    ${counter}
             ${list}    Get From List    ${PolDtldf}    ${counter}
@@ -811,6 +817,7 @@ Get View Policy DB VPs
                 ${productName}    Set Variable    ${EMPTY}
             END
             ${premiumInstallment}    Set Variable    ${list}[${index10}]
+            Set Global Variable    ${premiumInstallment}
             Log    ${premiumInstallment}
             IF    '${premiumInstallment}' == 'None'
                 ${premiumInstallment}    Set Variable    ${EMPTY}
@@ -820,6 +827,16 @@ Get View Policy DB VPs
                 ${premiumInstallmentmsg}    Set Variable    -
             END
             ${productName}    Strip String    ${productName}
+#            policy issue date
+            ${policyIssueDate}    Set Variable    ${list}[${index11}]
+            Set Global Variable    ${policyIssueDate}
+            Log    ${policyIssueDate}
+            IF    '${policyIssueDate}' == 'None'
+                ${policyIssueDate}    Set Variable    ${EMPTY}
+            END
+#            ${policyIssueDate}  Strip String    ${policyIssueDate}
+            ${policyIssueDate}    Convert Date    ${policyIssueDate}    result_format=%Y-%m-%d %H:%M:%S
+
     #    ${mproductName}    Remove String    ${productName}    (Top-Up)
             ${OverView_InsuredForValue}    Set Variable    ${fname} ${lname}
             ${OverView_YourCovervalue}    Set Variable    ${premiumCcy} ${SA}
@@ -875,6 +892,7 @@ Get View Policy DB VPs
             ...    ${expiryDatemsg}
             ...    ${expiryDate}
             ...    ${ActualSource}
+
 
             #    Set Calc VP Actual Result With Original And Source    ${policydata}_Method    ${VP_OverView_Method}    ${VP_OverView_Method}    ${ActualSource}
             ${PolAdddf}    Run Keyword
@@ -1177,4 +1195,80 @@ Get View Policy DB VPs
         END
     EXCEPT     AS  ${reason}
         Set Failed Actual Result and VP    Omne_Flow   ${reason}   Get View Policy DB VPs
+    END
+
+Indicative dividend
+    [Documentation]     To verify the Indicative dividend Amount
+    Click Element   ${${platformName}_${lang}_Overview}
+    ${Status}    Run Keyword And Return Status  Wait Until Element Is Visible       ${${platformName}_${lang}_Indicative_dividend}       timeout=10s
+    IF    '${Status}' == 'True'
+        Click Element    ${${platformName}_${lang}_Indicative_dividend}
+        Take Screenshot    Indicative_dividend
+        ${VP_first30PerPortion}    Get Text    ${${platformName}_${lang}_first30PerPortion_1}
+        ${VP_first70PerPortion}    Get Text    ${${platformName}_${lang}_first70PerPortion_1}
+        Scroll Till Transaction Is Visible    ${${platformName}_${lang}_Indicative_dividend_View details}
+        Click Element    ${${platformName}_${lang}_Indicative_dividend_View details}
+        Wait Until Element Is Visible    ${${platformName}_${lang}_Indicative_dividend_Page_Title}   timeout=5s
+        Take Screenshot    Indicative_dividend_Page
+        ${VP_Data_as_per_initial_valuation_date_of}     Get Element Attribute    ${${platformName}_${lang}_Data_as_per_initial_valuation_date_of}    attribute=value
+        ${VP_Underlying_index_level}     Get Element Attribute    ${${platformName}_${lang}_Underlying_index_level}    attribute=value
+        ${VP_Exchange_rate_from_USD_to_THB_1}     Get Element Attribute    ${${platformName}_${lang}_Exchange_rate_from_USD_to_THB_1}    attribute=value
+        ${VP_Participation_rate_(PR)}     Get Element Attribute    ${${platformName}_${lang}_Participation_rate_(PR)}    attribute=value
+        ${VP_Index_data_as_of}     Get Element Attribute    ${${platformName}_${lang}_Index_data_as_of}    attribute=value
+        ${VP_Index_level_of}     Get Element Attribute    ${${platformName}_${lang}_Index_level_of}    attribute=value
+        ${VP_Exchange_rate_from_USD_to_THB_2}     Get Element Attribute    ${${platformName}_${lang}_Exchange_rate_from_USD_to_THB_2}    attribute=value
+        ${VP_first30PerPortion_Indicative_dividend_Page}     Get Element Attribute    ${${platformName}_${lang}_first30PerPortion_2}    attribute=value
+        ${VP_first30PerPortion_Indicative_dividend_Page}    Remove String    ${VP_first30PerPortion_Indicative_dividend_Page}   THB
+        ${VP_first30PerPortion_Indicative_dividend_Page}    Remove String    ${VP_first30PerPortion_Indicative_dividend_Page}   ,
+        ${VP_first70PerPortion_Indicative_dividend_Page}     Get Element Attribute    ${${platformName}_${lang}_first70PerPortion_2}    attribute=value
+        ${VP_first70PerPortion_Indicative_dividend_Page}    Remove String    ${VP_first70PerPortion_Indicative_dividend_Page}   THB
+        ${VP_first70PerPortion_Indicative_dividend_Page}    Remove String    ${VP_first70PerPortion_Indicative_dividend_Page}   ,
+
+        Set Calc VP Actual Result With Original And Source    First30Portion_Amount    ${VP_first30PerPortion_Indicative_dividend_Page}    ${VP_first30PerPortion_Indicative_dividend_Page}    Omne_Indicative_dividend_page
+        Set Calc VP Actual Result With Original And Source    Remaining70Portion    ${VP_first70PerPortion_Indicative_dividend_Page}    ${VP_first70PerPortion_Indicative_dividend_Page}    Omne_Indicative_dividend_page
+        Click Element    ${${platformName}_${lang}_Indicative_dividend_BackArrow}
+
+        #           Get Selected Policy Indicative dividend Detail from DB
+            ${policyIndicativedividend}    Run Keyword
+            ...    Get Selected Policy Indicative dividend Detail from DB
+            ...    ${dbhostname}
+            ...    ${dbusername}
+            ...    ${dbpassword}
+            ...    ${dbport}
+            ...    ${dbinstanceAddon}
+#            ...    ${PolicyId}
+            ...    ${screenshotPath}
+            ...    ${policyIssueDate}
+            Log    ${policyIndicativedividend}
+			${leng}    Get Length    ${policyIndicativedividend}
+            Log    ${leng}
+            ${list0}    Get From List    ${policyIndicativedividend}    0
+            Log    ${list0}
+            ${index1}    Get Index From List    ${list0}    First30Portion
+            Log    ${index1}
+            ${index2}    Get Index From List    ${list0}    Remaining70Portion
+            Log    ${index2}
+			${counter}    Set Variable    1
+			${list}    Get From List    ${policyIndicativedividend}    ${counter}
+			${First30Portion}    Set Variable    ${list}[${index1}]
+            Log    ${First30Portion}
+            IF    '${First30Portion}' == 'None'
+                ${First30Portion}    Set Variable    ${EMPTY}
+            END
+            Set Global Variable    ${First30Portion}
+			${Remaining70Portion}    Set Variable    ${list}[${index2}]
+            Log    ${Remaining70Portion}
+            IF    '${Remaining70Portion}' == 'None'
+                ${Remaining70Portion}    Set Variable    ${EMPTY}
+            END
+            Set Global Variable    ${Remaining70Portion}
+#           Calculation for Indicative dividend Amount
+            ${DB_First30Portion_Amount}=  Evaluate  ${First30Portion} * 6 * ${premiumInstallment}
+            ${DB_Remaining70Portion_Amount}=  Evaluate  ${Remaining70Portion} * 6 * ${premiumInstallment}
+            ${DB_First30Portion_Amount}  Evaluate    "{:.2f}".format(${DB_First30Portion_Amount})
+            ${DB_Remaining70Portion_Amount}  Evaluate    "{:.2f}".format(${DB_Remaining70Portion_Amount})
+
+            Set Calc VP Expected Result With Original And Source    First30Portion_Amount    ${DB_First30Portion_Amount}    ${DB_First30Portion_Amount}    DB_Calculated
+            Set Calc VP Expected Result With Original And Source    Remaining70Portion    ${DB_Remaining70Portion_Amount}    ${DB_Remaining70Portion_Amount}    DB_Calculated
+
     END

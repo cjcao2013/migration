@@ -29,6 +29,14 @@ Claim Hospitalisation
     IF    '${ClaimIsAbout}' == 'Accident'
         Input Text    ${${platformName}_${lang}_accidentDate}    ${AccidentDate}\n
     END
+
+    # Input recript number
+     # Input recript number
+    ${Recript_number}      generate random string  10  [NUMBERS]
+    Set Global Variable    ${Recript_number}
+
+    Input Text    ${${platformName}_${lang}_ReceiptNumber}    ${Recript_number}\n}
+
     # checkin and checkout date
     Click Element    ${${platformName}_${lang}_hospitalsaty}
     Run Keyword    Select CheckIN and CheckOut Date

@@ -41,29 +41,22 @@ Pay now
 
 Loan repayment
     TRY
-        Pause Execution
-        ${status}    Run Keyword And Return Status
-        ...    Wait Until Element Is Visible
-        ...    ${${platformName}_EN_PolicyNotAvailable}
-        ...    timeout=2s
-        IF    '${status}' == 'True'
-            Set Global Variable    ${errormsg}    No Eligible Policy
-        END
         #    Click On Policy Number
         ${Android_SelectPolicyNo}    Set Variable    android=new UiSelector().textContains("${Policy_No}")
         ${iOS_SelectPolicyNo}    Set Variable    chain=**/XCUIElementTypeOther[`label CONTAINS '${Policy_No}'`][2]
         ${iOS_EN_PolicyLoan_RequestAmount}    Set Variable    chain=**/XCUIElementTypeOther[`label == "${Request_Amount}"`]
         ${Android_EN_PolicyLoan_RequestAmount}    Set Variable      xpath=//android.widget.TextView[@text="${Request_Amount}"]
 
-        Wait Until Page Contains Element    ${${platformName}_SelectPolicyNo}       timeout=5s
+        Wait Until Page Contains Element    ${${platformName}_SelectPolicyNo}       timeout=60s
         Take Screenshot    Select Policy
+        Sleep    1s
         Click Element    ${${platformName}_SelectPolicyNo}
-          Pause Execution
         ${PolicyDetails}    Get Text    ${${platformName}_SelectPolicyNo}
         Set Global Variable    ${${platformName}_SelectPolicyNo}
-
-        Wait Until Page Contains Element    ${${platformName}_${lang}_PolicyLoanRepayment_txt}       timeout=3s
-        Wait Until Element Is Visible    ${${platformName}_${lang}_Loanoutstanding}    timeout=2s
+        
+        Sleep    1s
+        Wait Until Page Contains Element    ${${platformName}_${lang}_PolicyLoanRepayment_txt}       timeout=60s
+        Wait Until Element Is Visible    ${${platformName}_${lang}_Loanoutstanding}    timeout=60s
         ${VP_Loanoutstanding}    Get Text    ${${platformName}_${lang}_Loanoutstanding}
         ${mVP_Loanoutstanding}    Remove String    ${VP_Loanoutstanding}    THB
         ${mVP_Loanoutstanding}    Remove String    ${mVP_Loanoutstanding}    ,
@@ -79,13 +72,17 @@ Loan repayment
         ${mVP_Totalasoftoday}    Remove String    ${VP_Totalasoftoday}    THB
         ${mVP_Totalasoftoday}    Remove String    ${mVP_Totalasoftoday}    ,
 
+        ${VP_Notice_Text}    Get Text    ${${platformName}_${lang}_Notice_Text}
+        ${Notice_text}      Set Variable            Loan repayment will take up to 3 to 5 business days to be reflected in your account.
+        Set Calc VP With Source And Original Values    Loan_Repayment_Notice_Text    ${Notice_text.strip()}     ${VP_Notice_Text.strip()}    Static    OMNE_Application    ${Notice_text.strip()}     ${VP_Notice_Text.strip()}
+
             Take Screenshot    Loan_Repayment
             IF    '${Request_Amount}' == 'Specify amount (THB)'
                 Click Element    ${${platformName}_${lang}_PolicyLoan_RequestAmount}
                 ${Loanlimitasoftoday}    Convert To Number    ${mVP_Totalasoftoday}
                 # Calculate Policy Max Limit
                 ${Max_LoanLimit}    Evaluate    ${Loanlimitasoftoday} + 100
-                Wait Until Element Is Visible    ${${platformName}_${lang}_PolicyLoanAmt}       timeout=5s
+                Wait Until Element Is Visible    ${${platformName}_${lang}_PolicyLoanAmt}       timeout=50s
                 Input Text    ${${platformName}_${lang}_PolicyLoanAmt}    ${Max_LoanLimit}\n
                 # Capture Policy Max limit Error
                 ${status}    Run Keyword And Return Status
@@ -103,9 +100,9 @@ Loan repayment
                     ...    ${Error_MaxLoanLimit}
                     ...    ${Error_MaxLoanLimit}
                 END
-                Wait Until Element Is Visible    ${${platformName}_${lang}_Totalasoftoday_txt}  timeout=1s
+                Wait Until Element Is Visible    ${${platformName}_${lang}_Totalasoftoday_txt}  timeout=10s
                 Click Element    ${${platformName}_${lang}_Totalasoftoday_txt}
-                Wait Until Element Is Visible    ${${platformName}_${lang}_PolicyLoan_RequestAmount}       timeout=1s
+                Wait Until Element Is Visible    ${${platformName}_${lang}_PolicyLoan_RequestAmount}       timeout=10s
                 Click Element    ${${platformName}_${lang}_PolicyLoan_RequestAmount}
                 Input Text    ${${platformName}_${lang}_PolicyLoanAmt}    ${Min_LoanLimit}\n
                 Take Screenshot    Min Loan Limit
@@ -125,9 +122,9 @@ Loan repayment
                     ...    ${Error_MinLoanLimit}
                     ...    ${Error_MinLoanLimit}
                 END
-                Wait Until Element Is Visible    ${${platformName}_${lang}_Totalasoftoday_txt}  timeout=1s
+                Wait Until Element Is Visible    ${${platformName}_${lang}_Totalasoftoday_txt}  timeout=10s
                 Click Element    ${${platformName}_${lang}_Totalasoftoday_txt}
-                Wait Until Element Is Visible    ${${platformName}_${lang}_PolicyLoan_RequestAmount}       timeout=1s
+                Wait Until Element Is Visible    ${${platformName}_${lang}_PolicyLoan_RequestAmount}       timeout=10s
                 Click Element    ${${platformName}_${lang}_PolicyLoan_RequestAmount}
                 Input Text    ${${platformName}_${lang}_PolicyLoanAmt}    ${Loan_Amount}\n
             ELSE

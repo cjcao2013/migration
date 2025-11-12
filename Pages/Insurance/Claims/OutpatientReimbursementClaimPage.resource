@@ -22,6 +22,14 @@ Claim Outpatient reimbursement
     Take Screenshot    Claim_Step2_Page
     Click Element    ${${platformName}_${lang}_nextBtn}
 
+
+
+    # Input recript number
+    ${Recript_number}      generate random string  10  [NUMBERS]
+    Set Global Variable    ${Recript_number}
+    
+    Input Text    ${${platformName}_${lang}_ReceiptNumber}    ${Recript_number}\n
+
     # add claimdetails
     Wait Until Element Is Visible    ${${platformName}_${lang}_treatmentdate}    timeout=50s
     IF    '${testtype}'!='NEGATIVE' and '${Transaction_Page_GUI}' == 'Yes'

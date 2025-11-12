@@ -265,7 +265,8 @@ Capture Payment Frequency Details For iOS
                 ${VP_newpremiumamountdata}    Get From List    ${VP_premiumamountdata}    0
             END
         END
-        ${VP_newpremiumamountdata}    Evaluate    "{:.2f}".format(${VP_newpremiumamountdata})
+
+        #${VP_newpremiumamountdata}    Evaluate    "{:.2f}".format(${VP_newpremiumamountdata})
         IF    '${Transaction_Info}' == 'Pre'
             Set Calc VP Expected Result With Original And Source
             ...    Policy No
