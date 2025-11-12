@@ -15,7 +15,7 @@ ${iOS_EN_promtpaySaveButton}                                accessibility_id=pro
 ${iOS_EN_ChequeCancelNextButton}                            chain=**/XCUIElementTypeButton[`name == "ChequeCancelDetails-Next"`]
 ${iOS_EN_SummaryPage}                                       chain=**/XCUIElementTypeStaticText[`name == "Cheque cancellation request"`]
 ${iOS_EN_SummaryPageNextButton}                             chain=**/XCUIElementTypeButton[`name == "Submit"`]
-
+${iOS_EN_Dispay_Message}                                    chain=**/XCUIElementTypeStaticText[`name CONTAINS  "This change will affect cheque"`]
 
 
 ${Android_EN_Title}                                         android=new UiSelector().text("Cheque cancellation request")

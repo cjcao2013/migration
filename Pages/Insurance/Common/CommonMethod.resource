@@ -5,6 +5,7 @@ Resource    ../../../PageObjects/Insurance/Common/CommonMethodObjects.resource
 Resource    UploadDocuments.resource
 Resource    ../../../CustomLibraries/common.robot
 Resource    ../../../PageObjects/Insurance/Common/CommonObjects.resource
+Library     ../../DBQuery/ViewPolicyDB.py
 
 
 *** Keywords ***
@@ -477,10 +478,9 @@ Set or enter PIN
 
 Claim Feedback
     Take Screenshot    FeedBack_Page
-    ${status}   Run Keyword And Return Status    Wait Until Element Is Visible    ${${platformName}_${lang}_FeedbackRangeoption}   timeout=30s
+    ${status}   Run Keyword And Return Status    Wait Until Element Is Visible    ${${platformName}_${lang}_FeedbackRangeoption}   timeout=60s
     Take Screenshot    Feedback_Page
     IF    '${status}' == 'True'
-        Wait Until Element Is Visible    ${${platformName}_${lang}_FeedbackRangeoption}
         Click Element   ${${platformName}_${lang}_FeedbackRangeoption}
         Wait Until Element Is Visible    ${${platformName}_${lang}_FeedbackReviewOption}
         Click Element    ${${platformName}_${lang}_FeedbackReviewOption}
@@ -510,6 +510,25 @@ Claim Feedback
         END
         Set or enter PIN
     END
+    ${PolAdddf}    Run Keyword
+    ...    Get Selected Policy Detail from customer policies
+    ...    ${dbhostname}
+    ...    ${dbusername}
+    ...    ${dbpassword}
+    ...    ${dbport}
+    ...    ${dbinstance}
+    ...    ${Policy_No}
+    ...    ${screenshotPath}
+    Log    ${PolDetaildf}
+    ${leng}    Get Length    ${PolDetaildf}
+    Log    ${leng}
+    ${list0}    Get From List    ${PolDetailsdf}    0
+    Log    ${list0}
+    ${index1}    Get Index From List    ${list0}    Point
+    Log    ${index1}
+    ${Point}    Set Variable    ${list}[${index1}]
+    ${Point}    Strip String    ${Point}
+    Set Calc VP With Source And Original Values    Wallet_Point    ${Point}    ${Point}    Static    DB    ${Point}    ${Point}
 
 Overall APP Experience
     ${status}    Run Keyword And Return Status      Wait Until Element Is Visible       ${${platformName}_${lang}_OverAllAppExperience}     timeout=3s

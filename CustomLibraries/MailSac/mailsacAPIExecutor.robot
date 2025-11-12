@@ -37,7 +37,8 @@ Get OTP
 
 
 Get Email
-        ${mailId}       Set Variable    ${Email}
+    [Arguments]    ${ChangeEmail}   ${EmailType}
+        ${mailId}       Set Variable    ${ChangeEmail}
         Set Global Variable    ${base_url}
         ${mailSacKey}       Get Environment Attribute    mailSacKey
         Set Global Variable    ${mailSacKey}
@@ -46,7 +47,7 @@ Get Email
     #    Set Global Variable    ${messageId}
         Get Latest Message ID
         IF    '${messageId}' != '${EMPTY}'
-            Get Transaction Confirmation Email
+            Get Transaction Confirmation Email    ${mailId}        ${EmailType}
         END
 
 

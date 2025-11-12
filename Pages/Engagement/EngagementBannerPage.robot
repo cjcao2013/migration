@@ -17,7 +17,7 @@ ${VP_ByDefault_Lang}    ${EMPTY}
 Engagement Banner
     TRY
         Take Screenshot    Engagement Banner
-        Sleep    2s
+        Sleep    3s
         IF    '${Engagement_Quick_link_Module}' == 'Tax Season Banner Link Redirection'
             Tax Season Banner Link Redirection
         ELSE IF     '${Engagement_Quick_link_Module}' == 'Geolocator Link redirection'

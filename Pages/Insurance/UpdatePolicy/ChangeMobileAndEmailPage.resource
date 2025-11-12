@@ -30,6 +30,7 @@ Mobile and Email Change
             Set Global Variable    ${MobNo}
             Take Screenshot    Update_Details
             IF    '${PersonalDetails_WhatChange}' == 'MobileNo'
+
                 Mobile Change
                 ${Static_Message}        Set Variable            FWD has successfully updated your mobile number as requested.
             ELSE
@@ -50,7 +51,8 @@ Mobile and Email Change
                 Insert OTP    ${Transaction_OTP_Source}    ${Transaction_OTP_Expiry_Flag}    ${Transaction_OTP_Resend_Flag}
             END
             #Check confirmation emaik
-            Get Email
+            Get Email   ${oldUsername}      Old
+            Get Email   ${email}        New
             # New All Done Confirmation Page
             Run Keyword    Check Transaction Status
             Run Keyword    Handle Feedback
@@ -120,7 +122,8 @@ Email Change
     Set Calc VP Expected Result With Original And Source    MailID_DB    ${email}    ${email}    OmneApplication
     
 Mobile Change
-
+     ${email}      Set Variable          ${oldUsername}
+     Set Global Variable    ${email}
 
     # Input invalid mobile number
     ${PersonalDetails_MobileNo}    Set Variable    56

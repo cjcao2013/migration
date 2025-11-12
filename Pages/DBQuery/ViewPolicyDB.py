@@ -238,7 +238,7 @@ class ViewPolicyDB:
             print(conn)
             # Create a pandas DataFrame from the SQL query
             query = f" SELECT customerPolicies.Id, coverageplans.Description ProductName, " \
-                    f" customers.FirstName, customers.LastName, " \
+                    f" customers.FirstName, customers.LastName, customerPolicies.policyissuedate, " \
                     f" coverages.SumAssured sumAssured, customerPolicies.CommencementDate commencementDate, " \
                     f" coverages.RiskCessationDate expiryDate, customerPolicies.NextPremiumDate NextPremiumDate, " \
                     f" customerPolicies.Premium premiuminstallmentPremium, customerPolicies.PremiumCurrency premiumCurrency, " \
@@ -526,5 +526,55 @@ class ViewPolicyDB:
         finally:
             # Close the database connection
             conn.close()
+        lsdf = [df.columns.values.tolist()] + df.values.tolist()
+        return lsdf
+
+    @keyword("Get Selected Policy Indicative dividend Detail from DB")
+    def get_Indicative_dividend(self, dbhostname, dbusername, dbpassword, dbport, dbinstance, screenshotdir, policyIssueDate):
+        # Database connection parameters
+        db_config = {
+            "host": dbhostname,
+            "port": dbport,
+            "user": dbusername,
+            "password": dbpassword,
+            "database": dbinstance,
+        }
+        key = b'f057ecb7c8ed51ac'
+        value1 = ""
+        lsdf = []
+        try:
+            # Create a MySQL database connection
+            conn = mysql.connector.connect(**db_config)
+            # Create a pandas DataFrame from the SQL query
+            query = f" select * from '" + dbinstance + "'.indexfundvaluations " \
+                    f" where IsDeleted = 0 and '" + policyIssueDate + "' between PolicyIssuedStartDate and PolicyIssuedEndDate " \
+                    f" order by PolicyIssuedStartDate desc; "
+            print(query)
+            df = pd.read_sql(query, conn)
+            # print (type(df))
+            print(df)
+            screenshot = screenshotdir
+            print(query)
+
+            f = open(screenshot + "/Selected_Policy_Indicative_dividend_Detail.txt", "a")
+            f.write(query)
+            f.close()
+
+            df = pd.read_sql(query, conn)
+            df.to_csv(screenshot + "/Selected_Policy_Indicative_dividend_Detail.csv", mode='a')
+            # BuiltIn.log(df)
+            # Retrieve values based on the column header name
+            # values = df[column_header]
+            # # Print the retrieved values
+            # for value in values:
+            #     print(value)
+            #     value1 = value
+        except mysql.connector.Error as err:
+            print(f"Error: {err}")
+        finally:
+            # Close the database connection
+            conn.close()
+        # print(value1)
+        # return df
         lsdf = [df.columns.values.tolist()] + df.values.tolist()
         return lsdf

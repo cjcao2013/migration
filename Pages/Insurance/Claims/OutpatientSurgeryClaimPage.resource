@@ -16,6 +16,14 @@ Claim Outpatient surgery
     PromptPayHeadsPopup
     Wait Until Element Is Visible    ${${platformName}_${lang}_treatmentdate}    timeout=20s
     SwipePage
+
+
+     # Input recript number
+    ${Recript_number}      generate random string  10  [NUMBERS]
+    Set Global Variable    ${Recript_number}
+
+    Input Text    ${${platformName}_${lang}_ReceiptNumber}    ${Recript_number}\n
+
     # input treatment date field
     Clear Text    ${${platformName}_${lang}_treatmentdate}
     Input Text    ${${platformName}_${lang}_treatmentdate}    ${dob}\n

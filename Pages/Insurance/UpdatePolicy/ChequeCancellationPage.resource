@@ -39,6 +39,16 @@ Cheque cancellation
         ELSE
             Close keyboard
         END
+        ${Static_Message}           Set Variable        This change will affect cheque or draft that you have previously received but have not yet deposited for payment, as well as all future payouts.
+        ${VP_Display_Message}       Get Text    ${${platformName}_${lang}_Dispay_Message}
+        Set Calc VP With Source And Original Values
+            ...    Cheque_Cancellation_Display_Message
+            ...    ${Static_Message.strip()}
+            ...    ${VP_Display_Message.strip()}
+            ...    Static
+            ...    OMNE_Cheque_Cancellatio_Page
+            ...    ${Static_Message.strip()}
+            ...    ${VP_Display_Message.strip()}
         Take Screenshot    Cheque cancellation Page
         ${Status}    Run Keyword And Return Status    Wait Until Element Is Visible    ${${platformName}_${lang}_AddPaymentMethod}       timeout=2s
         IF    '${Status}' == 'True'

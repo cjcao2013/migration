@@ -29,6 +29,7 @@ ${iOS_EN_nextBtn}                                   chain=**/XCUIElementTypeButt
 ${iOS_EN_accidentDate}                              chain=**/XCUIElementTypeOther[`label CONTAINS 'Accident date'`][-1]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeTextField
 #chain=**/XCUIElementTypeTextField[`name == "date-input"`][1]
 ${iOS_EN_treatmentdate}                             chain=**/XCUIElementTypeOther[`label CONTAINS 'Treatment date (dd/mm/yyyy)'`][-1]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeTextField
+${iOS_EN_ReceiptNumber}                             chain=**/XCUIElementTypeOther[`name == "Receipt number"`]
 #chain=**/XCUIElementTypeTextField[`name == "date-input"`][2]
 ${iOS_EN_treatmentdate1}                             chain=**/XCUIElementTypeTextField[`name == "date-input"`]
 ${iOS_EN_DiagnosisOption}                           chain=**/XCUIElementTypeOther[`label == 'Diagnosis'`][2]
@@ -68,6 +69,7 @@ ${iOS_EN_reviewtreatmentitems}                      chain=**/XCUIElementTypeOthe
 ${iOS_EN_reviewamountandcurr}                       chain=**/XCUIElementTypeOther[`label CONTAINS 'Total amount you paid'`][-2]/XCUIElementTypeOther[2]
 ${iOS_EN_reviewtotCostwamountandcurr}               chain=**/XCUIElementTypeOther[`label CONTAINS 'Treatment cost'`][-2]/XCUIElementTypeOther[2]
 ${iOS_EN_reviewDurationofStay}                      chain=**/XCUIElementTypeOther[`label CONTAINS 'Duration of hospital stay'`][-2]/XCUIElementTypeOther[2]
+${iOS_EN_Recipt_Number}                             chain=**/XCUIElementTypeOther[`label CONTAINS 'Receipt number'`][-2]/XCUIElementTypeOther[2]
 ${iOS_EN_accidentDateErrMsg}                        chain=**/XCUIElementTypeStaticText[`label == 'Accident date must be before the treatment date'`]
 ${iOS_EN_treatmentDateErrMsg}                       chain=**/XCUIElementTypeStaticText[`label == 'Treatment date must be after the accident date'`]
 ${iOS_EN_claimreviewPagetext}                       chain=**/XCUIElementTypeStaticText[`label CONTAINS 'Thanks'`]

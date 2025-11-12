@@ -17,7 +17,7 @@ ${iOS_EN_PremiumAmount_txt}        xpath=(//XCUIElementTypeOther[contains(@name,
 ${iOS_EN_DownloadQRCode}        chain=**/XCUIElementTypeButton[`label == "Download QR code"`]
 ${iOS_EN_BackToDashboard}        chain=**/XCUIElementTypeOther[`label == "Back to dashboard"`]
 ${iOS_EN_QRCodeSaved_txt}        chain=**/XCUIElementTypeOther[`label == "QR code is saved to your device album"`][5]
-
+${iOS_EN_Notice_Text}           xpath=//XCUIElementTypeOther[@name="Notice"]/following-sibling::XCUIElementTypeOther/XCUIElementTypeStaticText
 
 ${Android_EN_PolicyLoanRepayment_txt}           android=new UiSelector().text("Policy loan repayment")
 ${Android_EN_Loanoutstanding}                   xpath=//android.widget.TextView[@text="Loan outstanding"]//following-sibling::android.widget.TextView

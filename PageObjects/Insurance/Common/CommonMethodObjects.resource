@@ -119,7 +119,7 @@ ${Android_EN_EnterPinField}         xpath=(//android.widget.TextView[contains(@t
 ${Android_EN_ConfirmPinField}       xpath=(//android.widget.TextView[contains(@text,"Almost there")]//ancestor::android.view.ViewGroup)[last()-2]//following-sibling::android.widget.EditText
 ${Android_EN_SkipButton}            android=new UiSelector().textContains("Skip")
 
-${iOS_EN_FeedbackRangeoption}       chain=**/XCUIElementTypeOther[`label == "8"`][2]
+${iOS_EN_FeedbackRangeoption}       chain=**/XCUIElementTypeOther[`label == "8"`]
 ${iOS_EN_FeedbackReviewOption}       chain=**/XCUIElementTypeOther[`label == "Ease of claims submission"`][2]/XCUIElementTypeOther
 ${iOS_EN_FeedbackSubmit_Btn}            chain=**/XCUIElementTypeButton[`label == "Submit"`]
 ${iOS_EN_FeedbackSkip_Btn}              chain=**/XCUIElementTypeOther[`label == "Skip"`]

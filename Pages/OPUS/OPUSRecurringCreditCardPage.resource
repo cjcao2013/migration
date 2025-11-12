@@ -7,7 +7,7 @@ Resource    ../../PageObjects/OPUS/OPUSRecurringCreditCardPageObject.resource
 Resource    OPUSInquiryPage.resource
 
 *** Keywords ***
-OPUS Recurring payment
+OPUS Credit card recurring payment
     TRY
         Wait Until Element Is Visible    ${EN_OPUS_CaseNo}       timeout=50s
         Take OPUS Screenshot        Recurring Credit Card

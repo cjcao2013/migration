@@ -81,6 +81,7 @@ OPUS frequency
         ...    ${MVP_NewModalPremium.strip()}
         ...    ${VP_NewModalPremium}
         ...    OPUS Application
+
         ${Approved_Status}    Get Element Attribute    ${EN_frequencyStatus}       attribute=title
         Set Global Variable    ${Approved_Status}
         ${Final_Approve_Status}         Set Variable                 ${Approved_Status}
@@ -91,7 +92,7 @@ OPUS frequency
         ...    ${Approved_Status.strip()}
         ...    ${Approved_Status}
         ...    OPUS_Application
-        Pause Execution
+
         Wait Until Page Contains Element    xpath=//button[@data-trigger='submit']              timeout=20s
         Click Element    xpath=//button[@data-trigger='submit']
         Sleep    5s
