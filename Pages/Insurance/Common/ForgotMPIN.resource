@@ -85,6 +85,10 @@ Additional Verification
             Click Element    ${${platformName}_${lang}_Verify_btn}
         END
         Take Screenshot    SignIn_OTP_Page
+        ${Update_Policy_Module}    Set Variable    Personal details
+        Set Global Variable    ${Update_Policy_Module}
+        ${PersonalDetails_WhatChange}    Set Variable    Mailing address
+        Set Global Variable    ${PersonalDetails_WhatChange}
         Run Keyword    Insert OTP       ${Transaction_OTP_Source}   ${Transaction_OTP_Expiry_Flag}  ${Transaction_OTP_Resend_Flag}
 
         Omne Action Popup

@@ -29,8 +29,8 @@ Transaction after Complete
     TRY
         IF    '${Transaction_After_OWB_Flag}' == 'Yes'
             Set Global Variable    ${VP_Transaction_Status}
-            Wait Until Element Is Visible    ${${platformName}_${lang}_BackArrow}   timeout=20s
-            Click Element    ${${platformName}_${lang}_BackArrow}
+            Wait Until Element Is Visible    ${${platformName}_${lang}_Transaction_BackButton}   timeout=20s
+            Click Element    ${${platformName}_${lang}_Transaction_BackButton}
             Sleep    3s
             Wait Until Element Is Visible    ${${platformName}_${lang}_SeeAll}   timeout=20s
             Click Element    ${${platformName}_${lang}_SeeAll}
@@ -251,7 +251,7 @@ Transaction Personal details
         ${iOS_pendingButton}    Set Variable    chain=**/XCUIElementTypeOther[`label CONTAINS '${currdate}' and label CONTAINS 'Change of personal details ${MCaseStatus}' and label CONTAINS 'Policy no: ${Policy_No}'`][27]
         ${Android_pendingButton}    Set Variable    xpath=//android.view.ViewGroup[@content-desc="Pending details"]
         Take Screenshot    Transaction Page
-        RefreshPage
+
         Wait Until Element Is Visible        ${${platformName}_pendingButton}        timeout=30s
         Click Element    ${${platformName}_pendingButton}
         ${iOS_EN_newstatusobject}      Set Variable    chain=**/XCUIElementTypeOther[`label CONTAINS '${currdate}' and label CONTAINS 'Change of personal details In progress' and label CONTAINS 'Policy no: ${Policy_No}'`][27]

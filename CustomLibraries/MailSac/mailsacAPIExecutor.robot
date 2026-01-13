@@ -17,14 +17,16 @@ ${messageId}
 
 *** Keywords ***
 Get OTP
-#    Set Screenshot Directory     ${screenshotPath}\\
+
+    [Arguments]     ${Email}
     ${mailId}       Set Variable    ${Email}
+
     Set Global Variable    ${base_url}
     ${mailSacKey}       Get Environment Attribute    mailSacKey
     Set Global Variable    ${mailSacKey}
     Set Global Variable     ${mailId}
-    Set Global Variable    ${screenshotPath}
-    #    Set Global Variable    ${messageId}
+    Set Global Variable    ${screenshotDir}
+#    Set Global Variable    ${messageId}
     Get Latest Message ID
     IF    '${messageId}' != '${EMPTY}'
         Get OTP from Message ID
@@ -32,8 +34,6 @@ Get OTP
         ${OTPNumber}    Set Variable
         Set Global Variable    ${OTPNumber}
     END
-#        ${OTPNumber}    Set Variable    123456
-#        Set Global Variable    ${OTPNumber}
 
 
 Get Email
@@ -67,3 +67,35 @@ Get COI Information
      EXCEPT     AS  ${reason}
         Set Failed Actual Result and VP    Omne_Flow   ${reason}   Capture Change Name Transaction Details for iOS
      END
+
+Fetch Insurance Mobile Number from API
+    ${api_Sign_in_endpoint}     Set Variable    /live/auth/v9/api/signin
+
+    #create header dict
+    ${api_headers}      Create Dictionary
+    ...     ${api_key_name}=${api_key_valueauth}
+    ...     App-Version=${omneapp_version}
+
+    #create request body dictionary
+    ${request_body_data}    Create Dictionary
+    ...        email=${Email}
+    ...        language=en-GB
+    ...        deviceId=5545314F-0AC8-41E2-B330-3FE8BB0234C7
+    ...        isAdditionalDeviceSignIn=true
+
+    #   Save Request Body
+    ${str_request}      Convert To String    ${request_body_data}
+    Create File     ${screenshotDir}//fetch_mobile_number_request.json       ${str_request}
+
+#    API Call
+    ${response}     POST    url=${api_host}/${api_Sign_in_endpoint}      headers=${api_headers}     json=${request_body_data}    expected_status=200
+
+    #   Save Repsonse
+    ${str_response}     Convert To String    ${response.json()}
+    Create File     ${screenshotDir}//fetch_mobile_number_response.json       ${str_response}
+
+    ${insurance_mobile_number}       Set Variable    ${response.json()}[unmaskedPhoneNumber]
+    ${insurance_mobile_number}      Remove String    ${insurance_mobile_number}     +
+    ${countrycode_contains_status}      Run Keyword And Return Status    Should Start With    ${insurance_mobile_number}    81
+
+    [Return]    ${insurance_mobile_number}

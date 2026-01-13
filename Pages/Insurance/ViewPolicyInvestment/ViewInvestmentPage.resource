@@ -99,7 +99,7 @@ Investment(s)
             END
           END
           Take Screenshot     My policy Page
-          RefreshPage
+
           Sleep    2s
           Scroll Till Transaction Is Visible    ${SelectedPolicy_Moredetail_Element}
           Click Element     ${SelectedPolicy_Moredetail_Element}

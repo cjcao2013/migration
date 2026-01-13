@@ -32,10 +32,10 @@ Claim Hospitalisation
 
     # Input recript number
      # Input recript number
-    ${Recript_number}      generate random string  10  [NUMBERS]
-    Set Global Variable    ${Recript_number}
-
-    Input Text    ${${platformName}_${lang}_ReceiptNumber}    ${Recript_number}\n}
+#    ${Recript_number}      generate random string  10  [NUMBERS]
+#    Set Global Variable    ${Recript_number}
+#
+#    Input Text    ${${platformName}_${lang}_ReceiptNumber}    ${Recript_number}\n}
 
     # checkin and checkout date
     Click Element    ${${platformName}_${lang}_hospitalsaty}
@@ -78,7 +78,7 @@ Select CheckIN and CheckOut Date
     ${x}    Convert To Integer    ${x}
     ${y}    Evaluate    ${y}+24    # 659
     ${y}    Convert To Integer    ${y}
-    Click Element At Coordinates    ${x}    ${y}
+    Click by Coordinates    ${x}    ${y}
     IF  '${platformName}' == 'iOS'
         ${givenyearvalue}    Get Element Attribute    ${${platformName}_${lang}_hospitalcurrentYear}    attribute=value
     ELSE
@@ -121,7 +121,7 @@ Select CheckIN and CheckOut Date
         ${x}    Convert To Integer    ${x}
         ${y}    Evaluate    ${y}+22    # 659
         ${y}    Convert To Integer    ${y}
-        Click Element At Coordinates    ${x}    ${y}
+        Click by Coordinates    ${x}    ${y}
         @{checkoutdatevalues}    Split String    ${checkoutDate}
         ${checkoutday}    Get From List    ${checkoutdatevalues}    0
         ${checkoutmonth}    Get From List    ${checkoutdatevalues}    1

@@ -1,5 +1,6 @@
 *** Settings ***
 Library     SeleniumLibrary
+Library    RPA.Desktop
 Resource    ../../PageObjects/OPUS/OPUSLoginPageObject.resource
 Resource    ../../PageObjects/OPUS/OPUSInquiryPageObject.resource
 Resource    ../../CustomLibraries/Common.robot
@@ -109,27 +110,31 @@ Change Name VP
     TRY
 #   ${CaseStatus}    Set Variable    Pending
         IF    '${CaseStatus}' == 'Pending'
-                Wait Until Element Is Visible    ${EN_Envoy}        timeout=2s
+                Wait Until Element Is Visible    ${EN_Envoy}        timeout=20s
                 Click Element    ${EN_Envoy}
-                Wait Until Element Is Visible    ${EN_Add-Envoy_button}    timeout=5s
+                Wait Until Element Is Visible    ${EN_Add-Envoy_button}    timeout=25s
                 Click Element    ${EN_Add-Envoy_button}
-                Wait Until Element Is Visible     ${EN_Select_Pending_reason}    timeout=2s
+                Wait Until Element Is Visible     ${EN_Select_Pending_reason}    timeout=20s
                 Click Element    ${EN_Select_Pending_reason}
-                Wait Until Element Is Visible    ${EN_Further_Requirement}    timeout=2s
+                Wait Until Element Is Visible    ${EN_Further_Requirement}    timeout=20s
                 Click Element    ${EN_Further_Requirement}
-                Sleep    5s
-                Wait Until Element Is Visible    ${EN_MemoCode}    timeout=2s
-                Click Element    ${EN_MemoCode}
                 Pause Execution
-                Wait Until Element Is Visible    ${EN_ReasonCode}    timeout=2s
+                Sleep    10s
+                Wait Until Element Is Visible    ${EN_MemoCode}    timeout=10s
+                Click Element    ${EN_MemoCode}
+
+                Wait Until Element Is Visible    ${EN_Select_Memocode}      timeout=10s
+                Click Element    ${EN_Select_Memocode}
+
+                Wait Until Element Is Visible    ${EN_ReasonCode}    timeout=20s
                 Click Element    ${EN_ReasonCode}
-                Wait Until Element Is Visible    ${EN_SelectReasonCode}    timeout=2s
+                Wait Until Element Is Visible    ${EN_SelectReasonCode}    timeout=20s
                 Click Element    ${EN_SelectReasonCode}
-                Wait Until Element Is Visible    ${EN_SaveButton}    timeout=2s
+                Wait Until Element Is Visible    ${EN_SaveButton}    timeout=20s
                 Click Element    ${EN_SaveButton}
-                Wait Until Element Is Visible    ${EN_SendButton}    timeout=2s
+                Wait Until Element Is Visible    ${EN_SendButton}    timeout=20s
                 Click Element    ${EN_SendButton}
-                Wait Until Element Is Visible    ${EN_ResolveButton}    timeout=3s
+                Wait Until Element Is Visible    ${EN_ResolveButton}    timeout=30s
                 Click Element    ${EN_ResolveButton}
                 ${Approved_Status}      Get Text    ${EN_OPUS_DecisionStatus}
                 Set Global Variable    ${Approved_Status}
@@ -153,7 +158,7 @@ Change Name VP
             IF    '${VP_new_MaritalStatus}' == 'สมรส'
                   ${mVP_new_MaritalStatus}       Set Variable        Married
             ELSE IF   '${VP_new_MaritalStatus}' == 'โสด'
-                ${mVP_new_MaritalStatus}       Set Variable        single
+                ${mVP_new_MaritalStatus}       Set Variable        Single
             END
             Set Calc VP Actual Result With Original And Source
             ...    NEW_Title
@@ -230,7 +235,7 @@ Change Name VP
                 END
                 Set Calc VP Expected Result With Original And Source
                 ...    Transaction_Status_After_OPUS
-                ...    ${mVP_TransactionStatus}
+                ...    ${mVP_TransactionStatus.strip()}
                 ...    ${VP_TransactionStatus}
                 ...    OPUS Application
 

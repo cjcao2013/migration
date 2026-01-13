@@ -15,7 +15,7 @@ ${VP_Prodct_Name_PayCashoutapgr}    ${EMPTY}
 
 
 *** Keywords ***
-Preferred payout
+Change preferred payout
     TRY
         Select Policy
         Take Screenshot    ICP_Option_page
@@ -163,7 +163,7 @@ VP For Cash Payout Option Page
 
 Capture ICP Transaction Details for iOS
     TRY
-        RefreshPage
+
         Scroll Till Transaction Is Visible    chain=**/XCUIElementTypeOther[`label CONTAINS '${currdate}' and label CONTAINS 'Change of preferred payout' and label CONTAINS 'Policy no: ${Policy_No}'`][27]
         Wait Until Page Contains Element
         ...    chain=**/XCUIElementTypeOther[`label CONTAINS '${currdate}' and label CONTAINS 'Change of preferred payout' and label CONTAINS 'Policy no: ${Policy_No}'`][27]

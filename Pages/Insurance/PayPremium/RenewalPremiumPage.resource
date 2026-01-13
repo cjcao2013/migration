@@ -39,10 +39,10 @@ Renewal premium
             Click Element    ${${platformName}_${lang}_CreditCard}
             Take Screenshot    RenewalPremiumPage
             Wait Until Element Is Visible    ${${platformName}_${lang}_lang}       timeout=100s
-#            Click Element       ${${platformName}_${lang}_lang}
-            Pause Execution
-#            Wait Until Element Is Visible    ${${platformName}_${lang}_Englang}       timeout=3s
-#            Click Element       ${${platformName}_${lang}_Englang}
+            Click Element       ${${platformName}_${lang}_lang}
+#            Pause Execution
+            Wait Until Element Is Visible    ${${platformName}_${lang}_Englang}       timeout=3s
+            Click Element       ${${platformName}_${lang}_Englang}
             Wait Until Element Is Visible    ${${platformName}_${lang}_RP_CreditCardNumber}       timeout=3s
             Input Text    ${${platformName}_${lang}_RP_CreditCardNumber}    ${CrediCardNumber}
             Close keyboard

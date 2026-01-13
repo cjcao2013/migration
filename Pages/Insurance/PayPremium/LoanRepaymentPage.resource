@@ -2,6 +2,7 @@
 Library     AppiumLibrary
 Library     FakerLibrary    locale=en_US
 Library     String
+Library    RPA.Browser
 Resource    ../Common/CommonMethod.resource
 Resource    ../Common/AddOTP.resource
 Resource    ../../../PageObjects/Insurance/PayPremium/LoanRepaymentPageObjects.resource
@@ -13,11 +14,16 @@ Pay now
     TRY
           ${Android_EN_InsurnacePage}       Set Variable    android=new UiSelector().text("Insurance")
           ${iOS_EN_InsurnacePage}           Set Variable    chain=**/XCUIElementTypeButton[`label == '${Flow_Flag}'`]
-          Wait Until Element Is Visible      ${${platformName}_${lang}_InsurnacePage}            timeout=10s
-          Take Screenshot     FWD_Insurance_Page
+          ${status}    Run Keyword And Return Status    Wait Until Element Is Visible    ${${platformName}_${lang}_InsurnacePage}
+          IF    '${status}' == 'True'
+                Click Element       ${${platformName}_${lang}_InsurnacePage}
+          END
+#          Wait Until Element Is Visible      ${${platformName}_${lang}_InsurnacePage}            timeout=10s
+#          Take Screenshot     FWD_Insurance_Page
           Sleep    1s
-          Click Element       ${${platformName}_${lang}_InsurnacePage}
-          Set or enter PIN
+#          Click Element       ${${platformName}_${lang}_InsurnacePage}
+         Set or enter PIN
+#          Pause Execution
           #      Select Insurance Flow
           ${Android_EN_Insurance_Module}    Set Variable     android=new UiSelector().textContains("${Insurance_Flow}")
           ${iOS_EN_Insurance_Module}        Set Variable     chain=**/XCUIElementTypeOther[`label == "${Insurance_Flow}"`][-1]
@@ -40,10 +46,9 @@ Pay now
 
 
 Loan repayment
-    TRY
         #    Click On Policy Number
         ${Android_SelectPolicyNo}    Set Variable    android=new UiSelector().textContains("${Policy_No}")
-        ${iOS_SelectPolicyNo}    Set Variable    chain=**/XCUIElementTypeOther[`label CONTAINS '${Policy_No}'`][2]
+        ${iOS_SelectPolicyNo}    Set Variable    chain=**/XCUIElementTypeOther[`label ENDSWITH '${Policy_No}'`][2]
         ${iOS_EN_PolicyLoan_RequestAmount}    Set Variable    chain=**/XCUIElementTypeOther[`label == "${Request_Amount}"`]
         ${Android_EN_PolicyLoan_RequestAmount}    Set Variable      xpath=//android.widget.TextView[@text="${Request_Amount}"]
 
@@ -51,6 +56,8 @@ Loan repayment
         Take Screenshot    Select Policy
         Sleep    1s
         Click Element    ${${platformName}_SelectPolicyNo}
+
+        Wait Until Page Contains Element    ${${platformName}_SelectPolicyNo}       timeout=60s
         ${PolicyDetails}    Get Text    ${${platformName}_SelectPolicyNo}
         Set Global Variable    ${${platformName}_SelectPolicyNo}
         
@@ -75,81 +82,117 @@ Loan repayment
         ${VP_Notice_Text}    Get Text    ${${platformName}_${lang}_Notice_Text}
         ${Notice_text}      Set Variable            Loan repayment will take up to 3 to 5 business days to be reflected in your account.
         Set Calc VP With Source And Original Values    Loan_Repayment_Notice_Text    ${Notice_text.strip()}     ${VP_Notice_Text.strip()}    Static    OMNE_Application    ${Notice_text.strip()}     ${VP_Notice_Text.strip()}
-
-            Take Screenshot    Loan_Repayment
-            IF    '${Request_Amount}' == 'Specify amount (THB)'
-                Click Element    ${${platformName}_${lang}_PolicyLoan_RequestAmount}
-                ${Loanlimitasoftoday}    Convert To Number    ${mVP_Totalasoftoday}
-                # Calculate Policy Max Limit
-                ${Max_LoanLimit}    Evaluate    ${Loanlimitasoftoday} + 100
-                Wait Until Element Is Visible    ${${platformName}_${lang}_PolicyLoanAmt}       timeout=50s
-                Input Text    ${${platformName}_${lang}_PolicyLoanAmt}    ${Max_LoanLimit}\n
-                # Capture Policy Max limit Error
-                ${status}    Run Keyword And Return Status
-                ...    Element Should Be Visible
-                ...    ${${platformName}_${lang}_Max_LoanLimit_Error}
-                IF    '${status}' == 'True'
-                    Take Screenshot    Policy_Loan_Max_Limit_Error
-                    ${Error_MaxLoanLimit}    Get Text    ${${platformName}_${lang}_Max_LoanLimit_Error}
-                    Set Calc VP With Source And Original Values
-                    ...    PolicyLoan_MaxLimit_ErrorMsg
-                    ...    ${Error_MaxLoanLimit}
-                    ...    ${Error_MaxLoanLimit}
-                    ...    static
-                    ...    Omne Application
-                    ...    ${Error_MaxLoanLimit}
-                    ...    ${Error_MaxLoanLimit}
-                END
-                Wait Until Element Is Visible    ${${platformName}_${lang}_Totalasoftoday_txt}  timeout=10s
-                Click Element    ${${platformName}_${lang}_Totalasoftoday_txt}
-                Wait Until Element Is Visible    ${${platformName}_${lang}_PolicyLoan_RequestAmount}       timeout=10s
-                Click Element    ${${platformName}_${lang}_PolicyLoan_RequestAmount}
-                Input Text    ${${platformName}_${lang}_PolicyLoanAmt}    ${Min_LoanLimit}\n
-                Take Screenshot    Min Loan Limit
-                # Capture Policy Min limit Error
-                ${status}    Run Keyword And Return Status
-                ...    Element Should Be Visible
-                ...    ${${platformName}_${lang}_Min_LoanLimit_Error}
-                IF    '${status}' == 'True'
-                    Take Screenshot    Policy_Loan_Max_Limit_Error
-                    ${Error_MinLoanLimit}    Get Text    ${${platformName}_${lang}_Min_LoanLimit_Error}
-                    Set Calc VP With Source And Original Values
-                    ...    PolicyLoan_MinLimit_ErrorMsg
-                    ...    ${Error_MinLoanLimit}
-                    ...    ${Error_MinLoanLimit}
-                    ...    static
-                    ...    Omne Application
-                    ...    ${Error_MinLoanLimit}
-                    ...    ${Error_MinLoanLimit}
-                END
-                Wait Until Element Is Visible    ${${platformName}_${lang}_Totalasoftoday_txt}  timeout=10s
-                Click Element    ${${platformName}_${lang}_Totalasoftoday_txt}
-                Wait Until Element Is Visible    ${${platformName}_${lang}_PolicyLoan_RequestAmount}       timeout=10s
-                Click Element    ${${platformName}_${lang}_PolicyLoan_RequestAmount}
-                Input Text    ${${platformName}_${lang}_PolicyLoanAmt}    ${Loan_Amount}\n
-            ELSE
-                Click Element   ${${platformName}_${lang}_PolicyLoan_RequestAmount}
-                ${status}    Run Keyword And Return Status  Wait Until Element Is Visible    ${${platformName}_${lang}_PolicyLoanAmt}   timeout=5s
-                IF    '${status}' == 'False'
-                    ${status}   Run Keyword And Return Status   Element Should Be Disabled    chain=**/XCUIElementTypeOther[`label == "Specify amount (THB)"`]
-                END
+        ${status}    Run Keyword And Return Status         Element Should Be Enabled    ${${platformName}_${lang}_Totalasoftoday_txt}
+        IF    '${status}' == 'False'
+            Set Calc VP With Source And Original Values         Total_As_Of_Today_Enable
+            ...    false
+            ...    ${status}
+            ...    static
+            ...    Omne Application
+            ...    false
+            ...    ${status}
+            ${VP_As_of_Today}       Get Element Attribute    ${${platformName}_${lang}_Totalasoftoday_txt}       attribute=label
+            Set Calc VP With Source And Original Values         Total_As_Of_Today_ Text
+            ...    Total as of today (available after 8:00AM)
+            ...    ${VP_As_of_Today.strip()}
+            ...    static
+            ...    Omne Application
+            ...    Total as of today (available after 8:00AM)
+            ...    ${VP_As_of_Today.strip()}
+        END
+        Take Screenshot    Loan_Repayment
+        IF    '${Request_Amount}' == 'Specify amount (THB)'
+            Click Element    ${${platformName}_${lang}_PolicyLoan_RequestAmount}
+            ${Loanlimitasoftoday}    Convert To Number    ${mVP_Totalasoftoday}
+            # Calculate Policy Max Limit
+            ${Max_LoanLimit}    Evaluate    ${Loanlimitasoftoday} + 100
+            Wait Until Element Is Visible    ${${platformName}_${lang}_PolicyLoanAmt}       timeout=50s
+            Input Text    ${${platformName}_${lang}_PolicyLoanAmt}    ${Max_LoanLimit}\n
+            # Capture Policy Max limit Error
+            ${status}    Run Keyword And Return Status
+            ...    Element Should Be Visible
+            ...    ${${platformName}_${lang}_Max_LoanLimit_Error}
+            IF    '${status}' == 'True'
+                Take Screenshot    Policy_Loan_Max_Limit_Error
+                ${Error_MaxLoanLimit}    Get Text    ${${platformName}_${lang}_Max_LoanLimit_Error}
+                Set Calc VP With Source And Original Values
+                ...    PolicyLoan_MaxLimit_ErrorMsg
+                ...    ${Error_MaxLoanLimit}
+                ...    ${Error_MaxLoanLimit}
+                ...    static
+                ...    Omne Application
+                ...    ${Error_MaxLoanLimit}
+                ...    ${Error_MaxLoanLimit}
             END
+            Wait Until Element Is Visible    ${${platformName}_${lang}_Totalasoftoday_txt}  timeout=10s
+            Click Element    ${${platformName}_${lang}_Totalasoftoday_txt}
+            Wait Until Element Is Visible    ${${platformName}_${lang}_PolicyLoan_RequestAmount}       timeout=10s
+            Click Element    ${${platformName}_${lang}_PolicyLoan_RequestAmount}
+            Wait Until Element Is Visible   ${${platformName}_${lang}_AmountClearText}
+            Clear Text      ${${platformName}_${lang}_AmountClearText}
+            Input Text    ${${platformName}_${lang}_PolicyLoanAmt}    ${Min_LoanLimit}\n
+            Take Screenshot    Min Loan Limit
+            # Capture Policy Min limit Error
+            ${status}    Run Keyword And Return Status
+            ...    Element Should Be Visible
+            ...    ${${platformName}_${lang}_Min_LoanLimit_Error}
+            IF    '${status}' == 'True'
+                Take Screenshot    Policy_Loan_Max_Limit_Error
+                ${Error_MinLoanLimit}    Get Text    ${${platformName}_${lang}_Min_LoanLimit_Error}
+                Set Calc VP With Source And Original Values
+                ...    PolicyLoan_MinLimit_ErrorMsg
+                ...    ${Error_MinLoanLimit}
+                ...    ${Error_MinLoanLimit}
+                ...    static
+                ...    Omne Application
+                ...    ${Error_MinLoanLimit}
+                ...    ${Error_MinLoanLimit}
+            END
+            Wait Until Element Is Visible    ${${platformName}_${lang}_Totalasoftoday_txt}  timeout=10s
+            Click Element    ${${platformName}_${lang}_Totalasoftoday_txt}
+            Wait Until Element Is Visible    ${${platformName}_${lang}_PolicyLoan_RequestAmount}       timeout=10s
+            Click Element    ${${platformName}_${lang}_PolicyLoan_RequestAmount}
+            Clear Text      ${${platformName}_${lang}_AmountClearText}
+            Pause Execution
+            Input Text    ${${platformName}_${lang}_PolicyLoanAmt}    ${Loan_Amount}\n
+        ELSE
+            Click Element   ${${platformName}_${lang}_PolicyLoan_RequestAmount}
+            ${status}    Run Keyword And Return Status  Wait Until Element Is Visible    ${${platformName}_${lang}_PolicyLoanAmt}   timeout=5s
+            IF    '${status}' == 'False'
+                ${status}   Run Keyword And Return Status   Element Should Be Disabled    chain=**/XCUIElementTypeOther[`label == "Specify amount (THB)"`]
+            END
+        END
+
             Take Screenshot    Loan_Repayment
             SwipePage
+            Wait Until Element Is Visible   ${${platformName}_${lang}_loan_temsandconditonchekbox}           timeout=10s
+            Click Element            ${${platformName}_${lang}_loan_temsandconditonchekbox}
+            Take Screenshot    Loan_Repayment
             Click Element    ${${platformName}_${lang}_PayNow}
+        ${status}    Run Keyword And Return Status      Wait Until Element Is Visible       ${${platformName}_${lang}_TimeingPoup}          timeout=20s
+        IF    '${status}' == 'True'
+            ${VP_Timing_Popup}      Get Text     ${${platformName}_${lang}_TimeingPoup}
+            ${Timing_Popup_static_text}     Set Variable        Interest amount is updated daily between 10:00 PM and 8:00 AM. Any loan repayments made during this period may not yet reflect the additional interest accrued.
+            Set Calc VP With Source And Original Values
+            ...    PolicyLoan_MinLimit_ErrorMsg
+            ...    ${Timing_Popup_static_text.strip()}
+            ...    ${VP_Timing_Popup.strip()}
+            ...    static
+            ...    Omne Application
+            ...    ${Timing_Popup_static_text.strip()}
+            ...    ${VP_Timing_Popup.strip()}
+            Take Screenshot    Loan_Repayment
+            Wait Until Element Is Visible    ${${platformName}_${lang}_IUnderstandbutton}           timeout=10s
+            Click Element           ${${platformName}_${lang}_IUnderstandbutton}
+        END
+
             # QR Scan Page
              QR Code
-    EXCEPT     AS  ${reason}
-        Set Failed Actual Result and VP    Omne_Flow   ${reason}   Loan repayment ${Insurance_Flow}
-    END
-
-
 
 
 QR Code
     # QR Scan Page
-    TRY
-        Wait Until Element Is Visible    ${${platformName}_${lang}_QRcode_txt}      timeout=10s
+    Wait Until Element Is Visible    ${${platformName}_${lang}_QRcode_txt}      timeout=10s
         ${VP_PolicyNumber}      Get Text    ${${platformName}_${lang}_PolicyNumber_txt}
         ${VP_PolicyNumber}      Remove String    ${VP_PolicyNumber}     Policy number
 
@@ -187,9 +230,5 @@ QR Code
             ...    true
             ...    ${status}
         END
-            Click Element    ${${platformName}_${lang}_BackToDashboard}
+        Click Element    ${${platformName}_${lang}_BackToDashboard}
             Take Screenshot    DashboardPage
-
-    EXCEPT     AS  ${reason}
-        Set Failed Actual Result and VP    Omne_Flow   ${reason}   OR Code
-    END

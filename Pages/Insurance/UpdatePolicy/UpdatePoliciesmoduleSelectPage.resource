@@ -27,17 +27,20 @@ Manage
     TRY
         ${Android_EN_InsurancePage}       Set Variable    android=new UiSelector().text("${Flow_Flag}")
         ${iOS_EN_InsurancePage}           Set Variable    chain=**/XCUIElementTypeButton[`label == '${Flow_Flag}'`]
-        Wait Until Element Is Visible      ${${platformName}_${lang}_InsurancePage}            timeout=30s
+         ${status}       Run Keyword And Return Status    Wait Until Element Is Visible    ${${platformName}_${lang}_InsurancePage}        timeout=5s
+        IF    '${status}' == 'True'
+             Click Element    ${${platformName}_${lang}_InsurancePage}
+        END
         Take Screenshot     FWD_Insurance_Page
-        Click Element       ${${platformName}_${lang}_InsurancePage}
+
         Set or enter PIN
-        Sleep   0.5s
+
         #      Select Insurance Flow
         ${Android_EN_Insurance_Module}    Set Variable     android=new UiSelector().textContains("${Insurance_Flow}")
         ${iOS_EN_Insurance_Module}        Set Variable     chain=**/XCUIElementTypeOther[`label CONTAINS '${Insurance_Flow}'`][-1]
         Wait Until Element Is Visible    ${${platformName}_${lang}_Insurance_Module}        timeout=20s
         Click Element    ${${platformName}_${lang}_Insurance_Module}
-        Sleep   1s
+
         ${status}       Run Keyword And Return Status    Wait Until Element Is Visible    ${${platformName}_${lang}_ClosePopup}        timeout=5s
         IF    '${status}' == 'True'
              Click Element    ${${platformName}_${lang}_ClosePopup}

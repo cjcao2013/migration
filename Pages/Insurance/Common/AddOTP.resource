@@ -18,8 +18,7 @@ ${LoginPrevious_OTP}    ${EMPTY}
 *** Keywords ***
 Insert OTP
     [Arguments]     ${OTP_Source}    ${Expiry_Flag}     ${Resend_Flag}
-    TRY
-          ${Previous_OTP}     Set Variable       567892
+        ${Previous_OTP}     Set Variable       567892
         #     Check for OTP expired scenario
         IF      '${Expiry_Flag}' != ''
             ${Expiry_Flag}      Convert To Number    ${Expiry_Flag}
@@ -48,19 +47,23 @@ Insert OTP
             Wait Until Page Contains Element        ${${platformName}_${lang}_OTP_email}        timeout=10s
             ${VP_OTP_Page_EmailID}    Get Text    ${${platformName}_${lang}_OTP_email}
             @{VP_OTP_Page_EmailID}    Split String    ${VP_OTP_Page_EmailID}
-            ${m_Email}    Convert To Lower Case    ${Email}
-#            Set Calc VP With Source And Original Values   OTP_Page_EmailID    ${m_Email}    ${VP_OTP_Page_EmailID}[5]    Test_Data    OMNE_Application    ${Email}    ${VP_OTP_Page_EmailID}[5]
-#            Get OTP
-            ${LoginCurrent_OTP}      Set Variable    123456
-            ${LoginPrevious_OTP}      Set Variable          567653
+            IF  '${LoginMethod}' != 'SignUp'
+                ${m_Email}    Convert To Lower Case    ${insurance_mobilenumber}@mailsac.com
+            ELSE
+                ${m_Email}    Convert To Lower Case    ${Email}
+            END
+            Set Global Variable    ${m_Email}
+            Get OTP     ${m_Email}
+             ${LoginCurrent_OTP}      Set Variable    ${OTPNumber}
+             ${LoginPrevious_OTP}      Set Variable          567653
             IF    '${LoginPrevious_OTP}' != '${LoginCurrent_OTP}'
                 ${Current_OTP}     Set Variable        ${LoginCurrent_OTP}
             ELSE
                 ${status}    Run Keyword And Return Status    Wait Until Element Is Visible    ${${platformName}_${lang}_OTP_Expire}    timeout=5s
                  WHILE    '${LoginPrevious_OTP}' == '${LoginCurrent_OTP}' and '${status}' != 'True'
-#                      Get OTP
+                       Get OTP     ${m_Email}
 #                      ${Current_OTP}      Set Variable    ${OTPNumber}
-                      ${LoginCurrent_OTP}      Set Variable    123456
+#                      ${LoginCurrent_OTP}      Set Variable    123456
                       ${status}    Run Keyword And Return Status    Wait Until Element Is Visible    ${${platformName}_${lang}_OTP_Expire}    timeout=5s
                  END
                  IF    '${status}' == 'True'
@@ -122,9 +125,7 @@ Insert OTP
         END
         Sleep    2s
         Take Screenshot    OTP Submit
-    EXCEPT     AS  ${reason}
-        Set Failed Actual Result and VP    Omne_Flow   ${reason}   Insert OTP
-    END
+
 
 Get Details from DB
     TRY

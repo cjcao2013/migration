@@ -37,7 +37,7 @@ Mobile and Email Change
                 Email Change
                 ${Static_Message}        Set Variable            We are delighted to confirm that we have completed your Change of Email address request.
             END
-            Set Global Variable    ${Static_Message}
+#            Set Global Variable    ${Static_Message}
 
             Get Details from DB
             ${Previous_OTP}    Set Variable    ${OTPNumber}
@@ -51,8 +51,8 @@ Mobile and Email Change
                 Insert OTP    ${Transaction_OTP_Source}    ${Transaction_OTP_Expiry_Flag}    ${Transaction_OTP_Resend_Flag}
             END
             #Check confirmation emaik
-            Get Email   ${oldUsername}      Old
-            Get Email   ${email}        New
+#            Get Email   ${oldUsername}      Old
+#            Get Email   ${email}        New
             # New All Done Confirmation Page
             Run Keyword    Check Transaction Status
             Run Keyword    Handle Feedback
@@ -374,7 +374,7 @@ Capture Email and Mobile Details Transaction for Android
     Take Screenshot    Transaction Page
     IF    '${Transaction_Info}'== 'Pre'
 
-        RefreshPage
+
         ${Android_selectCurrentTransaction}    Set Variable
         ...    xpath=(//android.widget.TextView[@text='${current_day}']/following-sibling::android.widget.TextView[@text='${current_month}']/parent::android.view.ViewGroup/following-sibling::android.widget.TextView[@text='Change of personal details'])[1]
     END

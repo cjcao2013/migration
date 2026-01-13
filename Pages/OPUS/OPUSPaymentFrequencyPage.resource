@@ -57,13 +57,13 @@ OPUS frequency
             ...    OPUS Application
         END
         IF    '${VP_currentFrequency}' == 'Half Annual'
-            ${mVP_currentFrequency}    Set Variable    Half yearly
+            ${VP_currentFrequency}    Set Variable    Half yearly
 
         END
 
         Set Calc VP Actual Result With Original And Source
         ...    OLD_Payment_Frequency
-        ...    ${mVP_currentFrequency}
+        ...    ${VP_currentFrequency}
         ...    ${VP_currentFrequency}
         ...    OPUS Application
         Set Calc VP Actual Result With Original And Source

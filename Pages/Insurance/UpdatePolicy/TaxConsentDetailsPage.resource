@@ -165,8 +165,6 @@ Capture Tax Consent Transaction Details for iOS
 
     Take Screenshot    Transaction Page
     IF    '${Transaction_Info}'== 'Pre'
-
-        RefreshPage
         ${iOS_selectCurrentTransaction1}    Set Variable
         ...    chain=**/XCUIElementTypeOther[`label CONTAINS '${currdate}' and label CONTAINS 'tax consent'`][27]
     END

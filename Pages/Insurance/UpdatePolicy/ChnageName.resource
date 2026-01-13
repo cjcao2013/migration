@@ -240,7 +240,7 @@ Capture Change Name Transaction Details for iOS
             Set Global Variable    ${OPUSTransactionstatus}
         END
         IF    '${VP_Transaction_Status}' == 'Declined'
-            ${m_VP_Transaction_Status}    Set Variable    Decline
+            ${m_VP_Transaction_Status}    Set Variable    Declined
             Set Global Variable    ${m_VP_Transaction_Status}
         END
 

@@ -40,7 +40,7 @@ Tax Season Banner Link Redirection
 
     Wait Until Element Is Visible       ${${platformName}_${lang}_TaxDeducationBanner}       timeout=10s
     IF    '${platformName}' == 'iOS'
-        Click Element At Coordinates    183    400
+        Click by Coordinates    183    400
     ELSE
         Click Element    ${${platformName}_${lang}_TaxDeducationBanner}
     END
@@ -80,7 +80,6 @@ Health Journey Link Redirection
     Take Screenshot    Engagement Banner
 
     Scroll Till Transaction Is Visible      ${${platformName}_${lang}_HealthBeginsWithYouQuickLink}
-    Scroll Till Transaction Is Visible      ${${platformName}_${lang}_HealthBeginsWithYouQuickLink_LetsStart}
     Click Element    ${${platformName}_${lang}_HealthBeginsWithYouQuickLink_LetsStart}
     Take Screenshot    Engagement Banner
     Click Element   ${${platformName}_${lang}_UpdatePolicyBackButton}

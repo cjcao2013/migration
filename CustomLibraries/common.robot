@@ -43,6 +43,11 @@ Get Details from Qrace Environment
         ${key}                  Get Environment Attribute    DB_Encrpt_AND_Decrpt_key
         ${ivkey}                Get Environment Attribute    DB_Encrpt_AND_Decrpt_IVkey
         ${samplemobileno}       Get Environment Attribute    listofmobileno
+        ${api_key_name}     Get Environment Attribute    APIKeyname
+        ${api_key_valueauth}        Get Environment Attribute    APIKeyValueauth
+        ${omneapp_version}      Get Environment Attribute    App_Version
+        ${api_host}     Get Environment Attribute    host
+
         ${key}                  Set Variable    b'${key}'
         ${env}=     Get EnvironmentName
         ${runId}=     Get TestRunId
@@ -70,6 +75,10 @@ Get Details from Qrace Environment
         Set Global Variable    ${key}
         Set Global Variable    ${ivkey}
         Set Global Variable    ${samplemobileno}
+        Set Global Variable    ${api_key_name}
+        Set Global Variable    ${api_key_valueauth}
+        Set Global Variable    ${omneapp_version}
+        Set Global Variable    ${api_host}
     EXCEPT     AS  ${reason}
         Set Failed Actual Result and VP    Omne_Flow   ${reason}   Capture Change Name Transaction Details for iOS
     END
@@ -242,15 +251,13 @@ Take OPUS Screenshot
         Set Failed Actual Result and VP    Omne_Flow   ${reason}   Capture Change Name Transaction Details for iOS
     END
 SwipePage
-    TRY
-        ${hight}    Get Window Height
-        ${width}    Get Window Width
-        ${hight}    Evaluate    ${hight}/2
-        ${width}    Evaluate    ${width}/2
-        Swipe    ${width}    ${hight}    ${width}    50
-    EXCEPT     AS  ${reason}
-        Set Failed Actual Result and VP    Omne_Flow   ${reason}   Capture Change Name Transaction Details for iOS
-    END
+    ${hight}    AppiumLibrary.Get Window Height
+    ${width}    AppiumLibrary.Get Window Width
+    ${hight}    Evaluate    ${hight}/2
+    ${width}    Evaluate    ${width}/2
+    Swipe    start_x=${width}     start_y=${hight}    end_x=${width}    end_y=50   duration=1s
+#        Swipe               50
+
 RefreshPage
     TRY
         ${window_height}    Get Window Height
@@ -262,11 +269,18 @@ RefreshPage
     #    ${end_x}=    Evaluate    ${element_location['x']} + (${element_size['width']} * 0.5)
         ${end_y}    Evaluate    (${window_height}*0.3)
         ${end_y}    Convert To Integer    ${end_y}
-        Swipe    ${start_x}    ${end_y}    ${start_x}    ${start_Y}    2000
+#        Swipe                 2000
+        Swipe    start_x=${start_x}     start_y=${end_y}    end_x=${start_x}      end_y=${start_Y}   duration=2000s
         Sleep    0.5s
     EXCEPT     AS  ${reason}
         Set Failed Actual Result and VP    Omne_Flow   ${reason}   Capture Change Name Transaction Details for iOS
     END
+
+Click by Coordinates
+    [Arguments]     ${xaxis}    ${yaxis}
+    @{coordinates}  Create List     ${xaxis}      ${yaxis}
+    Tap     ${coordinates}      count=1
+
 Fetch Reason
     [Arguments]    ${sOutput}
     TRY
@@ -339,39 +353,34 @@ Get Month Num
         Set Failed Actual Result and VP    Omne_Flow   ${reason}   Capture Change Name Transaction Details for iOS
     END
 Horizontal Swipe
-#    Swipe    812 739 225 739 500
-    TRY
-        ${window_height}    Get Window Height
-        ${window_width}    Get Window Width
-        ${start_X}    Evaluate    (${window_width}-90)
-        ${start_x}    Convert To Integer    ${start_x}
-        ${start_Y}    Evaluate    (${window_height}*2)/3
-        ${start_Y}    Convert To Integer    ${start_Y}
-        ${end_x}    Evaluate    (${window_width})/16
-        ${end_x}    Convert To Integer    ${end_x}
-        Swipe    ${start_x}    ${start_y}    ${end_x}    ${start_y}
-        Sleep    0.5s
-    EXCEPT     AS  ${reason}
-        Set Failed Actual Result and VP    Omne_Flow   ${reason}   Capture Change Name Transaction Details for iOS
-    END
+    ${window_height}    Get Window Height
+    ${window_width}    Get Window Width
+    ${start_X}    Evaluate    (${window_width}-90)
+    ${start_x}    Convert To Integer    ${start_x}
+    ${start_Y}    Evaluate    (${window_height}*2)/3
+    ${start_Y}    Convert To Integer    ${start_Y}
+    ${end_x}    Evaluate    (${window_width})/16
+    ${end_x}    Convert To Integer    ${end_x}
+    Swipe    start_x=${start_x}     start_y=${start_y}    end_x=${end_x}     end_y=${start_y}   duration=1s
+
+    Sleep    0.5s
+
 Horizontal Swipe Rider
     [Arguments]    &{coordinateDic}
-    TRY
-        ${xaxis}    Get From Dictionary    ${coordinateDic}    x
-        ${yaxis}    Get From Dictionary    ${coordinateDic}    y
+    ${xaxis}    Get From Dictionary    ${coordinateDic}    x
+    ${yaxis}    Get From Dictionary    ${coordinateDic}    y
 
-        ${start_X}    Evaluate    (${xaxis}+780)
-        ${start_x}    Convert To Integer    ${start_x}
-        ${start_Y}    Evaluate    (${yaxis}-300)
-        ${start_Y}    Convert To Integer    ${start_Y}
-        ${end_x}    Evaluate    (${xaxis}+25)
-        ${end_x}    Convert To Integer    ${end_x}
+    ${start_X}    Evaluate    (${xaxis}+780)
+    ${start_x}    Convert To Integer    ${start_x}
+    ${start_Y}    Evaluate    (${yaxis}-300)
+    ${start_Y}    Convert To Integer    ${start_Y}
+    ${end_x}    Evaluate    (${xaxis}+25)
+    ${end_x}    Convert To Integer    ${end_x}
     #    Click Element At Coordinates    ${start_x}    ${start_y}
-        Swipe    ${start_x}    ${start_y}    ${end_x}    ${start_y}
-        Sleep    0.5s
-    EXCEPT     AS  ${reason}
-        Set Failed Actual Result and VP    Omne_Flow   ${reason}   Capture Change Name Transaction Details for iOS
-    END
+
+    Swipe    start_x=${start_x}      start_y=${start_y}    end_x=${end_x}    end_y=${start_y}   duration=1s
+    Sleep    0.5s
+
 Get English To Thai Value
     [Arguments]    ${English_data}
     TRY

@@ -6,7 +6,7 @@ Library     QraceHelper
 *** Variables ***
 ${iOS_EN_PolicyOwnerName}                               xpath=//XCUIElementTypeStaticText[@name='Policy owner name']/following-sibling::XCUIElementTypeStaticText
 ${iOS_EN_Policyownername_txt}                           chain=**/XCUIElementTypeStaticText[`label == 'Policy owner name'`]
-${iOS_EN_txtTitle}                                      xpath=(//XCUIElementTypeOther[@name="fwd-dropdown-control"])[1]
+${iOS_EN_txtTitle}                                      accessibility_id=salutation-selector
 # ${iOS_EN_txtTitle}    chain=**/XCUIElementTypeOther[`label CONTAINS 'Title'`][-1]
 ${iOS_EN_txtFirstName}                                  chain=**/XCUIElementTypeTextField[`name == "first-name-input"`]
 ${iOS_EN_txtMiddleName}                                 chain=**/XCUIElementTypeTextField[`name == "middle-name-input"`]

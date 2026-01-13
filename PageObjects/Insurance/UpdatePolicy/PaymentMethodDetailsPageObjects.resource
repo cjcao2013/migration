@@ -16,7 +16,7 @@ ${iOS_EN_RecurringPayment_DisclaimerText}                           chain=**/XCU
 ${iOS_EN_RecurringPayment_DisclaimerContent}                        xpath=//XCUIElementTypeOther[@name="Disclaimer"]/following-sibling::XCUIElementTypeStaticText
 ${iOS_EN_RecurringPayment_PolicyNUmber}                             xpath=//XCUIElementTypeStaticText[@label="This recurring payment will be applied to"]//following::XCUIElementTypeStaticText[1]
 ${iOS_EN_RecurringPayment_PolicyName}                               xpath=//XCUIElementTypeStaticText[@label="This recurring payment will be applied to"]//following::XCUIElementTypeStaticText[2]
-${iOS_EN_RecurringPayment_Checkbox}                                 chain=**/XCUIElementTypeOther[`label == "CheckBox"`]
+${iOS_EN_RecurringPayment_Checkbox}                                 chain=**/XCUIElementTypeOther[`name == "RecurringPayment-terms-checkbox"`]
 ${iOS_EN_RecurringPayment_CardNumber_Below_16digit_ErrorMsg}        chain=**/XCUIElementTypeStaticText[`label == "Please input at least 16 digits"`]
 ${iOS_EN_RecurringPayment_CardNumber_Invalid_ErrorMsg}              chain=**/XCUIElementTypeStaticText[`label == "Please input a valid credit card number"`]
 ${iOS_EN_RecurringPayment_ExpiryDate_ErrorMsg}                      chain=**/XCUIElementTypeOther[`label == "Please input a credit card with an expiry date of at least 6 months from today"`][3]

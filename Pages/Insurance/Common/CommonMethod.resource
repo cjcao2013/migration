@@ -13,9 +13,9 @@ Completion Popup
     TRY
         Sleep    10s
         IF    '${platformName}' == 'iOS'
-            Click Element At Coordinates    199    95
+            Click by Coordinates   199    95
         ELSE
-                Click Element At Coordinates    510    248
+                Click by Coordinates   510    248
         END
         Extra POP Up
         ${Android_EN_InsurancePage}    Set Variable    android=new UiSelector().text("${Flow_Flag}")
@@ -312,55 +312,81 @@ Select Policy
 
 
 Handle Feedback
-    ${status}   Run Keyword And Return Status    Wait Until Element Is Visible    ${${platformName}_${lang}_FeedbackPage_Title}     timeout=20s
+    Handle Feedback
+    ${status}   Run Keyword And Return Status    Wait Until Element Is Visible    ${${platformName}_${lang}_FeedbackPage_Title}     timeout=5s
     IF    '${status}' == 'True'
-       Take Screenshot    FeedBack_Page
-        ${status}   Run Keyword And Return Status    Wait Until Element Is Visible    ${${platformName}_${lang}_FeebackEmoji_Option}     timeout=20s
-        IF    '${status}' == 'True'
-            Click Element   ${${platformName}_${lang}_FeebackEmoji_Option}
-        ELSE
-            Click Element   ${${platformName}_${lang}_Seven_Txt}
-        END
-       ${status}   Run Keyword And Return Status    Wait Until Element Is Visible    ${${platformName}_${lang}_Feedback_CheckBox}      timeout=10s
-       IF    '${status}' == 'True'
-            Click Element    ${${platformName}_${lang}_Feedback_CheckBox}
-       ELSE
-            Click Element    ${${platformName}_${lang}_Feedback_Claim_CheckBox}
-       END
-       Sleep    2s
-        Click Element    ${${platformName}_${lang}_FeedbackSubmit_Btn}
-        ${status}   Run Keyword And Return Status    Wait Until Element Is Visible    ${${platformName}_${lang}_FeedbackSkip_Btn}    timeout=10s
-        Take Screenshot    Feedback_Page
-        IF    '${status}' == 'True'
-            Input Text    ${${platformName}_${lang}_FeedbackComment_Txt}    Feedback Sample Text
-            Close keyboard
-            Click Element    ${${platformName}_${lang}_TellUsMoreTxt}
-            Take Screenshot     FeedBack_Page
-            Click Element    ${${platformName}_${lang}_FeedbackSubmit_Btn}
-            ${status}   Run Keyword And Return Status    Wait Until Element Is Visible    ${${platformName}_${lang}_FeedbackDone_Btn}    timeout=10s
-            Take Screenshot    FeedbackPage
+           Take Screenshot    FeedBack_Page
+            ${status}   Run Keyword And Return Status    Wait Until Element Is Visible    ${${platformName}_${lang}_Appexperience}    timeout=5s
+            Take Screenshot    Feedback_Page
             IF    '${status}' == 'True'
-                Click Element    ${${platformName}_${lang}_FeedbackDone_Btn}
+                    Click Element    ${${platformName}_${lang}_Appexperience}
             END
-            ${status}   Run Keyword And Return Status    Wait Until Element Is Visible    ${${platformName}_${lang}_FeedbackSubmit_Btn}    timeout=3s
-            Take Screenshot    FeedbackPage
+            Wait Until Element Is Visible   ${${platformName}_${lang}_Feedback_NextButton}
+            Take Screenshot    Feedback 1st page
+            Click Element    ${${platformName}_${lang}_Feedback_NextButton}
+
+            #2nd feedback page
+            Run Keyword    Feedback 2nd page ${platformName}
+            Scroll Till Transaction Is Visible    ${${platformName}_${lang}_Feedback_NextButton}
+            Wait Until Element Is Visible    ${${platformName}_${lang}_Feedback_NextButton}
+            Click Element    ${${platformName}_${lang}_Feedback_NextButton}
+
+            # feedback 3rd page
+            Wait Until Element Is Visible    ${${platformName}_${lang}_TellUsMoreTxt}
+
+            ${status}   Run Keyword And Return Status    Wait Until Element Is Visible    ${${platformName}_${lang}_FeedbackSubmit_Btn}    timeout=5s
+            Take Screenshot    Feedback_Page
             IF    '${status}' == 'True'
-                Click Element    ${${platformName}_${lang}_FeedbackSubmit_Btn}
+                Take Screenshot     FeedBack_Page
+                Click Element       ${${platformName}_${lang}_FeedbackSubmit_Btn}
+                ${status}   Run Keyword And Return Status    Wait Until Element Is Visible    ${${platformName}_${lang}_FeedbackDone_Btn}    timeout=5s
+                IF    '${status}' == 'True'
+                    Take Screenshot    FeedbackPage
+                    Click Element    ${${platformName}_${lang}_FeedbackDone_Btn}
+                END
             END
-        END
-#        Click Element    ${${platformName}_${lang}_FeedbackDone_Btn}
-    END
-#    Extra POP Up
-    ${Android_EN_InsurancePage}    Set Variable    android=new UiSelector().text("${Flow_Flag}")
-    ${iOS_EN_InsurancePage}    Set Variable    chain=**/XCUIElementTypeButton[`label == '${Flow_Flag}'`]
-    ${status}   Run Keyword And Return Status    Wait Until Element Is Visible    ${${platformName}_${lang}_InsurancePage}   timeout=30s
-    Take Screenshot    Feedback_Page
-    IF    '${status}' == 'True'
-            Take Screenshot    FWD_Insurance_Page
-            Click Element    ${${platformName}_${lang}_InsurancePage}
+            ${iOS_EN_InsurancePage}           Set Variable    chain=**/XCUIElementTypeButton[`label == '${Flow_Flag}'`]
+            ${status}     Run Keyword And Return Status     Wait Until Element Is Visible      ${${platformName}_${lang}_InsurancePage}            timeout=5s
+            Take Screenshot     FWD_Insurance_Page
+            Sleep      2s
+            IF    '${status}' == 'True'
+                     Click Element       ${${platformName}_${lang}_InsurancePage}
+                     Set or enter PIN
+            END
     END
 
-#    Set or enter PIN
+Feedback 2nd page Android
+    FOR    ${counter}    IN RANGE    1    4
+        Log    ${counter}
+        ${Android_EN_feedback_question_list}   Set Variable     xpath=(//android.view.ViewGroup[@resource-id="feedback-star-pressable-3"])[${counter}]/android.view.ViewGroup
+        Scroll Till Transaction Is Visible    ${${platformName}_${lang}_feedback_question_list}
+        Wait Until Element Is Visible    ${${platformName}_${lang}_feedback_question_list}       timeout=5s
+        Click Element    ${${platformName}_${lang}_feedback_question_list}
+    END
+        ${Android_EN_feedback_star5}    Set Variable    xpath=//android.widget.TextView[@text="The details I received felt relevant to my specific request."]/following-sibling::android.view.ViewGroup[1]//android.view.ViewGroup[4]
+        ${Android_EN_feedback_star6}    Set Variable    xpath=//android.widget.TextView[contains(@text,'My request')]/following-sibling::android.view.ViewGroup[1]/android.view.ViewGroup[4]
+        Scroll Till Transaction Is Visible      ${Android_EN_feedback_star6}
+        Sleep    1s
+        Wait Until Element Is Visible   ${Android_EN_feedback_star6}    timeout=5s
+        Click Element    ${Android_EN_feedback_star5}
+        Sleep    1s
+        Wait Until Element Is Visible   ${Android_EN_feedback_star6}    timeout=5s
+        Click Element    ${Android_EN_feedback_star6}
+        Take Screenshot    Feedbcak 2nd page
+
+ Feedback 2nd page iOS
+    ${iOS_EN_feedback_question_list}   Set Variable     chain=**/XCUIElementTypeOther[`name == "feedback-star-pressable-4"`][2]
+    Wait Until Element Is Visible    ${${platformName}_${lang}_feedback_question_list}       timeout=5s
+    @{feedback_question_list}   Get Webelements    chain=**/XCUIElementTypeOther[`name == "feedback-star-pressable-4"`]
+    ${total_feedbcak_question}      Get Length    ${feedback_question_list}
+
+    FOR    ${counter}    IN RANGE    1    ${total_feedbcak_question}
+        Log    ${counter}
+        Scroll Till Transaction Is Visible    chain=**/XCUIElementTypeOther[`name == "feedback-star-pressable-4"`][${counter}+1]
+        Wait Until Element Is Visible    chain=**/XCUIElementTypeOther[`name == "feedback-star-pressable-4"`][${counter}+1]       timeout=5s
+        Click Element    chain=**/XCUIElementTypeOther[`name == "feedback-star-pressable-4"`][${counter}+1]
+    END
+        Take Screenshot    Feedbcak 2nd page
 
 
 Check Transaction Status
@@ -406,9 +432,9 @@ Check Transaction Status
 Set or enter PIN
     TRY
         Take Screenshot    PIN PopUp
-        ${status}       Run Keyword And Return Status    Wait Until Element Is Visible    ${${platformName}_${lang}_SetPin}     timeout=2s
-        ${enterpinstatus}       Run Keyword And Return Status    Wait Until Element Is Visible    ${${platformName}_${lang}_EnterPinField}     timeout=2s
-        ${enterpinFieldStatus}      Run Keyword And Return Status    Wait Until Element Is Visible      ${${platformName}_${lang}_SetPinField}  timeout=2s
+        ${status}       Run Keyword And Return Status    Wait Until Element Is Visible    ${${platformName}_${lang}_SetPin}     timeout=10s
+        ${enterpinstatus}       Run Keyword And Return Status    Wait Until Element Is Visible    ${${platformName}_${lang}_EnterPinField}     timeout=10s
+        ${enterpinFieldStatus}      Run Keyword And Return Status    Wait Until Element Is Visible      ${${platformName}_${lang}_SetPinField}  timeout=10s
         IF    '${status}' == 'True' or '${enterpinFieldStatus}' == 'True'
             IF    '${status}' == 'True'
                 Click Element    ${${platformName}_${lang}_SetPin}

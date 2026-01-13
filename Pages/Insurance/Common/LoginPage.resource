@@ -219,55 +219,59 @@ Onboard Insurance
    END
 
 SignIn
-    TRY
-        ${status}   Run Keyword And Return Status   Wait Until Element Is Visible    ${${platformName}_${lang}_Allow}     timeout=2s
-        IF    '${status}' == 'True'
-            Click Element       ${${platformName}_${lang}_Allow}
-        END
-        ${status}    Run Keyword And Return Status   Wait Until Element Is Visible    ${${platformName}_${lang}_Sign_in_here}    timeout=20s
-        IF    '${status}' == 'True'    Click Element    ${${platformName}_${lang}_Sign_in_here}
-        ${status}    Run Keyword And Return Status    Wait Until Element Is Visible    ${${platformName}_${lang}_SignIn_WelomebackText}    timeout=2s
-        Set Global Variable    ${loginstatus}    ${status}
-        IF    '${status}' == 'True'
-            ${VP_Sign_here_Welcome_Txt}    Get Text    ${${platformName}_${lang}_SignIn_WelomebackText}
-            ${VP_Sign_here_DontHave_Txt}    Get Text    ${${platformName}_${lang}_SignIn_DontHaveText}
-            Set Calc VP With Source And Original Values    Login_Welcome_txt    Welcome back!    ${VP_Sign_here_Welcome_Txt}    Static    OMNE_Application    Welcome back!    ${VP_Sign_here_Welcome_Txt}
-            Set Calc VP With Source And Original Values    Login_Don't_have_account_txt    Don't have an account yet?    ${VP_Sign_here_DontHave_Txt.strip()}    Static    OMNE_Application    Don't have an account yet?    ${VP_Sign_here_DontHave_Txt}
-            ${status}    Run Keyword And Return Status    Element Should Be Enabled    ${${platformName}_${lang}_Enter_MobileNo}
-            Set Calc VP With Source And Original Values    Mobile_No_Enable_By_Default    true    ${status}    Static    OMNE_Application    true    ${status}
-            ${status}    Run Keyword And Return Status    Wait Until Element Is Visible    ${${platformName}_${lang}_Language}    timeout=1s
-            IF    '${status}' == 'True'
-                ${VP_ByDefault_Lang}    Get Text    ${${platformName}_${lang}_Language}
-            END
-            Set Calc VP With Source And Original Values    By_Default_EN_Language    EN    ${VP_ByDefault_Lang}    Static    OMNE_Application    EN    ${VP_ByDefault_Lang}
 
-            #       Login by Email or Mobile
-            Run Keyword    Login By ${LoginType}
-            Additional Verification Page
+    ${status}   Run Keyword And Return Status   Wait Until Element Is Visible    ${${platformName}_${lang}_Allow}     timeout=2s
+    IF    '${status}' == 'True'
+        Click Element       ${${platformName}_${lang}_Allow}
+    END
+#    ${iOS_FWDPolicyHolder}      Set Variable          chain=**/XCUIElementTypeButton[`label == "${IS_FWD_PolicyHolder}"`]
+#    ${Android_FWDPolicyHolder}      Set Variable      xpath=//android.widget.TextView[@text='${IS_FWD_PolicyHolder}']/preceding-sibling::android.view.ViewGroup
+#    ${status}       Run Keyword And Return Status    Wait Until Element Is Visible       ${${platformName}_FWDPolicyHolder}     timeout=5s
+#    IF    '${status}' == 'True'
+#         Click Element       ${${platformName}_FWDPolicyHolder}
+#    END
 
-            Extra POP Up
-
-        ELSE
-            Logout From OMNE
-        END
-
-        ${status}    Run Keyword And Return Status    Wait Until Page Contains    Allow    timeout=2s
+    ${status}    Run Keyword And Return Status   Wait Until Element Is Visible    ${${platformName}_${lang}_Sign_in_here}    timeout=20s
+    IF    '${status}' == 'True'    Click Element    ${${platformName}_${lang}_Sign_in_here}
+    ${status}    Run Keyword And Return Status    Wait Until Element Is Visible    ${${platformName}_${lang}_SignIn_WelomebackText}    timeout=2s
+    Set Global Variable    ${loginstatus}    ${status}
+    IF    '${status}' == 'True'
+        ${VP_Sign_here_Welcome_Txt}    Get Text    ${${platformName}_${lang}_SignIn_WelomebackText}
+        ${VP_Sign_here_DontHave_Txt}    Get Text    ${${platformName}_${lang}_SignIn_DontHaveText}
+        Set Calc VP With Source And Original Values    Login_Welcome_txt    Welcome back!    ${VP_Sign_here_Welcome_Txt}    Static    OMNE_Application    Welcome back!    ${VP_Sign_here_Welcome_Txt}
+        Set Calc VP With Source And Original Values    Login_Don't_have_account_txt    Don't have an account yet?    ${VP_Sign_here_DontHave_Txt.strip()}    Static    OMNE_Application    Don't have an account yet?    ${VP_Sign_here_DontHave_Txt}
+        ${status}    Run Keyword And Return Status    Element Should Be Enabled    ${${platformName}_${lang}_Enter_MobileNo}
+        Set Calc VP With Source And Original Values    Mobile_No_Enable_By_Default    true    ${status}    Static    OMNE_Application    true    ${status}
+        ${status}    Run Keyword And Return Status    Wait Until Element Is Visible    ${${platformName}_${lang}_Language}    timeout=1s
         IF    '${status}' == 'True'
-            Click Text    Allow    exact_match=true
-            Take Screenshot    PostSignInHome_Page
+            ${VP_ByDefault_Lang}    Get Text    ${${platformName}_${lang}_Language}
         END
+        Set Calc VP With Source And Original Values    By_Default_EN_Language    EN    ${VP_ByDefault_Lang}    Static    OMNE_Application    EN    ${VP_ByDefault_Lang}
 
-        ${status}    Run Keyword And Return Status    Wait Until Page Contains    Close    timeout=1s
-        IF    '${status}' == 'True'
-            Click Text    Close    exact_match=true
-            Take Screenshot    PostSignInHome_Page
-        END
-            ${Status}    Run Keyword And Return Status    Wait Until Element Is Visible    ${${platformName}_${lang}_Popup_Confirm_btn}   timeout=3s
-        IF    '${status}' == 'True'
-            Click Element    ${${platformName}_${lang}_Popup_Confirm_btn}
-        END
-    EXCEPT     AS  ${reason}
-       Set Failed Actual Result and VP    Omne_Flow   ${reason}   Sign IN
+        #       Login by Email or Mobile
+        Run Keyword    Login By ${LoginType}
+        Additional Verification Page
+
+        Extra POP Up
+
+    ELSE
+        Logout From OMNE
+    END
+
+    ${status}    Run Keyword And Return Status    Wait Until Page Contains    Allow    timeout=2s
+    IF    '${status}' == 'True'
+        Click Text    Allow    exact_match=true
+        Take Screenshot    PostSignInHome_Page
+    END
+
+    ${status}    Run Keyword And Return Status    Wait Until Page Contains    Close    timeout=1s
+    IF    '${status}' == 'True'
+        Click Text    Close    exact_match=true
+        Take Screenshot    PostSignInHome_Page
+    END
+        ${Status}    Run Keyword And Return Status    Wait Until Element Is Visible    ${${platformName}_${lang}_Popup_Confirm_btn}   timeout=3s
+    IF    '${status}' == 'True'
+        Click Element    ${${platformName}_${lang}_Popup_Confirm_btn}
     END
 
 
@@ -323,6 +327,9 @@ Additional Verification Page
                     Fail    ${errormsg}
                 END
             END
+            ${insurance_mobilenumber}       Fetch Insurance Mobile Number from API
+            ${insurance_mobilenumber}   Set Variable    ${insurance_mobilenumber}Copy
+            Set Global Variable     ${insurance_mobilenumber}
             Wait Until Element Is Visible    ${${platformName}_${lang}_Verify_btn}
             Take Screenshot    Document_Details
 
@@ -343,8 +350,8 @@ Additional Verification Page
             END
         END
         Take Screenshot    SignIn_OTP_Page
-       #Insert OTP      ${OTP_Source}    ${OTP_Expiry_Flag}     ${OTP_Resend_Flag}
-         Pause Execution
+       Insert OTP      ${OTP_Source}    ${OTP_Expiry_Flag}     ${OTP_Resend_Flag}
+#        Pause Execution
         Omne Action Popup
     EXCEPT     AS  ${reason}
        Set Failed Actual Result and VP    Omne_Flow   ${reason}   Additional Verification Page
@@ -370,7 +377,8 @@ Select DOB
         Sleep    2s
         ${status}    Run Keyword And Return Status      Wait Until Page Contains Element    ${${platformName}_DayObj}    timeout=2s
         WHILE    '${status}' != 'True'
-            Swipe    289    1294    294    735
+            Swipe    start_x=289    start_y=1294    end_x=294    end_y=735   duration=1s
+
             ${status}    Run Keyword And Return Status      Wait Until Page Contains Element    ${${platformName}_DayObj}    timeout=2s
 
         END
@@ -379,7 +387,7 @@ Select DOB
         Click Element    ${${platformName}_${lang}_MMM_dropdown}
         ${status}    Run Keyword And Return Status      Wait Until Page Contains Element    ${${platformName}_MonthObj}    timeout=2s
         WHILE    '${status}' != 'True'
-            Swipe    289    1294    294    735
+             Swipe    start_x=289    start_y=1294    end_x=294    end_y=735   duration=1s
             ${status}    Run Keyword And Return Status      Wait Until Page Contains Element    ${${platformName}_MonthObj}    timeout=2s
         END
         Click Element    ${${platformName}_MonthObj}
@@ -387,7 +395,7 @@ Select DOB
         Click Element    ${${platformName}_${lang}_YYYY_dropdown}
         ${status}    Run Keyword And Return Status      Wait Until Page Contains Element    ${${platformName}_YearObj}    timeout=2s
         WHILE    '${status}' != 'True'
-            Swipe    289    1294    294    735
+            Swipe    start_x=289    start_y=1294    end_x=294    end_y=735   duration=1s
             ${status}    Run Keyword And Return Status      Wait Until Page Contains Element    ${${platformName}_YearObj}    timeout=2s
     #        IF    '${status}' == 'True'
     #            BREAK

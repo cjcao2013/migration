@@ -200,10 +200,11 @@ Credit card recurring payment
         IF    '${status}' == 'True'
             Insert OTP    ${Transaction_OTP_Source}    ${Transaction_OTP_Expiry_Flag}    ${Transaction_OTP_Resend_Flag}
         END
-        Take Screenshot    Payment_method_page
-        # New All Done Confirmation Page
+#        Pause Execution
+        Take Screenshot    Payment_method_pag
+       # New All Done Confirmation Page
         Run Keyword    Check Transaction Status
-        Run Keyword    Handle Feedback
+        Run Keyword    Completion Popup
 
         Wait Until Element Is Visible    ${${platformName}_${lang}_SeeAll}   timeout=20s
         Click Element    ${${platformName}_${lang}_SeeAll}
@@ -360,7 +361,7 @@ Capture RCC Transaction Details for iOS
         SwipePage
         Take Screenshot    Transaction_Page
         IF    '${Transaction_Info}'== 'Pre'
-            RefreshPage
+
             ${iOS_selectCurrentTransaction1}    Set Variable
             ...    chain=**/XCUIElementTypeOther[`label CONTAINS '${currdate}' and label CONTAINS 'Credit card recurring payment' and label CONTAINS 'Policy no: ${Policy_No}'`][27]
         ELSE IF    '${Transaction_Info}'== 'Post'
@@ -369,7 +370,8 @@ Capture RCC Transaction Details for iOS
             ${iOS_transactionstatusobject}    Set Variable
             ...    chain=**/XCUIElementTypeOther[`label CONTAINS '${currdate}' and label CONTAINS 'Credit card recurring payment ${MCaseStatus}' and label CONTAINS 'Policy no: ${Policy_No}'`][26]/XCUIElementTypeOther/XCUIElementTypeOther
         END
-        Wait Until Element Is Visible    ${${platformName}_selectCurrentTransaction1}    timeout=300s
+        Scroll Till Transaction Is Visible    ${${platformName}_selectCurrentTransaction1}
+#        Wait Until Element Is Visible      timeout=300s
         Take Screenshot    Transaction Page
         ${transactionstatus}    Get Text    ${${platformName}_selectCurrentTransaction1}
         @{transactionstatusdetail}    Split String    ${transactionstatus}    Policy no
