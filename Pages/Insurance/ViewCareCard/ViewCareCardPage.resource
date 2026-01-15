@@ -36,9 +36,9 @@ View care card
         #select policy  number
         ${iOS_EN_selectViewcardPolicy}      Set Variable     chain=**/XCUIElementTypeOther[`name CONTAINS " Policy no: ${Policy_No}"`][-1]
         ${Android_EN_selectViewcardPolicy}      Set Variable     android=
-        Wait Until Element Is Visible   ${${platformName}_${lang}_selectViewcardPolicy}
-        Take Screenshot     Select policy
-        Click Element   ${${platformName}_${lang}_selectViewcardPolicy}
+#        Wait Until Element Is Visible   ${${platformName}_${lang}_selectViewcardPolicy}
+#        Take Screenshot     Select policy
+#        Click Element   ${${platformName}_${lang}_selectViewcardPolicy}
         Run Keyword     Download View Care Card Document for ${platformName}
 
         ${actualResult}=    Catenate    ${actualResult}     | FWD Insurance Flow of ${Insurance_Flow} Successful   : View care card for policy ${Policy_No}
@@ -46,9 +46,9 @@ View care card
 
         Wait Until Element Is Visible   ${${platformName}_${lang}_carecardpreviewDocument_backBtn}
         Click Element   ${${platformName}_${lang}_carecardpreviewDocument_backBtn}
-
-        Wait Until Element Is Visible   ${${platformName}_${lang}_UpdatePolicyBackButton}
-        Click Element   ${${platformName}_${lang}_UpdatePolicyBackButton}
+#
+#        Wait Until Element Is Visible   ${${platformName}_${lang}_UpdatePolicyBackButton}
+#        Click Element   ${${platformName}_${lang}_UpdatePolicyBackButton}
 
         #now check view care card in my policy section
          #      Select My Policy Flow

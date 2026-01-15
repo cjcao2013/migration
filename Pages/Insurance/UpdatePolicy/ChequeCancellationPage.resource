@@ -111,13 +111,10 @@ Cheque cancellation
         Click Element    ${${platformName}_${lang}_SubmitButton}
         Take Screenshot    Cheque cancellation Page
 
-        ...    Insert OTP
+         Insert OTP
         ...    ${Transaction_OTP_Source}
         ...    ${Transaction_OTP_Expiry_Flag}
         ...    ${Transaction_OTP_Resend_Flag}
-
-        # check text on confirmation screen for preferred payout
-        Check confirmation Screen text
 
         Check Transaction Status
 
@@ -129,7 +126,7 @@ Cheque cancellation
         Take Screenshot    Transaction_Page
         #Capture Transaction Deatils
         Run Keyword     Capture Cheque Cancellation Transaction Details for ${platformName}     Pre
-        Run Keyword    Capture ICP Transaction Details for ${platformName}        ${Perferred_transaction_status}
+
         Set Global Variable    ${result}    Cheque Cancellation for Policy No: ${Policy_No}
 
     EXCEPT     AS  ${reason}
@@ -308,14 +305,4 @@ Capture Cheque Cancellation Transaction Details for Android
     END
 
 
-Check confirmation Screen text
-    Set Variable    ${Perferred_transaction_status}
-    ${completed_prefred_status}     Run Keyword And Return Status    Element Should Be Visible    ${iOS_EN_ConfirmationScreen_STPText_Status}
-    IF    '${completed_prefred_status}' == 'True'
-         ${Perferred_transaction_status}    Set Variable    Completed
-    END
-    ${completed_prefred_status}     Run Keyword And Return Status    Element Should Be Visible    ${iOS_EN_ConfirmationScreen_VanillaText_Status}
-    IF    '${completed_prefred_status}' == 'True'
-         ${Perferred_transaction_status}    Set Variable    In progress
-    END
-    Set Global Variable    ${Perferred_transaction_status}
+

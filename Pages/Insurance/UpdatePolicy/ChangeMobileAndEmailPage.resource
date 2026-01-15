@@ -280,7 +280,7 @@ Capture Email and Mobile Details Transaction for iOS
     Click Element    ${${platformName}_${lang}_ServiceReuest}
     Take Screenshot    Transaction Page
     IF    '${Transaction_Info}'== 'Pre'
-        RefreshPage
+
         ${iOS_selectCurrentTransaction1}    Set Variable
         ...    chain=**/XCUIElementTypeOther[`label CONTAINS '${currdate}' and label CONTAINS 'Change of personal details' and label CONTAINS 'Policy no: ${Policy_No}'`][27]
     END
@@ -374,7 +374,7 @@ Capture Email and Mobile Details Transaction for Android
     Take Screenshot    Transaction Page
     IF    '${Transaction_Info}'== 'Pre'
 
-        RefreshPage
+
         ${Android_selectCurrentTransaction}    Set Variable
         ...    xpath=(//android.widget.TextView[@text='${current_day}']/following-sibling::android.widget.TextView[@text='${current_month}']/parent::android.view.ViewGroup/following-sibling::android.widget.TextView[@text='Change of personal details'])[1]
     END

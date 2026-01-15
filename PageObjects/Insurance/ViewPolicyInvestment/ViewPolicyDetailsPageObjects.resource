@@ -27,7 +27,7 @@ ${Android_EN_plyNo}                                     xpath=(((//android.view.
 ${iOS_EN_plyNo}                                         xpath=(//XCUIElementTypeOther[contains(@name,'Overview Document(s)')])[last()-4]/preceding::XCUIElementTypeOther[4]
 
 ${Android_EN_policyName_txt}                            xpath=((//android.view.ViewGroup[@clickable="true"])[1]/following-sibling::android.widget.TextView)[2]
-${iOS_EN_policyName_txt}                                xpath=(//XCUIElementTypeOther[contains(@name,'Overview Document(s)')])[last()-4]/preceding::XCUIElementTypeOther[7]/XCUIElementTypeStaticText[2]
+${iOS_EN_policyName_txt}                                accessibility_id=header-product-name
 
 ${Android_EN_YouAreCoveredFor_txt}                      xpath=(//android.widget.TextView[@text="You’re covered for"]/following-sibling::android.widget.TextView)[1]
 ${iOS_EN_YouAreCoveredFor_txt}                          chain=**/XCUIElementTypeOther[`label CONTAINS "Sum assured"`][-1]/XCUIElementTypeStaticText[2]
@@ -74,7 +74,7 @@ ${Android_EN_VPH_Count}                                 xpath=//android.widget.T
 ${Android_EN_Rider}                                     xpath=//android.widget.TextView[@text='Rider(s)']
 ${iOS_EN_Rider}                                         chain=**/XCUIElementTypeOther[`label == "Rider(s)"`]
 
-${iOS_EN_RiderList}                                     xpath=//XCUIElementTypeOther[@name="Rider(s)"]/following::XCUIElementTypeScrollView[1]/XCUIElementTypeOther[1]/XCUIElementTypeOther
+${iOS_EN_RiderList}                                     xpath=//XCUIElementTypeOther[@name="collapsible-header" and @label="Rider(s)"]/parent::XCUIElementTypeOther[last()]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeScrollView/XCUIElementTypeOther
 ${Android_EN_RiderList}                                 xpath=//android.view.ViewGroup[@content-desc="Rider(s)"]/following::android.widget.HorizontalScrollView/android.view.ViewGroup/android.view.ViewGroup
 
 ${Android_EN_Riders_YouAreCoveredFor_txt}               xpath=(//android.widget.TextView[@text="Insured for"]/preceding-sibling::android.widget.TextView)[2]

@@ -11,9 +11,9 @@ ${iOS_EN_Totalasoftoday_txt}                    accessibility_id=request-amount-
 ${iOS_EN_PayNow}                     chain=**/XCUIElementTypeButton[`label == "Pay now"`]
 ${iOS_EN_QRcode_txt}                   chain=**/XCUIElementTypeStaticText[`label == "QR code for bank transfer"`]
 ${iOS_EN_PaymentDetails_txt}            chain=**/XCUIElementTypeStaticText[`label == "Payment details"`]
-${iOS_EN_PolicyNumber_txt}        xpath=(//XCUIElementTypeOther[contains(@name,"Policy number")])[22]
-${iOS_EN_PaymentAmount_txt}        xpath=(//XCUIElementTypeOther[contains(@name,"Payment amount")])[22]
-${iOS_EN_PremiumAmount_txt}        xpath=(//XCUIElementTypeOther[contains(@name,"Premium amount")])[22]
+${iOS_EN_PolicyNumber_txt}        xpath=//XCUIElementTypeStaticText[@name="Policy number"]/following-sibling::XCUIElementTypeStaticText
+${iOS_EN_PaymentAmount_txt}        xpath=//XCUIElementTypeStaticText[@name="Premium amount"]/following-sibling::XCUIElementTypeStaticText
+${iOS_EN_PremiumAmount_txt}        xpath=//XCUIElementTypeStaticText[@name="Premium amount"]/following-sibling::XCUIElementTypeStaticText
 ${iOS_EN_DownloadQRCode}        chain=**/XCUIElementTypeButton[`label == "Download QR code"`]
 ${iOS_EN_BackToDashboard}        chain=**/XCUIElementTypeOther[`label == "Back to dashboard"`]
 ${iOS_EN_QRCodeSaved_txt}        chain=**/XCUIElementTypeOther[`label == "QR code is saved to your device album"`][5]
@@ -21,16 +21,21 @@ ${iOS_EN_Notice_Text}           xpath=//XCUIElementTypeOther[@name="Notice"]/fol
 ${iOS_EN_loan_temsandconditonchekbox}         accessibility_id=CheckBox
 ${iOS_EN_TimeingPoup}                   chain=**/XCUIElementTypeStaticText[`name BEGINSWITH "Interest amount is updated daily between 10:00 PM and 8:00 AM."`]
 ${iOS_EN_IUnderstandbutton}             chain=**/XCUIElementTypeButton[`name == "I understand"`]
-${}
+${iOS_EN_AmountClearText}                     chain=**/XCUIElementTypeOther[`label BEGINSWITH "Enter amount here"`]
 
+${Android_EN_TimeingPoup}           xpath=//android.widget.TextView[@text="Loan interest disclaimer"]/following-sibling::android.widget.TextView
+${Android_EN_IUnderstandbutton}         xpath=//android.widget.Button[@content-desc="I understand"]
+${Android_EN_loan_temsandconditonchekbox}                      xpath=//android.widget.CheckBox[@resource-id="LoanRepayment-terms-checkbox"]/android.view.ViewGroup
+${Android_EN_Notice_Text}                   xpath=(//android.widget.TextView[@text="Notice"]//parent::android.view.ViewGroup)/parent::android.view.ViewGroup/android.view.ViewGroup[2]/android.widget.TextView
 ${Android_EN_PolicyLoanRepayment_txt}           android=new UiSelector().text("Policy loan repayment")
 ${Android_EN_Loanoutstanding}                   xpath=//android.widget.TextView[@text="Loan outstanding"]//following-sibling::android.widget.TextView
 ${Android_EN_Loaninterest}                      xpath=//android.widget.TextView[@text="Loan interest"]//following-sibling::android.widget.TextView
 ${Android_EN_Interestrate}                      xpath=//android.widget.TextView[@text="Interest rate"]//following-sibling::android.widget.TextView
 ${Android_EN_Totalasoftoday}                    xpath=//android.widget.TextView[@text="Total as of today"]//following-sibling::android.widget.TextView
 ${Android_EN_PolicyLoanAmt}                         xpath=//android.widget.EditText[@text="Enter amount here"]
+${Android_EN_AmountClearText}                       xpath=//android.widget.TextView[@text="Enter amount here"]/following-sibling::android.widget.EditText
 ${Android_EN_Max_LoanLimit_Error}                   xpath=//android.widget.TextView[@text="The inputted amount cannot be greater than the total as of today"]
-${Android_EN_Totalasoftoday_txt}                    xpath=(//android.widget.TextView[@text="Total as of today"][last()])[2]
+${Android_EN_Totalasoftoday_txt}                    xpath=//android.widget.TextView[@text="Total as of today (available after 8:00AM)"]
 ${Android_EN_PayNow}                                xpath=//android.widget.Button[@content-desc="Pay now"]
 ${Android_EN_QRcode_txt}                            xpath=//android.widget.TextView[@text="QR code for bank transfer"]
 ${Android_EN_PaymentDetails_txt}                 android=new UiSelector().text("Payment details")

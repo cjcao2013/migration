@@ -86,16 +86,24 @@ Get OTP from CustID
     Log    ${leng}
     ${list0}    Get From List    ${PDdf}    0
     Log    ${list0}
+    log     ${OTPCol}
     ${index1}    Get Index From List    ${list0}    ${OTPCol}
     Log    ${index1}
+
     IF    '${leng}' > '1'
         ${counter}    Set Variable    1
         ${list}    Get From List    ${PDdf}    ${counter}
+        Log     ${list}
         ${OTPNumber}    Set Variable    ${list}[${index1}]
         Log    ${OTPNumber}
     ELSE
         ${OTPNumber}    Set Variable
     END
+#    Set Global Variable    ${OTPNumber}
+    IF    '${OTPCol}' == 'EncryptedOTP'
+         ${OTPNumber}   AES Decrypt    ${key}    ${OTPNumber}
+    END
+
     Set Global Variable    ${OTPNumber}
 
 # Get Delete Rider OTP
@@ -190,7 +198,7 @@ Get Name Marital Status Details
     Log    ${index3}
     ${index4}    Get Index From List    ${list0}    MaritalStatus
     Log    ${index4}
-    ${index5}    Get Index From List    ${list0}    OTP
+    ${index5}    Get Index From List    ${list0}    EncryptedOTP
     Log    ${index5}
     ${index6}    Get Index From List    ${list0}    Salutation
     Log    ${index6}
@@ -222,6 +230,9 @@ Get Name Marital Status Details
     END
     ${OTPNumber}    Set Variable    ${list}[${index5}]
     Log    ${OTPNumber}
+    IF    '${OTP_Column_Name}' == 'EncryptedOTP'
+      ${OTPNumber}   AES Decrypt    ${key}    ${OTPNumber}
+    END
     Set Global Variable    ${OTPNumber}
     ${Salval}    Set Variable    ${list}[${index6}]
     Log    ${Salval}
@@ -276,7 +287,7 @@ Get Email or Mobile Details
     Log    ${list0}
     ${index1}    Get Index From List    ${list0}    ${FetchCol}
     Log    ${index1}
-    ${index2}    Get Index From List    ${list0}    OTP
+    ${index2}    Get Index From List    ${list0}    EncryptedOTP
     Log    ${index2}
 #    ${index2}    Get Index From List    ${list0}    MobileNumber
 #    Log    ${index2}
@@ -290,6 +301,10 @@ Get Email or Mobile Details
     Log    ${fetchValue}
     ${pdotp}    Set Variable    ${list}[${index2}]
     Log    ${pdotp}
+    IF    '${OTP_Column_Name}' == 'EncryptedOTP'
+      ${pdotp}   AES Decrypt    ${key}    ${pdotp}
+    END
+    Set Global Variable     ${pdotp}
 #    ${mobileNum}    Set Variable    ${list}[${index2}]
 #    Log    ${mobileNum}
     RETURN    ${pdotp}~${fetchValue}
@@ -327,7 +342,7 @@ Get Address Details from DB
     Log    ${index4}
     ${index5}    Get Index From List    ${list0}    City
     Log    ${index5}
-    ${index6}    Get Index From List    ${list0}    OTP
+    ${index6}    Get Index From List    ${list0}    EncryptedOTP
     Log    ${index6}
     ${counter}    Set Variable    1
 #    Log    ${counter}
@@ -354,6 +369,11 @@ Get Address Details from DB
     ${cityDB}    Set Variable    ${list}[${index5}]
     Log    ${cityDB}
     ${OTPNumber}    Set Variable    ${list}[${index6}]
+    IF    '${OTP_Column_Name}' == 'EncryptedOTP'
+      ${OTPNumber}   AES Decrypt    ${key}    ${OTPNumber}
+    END
+    Set Global Variable    ${OTPNumber}
+
     Log    ${OTPNumber}
     Set Global Variable    ${OTPNumber}
     Set Calc VP Actual Result With Original And Source

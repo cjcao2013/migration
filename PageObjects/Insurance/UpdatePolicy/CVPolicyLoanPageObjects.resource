@@ -14,7 +14,7 @@ ${iOS_EN_BankName_DropDown}                         chain=**/XCUIElementTypeOthe
 ${iOS_EN_Done_Button}                               chain=**/XCUIElementTypeButton[`label == "Done"`][2]
 ${iOS_EN_Bank_Account_No}                           chain=**/XCUIElementTypeOther[`label CONTAINS 'Bank account no'`][-1]
 #${iOS_EN_TermsandConCheckbox}                       chain=**/XCUIElementTypeOther[`label == "fwd-checkbox-terms"`]
-${iOS_EN_TermsandConCheckbox}                       chain=**/XCUIElementTypeOther[`label == "CheckBox"`]
+${iOS_EN_CVloan_TermsandConCheckbox}                accessibility_id=CashValueLoan-terms-checkbox
 ${iOS_EN_CVLoanTransaction}                         chain=**/XCUIElementTypeOther[`label == "View servicing request transactions"`]
 ${iOS_EN_TransactionDetailspolicyloan}              chain=**/XCUIElementTypeOther[`label CONTAINS "Request Amount "`][-1]
 ${iOS_EN_AddPaymentMethod}                          chain=**/XCUIElementTypeOther[`label == "Add payment method"`]

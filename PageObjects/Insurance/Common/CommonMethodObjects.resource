@@ -76,7 +76,7 @@ ${iOS_EN_Postal_Code}                               chain=**/XCUIElementTypeOthe
 ${iOS_EN_beneficiary_dropdown_search_field}         chain=**/XCUIElementTypeTextField[`value == 'Search here'`]
 ${iOS_EN_add_document_btn}                          accessibility_id=iBank-add-image
 ${iOS_EN_ICPAddImage}                               chain=**/XCUIElementTypeOther[`name == "add-more-photo-button"`]
-${iOS_EN_UpdatePolicyBackButton}           chain=**/XCUIElementTypeButton[`name == "back-button"`]
+${iOS_EN_UpdatePolicyBackButton}           accssiblity_id=back-button
 ${iOS_EN_NavigateBackButton}               chain=**/XCUIElementTypeButton[`name == "back-button"`]
 ${iOS_EN_NavigateBackButton1}               chain=**/XCUIElementTypeOther[`name == "back-arrow-icon"`]
 
@@ -119,16 +119,27 @@ ${Android_EN_EnterPinField}         xpath=(//android.widget.TextView[contains(@t
 ${Android_EN_ConfirmPinField}       xpath=(//android.widget.TextView[contains(@text,"Almost there")]//ancestor::android.view.ViewGroup)[last()-2]//following-sibling::android.widget.EditText
 ${Android_EN_SkipButton}            android=new UiSelector().textContains("Skip")
 
-${iOS_EN_FeedbackRangeoption}       chain=**/XCUIElementTypeOther[`label == "8"`]
+#feedback objects
+${iOS_EN_FeedbackRangeoption}       chain=**/XCUIElementTypeOther[`label == "8"`][-1]
 ${iOS_EN_FeedbackReviewOption}       chain=**/XCUIElementTypeOther[`label == "Ease of claims submission"`][2]/XCUIElementTypeOther
 ${iOS_EN_FeedbackSubmit_Btn}            chain=**/XCUIElementTypeButton[`label == "Submit"`]
 ${iOS_EN_FeedbackSkip_Btn}              chain=**/XCUIElementTypeOther[`label == "Skip"`]
 ${iOS_EN_FeedbackDone_Btn}              chain=**/XCUIElementTypeOther[`label == "Done"`][2]
 ${iOS_EN_FeedbackComment_Txt}           chain=**/XCUIElementTypeTextView[`name == "Type here"`]
 ${iOS_EN_TellUsMoreTxt}                 chain=**/XCUIElementTypeStaticText[`label == "Tell us more"`]
-${iOS_EN_FeedbackPage_Title}            chain=**/XCUIElementTypeStaticText[`label == 'We’d love to hear from you'`][-1]
+${iOS_EN_FeedbackPage_Title}            chain=**/XCUIElementTypeStaticText[`label == 'We’d love to hear from you'`][1]
 ${iOS_EN_FeebackEmoji_Option}           chain=**/XCUIElementTypeOther[`label == "Good"`][2]
 ${iOS_EN_Feedback_CheckBox}             chain=**/XCUIElementTypeOther[`label == "Ease of performing my request"`][2]/XCUIElementTypeOther
+${iOS_EN_Appexperience}                 chain=**/XCUIElementTypeOther[`name == "feedback-star-pressable-4"`][-1]
+${iOS_EN_Feedback_NextButton}           accessibility_id=feedback-submit-pressable
+
+${Android_EN_Appexperience}         xpath=(//android.view.ViewGroup[@resource-id="feedback-star-pressable-3"])[1]/android.view.ViewGroup
+${Android_EN_Feedback_NextButton}   xpath=//android.widget.Button[@content-desc="Next"]
+${Android_EN_TellUsMoreTxt}             xpath=//android.widget.TextView[@text="Tell us more"]
+${Android_EN_EditTypeHere}                 xpath=//android.widget.EditText[@text="Type here"]
+${Android_EN_FeedbackSubmitButton}     xpath=//android.widget.TextView[@text="Submit"]
+${Android_EN_FeedbackDoneButton}          xpath=//android.widget.TextView[@text="Done"
+
 
 ${iOS_EN_Next_button}               xpath=//XCUIElementTypeButton[@name="next-button"]
 ${iOS_EN_Disclaimer}                chain=**/XCUIElementTypeStaticText[`name == "Disclaimer"`]

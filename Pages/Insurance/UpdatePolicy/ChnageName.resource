@@ -12,9 +12,10 @@ Library      .../../../../DBQuery/PersonalDetailsDB.py
 *** Keywords ***
 Name Change
     TRY
-        ${iOS_Title}    Set Variable    chain=**/XCUIElementTypeStaticText[`label CONTAINS "${PersonalDetails_Title}"`]
-        ${iOS_MaritalStatus}    Set Variable
-        ...    chain=**/XCUIElementTypeStaticText[`label == "${PersonalDetails_MaritalStatus}"`]
+        ${iOS_Title}    Set Variable    xpath=//XCUIElementTypeOther[@name="salutation-list-item" and @label="${PersonalDetails_Title}."]
+
+        ${iOS_MaritalStatus}    Set Variable        xpath=//XCUIElementTypeOther[@name="maritalStatus-list-item" and @label="${PersonalDetails_MaritalStatus}"]
+
         ${Android_Title}    Set Variable    android=new UiSelector().textContains("${PersonalDetails_Title}")
         ${Android_MaritalStatus}    Set Variable
         ...    android=new UiSelector().textContains("${PersonalDetails_MaritalStatus}")
@@ -78,7 +79,16 @@ Name Change
         # Input New ELement
         IF    '${PersonalDetails_Title}' != '${Title}'
             Click Element    ${${platformName}_${lang}_txtTitle}
+            Wait Until Element Is Visible     ${${platformName}_Title}          timeout=10s
             Click Element    ${${platformName}_Title}
+            
+#            Wait Until Element Is Visible    ${${platformName}_${lang}_DoneButton}       timeout=10s
+#            Click Element    ${${platformName}_${lang}_DoneButton}
+
+        END
+        ${Status}    Run Keyword And Return Status      Wait Until Element Is Visible    ${${platformName}_${lang}_DoneButton}       timeout=10s
+        IF    '${Status}' == 'True'
+        Click Element    ${${platformName}_${lang}_DoneButton}
         END
         Wait Until Element Is Visible   ${${platformName}_${lang}_txtFirstName}     timeout=5s
         Click Element    ${${platformName}_${lang}_txtFirstName}

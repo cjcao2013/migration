@@ -11,39 +11,37 @@ ${url}
 
 *** Keywords ***
 Get OTP from Message ID
-    TRY
-        ${url}      Set Variable      ${base_url}api/dirty/${mailId}/${messageId}
-        &{header}=    Create Dictionary       Mailsac-Key=${mailSacKey}
-        ${response}=     GET         url=${url}     headers=${header}       verify=${False}
-    #    ${messageId}=       Get From Dictionary     ${response.json()}[0]      _id
-        Log To Console    ${response.status_code}
-        Log    ${response.text}
-        ${response_body}        Set Variable        ${response.text}
-    #   ${ResBody}   Evaluate       json.dumps(${response.text})
-    #    ${response_body}   Convert To String    ${Res_body}
-        Create File     ${screenshotPath}\\getMailBody_response.html     ${response_body}
-        TRY
-             ${OTPArr}      Split String    ${response_body}            10px">
-             ${OTP}      Set Variable      ${OTPArr}[1]
-             ${OTP}      Fetch From Left    ${OTP}    </h2>
-        EXCEPT
-            ${OTPArr}      Split String    ${response_body}            </h4> <p
-            ${OTP}      Set Variable      ${OTPArr}[1]
-            ${OTP}      Fetch From Right    ${OTP}    >
-        END
-        ${OTPNumber}      Strip String    ${OTP}
 
-        Log    "."${OTPNumber}"."
-        Set Global Variable    ${OTPNumber}
-    #    **************** Username *******************
-        ${Reg_Username}      Set Variable      ${OTPArr}[0]
-        ${Reg_Username}      Fetch From Right    ${Reg_Username}    >
-        ${Reg_Username}      Strip String    ${Reg_Username}
-        Log    "."${Reg_Username}"."
-        Set Global Variable    ${Reg_Username}
-    EXCEPT     AS  ${reason}
-        Set Failed Actual Result and VP    Omne_Flow   ${reason}   Capture Change Name Transaction Details for iOS
+#    Sleep   30s
+    ${url}      Set Variable      ${base_url}api/dirty/${mailId}/${messageId}
+    &{header}=    Create Dictionary       Mailsac-Key=${mailSacKey}
+    ${response}=     GET         url=${url}     headers=${header}       verify=${False}
+#    ${messageId}=       Get From Dictionary     ${response.json()}[0]      _id
+    Log To Console    ${response.status_code}
+    Log    ${response.text}
+    ${response_body}        Set Variable        ${response.text}
+#   ${ResBody}   Evaluate       json.dumps(${response.text})
+#    ${response_body}   Convert To String    ${Res_body}
+    Create File     ${screenshotPath}\\getMailBody_response.html     ${response_body}
+    TRY
+         ${OTPArr}      Split String    ${response_body}            10px">
+         ${OTP}      Set Variable      ${OTPArr}[1]
+         ${OTP}      Fetch From Left    ${OTP}    </h2>
+    EXCEPT
+        ${OTPArr}      Split String    ${response_body}            </h4> <p
+        ${OTP}      Set Variable      ${OTPArr}[1]
+        ${OTP}      Fetch From Right    ${OTP}    >
     END
+
+    ${OTPNumber}      Strip String    ${OTP}
+    Log    "."${OTPNumber}"."
+    Set Global Variable    ${OTPNumber}
+#    **************** Username *******************
+    ${Reg_Username}      Set Variable      ${OTPArr}[0]
+    ${Reg_Username}      Fetch From Right    ${Reg_Username}    >
+    ${Reg_Username}      Strip String    ${Reg_Username}
+    Log    "."${Reg_Username}"."
+    Set Global Variable    ${Reg_Username}
 
 Get COI Information from mail
     [Arguments]     ${emailId}

@@ -128,8 +128,8 @@ Policy loan
         ${Previous_OTP}    Set Variable    ${OTPNumber}
         Set Global Variable    ${Previous_OTP}
         Sleep    1s
-        Wait Until Element Is Visible    ${${platformName}_${lang}_TermsandConCheckbox}    timeout=20s
-        Click Element    ${${platformName}_${lang}_TermsandConCheckbox}
+        Wait Until Element Is Visible    ${${platformName}_${lang}_CVloan_TermsandConCheckbox}    timeout=20s
+        Click Element    ${${platformName}_${lang}_CVloan_TermsandConCheckbox}
         Take Screenshot    Policy_Loan
         Click Text    Submit    exact_match=true
         ${iOS_PolicyLoanConfirmEmailPopup}    Set Variable    chain=**/XCUIElementTypeOther[`label == "Yes"`]

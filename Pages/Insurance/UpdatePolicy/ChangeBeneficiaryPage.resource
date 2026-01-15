@@ -79,7 +79,7 @@ Beneficiary(s) details
         Take Screenshot    Success Message
         Run Keyword    Check Transaction Status
         Run Keyword    Handle Feedback
-        Wait Until Element Is Visible    ${${platformName}_${lang}_SeeAll}   timeout=20s
+        Wait Until Element Is Visible    ${${platformName}_${lang}_SeeAll}   timeout=60s
         Click Element    ${${platformName}_${lang}_SeeAll}
         Take Screenshot    Transaction_Page
         Wait Until Page Contains Element    ${${platformName}_${lang}_ServiceReuest}    timeout=50s

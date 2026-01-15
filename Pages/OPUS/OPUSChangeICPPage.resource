@@ -8,7 +8,7 @@ Resource    ../../PageObjects/OPUS/OPUSAssignTaskPageObject.resource
 Resource   OPUSInquiryPage.resource
 
 *** Keywords ***
-OPUS Preferred payout
+OPUS Change preferred payout
      TRY
         Wait Until Page Contains Element   ${EN_OPUS_NewPayoutOption}    timeout=20s
         Scroll Element Into View    ${EN_OPUS_NewPayoutOption}

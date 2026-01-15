@@ -80,7 +80,6 @@ Health Journey Link Redirection
     Take Screenshot    Engagement Banner
 
     Scroll Till Transaction Is Visible      ${${platformName}_${lang}_HealthBeginsWithYouQuickLink}
-    Scroll Till Transaction Is Visible      ${${platformName}_${lang}_HealthBeginsWithYouQuickLink_LetsStart}
     Click Element    ${${platformName}_${lang}_HealthBeginsWithYouQuickLink_LetsStart}
     Take Screenshot    Engagement Banner
     Click Element   ${${platformName}_${lang}_UpdatePolicyBackButton}

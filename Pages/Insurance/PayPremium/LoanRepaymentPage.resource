@@ -14,11 +14,16 @@ Pay now
     TRY
           ${Android_EN_InsurnacePage}       Set Variable    android=new UiSelector().text("Insurance")
           ${iOS_EN_InsurnacePage}           Set Variable    chain=**/XCUIElementTypeButton[`label == '${Flow_Flag}'`]
-          Wait Until Element Is Visible      ${${platformName}_${lang}_InsurnacePage}            timeout=10s
-          Take Screenshot     FWD_Insurance_Page
+          ${status}    Run Keyword And Return Status    Wait Until Element Is Visible    ${${platformName}_${lang}_InsurnacePage}
+          IF    '${status}' == 'True'
+                Click Element       ${${platformName}_${lang}_InsurnacePage}
+          END
+#          Wait Until Element Is Visible      ${${platformName}_${lang}_InsurnacePage}            timeout=10s
+#          Take Screenshot     FWD_Insurance_Page
           Sleep    1s
-          Click Element       ${${platformName}_${lang}_InsurnacePage}
-          Set or enter PIN
+#          Click Element       ${${platformName}_${lang}_InsurnacePage}
+         Set or enter PIN
+#          Pause Execution
           #      Select Insurance Flow
           ${Android_EN_Insurance_Module}    Set Variable     android=new UiSelector().textContains("${Insurance_Flow}")
           ${iOS_EN_Insurance_Module}        Set Variable     chain=**/XCUIElementTypeOther[`label == "${Insurance_Flow}"`][-1]
@@ -41,9 +46,9 @@ Pay now
 
 
 Loan repayment
-    #    Click On Policy Number
+        #    Click On Policy Number
         ${Android_SelectPolicyNo}    Set Variable    android=new UiSelector().textContains("${Policy_No}")
-        ${iOS_SelectPolicyNo}    Set Variable    chain=**/XCUIElementTypeOther[`label CONTAINS '${Policy_No}'`][2]
+        ${iOS_SelectPolicyNo}    Set Variable    chain=**/XCUIElementTypeOther[`label ENDSWITH '${Policy_No}'`][2]
         ${iOS_EN_PolicyLoan_RequestAmount}    Set Variable    chain=**/XCUIElementTypeOther[`label == "${Request_Amount}"`]
         ${Android_EN_PolicyLoan_RequestAmount}    Set Variable      xpath=//android.widget.TextView[@text="${Request_Amount}"]
 
@@ -51,6 +56,8 @@ Loan repayment
         Take Screenshot    Select Policy
         Sleep    1s
         Click Element    ${${platformName}_SelectPolicyNo}
+
+        Wait Until Page Contains Element    ${${platformName}_SelectPolicyNo}       timeout=60s
         ${PolicyDetails}    Get Text    ${${platformName}_SelectPolicyNo}
         Set Global Variable    ${${platformName}_SelectPolicyNo}
         
@@ -121,7 +128,8 @@ Loan repayment
             Click Element    ${${platformName}_${lang}_Totalasoftoday_txt}
             Wait Until Element Is Visible    ${${platformName}_${lang}_PolicyLoan_RequestAmount}       timeout=10s
             Click Element    ${${platformName}_${lang}_PolicyLoan_RequestAmount}
-            Clear Text      ${${platformName}_${lang}_PolicyLoanAmt}
+            Wait Until Element Is Visible   ${${platformName}_${lang}_AmountClearText}
+            Clear Text      ${${platformName}_${lang}_AmountClearText}
             Input Text    ${${platformName}_${lang}_PolicyLoanAmt}    ${Min_LoanLimit}\n
             Take Screenshot    Min Loan Limit
             # Capture Policy Min limit Error
@@ -144,7 +152,7 @@ Loan repayment
             Click Element    ${${platformName}_${lang}_Totalasoftoday_txt}
             Wait Until Element Is Visible    ${${platformName}_${lang}_PolicyLoan_RequestAmount}       timeout=10s
             Click Element    ${${platformName}_${lang}_PolicyLoan_RequestAmount}
-            Clear Text      ${${platformName}_${lang}_PolicyLoanAmt}
+            Clear Text      ${${platformName}_${lang}_AmountClearText}
             Pause Execution
             Input Text    ${${platformName}_${lang}_PolicyLoanAmt}    ${Loan_Amount}\n
         ELSE
@@ -222,5 +230,5 @@ QR Code
             ...    true
             ...    ${status}
         END
-            Click Element    ${${platformName}_${lang}_BackToDashboard}
+        Click Element    ${${platformName}_${lang}_BackToDashboard}
             Take Screenshot    DashboardPage

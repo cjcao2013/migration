@@ -6,12 +6,12 @@ Library     QraceHelper
 *** Variables ***
 ${iOS_EN_PolicyOwnerName}                               xpath=//XCUIElementTypeStaticText[@name='Policy owner name']/following-sibling::XCUIElementTypeStaticText
 ${iOS_EN_Policyownername_txt}                           chain=**/XCUIElementTypeStaticText[`label == 'Policy owner name'`]
-${iOS_EN_txtTitle}                                      xpath=(//XCUIElementTypeOther[@name="fwd-dropdown-control"])[1]
+${iOS_EN_txtTitle}                                      accessibility_id=salutation-selector
 # ${iOS_EN_txtTitle}    chain=**/XCUIElementTypeOther[`label CONTAINS 'Title'`][-1]
 ${iOS_EN_txtFirstName}                                  chain=**/XCUIElementTypeTextField[`name == "first-name-input"`]
 ${iOS_EN_txtMiddleName}                                 chain=**/XCUIElementTypeTextField[`name == "middle-name-input"`]
 ${iOS_EN_txtLastName}                                   chain=**/XCUIElementTypeTextField[`name == "last-name-input"`]
-${iOS_EN_Marital_Status}                                xpath=(//XCUIElementTypeOther[@name="fwd-dropdown-control"])[2]
+${iOS_EN_Marital_Status}                                 accessibility_id=maritalStatus-selector
 # ${iOS_EN_Marital_Status}    chain=**/XCUIElementTypeOther[`label CONTAINS "Marital status (Optional)"`][-1]
 ${iOS_EN_reasonToChangeName}                            chain=**/XCUIElementTypeOther[`label == 'Reason for name change'`][2]
 ${iOS_EN_Updatename}                                    chain=**/XCUIElementTypeStaticText[`label == 'Update name'`]

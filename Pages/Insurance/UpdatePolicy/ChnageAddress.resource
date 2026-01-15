@@ -308,7 +308,7 @@ Capture Address Transaction Details for iOS
     Take Screenshot    Transaction Page
     Wait Until Page Contains Element    ${${platformName}_${lang}_ServiceReuest}    timeout=5s
     Click Element    ${${platformName}_${lang}_ServiceReuest}
-    RefreshPage
+#    RefreshPage
     ${iOS_selectCurrentTransaction1}    Set Variable
     ...    chain=**/XCUIElementTypeOther[`label CONTAINS '${currdate}' and label CONTAINS 'Change of mailing address' and label CONTAINS 'Policy no: ${Policy_No}'`][27]
     Wait Until Element Is Visible    ${${platformName}_selectCurrentTransaction1}    timeout=60s

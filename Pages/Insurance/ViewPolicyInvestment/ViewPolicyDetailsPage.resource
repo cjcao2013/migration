@@ -87,7 +87,7 @@ My policy(s)
                 ${SelectedPolicyName}   Set Variable    ${PolicyName}
                 Set Global Variable    ${SelectedPolicyName}
                 Take Screenshot     My policy Page
-                RefreshPage
+
                 Scroll Till Transaction Is Visible    ${SelectedPolicy_Moredetail_Element}
                 Click Element     ${SelectedPolicy_Moredetail_Element}
                 ${sOutput}  Run Keyword And Ignore Error    Get View Policy DB VPs
@@ -155,7 +155,7 @@ My policy(s)
                         ${SelectedPolicyName}   Set Variable    ${PolicyName}
                         Set Global Variable    ${SelectedPolicyName}
                          Take Screenshot     My policy Page
-                         RefreshPage
+
 
                          Scroll Till Transaction Is Visible    ${SelectedPolicy_Moredetail_Element}
                          Click Element     ${SelectedPolicy_Moredetail_Element}
@@ -180,14 +180,11 @@ My policy(s)
     END
 
 Capture Policy Details
-    TRY
-       Overview
-       Document(s)
-       Beneficiarys
-       Indicative dividend
-    EXCEPT     AS  ${reason}
-        Set Failed Actual Result and VP    Omne_Flow   ${reason}   Capture Policy Details
-    END
+    Overview
+    Document(s)
+    Beneficiarys
+    Indicative dividend
+
 
 
 Overview

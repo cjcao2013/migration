@@ -52,14 +52,18 @@ Pending Details
             END
             #upload document
     #        ${iOS_clickonUploadDocument}        Set Variable            xpath=(//XCUIElementTypeStaticText[@name="${documentTypeName}"]/following-sibling::XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeScrollView/XCUIElementTypeOther)[1]
+           #upload document
             IF    '${Insurance_Flow}' != 'Submit claim'
                 ${iOS_clickonUploadDocument}        Set Variable            xpath=(//XCUIElementTypeStaticText[@name="${documentTypeName}"]/following::XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeScrollView/XCUIElementTypeOther)[1]
                 ${Android_clickonUploadDocument}        Set Variable        xpath=//android.widget.TextView[@text="${documentTypeName}"]/following::android.view.ViewGroup[contains(@resource-id,'add-image')][1]
             ELSE
-                ${iOS_clickonUploadDocument}        Set Variable            xpath=(//XCUIElementTypeStaticText[@name="${PendingReason}"]/following::XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeScrollView/XCUIElementTypeOther)[1]
-                ${Android_clickonUploadDocument}        Set Variable        xpath=//android.widget.TextView[@text="${PendingReason}"]/following::android.view.ViewGroup[contains(@resource-id,'add-image')][1]
+                ${iOS_clickonUploadDocument}        Set Variable            xpath=(//XCUIElementTypeStaticText[@name="${PendingReason}"]/following::XCUIElementTypeOther/XCUIElementTypeOther/descendant::XCUIElementTypeOther[@name="bankBook_0-add-image"])[1]
+                ${Android_clickonUploadDocument}        Set Variable        xpath=//android.widget.TextView[@text="${PendingReason}"]/following-sibling::android.view.ViewGroup/android.widget.HorizontalScrollView/android.view.ViewGroup/android.view.ViewGroup
             END
             Click Element    ${${platformName}_clickonUploadDocument}
+            IF    '${Insurance_Flow}' != 'Submit claim'
+                Click by Coordinates    54    384
+            END
             IF    '${platformName}' == 'iOS'
                  ${path}     Set Variable    ${EXECDIR}/CustomLibraries/ClaimImages/hospClaim.png
                 Run Keyword    Upload Document BS    ${path}

@@ -17,11 +17,14 @@ View Document
         #navigate to my policy page
         ${Android_EN_InsurnacePage}       Set Variable    android=new UiSelector().text("${Flow_Flag}")
         ${iOS_EN_InsurnacePage}           Set Variable    chain=**/XCUIElementTypeButton[`label == '${Flow_Flag}'`]
-        Wait Until Element Is Visible      ${${platformName}_${lang}_InsurnacePage}            timeout=30s
-        Take Screenshot     FWD_Insurance_Page
-        Click Element       ${${platformName}_${lang}_InsurnacePage}
-#        Set or enter PIN
-        Pause Execution
+        ${status}    Run Keyword And Return Status    Wait Until Element Is Visible    ${${platformName}_${lang}_InsurnacePage}
+          IF    '${status}' == 'True'
+                Take Screenshot     FWD_Insurance_Page
+                Click Element       ${${platformName}_${lang}_InsurnacePage}
+          END
+
+        Set or enter PIN
+#        Pause Execution
         ${Android_EN_Insurance_Module}    Set Variable    android=new UiSelector().textContains("View")
         ${iOS_EN_Insurance_Module}    Set Variable        chain=**/XCUIElementTypeOther[`label CONTAINS 'View'`][-1]
     #    ...    chain=**/XCUIElementTypeOther[`label == "${Insurance_Flow}"`]
@@ -120,7 +123,7 @@ Document Preview And Download for Android
                 ${mid}    Evaluate    ${hight}/2
                 ${hight}    Evaluate    ${hight}/1.1
                 ${width}    Evaluate    ${width}/2
-                Swipe    start_x=${width}    start_y=${hight}    end_x=${width}    end_y=${mid}   duration=1s
+                Swipe    ${width}    ${hight}    ${width}    ${mid}
                 ${Status}   Run Keyword And Return Status    Wait Until Element Is Visible    ${${platformName}_${lang}_Document_Print_Button}    timeout=10s
             END
             Wait Until Element Is Visible    ${${platformName}_${lang}_Document_Print_Button}    timeout=10s

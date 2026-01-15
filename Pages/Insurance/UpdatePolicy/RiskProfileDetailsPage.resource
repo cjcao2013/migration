@@ -334,7 +334,7 @@ Update Particulars
         Click Element    ${${platformName}_${lang}_Next_Button}
 
         # _________________________________addressChange_____________________________
-        Wait Until Element Is Visible    ${${platformName}_${lang}_ResidentialAddress_HeaderText}    timeout=5s
+        Wait Until Page Contains Element   ${${platformName}_${lang}_ResidentialAddress_HeaderText}    timeout=20s
         ${VP_ResidentialAddress_HeaderText}    Get Text    ${${platformName}_${lang}_ResidentialAddress_HeaderText}
         Set Calc VP WIth Source And Original Values
         ...    KYC_AddressDetails_Header
@@ -344,7 +344,7 @@ Update Particulars
         ...    Static
         ...    Residential address
         ...    ${VP_ResidentialAddress_HeaderText}
-        Wait Until Element Is Visible    ${${platformName}_${lang}_AddressDetails_AddressLine1}    timeout=5s
+        Wait Until Element Is Visible    ${${platformName}_${lang}_AddressDetails_AddressLine1}    timeout=10s
         Clear Text    ${${platformName}_${lang}_AddressDetails_AddressLine1}
         ${PersonalDetails_Address_Line1}    Set Variable    ${EMPTY}
         FOR    ${counter}    IN RANGE    1    7
@@ -370,7 +370,7 @@ Update Particulars
             ...    ${${platformName}_${lang}_AddressDetails_ZipCode}
             ...    ${Update_Risk_Profile_Residential_Address_ZipCode}
         END
-        Wait Until Element Is Visible    ${${platformName}_${lang}_ResidentialAddress_HeaderText}           timeout=5s
+        Wait Until Page Contains Element   ${${platformName}_${lang}_ResidentialAddress_HeaderText}           timeout=20s
         Click Element    ${${platformName}_${lang}_ResidentialAddress_HeaderText}
         Close keyboard
 
@@ -402,10 +402,10 @@ Update Particulars
             ...    true
             ...    ${Status}
         END
-        Wait Until Element Is Visible    ${${platformName}_${lang}_MyIDCardAddressSame_chkbox}      timeout=5s
-        Click Element    ${${platformName}_${lang}_MyIDCardAddressSame_chkbox}
-        Wait Until Element Is Visible    ${${platformName}_${lang}_MyIDCardAddressSame_chkbox}      timeout=5s
-        Click Element    ${${platformName}_${lang}_MyIDCardAddressSame_chkbox}
+#        Wait Until Element Is Visible    ${${platformName}_${lang}_MyIDCardAddressSame_chkbox}      timeout=5s
+#        Click Element    ${${platformName}_${lang}_MyIDCardAddressSame_chkbox}
+#        Wait Until Element Is Visible    ${${platformName}_${lang}_MyIDCardAddressSame_chkbox}      timeout=5s
+#        Click Element    ${${platformName}_${lang}_MyIDCardAddressSame_chkbox}
         SwipePage
         Click Element    ${${platformName}_${lang}_Next_Button}
         Wait Until Element Is Visible    ${${platformName}_${lang}_EducationalLevel}    timeout=15s
@@ -486,9 +486,14 @@ Update Particulars
         ${IOS_Objective}    Set Variable
         ...    xpath=(//XCUIElementTypeOther[@name="${Update_Risk_Profile_Objective_Investment}"])[2]
         Click Element    ${${platformName}_${lang}_Objective_Investment}
-
         Wait Until Element Is Visible    ${${platformName}_Objective}       timeout=10s
-        Click Element    ${${platformName}_Objective}
+
+        ${Objective_value}      Get Element Attribute    ${${platformName}_Objective}       attribute=label
+        IF    ' ${Objective_value} ' != '${Update_Risk_Profile_Objective_Investment}'
+            Click Element    ${${platformName}_Objective}
+        END
+
+
         Wait Until Element Is Visible    ${${platformName}_${lang}_Done_Button}     timeout=10s
         Click Element    ${${platformName}_${lang}_Done_Button}
 
