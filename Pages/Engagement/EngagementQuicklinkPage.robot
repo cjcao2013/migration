@@ -23,11 +23,11 @@ ${VP_ByDefault_Lang}    ${EMPTY}
 #
 #    #    Click Text    ${Engagement_Quick_link_Module}       exact_match=true
 #        IF    '${Engagement_Quick_link_Module}' == 'My policy(s)'
-#            Click Element At Coordinates    78    502
+#            Click by Coordinates    78    502
 #        ELSE IF     '${Engagement_Quick_link_Module}' == 'Manage policy(s)'
-#            Click Element At Coordinates    322    502
+#            Click by Coordinates    322    502
 #        ELSE
-#            Click Element At Coordinates    205    502
+#            Click by Coordinates    205    502
 #        END
 #        Take Screenshot    Engagement Quick link
 #        Set or enter PIN
@@ -59,7 +59,7 @@ Engagement_My policy(s)
         Take Screenshot    Engagement Quick link
         Sleep    2s
         IF    '${platformName}' == 'iOS'
-            Click Element At Coordinates    78    502
+            Click by Coordinates    78    502
         ELSE
             Wait Until Element Is Visible    ${${platformName}_${lang}_Quicklink_mypolicy}    timeout=5s
             Click Element    ${${platformName}_${lang}_Quicklink_mypolicy}
@@ -73,7 +73,7 @@ Engagement_Manage policy(s)
         Take Screenshot    Engagement Quick link
         Sleep    2s
         IF    '${platformName}' == 'iOS'
-            Click Element At Coordinates    322    502
+            Click by Coordinates    322    502
         ELSE
             Wait Until Element Is Visible    ${${platformName}_${lang}_Quicklink_mangepolicy}    timeout=5s
             Click Element    ${${platformName}_${lang}_Quicklink_mangepolicy}
@@ -86,7 +86,7 @@ Engagement_Submit claim
         Take Screenshot    Engagement Quick link
         Sleep    2s
         IF    '${platformName}' == 'iOS'
-            Click Element At Coordinates    205    502
+            Click by Coordinates    205    502
         ELSE
             Wait Until Element Is Visible    ${${platformName}_${lang}_Quicklink_submitClaim}    timeout=5s
             Click Element    ${${platformName}_${lang}_Quicklink_submitClaim}
@@ -100,7 +100,7 @@ Engagement_Buy_Insurance
     TRY
         Take Screenshot    Engagement Quick link
         IF    '${platformName}' == 'iOS'
-            Click Element At Coordinates    61    573
+            Click by Coordinates    61    573
         ELSE
             Click Element    xpath=//android.widget.TextView[contains(@text,"Submit")]
         END

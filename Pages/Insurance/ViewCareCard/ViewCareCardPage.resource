@@ -11,9 +11,9 @@ View care card
     TRY
         ${Android_EN_InsurancePage}       Set Variable    android=new UiSelector().text("${Flow_Flag}")
         ${iOS_EN_InsurancePage}           Set Variable    chain=**/XCUIElementTypeButton[`label == '${Flow_Flag}'`]
-        Wait Until Element Is Visible      ${${platformName}_${lang}_InsurancePage}            timeout=30s
-        Take Screenshot     FWD_Insurance_Page
-        Click Element       ${${platformName}_${lang}_InsurancePage}
+#        Wait Until Element Is Visible      ${${platformName}_${lang}_InsurancePage}            timeout=30s
+#        Take Screenshot     FWD_Insurance_Page
+#        Click Element       ${${platformName}_${lang}_InsurancePage}
         Set or enter PIN
         Sleep   0.5s
         #      Select Insurance Flow

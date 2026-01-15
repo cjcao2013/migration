@@ -247,7 +247,8 @@ SwipePage
         ${width}    Get Window Width
         ${hight}    Evaluate    ${hight}/2
         ${width}    Evaluate    ${width}/2
-        Swipe    ${width}    ${hight}    ${width}    50
+        # Swipe    ${width}    ${hight}    ${width}    50
+        Swipe    start_x=${width}    start_y=${hight}    end_x=${width}    end_y=50   duration=1s
     EXCEPT     AS  ${reason}
         Set Failed Actual Result and VP    Omne_Flow   ${reason}   Capture Change Name Transaction Details for iOS
     END
@@ -262,7 +263,8 @@ RefreshPage
     #    ${end_x}=    Evaluate    ${element_location['x']} + (${element_size['width']} * 0.5)
         ${end_y}    Evaluate    (${window_height}*0.3)
         ${end_y}    Convert To Integer    ${end_y}
-        Swipe    ${start_x}    ${end_y}    ${start_x}    ${start_Y}    2000
+        # Swipe    ${start_x}    ${end_y}    ${start_x}    ${start_Y}    2000
+        Swipe    start_x=${start_x}    start_y=${end_y}    end_x=${start_x}    end_y=${start_Y}    duration=1s
         Sleep    0.5s
     EXCEPT     AS  ${reason}
         Set Failed Actual Result and VP    Omne_Flow   ${reason}   Capture Change Name Transaction Details for iOS
@@ -349,7 +351,9 @@ Horizontal Swipe
         ${start_Y}    Convert To Integer    ${start_Y}
         ${end_x}    Evaluate    (${window_width})/16
         ${end_x}    Convert To Integer    ${end_x}
-        Swipe    ${start_x}    ${start_y}    ${end_x}    ${start_y}
+
+        Swipe    start_x=${start_x}   start_y=${start_y}    end_x=${end_x}    end_y=${start_y}   duration=1s
+        # Swipe    start_x=500    start_y=1000    end_x=500    end_y=300    duration=1
         Sleep    0.5s
     EXCEPT     AS  ${reason}
         Set Failed Actual Result and VP    Omne_Flow   ${reason}   Capture Change Name Transaction Details for iOS
@@ -366,8 +370,8 @@ Horizontal Swipe Rider
         ${start_Y}    Convert To Integer    ${start_Y}
         ${end_x}    Evaluate    (${xaxis}+25)
         ${end_x}    Convert To Integer    ${end_x}
-    #    Click Element At Coordinates    ${start_x}    ${start_y}
-        Swipe    ${start_x}    ${start_y}    ${end_x}    ${start_y}
+    #    Click by Coordinates    ${start_x}    ${start_y}
+         Swipe    start_x=${start_x}   start_y=${start_y}    end_x=${end_x}    end_y=${start_y}   duration=1s
         Sleep    0.5s
     EXCEPT     AS  ${reason}
         Set Failed Actual Result and VP    Omne_Flow   ${reason}   Capture Change Name Transaction Details for iOS

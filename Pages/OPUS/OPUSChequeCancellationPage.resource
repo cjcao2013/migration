@@ -88,6 +88,7 @@ OPUS Cheque cancellation
         Wait Until Page Contains Element    xpath=//button[@data-trigger='submit']      timeout=20s
         Click Element    xpath=//button[@data-trigger='submit']
         Sleep    5s
+
     EXCEPT     AS  ${reason}
         Set Failed Actual Result and VP    Omne_Flow   ${reason}   OPUS Flow of ${Insurance_Flow}
     END

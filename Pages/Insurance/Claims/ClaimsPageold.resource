@@ -816,7 +816,7 @@ Select CheckIN and CheckOut Date
     ${x}    Convert To Integer    ${x}
     ${y}    Evaluate    ${y}+24    # 659
     ${y}    Convert To Integer    ${y}
-    Click Element At Coordinates    ${x}    ${y}
+    Click by Coordinates    ${x}    ${y}
     ${givenyearvalue}    Get Element Attribute    ${${platformName}_${lang}_currentYear}    attribute=value
     ${LoopValue}    Evaluate    int(${givenyearvalue})-int(${checkinyear})
     Log To Console    ${LoopValue}
@@ -854,7 +854,7 @@ Select CheckIN and CheckOut Date
         ${x}    Convert To Integer    ${x}
         ${y}    Evaluate    ${y}+22    # 659
         ${y}    Convert To Integer    ${y}
-        Click Element At Coordinates    ${x}    ${y}
+        Click by Coordinates    ${x}    ${y}
         @{checkoutdatevalues}    Split String    ${checkoutDate}
         ${checkoutday}    Get From List    ${checkoutdatevalues}    0
         ${checkoutmonth}    Get From List    ${checkoutdatevalues}    1

@@ -98,7 +98,7 @@ Preferred payout
         Wait Until Page Contains Element    ${${platformName}_${lang}_ServiceReuest}    timeout=20s
         Click Element    ${${platformName}_${lang}_ServiceReuest}
         Take Screenshot    Transaction_Page
-        Run Keyword      Capture ICP Transaction Details for ${platformName}
+        Run Keyword      Capture ICP Transaction Details for ${platformName}        Completed
         Take Screenshot    Update_Details
         Set Global Variable    ${result}    ICP Option Changed Successfully For Policy No :${Policy_No}
     EXCEPT     AS  ${reason}
@@ -162,16 +162,17 @@ VP For Cash Payout Option Page
     END
 
 Capture ICP Transaction Details for iOS
+    [Arguments]     ${Transaction_Status}
     TRY
         RefreshPage
-        Scroll Till Transaction Is Visible    chain=**/XCUIElementTypeOther[`label CONTAINS '${currdate}' and label CONTAINS 'Change of preferred payout' and label CONTAINS 'Policy no: ${Policy_No}'`][27]
+        Scroll Till Transaction Is Visible    chain=**/XCUIElementTypeOther[`label CONTAINS '${currdate}' and label CONTAINS 'Change of preferred payout ${Transaction_Status}' and label CONTAINS 'Policy no: ${Policy_No}'`][27]
         Wait Until Page Contains Element
-        ...    chain=**/XCUIElementTypeOther[`label CONTAINS '${currdate}' and label CONTAINS 'Change of preferred payout' and label CONTAINS 'Policy no: ${Policy_No}'`][27]
+        ...    chain=**/XCUIElementTypeOther[`label CONTAINS '${currdate}' and label CONTAINS 'Change of preferred payout ${Transaction_Status}' and label CONTAINS 'Policy no: ${Policy_No}'`][27]
         ...    timeout=50s
 
         # TransactionStatus
         ${CompleteStatus_List}    Get Text
-        ...    chain=**/XCUIElementTypeOther[`label CONTAINS '${currdate}' and label CONTAINS 'Change of preferred payout' and label CONTAINS 'Policy no: ${Policy_No}'`][27]
+        ...    chain=**/XCUIElementTypeOther[`label CONTAINS '${currdate}' and label CONTAINS 'Change of preferred payout ${Transaction_Status}' and label CONTAINS 'Policy no: ${Policy_No}'`][27]
         @{Transaction_Status_List}    Split String    ${CompleteStatus_List}    Policy no
         Log To Console    Test1
         ${TransactionStatus_list2}    Get From List    ${Transaction_Status_List}    0
@@ -194,11 +195,11 @@ Capture ICP Transaction Details for iOS
         ...    ${m_Vp}
         ...    ${VP_Transaction_Status}
         ...    OMNE_TransactionPage
-        Scroll Till Transaction Is Visible          chain=**/XCUIElementTypeOther[`label CONTAINS '${currdate}' and label CONTAINS 'Change of preferred payout' and label CONTAINS 'Policy no: ${Policy_No}'`][27]
+        Scroll Till Transaction Is Visible          chain=**/XCUIElementTypeOther[`label CONTAINS '${currdate}' and label CONTAINS 'Change of preferred payout ${Transaction_Status}' and label CONTAINS 'Policy no: ${Policy_No}'`][27]
         Click Element
-        ...    chain=**/XCUIElementTypeOther[`label CONTAINS '${currdate}' and label CONTAINS 'Change of preferred payout' and label CONTAINS 'Policy no: ${Policy_No}'`][27]
+        ...    chain=**/XCUIElementTypeOther[`label CONTAINS '${currdate}' and label CONTAINS 'Change of preferred payout ${Transaction_Status}' and label CONTAINS 'Policy no: ${Policy_No}'`][27]
 
-        ${TransactionDeatils}           Get Text    chain=**/XCUIElementTypeOther[`label CONTAINS '${currdate}' and label CONTAINS 'Change of preferred payout' and label CONTAINS 'Policy no: ${Policy_No}'`][27]
+        ${TransactionDeatils}           Get Text    chain=**/XCUIElementTypeOther[`label CONTAINS '${currdate}' and label CONTAINS 'Change of preferred payout ${Transaction_Status}' and label CONTAINS 'Policy no: ${Policy_No}'`][27]
         Log    ${TransactionDeatils}
         Take Screenshot    Transaction_Page
         @{TransactionDeatils}        Split String       ${TransactionDeatils}         New ICP option
@@ -275,6 +276,7 @@ Capture ICP Transaction Details for iOS
     END
 
 Capture ICP Transaction Details for Android
+    [Arguments]     ${Transaction_Status}
     TRY
 
          ${Android_selectCurrentTransaction}    Set Variable

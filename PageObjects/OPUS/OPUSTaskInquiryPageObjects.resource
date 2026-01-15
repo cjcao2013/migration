@@ -21,7 +21,7 @@ ${EN_Select_Pending_reason}        xpath=//div[contains(text(),'Please select a 
 ${EN_Further_Requirement}          xpath=//li[text()='Further Requirement']
 #${EN_MemoCode}                     xpath=(//div[@id='memoCode'])[1]
 ${EN_MemoCode}                     xpath=(//div[@id='memoCode'])[1]//descendant::span[3]
-${EN_Select_Memocode}              xpath=//li[contains(text(),'M0001')]
+${EN_Select_Memocode}              xpath=//div[contains(text(),'M0001')]
 ${EN_ReasonCode}                   xpath=(//div[@id='reasonCode'])[1]
 ${EN_SelectReasonCode}             xpath=//li[contains(text(),'RS0001')]
 ${EN_SaveButton}                   xpath=(//button[@class='ant-btn Save'])[1]

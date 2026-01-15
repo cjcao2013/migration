@@ -13,9 +13,9 @@ Completion Popup
     TRY
         Sleep    10s
         IF    '${platformName}' == 'iOS'
-            Click Element At Coordinates    199    95
+            Click by Coordinates    199    95
         ELSE
-                Click Element At Coordinates    510    248
+                Click by Coordinates    510    248
         END
         Extra POP Up
         ${Android_EN_InsurancePage}    Set Variable    android=new UiSelector().text("${Flow_Flag}")
@@ -149,7 +149,7 @@ Navigate to Home Page
     END
     ${status}    Run Keyword And Return Status      Wait Until Element Is Visible    ${${platformName}_${lang}_UpdatePolicyBackButton}    timeout=2s
     IF    '${status}' == 'True'
-        Click Element At Coordinates    219    58
+        Click by Coordinates    219    58
         Sleep   1s
         Click Element       ${${platformName}_${lang}_UpdatePolicyBackButton}
         Sleep   1s
@@ -350,7 +350,6 @@ Handle Feedback
         END
 #        Click Element    ${${platformName}_${lang}_FeedbackDone_Btn}
     END
-#    Extra POP Up
     ${Android_EN_InsurancePage}    Set Variable    android=new UiSelector().text("${Flow_Flag}")
     ${iOS_EN_InsurancePage}    Set Variable    chain=**/XCUIElementTypeButton[`label == '${Flow_Flag}'`]
     ${status}   Run Keyword And Return Status    Wait Until Element Is Visible    ${${platformName}_${lang}_InsurancePage}   timeout=30s
@@ -360,7 +359,7 @@ Handle Feedback
             Click Element    ${${platformName}_${lang}_InsurancePage}
     END
 
-#    Set or enter PIN
+
 
 
 Check Transaction Status
@@ -631,3 +630,7 @@ Extra POP Up
         Click Text    Continue    exact_match=true
         Take Screenshot    PostSignInHome_Page
     END
+Click by Coordinates
+    [Arguments]     ${xaxis}    ${yaxis}
+    @{coordinates}  Create List     ${xaxis}      ${yaxis}
+    Tap     ${coordinates}      count=1

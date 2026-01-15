@@ -16,6 +16,8 @@ ${iOS_EN_ChequeCancelNextButton}                            chain=**/XCUIElement
 ${iOS_EN_SummaryPage}                                       chain=**/XCUIElementTypeStaticText[`name == "Cheque cancellation request"`]
 ${iOS_EN_SummaryPageNextButton}                             chain=**/XCUIElementTypeButton[`name == "Submit"`]
 ${iOS_EN_Dispay_Message}                                    chain=**/XCUIElementTypeStaticText[`name CONTAINS  "This change will affect cheque"`]
+${iOS_EN_ConfirmationScreen_STPText_Status}                 chain=**/XCUIElementTypeStaticText[`name == "Your default preferred payout is updated."`]
+${iOS_EN_ConfirmationScreen_VanillaText_Status}             chain=**/XCUIElementTypeStaticText[`name CONTAINS "Change of preferred payout is received"`]
 
 
 ${Android_EN_Title}                                         android=new UiSelector().text("Cheque cancellation request")

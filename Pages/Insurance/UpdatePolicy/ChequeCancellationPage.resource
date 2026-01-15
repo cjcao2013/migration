@@ -14,8 +14,10 @@ Cheque cancellation
         Select Policy
         Take Screenshot    Cheque Cancellation
         Click Element    ${${platformName}_${lang}_NextButton}
+        
         #Wait for  Page loading  for 2s
         Wait Until Element Is Visible    ${${platformName}_${lang}_Title}        timeout=10s
+        
         #Select Cheque Type
         Click Element    ${${platformName}_${lang}_Type_Of_Cheque}
         ${iOS_EN_Cheque_Type}    Set Variable      chain=**/XCUIElementTypeOther[`name == "${Type_Of_Cheque}"`][2]
@@ -24,6 +26,7 @@ Cheque cancellation
         Wait Until Element Is Visible    ${${platformName}_${lang}_Type_Of_Cheque_Title}     timeout=2s
         Click Element    ${${platformName}_${lang}_Cheque_Type}
         Click Element    ${${platformName}_${lang}_Done_Button}
+        
         #Select Cheque Reason for Cancelation
         Click Element    ${${platformName}_${lang}_ReasonForCancellation}
         Take Screenshot    Cheque cancellation Page
@@ -31,6 +34,7 @@ Cheque cancellation
         ${Android_EN_Cancellation_reason}    Set Variable       xpath=//android.widget.TextView[@text="${Reason_For_Cancellation}"]
         Click Element    ${${platformName}_${lang}_Cancellation_reason}
         Click Element    ${${platformName}_${lang}_Done_Button}
+        
         #Input Payable Amount
         Click Element    ${${platformName}_${lang}_AmountPayable}
         Input Text    ${${platformName}_${lang}_AmountPayable}    ${Amount_Payable}
@@ -39,6 +43,7 @@ Cheque cancellation
         ELSE
             Close keyboard
         END
+        
         ${Static_Message}           Set Variable        This change will affect cheque or draft that you have previously received but have not yet deposited for payment, as well as all future payouts.
         ${VP_Display_Message}       Get Text    ${${platformName}_${lang}_Dispay_Message}
         Set Calc VP With Source And Original Values
@@ -58,11 +63,17 @@ Cheque cancellation
         Wait Until Element Is Visible    ${${platformName}_${lang}_addPaymentMethodTitle}     timeout=2s
         ${iOS_EN_methodOfPayment}    Set Variable    chain=**/XCUIElementTypeOther[`name == "${Payment_Method}"`][2]
         ${Android_EN_methodOfPayment}    Set Variable       xpath=//android.widget.TextView[@text="${Payment_Method}"]
+        Wait Until Element Is Visible     ${${platformName}_${lang}_methodOfPayment}        timeout=10s
         Click Element    ${${platformName}_${lang}_methodOfPayment}
-        Wait Until Element Is Visible    ${iOS_EN_PromtPayCheckBox}     timeout=2s
-        Click Element    ${${platformName}_${lang}_PromtPayCheckBox}
-        Element Should Be Enabled    ${${platformName}_${lang}_promtpaySaveButton}
-        Click Element    ${${platformName}_${lang}_promtpaySaveButton}
+        
+        IF    '${Payment_Method}' == 'Bank account'
+            Add Payment Methods
+        ELSE
+             Wait Until Element Is Visible    ${iOS_EN_PromtPayCheckBox}     timeout=2s
+            Click Element    ${${platformName}_${lang}_PromtPayCheckBox}
+            Element Should Be Enabled    ${${platformName}_${lang}_promtpaySaveButton}
+            Click Element    ${${platformName}_${lang}_promtpaySaveButton}
+        END
         Element Should Be Enabled    ${${platformName}_${lang}_ChequeCancelNextButton}
         Take Screenshot    Cheque cancellation Page
         Click Element    ${${platformName}_${lang}_ChequeCancelNextButton}
@@ -100,13 +111,16 @@ Cheque cancellation
         Click Element    ${${platformName}_${lang}_SubmitButton}
         Take Screenshot    Cheque cancellation Page
 
-        ${sOutput}    Run Keyword And Ignore Error
         ...    Insert OTP
         ...    ${Transaction_OTP_Source}
         ...    ${Transaction_OTP_Expiry_Flag}
         ...    ${Transaction_OTP_Resend_Flag}
 
+        # check text on confirmation screen for preferred payout
+        Check confirmation Screen text
+
         Check Transaction Status
+
         Wait Until Element Is Visible    ${${platformName}_${lang}_SeeAll}   timeout=20s
         Click Element    ${${platformName}_${lang}_SeeAll}
         Take Screenshot    Transaction_Page
@@ -115,7 +129,7 @@ Cheque cancellation
         Take Screenshot    Transaction_Page
         #Capture Transaction Deatils
         Run Keyword     Capture Cheque Cancellation Transaction Details for ${platformName}     Pre
-
+        Run Keyword    Capture ICP Transaction Details for ${platformName}        ${Perferred_transaction_status}
         Set Global Variable    ${result}    Cheque Cancellation for Policy No: ${Policy_No}
 
     EXCEPT     AS  ${reason}
@@ -294,4 +308,14 @@ Capture Cheque Cancellation Transaction Details for Android
     END
 
 
-
+Check confirmation Screen text
+    Set Variable    ${Perferred_transaction_status}
+    ${completed_prefred_status}     Run Keyword And Return Status    Element Should Be Visible    ${iOS_EN_ConfirmationScreen_STPText_Status}
+    IF    '${completed_prefred_status}' == 'True'
+         ${Perferred_transaction_status}    Set Variable    Completed
+    END
+    ${completed_prefred_status}     Run Keyword And Return Status    Element Should Be Visible    ${iOS_EN_ConfirmationScreen_VanillaText_Status}
+    IF    '${completed_prefred_status}' == 'True'
+         ${Perferred_transaction_status}    Set Variable    In progress
+    END
+    Set Global Variable    ${Perferred_transaction_status}

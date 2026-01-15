@@ -30,7 +30,7 @@ Logout From OMNE
             Take Screenshot    ProfilePage
             Click Element    ${${platformName}_${lang}_Profile_Icon_btn}
             Sleep    1s
-            Click Element At Coordinates    340    163
+            Click by Coordinates    340    163
         END
         ${status}    Run Keyword And Return Status   Wait Until Element Is Visible    ${${platformName}_${lang}_SettingIcon}    timeout=10s
         Click Element    ${${platformName}_${lang}_SettingIcon}
@@ -313,7 +313,7 @@ Additional Verification Page
                     END
                      Close keyboard
                 END
-                #                Click Element At Coordinates    61    800
+                #                Click by Coordinates    61    800
                 ${status}    Run Keyword And Return Status    Wait Until Element Is Visible    ${${platformName}_${lang}_Error_Invalid_Document_No}    timeout=1s
                 IF    '${status}' == 'True'
                     Take Screenshot    Invalid_Document_Details
@@ -343,8 +343,8 @@ Additional Verification Page
             END
         END
         Take Screenshot    SignIn_OTP_Page
-       #Insert OTP      ${OTP_Source}    ${OTP_Expiry_Flag}     ${OTP_Resend_Flag}
-         Pause Execution
+        Insert OTP      ${OTP_Source}    ${OTP_Expiry_Flag}     ${OTP_Resend_Flag}
+         #Pause Execution
         Omne Action Popup
     EXCEPT     AS  ${reason}
        Set Failed Actual Result and VP    Omne_Flow   ${reason}   Additional Verification Page
@@ -370,7 +370,8 @@ Select DOB
         Sleep    2s
         ${status}    Run Keyword And Return Status      Wait Until Page Contains Element    ${${platformName}_DayObj}    timeout=2s
         WHILE    '${status}' != 'True'
-            Swipe    289    1294    294    735
+
+            Swipe    start_x=289   start_y=1294    end_x=294    end_y=735   duration=1s
             ${status}    Run Keyword And Return Status      Wait Until Page Contains Element    ${${platformName}_DayObj}    timeout=2s
 
         END
@@ -379,7 +380,7 @@ Select DOB
         Click Element    ${${platformName}_${lang}_MMM_dropdown}
         ${status}    Run Keyword And Return Status      Wait Until Page Contains Element    ${${platformName}_MonthObj}    timeout=2s
         WHILE    '${status}' != 'True'
-            Swipe    289    1294    294    735
+            Swipe    start_x=289   start_y=1294    end_x=294    end_y=735   duration=1s
             ${status}    Run Keyword And Return Status      Wait Until Page Contains Element    ${${platformName}_MonthObj}    timeout=2s
         END
         Click Element    ${${platformName}_MonthObj}
@@ -387,7 +388,7 @@ Select DOB
         Click Element    ${${platformName}_${lang}_YYYY_dropdown}
         ${status}    Run Keyword And Return Status      Wait Until Page Contains Element    ${${platformName}_YearObj}    timeout=2s
         WHILE    '${status}' != 'True'
-            Swipe    289    1294    294    735
+            Swipe    start_x=289   start_y=1294    end_x=294    end_y=735   duration=1s
             ${status}    Run Keyword And Return Status      Wait Until Page Contains Element    ${${platformName}_YearObj}    timeout=2s
     #        IF    '${status}' == 'True'
     #            BREAK

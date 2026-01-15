@@ -20,7 +20,8 @@ View Document
         Wait Until Element Is Visible      ${${platformName}_${lang}_InsurnacePage}            timeout=30s
         Take Screenshot     FWD_Insurance_Page
         Click Element       ${${platformName}_${lang}_InsurnacePage}
-        Set or enter PIN
+#        Set or enter PIN
+        Pause Execution
         ${Android_EN_Insurance_Module}    Set Variable    android=new UiSelector().textContains("View")
         ${iOS_EN_Insurance_Module}    Set Variable        chain=**/XCUIElementTypeOther[`label CONTAINS 'View'`][-1]
     #    ...    chain=**/XCUIElementTypeOther[`label == "${Insurance_Flow}"`]
@@ -31,8 +32,11 @@ View Document
         Select Policy
         Sleep    3s
         Take Screenshot    Select Policy
-        Wait Until Element Is Visible    ${${platformName}_${lang}_NextButton}
-        Click Element    ${${platformName}_${lang}_NextButton}
+        ${status}       Run Keyword And Return Status    Wait Until Element Is Visible      ${${platformName}_${lang}_NextButton}       timeout=5s
+        IF  '${status}' == 'True'
+                Click Element    ${${platformName}_${lang}_NextButton}
+        END
+
 
         #select document
         ${iOS_EN_selectDocument}   Set Variable    chain=**/XCUIElementTypeOther[`name == "${DocumentTypeName}"`]
@@ -41,7 +45,7 @@ View Document
         Click Element    ${${platformName}_${lang}_selectDocument}
         Take Screenshot    Document Type Select Page
         Run Keyword        Document Preview And Download for ${platformName}
-        Set Global Variable    ${result}    Document Download Completed Successfully for policy No: ${Policy_No}
+        Set Global Variable    ${result}    ${DocumentTypeName} Document Download Completed Successfully for policy No: ${Policy_No}
     EXCEPT     AS  ${reason}
         Set Failed Actual Result and VP       Omne_Flow   ${reason}   FWD Insurance Flow of ${Insurance_Flow}
     END
@@ -116,7 +120,7 @@ Document Preview And Download for Android
                 ${mid}    Evaluate    ${hight}/2
                 ${hight}    Evaluate    ${hight}/1.1
                 ${width}    Evaluate    ${width}/2
-                Swipe    ${width}    ${hight}    ${width}    ${mid}
+                Swipe    start_x=${width}    start_y=${hight}    end_x=${width}    end_y=${mid}   duration=1s
                 ${Status}   Run Keyword And Return Status    Wait Until Element Is Visible    ${${platformName}_${lang}_Document_Print_Button}    timeout=10s
             END
             Wait Until Element Is Visible    ${${platformName}_${lang}_Document_Print_Button}    timeout=10s

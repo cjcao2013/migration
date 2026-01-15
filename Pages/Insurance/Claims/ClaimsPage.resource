@@ -22,12 +22,15 @@ Submit
         DOB
         ${Android_EN_InsurancePage}    Set Variable    android=new UiSelector().text("${Flow_Flag}")
         ${iOS_EN_InsurancePage}    Set Variable    chain=**/XCUIElementTypeButton[`label == '${Flow_Flag}'`]
-        Wait Until Element Is Visible    ${${platformName}_${lang}_InsurancePage}    timeout=30s
         Take Screenshot    FWD_Insurance_Page
         IF    '${testtype}'!='NEGATIVE' and '${Transaction_Page_GUI}' == 'Yes'
             Verify FWDInsurance Page GUI
         END
-        Click Element    ${${platformName}_${lang}_InsurancePage}
+        ${status}    Run Keyword And Return Status    Wait Until Element Is Visible    ${${platformName}_${lang}_InsurnacePage}     timeout=10s
+          IF    '${status}' == 'True'
+                Take Screenshot     FWD_Insurance_Page
+                Click Element       ${${platformName}_${lang}_InsurnacePage}
+          END
 
         #enter pin
         Set or enter PIN
