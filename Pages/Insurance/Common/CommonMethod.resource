@@ -312,7 +312,6 @@ Select Policy
 
 
 Handle Feedback
-    Handle Feedback
     ${status}   Run Keyword And Return Status    Wait Until Element Is Visible    ${${platformName}_${lang}_FeedbackPage_Title}     timeout=5s
     IF    '${status}' == 'True'
            Take Screenshot    FeedBack_Page
@@ -337,6 +336,12 @@ Handle Feedback
             ${status}   Run Keyword And Return Status    Wait Until Element Is Visible    ${${platformName}_${lang}_FeedbackSubmit_Btn}    timeout=5s
             Take Screenshot    Feedback_Page
             IF    '${status}' == 'True'
+
+                #enter commnent in text
+                Click Element    ${${platformName}_${lang}_FeedbackComment_Txt}
+                Input Text    ${${platformName}_${lang}_FeedbackComment_Txt}    Good
+                Click Element    ${${platformName}_${lang}_TellUsMoreTxt}
+
                 Take Screenshot     FeedBack_Page
                 Click Element       ${${platformName}_${lang}_FeedbackSubmit_Btn}
                 ${status}   Run Keyword And Return Status    Wait Until Element Is Visible    ${${platformName}_${lang}_FeedbackDone_Btn}    timeout=5s
@@ -346,6 +351,7 @@ Handle Feedback
                 END
             END
             ${iOS_EN_InsurancePage}           Set Variable    chain=**/XCUIElementTypeButton[`label == '${Flow_Flag}'`]
+            ${Android_EN_InsurancePage}       Set Variable    android=new UiSelector().text("${Flow_Flag}")
             ${status}     Run Keyword And Return Status     Wait Until Element Is Visible      ${${platformName}_${lang}_InsurancePage}            timeout=5s
             Take Screenshot     FWD_Insurance_Page
             Sleep      2s
@@ -355,6 +361,7 @@ Handle Feedback
             END
     END
 
+
 Feedback 2nd page Android
     FOR    ${counter}    IN RANGE    1    4
         Log    ${counter}
@@ -363,8 +370,10 @@ Feedback 2nd page Android
         Wait Until Element Is Visible    ${${platformName}_${lang}_feedback_question_list}       timeout=5s
         Click Element    ${${platformName}_${lang}_feedback_question_list}
     END
+        SwipePage
+        Scroll Till Transaction Is Visible      ${${platformName}_${lang}_Feedback_NextButton}
         ${Android_EN_feedback_star5}    Set Variable    xpath=//android.widget.TextView[@text="The details I received felt relevant to my specific request."]/following-sibling::android.view.ViewGroup[1]//android.view.ViewGroup[4]
-        ${Android_EN_feedback_star6}    Set Variable    xpath=//android.widget.TextView[contains(@text,'My request')]/following-sibling::android.view.ViewGroup[1]/android.view.ViewGroup[4]
+        ${Android_EN_feedback_star6}    Set Variable    xpath=//android.widget.TextView[contains(@text,'my request properly')]/following-sibling::android.view.ViewGroup[1]/android.view.ViewGroup[4]
         Scroll Till Transaction Is Visible      ${Android_EN_feedback_star6}
         Sleep    1s
         Wait Until Element Is Visible   ${Android_EN_feedback_star6}    timeout=5s
@@ -374,7 +383,7 @@ Feedback 2nd page Android
         Click Element    ${Android_EN_feedback_star6}
         Take Screenshot    Feedbcak 2nd page
 
- Feedback 2nd page iOS
+Feedback 2nd page iOS
     ${iOS_EN_feedback_question_list}   Set Variable     chain=**/XCUIElementTypeOther[`name == "feedback-star-pressable-4"`][2]
     Wait Until Element Is Visible    ${${platformName}_${lang}_feedback_question_list}       timeout=5s
     @{feedback_question_list}   Get Webelements    chain=**/XCUIElementTypeOther[`name == "feedback-star-pressable-4"`]
@@ -382,12 +391,12 @@ Feedback 2nd page Android
 
     FOR    ${counter}    IN RANGE    1    ${total_feedbcak_question}
         Log    ${counter}
-        Scroll Till Transaction Is Visible    chain=**/XCUIElementTypeOther[`name == "feedback-star-pressable-4"`][${counter}+1]
-        Wait Until Element Is Visible    chain=**/XCUIElementTypeOther[`name == "feedback-star-pressable-4"`][${counter}+1]       timeout=5s
-        Click Element    chain=**/XCUIElementTypeOther[`name == "feedback-star-pressable-4"`][${counter}+1]
+        ${index}    Evaluate    ${counter}+1
+        Scroll Till Transaction Is Visible    chain=**/XCUIElementTypeOther[`name == "feedback-star-pressable-4"`][${index}]
+        Wait Until Element Is Visible    chain=**/XCUIElementTypeOther[`name == "feedback-star-pressable-4"`][${index}]       timeout=5s
+        Click Element    chain=**/XCUIElementTypeOther[`name == "feedback-star-pressable-4"`][${index}]
     END
         Take Screenshot    Feedbcak 2nd page
-
 
 Check Transaction Status
     TRY

@@ -11,9 +11,9 @@ ${iOS_EN_Totalasoftoday_txt}                    accessibility_id=request-amount-
 ${iOS_EN_PayNow}                     chain=**/XCUIElementTypeButton[`label == "Pay now"`]
 ${iOS_EN_QRcode_txt}                   chain=**/XCUIElementTypeStaticText[`label == "QR code for bank transfer"`]
 ${iOS_EN_PaymentDetails_txt}            chain=**/XCUIElementTypeStaticText[`label == "Payment details"`]
-${iOS_EN_PolicyNumber_txt}        xpath=(//XCUIElementTypeOther[contains(@name,"Policy number")])[22]
-${iOS_EN_PaymentAmount_txt}        xpath=(//XCUIElementTypeOther[contains(@name,"Payment amount")])[22]
-${iOS_EN_PremiumAmount_txt}        xpath=(//XCUIElementTypeOther[contains(@name,"Premium amount")])[22]
+${iOS_EN_PolicyNumber_txt}        xpath=//XCUIElementTypeStaticText[@name="Policy number"]/following-sibling::XCUIElementTypeStaticText
+${iOS_EN_PaymentAmount_txt}        xpath=//XCUIElementTypeStaticText[@name="Premium amount"]/following-sibling::XCUIElementTypeStaticText
+${iOS_EN_PremiumAmount_txt}        xpath=//XCUIElementTypeStaticText[@name="Premium amount"]/following-sibling::XCUIElementTypeStaticText
 ${iOS_EN_DownloadQRCode}        chain=**/XCUIElementTypeButton[`label == "Download QR code"`]
 ${iOS_EN_BackToDashboard}        chain=**/XCUIElementTypeOther[`label == "Back to dashboard"`]
 ${iOS_EN_QRCodeSaved_txt}        chain=**/XCUIElementTypeOther[`label == "QR code is saved to your device album"`][5]

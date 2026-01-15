@@ -47,10 +47,14 @@ Insert OTP
             Wait Until Page Contains Element        ${${platformName}_${lang}_OTP_email}        timeout=10s
             ${VP_OTP_Page_EmailID}    Get Text    ${${platformName}_${lang}_OTP_email}
             @{VP_OTP_Page_EmailID}    Split String    ${VP_OTP_Page_EmailID}
-            IF  '${LoginMethod}' != 'SignUp'
+
+            ${emailstatus}   Run Keyword And Return Status    Should Contain    ${VP_OTP_Page_EmailID}    ${Email}
+            IF  '${LoginMethod}' != 'SignUp' and '${emailstatus}' != 'True'
                 ${m_Email}    Convert To Lower Case    ${insurance_mobilenumber}@mailsac.com
+                Set Global Variable   ${m_Email}
             ELSE
                 ${m_Email}    Convert To Lower Case    ${Email}
+                Set Global Variable   ${m_Email}
             END
             Set Global Variable    ${m_Email}
             Get OTP     ${m_Email}

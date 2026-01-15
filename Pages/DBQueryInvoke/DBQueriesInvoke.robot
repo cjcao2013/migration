@@ -198,7 +198,7 @@ Get Name Marital Status Details
     Log    ${index3}
     ${index4}    Get Index From List    ${list0}    MaritalStatus
     Log    ${index4}
-    ${index5}    Get Index From List    ${list0}    OTP
+    ${index5}    Get Index From List    ${list0}    EncryptedOTP
     Log    ${index5}
     ${index6}    Get Index From List    ${list0}    Salutation
     Log    ${index6}
@@ -230,6 +230,9 @@ Get Name Marital Status Details
     END
     ${OTPNumber}    Set Variable    ${list}[${index5}]
     Log    ${OTPNumber}
+    IF    '${OTP_Column_Name}' == 'EncryptedOTP'
+      ${OTPNumber}   AES Decrypt    ${key}    ${OTPNumber}
+    END
     Set Global Variable    ${OTPNumber}
     ${Salval}    Set Variable    ${list}[${index6}]
     Log    ${Salval}
@@ -284,7 +287,7 @@ Get Email or Mobile Details
     Log    ${list0}
     ${index1}    Get Index From List    ${list0}    ${FetchCol}
     Log    ${index1}
-    ${index2}    Get Index From List    ${list0}    OTP
+    ${index2}    Get Index From List    ${list0}    EncryptedOTP
     Log    ${index2}
 #    ${index2}    Get Index From List    ${list0}    MobileNumber
 #    Log    ${index2}
@@ -298,6 +301,10 @@ Get Email or Mobile Details
     Log    ${fetchValue}
     ${pdotp}    Set Variable    ${list}[${index2}]
     Log    ${pdotp}
+    IF    '${OTP_Column_Name}' == 'EncryptedOTP'
+      ${pdotp}   AES Decrypt    ${key}    ${pdotp}
+    END
+    Set Global Variable     ${pdotp}
 #    ${mobileNum}    Set Variable    ${list}[${index2}]
 #    Log    ${mobileNum}
     RETURN    ${pdotp}~${fetchValue}

@@ -12,8 +12,8 @@ ${confirm_sign_up_OTP_endpoint}            live/auth/v2/api/confirm-otp
 Confirm Sign Up OTP
     TRY
         Sleep    10s
-        Get OTP
-         ${host}         Get Environment Attribute        host
+        Get OTP     ${Email}
+        ${host}         Get Environment Attribute        host
         &{request_body}     Create Dictionary
         ...     email=${EmailNew}
         ...     confirmationCode=${OTPNumber}

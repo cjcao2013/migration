@@ -280,7 +280,7 @@ Capture Email and Mobile Details Transaction for iOS
     Click Element    ${${platformName}_${lang}_ServiceReuest}
     Take Screenshot    Transaction Page
     IF    '${Transaction_Info}'== 'Pre'
-        RefreshPage
+
         ${iOS_selectCurrentTransaction1}    Set Variable
         ...    chain=**/XCUIElementTypeOther[`label CONTAINS '${currdate}' and label CONTAINS 'Change of personal details' and label CONTAINS 'Policy no: ${Policy_No}'`][27]
     END

@@ -10,7 +10,7 @@ Resource    ../Common/CommonMethod.resource
 Switch funds
     TRY
         Select Policy
-        RefreshPage
+
         # capture policy details
         ${iOS_EN_FundpolicyName}    Set Variable
         ...    chain=**/XCUIElementTypeOther[`label CONTAINS "${Policy_No}"`][-3]/XCUIElementTypeStaticText[-1]
@@ -294,6 +294,7 @@ Switch funds
         Click Element    ${${platformName}_${lang}_SubmitButton}
         Sleep   2s
         IF    '${Fatca_Status}' == 'Yes'    Run Keywords    FATCA Status Change
+
         Run Keyword
         ...    Insert OTP
         ...    ${Transaction_OTP_Source}
@@ -343,7 +344,7 @@ Capture Fund Switch Transaction Details
         ...    xpath=(//android.widget.TextView[@text='${current_day}']/following-sibling::android.widget.TextView[@text='${current_month}']/parent::android.view.ViewGroup/following-sibling::android.widget.TextView[@text='Fund Switch']/following-sibling::android.view.ViewGroup/android.widget.TextView[@text='${MCaseStatus}'])[1]
     END
     Log    ${${platformName}_selectCurrentTransaction1}
-    RefreshPage
+
 
     Scroll Till Transaction Is Visible    ${${platformName}_selectCurrentTransaction1}
     Wait Until Element Is Visible    ${${platformName}_selectCurrentTransaction1}    timeout=300s

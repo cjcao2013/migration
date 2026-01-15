@@ -149,7 +149,7 @@ ${iOS_EN_ResidentialAddress_HeaderText}                         chain=**/XCUIEle
 ${iOS_EN_AddressDetails_AddressLine1}                           chain=**/XCUIElementTypeStaticText[`name == "Address line 1"`][1]
 #**/XCUIElementTypeOther[`label == "Address line 1 Required"`][2]/XCUIElementTypeOther[1]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeTextField
 ${iOS_EN_AddressDetails_AddressLine2}                           xpath=(//XCUIElementTypeOther[@name="Address line 2 (Optional)"])[2]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeTextField
-${iOS_EN_AddressDetails_ZipCode}                                chain=**/XCUIElementTypeStaticText[`name == "Zip code"`][1]
+${iOS_EN_AddressDetails_ZipCode}                                xpath=(//XCUIElementTypeStaticText[@name="Zip code"])[1]/parent::XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeTextField
 
 # ${iOS_EN_AddressDetails_AddressLine1}    chain=**/XCUIElementTypeTextField[`name == "input"`][1]
 # ${iOS_EN_AddressDetails_AddressLine2}    chain=**/XCUIElementTypeTextField[`name == "input"`][2]
