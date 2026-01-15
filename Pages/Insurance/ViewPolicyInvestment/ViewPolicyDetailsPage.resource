@@ -290,7 +290,7 @@ Overview
             # Method
             ${VP_OverView_Method}    Get From List    ${Overview_FrequencyList}    1
             Log To Console    Method=${VP_OverView_Method}
-            @{mVP_OverView_Method}    Split String    ${VP_OverView_Method}    ••••
+            @{mVP_OverView_Method}    Split String    ${VP_OverView_Method}    Policy details
             ${mVP_OverView_Method}    Get From List    ${mVP_OverView_Method}    0
             IF    '${mVP_OverView_Method.strip()}' == 'Credit card'
                 ${mVP_OverView_Method}    Set Variable    CreditCard
@@ -351,6 +351,9 @@ Overview
                 FOR    ${element}    IN    @{DeleteriderTotalCount}
                     #    Changes for coverage in staging
                     ${totalRiderData}    Get Text    ${element}
+                    IF    '${totalRiderData}' == '${EMPTY}'
+                         Exit For Loop
+                    END
                     @{Riders_policy_namedata}    Split String    ${totalRiderData}    THB
 
                     # riderpolicyname
@@ -386,6 +389,7 @@ Overview
                     ${Riders_policy_status}    Get From List    ${Payperiod_Listdata}    -1
                     ${Riders_policy_status}    Strip String    ${Riders_policy_status}
                     ${Riders_EndsOnDate}    Remove String    ${Payperiod_List}    ${Riders_policy_status}
+                    ${Riders_EndsOnDate}    Remove String    ${Riders_EndsOnDate}    Pay period
                     ${Riders_EndsOnDate}    Strip String    ${Riders_EndsOnDate}
 
                     Set Calc VP Actual Result With Original And Source
@@ -832,8 +836,8 @@ Get View Policy DB VPs
                 ${policyIssueDate}    Set Variable    ${EMPTY}
             END
 #            ${policyIssueDate}  Strip String    ${policyIssueDate}
-            ${policyIssueDate}    Convert Date    ${policyIssueDate}    result_format=%Y-%m-%d %H:%M:%S
-
+#            ${policyIssueDate}    Convert Date    ${policyIssueDate}    result_format=%Y-%m-%d %H:%M:%S
+            ${policyIssueDate}      Convert To String    ${policyIssueDate}
     #    ${mproductName}    Remove String    ${productName}    (Top-Up)
             ${OverView_InsuredForValue}    Set Variable    ${fname} ${lname}
             ${OverView_YourCovervalue}    Set Variable    ${premiumCcy} ${SA}
@@ -1199,7 +1203,13 @@ Indicative dividend
     Click Element   ${${platformName}_${lang}_Overview}
     ${Status}    Run Keyword And Return Status  Wait Until Element Is Visible       ${${platformName}_${lang}_Indicative_dividend}       timeout=10s
     IF    '${Status}' == 'True'
-        Click Element    ${${platformName}_${lang}_Indicative_dividend}
+        &{dict}     Get Element Rect    ${${platformName}_${lang}_Indicative_dividend}
+        ${x}    Get From Dictionary    ${dict}    x
+        ${y}    Get From Dictionary    ${dict}    y
+        ${x}    Evaluate    ${x}+100    # 82
+        ${x}    Convert To Integer    ${x}
+        ${y}    Convert To Integer    ${y}
+        Click by Coordinates    ${x}    ${y}
         Take Screenshot    Indicative_dividend
         ${VP_first30PerPortion}    Get Text    ${${platformName}_${lang}_first30PerPortion_1}
         ${VP_first70PerPortion}    Get Text    ${${platformName}_${lang}_first70PerPortion_1}
@@ -1221,8 +1231,8 @@ Indicative dividend
         ${VP_first70PerPortion_Indicative_dividend_Page}    Remove String    ${VP_first70PerPortion_Indicative_dividend_Page}   THB
         ${VP_first70PerPortion_Indicative_dividend_Page}    Remove String    ${VP_first70PerPortion_Indicative_dividend_Page}   ,
 
-        Set Calc VP Actual Result With Original And Source    First30Portion_Amount    ${VP_first30PerPortion_Indicative_dividend_Page}    ${VP_first30PerPortion_Indicative_dividend_Page}    Omne_Indicative_dividend_page
-        Set Calc VP Actual Result With Original And Source    Remaining70Portion    ${VP_first70PerPortion_Indicative_dividend_Page}    ${VP_first70PerPortion_Indicative_dividend_Page}    Omne_Indicative_dividend_page
+        Set Calc VP Actual Result With Original And Source    First30Portion_Amount    ${VP_first30PerPortion_Indicative_dividend_Page.strip()}    ${VP_first30PerPortion_Indicative_dividend_Page.strip()}    Omne_Indicative_dividend_page
+        Set Calc VP Actual Result With Original And Source    Remaining70Portion    ${VP_first70PerPortion_Indicative_dividend_Page.strip()}    ${VP_first70PerPortion_Indicative_dividend_Page.strip()}    Omne_Indicative_dividend_page
         Click Element    ${${platformName}_${lang}_Indicative_dividend_BackArrow}
 
         #           Get Selected Policy Indicative dividend Detail from DB
@@ -1265,7 +1275,7 @@ Indicative dividend
             ${DB_First30Portion_Amount}  Evaluate    "{:.2f}".format(${DB_First30Portion_Amount})
             ${DB_Remaining70Portion_Amount}  Evaluate    "{:.2f}".format(${DB_Remaining70Portion_Amount})
 
-            Set Calc VP Expected Result With Original And Source    First30Portion_Amount    ${DB_First30Portion_Amount}    ${DB_First30Portion_Amount}    DB_Calculated
-            Set Calc VP Expected Result With Original And Source    Remaining70Portion    ${DB_Remaining70Portion_Amount}    ${DB_Remaining70Portion_Amount}    DB_Calculated
+            Set Calc VP Expected Result With Original And Source    First30Portion_Amount    ${DB_First30Portion_Amount.strip()}    ${DB_First30Portion_Amount.strip()}    DB_Calculated
+            Set Calc VP Expected Result With Original And Source    Remaining70Portion    ${DB_Remaining70Portion_Amount.strip()}    ${DB_Remaining70Portion_Amount.strip()}    DB_Calculated
 
     END

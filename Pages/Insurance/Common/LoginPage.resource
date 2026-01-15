@@ -327,11 +327,17 @@ Additional Verification Page
                     Fail    ${errormsg}
                 END
             END
-            ${insurance_mobilenumber}       Fetch Insurance Mobile Number from API
-            ${insurance_mobilenumber}   Set Variable    ${insurance_mobilenumber}Copy
-            Set Global Variable     ${insurance_mobilenumber}
-            Wait Until Element Is Visible    ${${platformName}_${lang}_Verify_btn}
-            Take Screenshot    Document_Details
+            TRY
+                 ${insurance_mobilenumber}       Fetch Insurance Mobile Number from API
+                ${insurance_mobilenumber}   Set Variable    ${insurance_mobilenumber}Copy
+                Set Global Variable     ${insurance_mobilenumber}
+                Wait Until Element Is Visible    ${${platformName}_${lang}_Verify_btn}
+                Take Screenshot    Document_Details
+            EXCEPT
+                Log     Unmasked mobile number not present
+            END
+
+
 
 
 

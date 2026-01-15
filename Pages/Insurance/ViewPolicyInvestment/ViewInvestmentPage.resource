@@ -105,13 +105,13 @@ Investment(s)
           Click Element     ${SelectedPolicy_Moredetail_Element}
           ${Android_EN_policyName}  Set Variable    xpath=//android.widget.TextView[@resource-id="header-product-name"]
           ${iOS_EN_policyName}    Set Variable
-          ...    xpath=(//XCUIElementTypeOther[contains(@label, '${Policy_No}')])[last()-2]//XCUIElementTypeStaticText[2]
+          ...    accessibility_id=header-product-name
           ${Android_EN_policyrisklevel}     Set Variable    xpath=//android.widget.TextView[contains(@text,"RISK LEVEL")]
           ${iOS_EN_policyrisklevel}    Set Variable
-          ...    xpath=((//XCUIElementTypeOther[contains(@label, '${Policy_No}')])[last()-2]//XCUIElementTypeStaticText)[last()-2]
+          ...    xpath=((//XCUIElementTypeOther[contains(@label, '${Policy_No}')])[last()-2]/XCUIElementTypeOther/XCUIElementTypeOther)[1]
           ${Android_EN_policytype}      Set Variable    xpath=(//android.widget.TextView[@resource-id="header-product-name"]/following-sibling::android.view.ViewGroup[2]/android.view.ViewGroup/android.widget.TextView)[2]
           ${iOS_EN_policytype}    Set Variable
-          ...    xpath=((//XCUIElementTypeOther[contains(@label, '${Policy_No}')])[last()-2]//XCUIElementTypeStaticText)[last()]
+          ...    xpath=((//XCUIElementTypeOther[contains(@label, '${Policy_No}')])[last()-2]/XCUIElementTypeOther/XCUIElementTypeOther)[3]
           ${Android_EN_PolicyStatus}    Set Variable    xpath=//android.widget.TextView[@text="Active" or @text="Inactive"]
           ${iOS_EN_PolicyStatus}    Set Variable
           ...     chain=**/XCUIElementTypeStaticText[`label == "Active" OR label == "Inactive"`]
@@ -119,7 +119,7 @@ Investment(s)
           Take Screenshot    FWD_investmentDetailsPage
           ${VP_InvestmentpolicyName}    Get Text    ${${platformName}_${lang}_policyName}
           ${VP_Investmentpolicytype}    Get Text    ${${platformName}_${lang}_policytype}
-          ${status}    Run Keyword And Return Status    Wait Until Page Contains    RISK LEVEL    timeout=10s
+          ${status}    Run Keyword And Return Status    Wait Until Page Contains    Risk Level    timeout=10s
           IF    '${status}' == 'True'
                 ${VP_risklevel}    Get Text    ${${platformName}_${lang}_policyrisklevel}
                 @{risklevel}    Split String    ${VP_risklevel}    -

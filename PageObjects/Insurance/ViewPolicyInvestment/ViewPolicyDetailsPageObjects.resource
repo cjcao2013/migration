@@ -21,10 +21,10 @@ ${Android_EN_Plyname}                                   xpath=((//android.view.V
 ${iOS_EN_Plyname}                                       xpath=//XCUIElementTypeStaticText[@name="header-product-name"]
 
 ${Android_EN_policystatus_txt}                          xpath=//android.widget.TextView[@text="Active" or @text="Inactive" or @text="Lapsed"]
-${iOS_EN_policystatus_txt}                              xpath=(//XCUIElementTypeOther[contains(@name,'Overview Document(s)')])[last()-4]/preceding::XCUIElementTypeOther[2]
+${iOS_EN_policystatus_txt}                              xpath=(//XCUIElementTypeOther[contains(@name,'Overview Document(s)')])[last()-4]/preceding::XCUIElementTypeOther[1]
 
 ${Android_EN_plyNo}                                     xpath=(((//android.view.ViewGroup[@clickable="true"]/parent::android.view.ViewGroup)[1]//android.view.ViewGroup)[3]//android.view.ViewGroup)[1]//android.widget.TextView
-${iOS_EN_plyNo}                                         xpath=(//XCUIElementTypeOther[contains(@name,'Overview Document(s)')])[last()-4]/preceding::XCUIElementTypeOther[4]
+${iOS_EN_plyNo}                                         xpath=(//XCUIElementTypeOther[contains(@name,'Overview Document(s)')])[last()-4]/preceding::XCUIElementTypeOther[3]
 
 ${Android_EN_policyName_txt}                            xpath=((//android.view.ViewGroup[@clickable="true"])[1]/following-sibling::android.widget.TextView)[2]
 ${iOS_EN_policyName_txt}                                accessibility_id=header-product-name
@@ -74,7 +74,7 @@ ${Android_EN_VPH_Count}                                 xpath=//android.widget.T
 ${Android_EN_Rider}                                     xpath=//android.widget.TextView[@text='Rider(s)']
 ${iOS_EN_Rider}                                         chain=**/XCUIElementTypeOther[`label == "Rider(s)"`]
 
-${iOS_EN_RiderList}                                     xpath=//XCUIElementTypeOther[@name="collapsible-header" and @label="Rider(s)"]/parent::XCUIElementTypeOther[last()]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeScrollView/XCUIElementTypeOther
+${iOS_EN_RiderList}                                     xpath=//XCUIElementTypeOther[@name="collapsible-header" and @label="Rider(s)"]/parent::XCUIElementTypeOther[last()]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeScrollView/XCUIElementTypeOther/XCUIElementTypeOther
 ${Android_EN_RiderList}                                 xpath=//android.view.ViewGroup[@content-desc="Rider(s)"]/following::android.widget.HorizontalScrollView/android.view.ViewGroup/android.view.ViewGroup
 
 ${Android_EN_Riders_YouAreCoveredFor_txt}               xpath=(//android.widget.TextView[@text="Insured for"]/preceding-sibling::android.widget.TextView)[2]
@@ -270,11 +270,11 @@ ${iOS_EN_SaveNotificationPopUp}                         chain=**/XCUIElementType
 ${iOS_EN_Policy_List}                       chain=**/XCUIElementTypeOther[`name='fwd-mypolicies-flatlist'`]/XCUIElementTypeScrollView/XCUIElementTypeOther/XCUIElementTypeOther
 
 #Indicative_dividend
-${iOS_EN_Indicative_dividend}							chain=**/XCUIElementTypeOther[`name == "Indicative dividend"`]
+${iOS_EN_Indicative_dividend}							chain=**/XCUIElementTypeOther[`label == "Indicative dividend"`]
 ${iOS_EN_Indicative_dividend_View details}				chain=**/XCUIElementTypeButton[`name == "View details"`]
 
-${iOS_EN_first30PerPortion_1}							xpath=(//XCUIElementTypeOther[@name="Indicative dividend"]//parent::XCUIElementTypeOther//descendant::XCUIElementTypeStaticText)[1]
-${iOS_EN_first70PerPortion_1}							xpath=(//XCUIElementTypeOther[@name="Indicative dividend"]//parent::XCUIElementTypeOther//descendant::XCUIElementTypeStaticText)[2]
+${iOS_EN_first30PerPortion_1}							xpath=(//XCUIElementTypeOther[@label="Indicative dividend"]//parent::XCUIElementTypeOther//descendant::XCUIElementTypeStaticText)[1]
+${iOS_EN_first70PerPortion_1}							xpath=(//XCUIElementTypeOther[@label="Indicative dividend"]//parent::XCUIElementTypeOther//descendant::XCUIElementTypeStaticText)[2]
 
 ${iOS_EN_Indicative_dividend_Page_Title}			chain=**/XCUIElementTypeStaticText[`name == "Indicative dividend"`]
 

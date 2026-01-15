@@ -542,12 +542,14 @@ class ViewPolicyDB:
         key = b'f057ecb7c8ed51ac'
         value1 = ""
         lsdf = []
+        print(policyIssueDate)
+        pid_str = policyIssueDate.strftime("%Y-%m-%d")
         try:
             # Create a MySQL database connection
             conn = mysql.connector.connect(**db_config)
             # Create a pandas DataFrame from the SQL query
-            query = f" select * from '" + dbinstance + "'.indexfundvaluations " \
-                    f" where IsDeleted = 0 and '" + policyIssueDate + "' between PolicyIssuedStartDate and PolicyIssuedEndDate " \
+            query = f" select * from " + dbinstance + ".indexfundvaluations " \
+                    f" where IsDeleted = 0 and '" + pid_str + "' between PolicyIssuedStartDate and PolicyIssuedEndDate " \
                     f" order by PolicyIssuedStartDate desc; "
             print(query)
             df = pd.read_sql(query, conn)
