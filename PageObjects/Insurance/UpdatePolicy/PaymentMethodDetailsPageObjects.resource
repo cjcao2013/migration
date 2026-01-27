@@ -34,6 +34,7 @@ ${iOS_EN_Required_Error_TXT}                                        chain=**/XCU
 ${iOS_EN_No_SingleCharAllow_Error_TXT}                              chain=**/XCUIElementTypeStaticText[`label == "No single character input allowed"`]
 ${iOS_EN_RecurringPayment_NoteText}                                 accessibility_id=RecurringPayment-note-text
 
+
 ${Android_EN_RecurringPayment_NoteText}                             android=new UiSelector().resourceId("RecurringPayment-note-text")
 ${Android_EN_Add_payment_method}                                    xpath=(//android.widget.TextView[contains(@text,'Add payment method')])
 ${Android_EN_cardHolderName}                                        xpath=//android.widget.EditText[@resource-id='RecurringPayment-card-holder-name-input']
@@ -43,7 +44,7 @@ ${Android_EN_RecurringPayment_HeaderText}                           xpath=//andr
 ${Android_EN_RecurringPayment_SubHeaderText}                        xpath=//android.widget.TextView[@text="Your recurring payment method"]
 ${Android_EN_RecurringPayment_DisclaimerText}                       xpath=//android.widget.TextView[@text='Disclaimer']
 ${Android_EN_RecurringPayment_DisclaimerContent}                    xpath=(//android.widget.TextView[@text='Disclaimer']/following::android.widget.TextView)[1]
-${Android_EN_RecurringPayment_Checkbox}                             xpath=//android.widget.CheckBox[@resource-id="RecurringPayment-terms-checkbox"]
+${Android_EN_RecurringPayment_Checkbox}                             xpath=//android.view.ViewGroup[contains(@resource-id,"terms-checkbox")]/android.view.ViewGroup
 ${Android_EN_RecurringPayment_CardNumber_Below_16digit_ErrorMsg}    xpath=//android.widget.TextView[@text='Please input at least 16 digits']
 ${Android_EN_RecurringPayment_CardNumber_Invalid_ErrorMsg}          xpath=//android.widget.TextView[@text='Please input a valid credit card number']
 ${Android_EN_RecurringPayment_ExpiryDate_ErrorMsg}                  xpath=//android.widget.TextView[@text='Please input a credit card with an expiry date of at least 6 months from today']

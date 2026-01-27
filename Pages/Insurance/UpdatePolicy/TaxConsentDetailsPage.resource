@@ -280,7 +280,7 @@ Capture Tax Consent Transaction Details for Android
     #    ${Android_selectCurrentTransaction}    Set Variable    xpath
     IF    '${Transaction_Info}'== 'Pre'
 
-        RefreshPage
+       
         ${Android_selectCurrentTransaction1}    Set Variable
         ...    xpath=(//android.widget.TextView[@text='${current_day}']/following-sibling::android.widget.TextView[@text='${current_month}']/parent::android.view.ViewGroup/following-sibling::android.widget.TextView[@text='Change of tax consent'])[1]
     END

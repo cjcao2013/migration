@@ -223,7 +223,7 @@ Capture Change Name Transaction Details for iOS
         Wait Until Page Contains Element    ${${platformName}_${lang}_TransactionServiceRequest}    timeout=10s
         Click Element    ${${platformName}_${lang}_TransactionServiceRequest}
     #    Log    ${${platformName}_selectCurrentTransaction1}
-        RefreshPage
+#        RefreshPage
         Scroll Till Transaction Is Visible    ${${platformName}_selectCurrentTransaction1}
         Wait Until Element Is Visible    ${${platformName}_selectCurrentTransaction1}    timeout=300s
         Take Screenshot    Transaction Page

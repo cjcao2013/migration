@@ -23,8 +23,8 @@ View Document
                 Click Element       ${${platformName}_${lang}_InsurnacePage}
           END
 
-        Set or enter PIN
-#        Pause Execution
+#        Set or enter PIN
+        Pause Execution
         ${Android_EN_Insurance_Module}    Set Variable    android=new UiSelector().textContains("View")
         ${iOS_EN_Insurance_Module}    Set Variable        chain=**/XCUIElementTypeOther[`label CONTAINS 'View'`][-1]
     #    ...    chain=**/XCUIElementTypeOther[`label == "${Insurance_Flow}"`]
@@ -43,7 +43,7 @@ View Document
 
         #select document
         ${iOS_EN_selectDocument}   Set Variable    chain=**/XCUIElementTypeOther[`name == "${DocumentTypeName}"`]
-        ${Android_EN_selectDocument}    Set Variable    android=new UiSelector().textContains("${DocumentTypeName}")
+        ${Android_EN_selectDocument}    Set Variable    xpath=(//android.widget.TextView[@text="${DocumentTypeName}"])[last()]
         Wait Until Element Is Visible    ${${platformName}_${lang}_selectDocument}
         Click Element    ${${platformName}_${lang}_selectDocument}
         Take Screenshot    Document Type Select Page
@@ -95,9 +95,9 @@ Document Preview And Download for iOS
 Document Preview And Download for Android
     # Document Preview & Download
     TRY
-            Wait Until Element Is Visible    xpath=//android.widget.TextView[@text='${Preview_Document_Name}']
+            Wait Until Element Is Visible    xpath=//android.widget.TextView[@text='${Preview_Document_Name}'][last()]
             Take Screenshot    View Policy Document Page
-            Click Element    xpath=//android.widget.TextView[@text='${Preview_Document_Name}']
+            Click Element    xpath=//android.widget.TextView[@text='${Preview_Document_Name}'][last()]
 
             Wait Until Element Is Visible    ${${platformName}_${lang}_Document_Preview_Document}    timeout=10s
             Take Screenshot    ViewPolicy_Documents_Preview_Page

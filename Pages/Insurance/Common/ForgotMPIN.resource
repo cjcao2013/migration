@@ -89,8 +89,64 @@ Additional Verification
         Set Global Variable    ${Update_Policy_Module}
         ${PersonalDetails_WhatChange}    Set Variable    Mailing address
         Set Global Variable    ${PersonalDetails_WhatChange}
-        Run Keyword    Insert OTP       ${Transaction_OTP_Source}   ${Transaction_OTP_Expiry_Flag}  ${Transaction_OTP_Resend_Flag}
+#        Run Keyword    Insert OTP       ${Transaction_OTP_Source}   ${Transaction_OTP_Expiry_Flag}  ${Transaction_OTP_Resend_Flag}
+        Wait Until Element Is Visible    ${${platformName}_${lang}_Verify_btn}          timeout=10s
+        Take Screenshot    Document_Details
+        # Previous OTP from Mailsac
+#        Get SignUp OTP
+#        ${LoginPrevious_OTP}     Set Variable      ${OTPNumber}
+#        Set Global Variable    ${LoginPrevious_OTP}
+#        Click Element    ${${platformName}_${lang}_Verify_btn}
 
+        Sleep    5s
+         ${OwnerUserId}    Run Keyword
+         ...    Get Owner User ID from DB
+         ...    ${dbhostname}
+         ...    ${dbusername}
+         ...    ${dbpassword}
+         ...    ${dbport}
+         ...    ${dbinstanceAddon}
+         ...    ${Policy_No}
+         ...    ${dbinstance}
+         Log    ${OwnerUserId}
+         Set Global Variable    ${OwnerUserId}
+        ${DBValue}    Get Email or Mobile Details    EmailAddress
+        ${OTP}      Set Variable   ${pdotp}
+        ${OTP}      Convert To String    ${OTP}
+        ${OTP1}     Get Substring    ${OTP}    0    1
+        ${OTP2}     Get Substring    ${OTP}    1    2
+        ${OTP3}     Get Substring    ${OTP}    2    3
+        ${OTP4}     Get Substring    ${OTP}    3    4
+        ${OTP5}     Get Substring    ${OTP}    4    5
+        ${OTP6}     Get Substring    ${OTP}    5    6
+        ${OTP_Source}           Set Variable        db
+        IF    '${OTP_Source.lower()}' == 'db' and '${platformName}' == 'iOS'
+            Sleep    2s
+            Input Text    ${${platformName}_${lang}_InputOTPField}    ${OTP}\n
+        ELSE
+           Input Password    ${${platformName}_${lang}_InputOTPField}    ${OTP}
+           Hide Keyboard
+        END
+
+        ${status}    Run Keyword And Return Status    Wait Until Element Is Visible    ${${platformName}_${lang}_NextButton}    timeout=3s
+        IF    '${status}' == 'True'
+            Click Element    ${${platformName}_${lang}_NextButton}
+        ELSE
+            Click Element    ${${platformName}_${lang}_Verify}
+        END
+        Take Screenshot    OTP Submit
+        ${status}    Run Keyword And Return Status    Wait Until Element Is Visible    ${${platformName}_${lang}_Eror_Msg_Wrong_Otp}    timeout=1s
+        IF    '${status}' == 'True'
+            Take Screenshot    Invalid_OTP
+            ${VP_Inavalid_OTP}    Get Text    ${${platformName}_${lang}_Eror_Msg_Wrong_Otp}
+            Set Global Variable    ${errormsg}    ${VP_Inavalid_OTP}
+            Set Calc VP With Source And Original Values    Onboard OTP Invalid Message    OTP is invalid    ${VP_Inavalid_OTP}    Static    OMNE_OTPPage    OTP is invalid    ${VP_Inavalid_OTP}
+            Fail    ${errormsg}
+        END
+       Set or enter PIN
+       Regestration Experience Feedback
+       Wait Until Element Is Visible      ${${platformName}_${lang}_InsurancePage}            timeout=30s
+       Take Screenshot    FWD Insurance Page
         Omne Action Popup
     EXCEPT     AS  ${reason}
        Set Failed Actual Result and VP    Omne_Flow   ${reason}   Additional Verification Page

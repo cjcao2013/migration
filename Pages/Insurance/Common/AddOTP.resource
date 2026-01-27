@@ -164,7 +164,7 @@ Get Details from DB
                 ...    ${DBMailId}
                 ...    Personal Details DB
                 Set Global Variable    ${OTPNumber}
-            ELSE IF    '${PersonalDetails_WhatChange}' == 'MobileNo'
+            ELSE IF    '${PersonalDetails_WhatChange}' == 'mobile number'
                 ${DBValue}    Get Email or Mobile Details    MobileNumber
                 @{DBValueArr}    Split String    ${DBValue}    ~
                 ${OTPNumber}    Get From List    ${DBValueArr}    0

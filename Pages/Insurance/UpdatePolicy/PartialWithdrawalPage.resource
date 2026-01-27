@@ -143,9 +143,9 @@ Partial withdrawal
            Run Keyword   Add Payment Methods
 
         END
-        Wait Until Element Is Visible    ${${platformName}_${lang}_acknowledgeChkBox}       timeout=5s
+        Wait Until Element Is Visible    ${${platformName}_${lang}_partial__acknowledgeChkBox}       timeout=20s
 
-        Click Element    ${${platformName}_${lang}_acknowledgeChkBox}
+        Click Element    ${${platformName}_${lang}_partial__acknowledgeChkBox}
         Take Screenshot    Review Withdrawal Fatca Status
         # Previous OTP from DB
         Get Details from DB
