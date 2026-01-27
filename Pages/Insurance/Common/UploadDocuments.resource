@@ -14,14 +14,19 @@ Upload Document BS
         IF    '${Status}' == 'True'
              Click Element    ${${platformName}_${lang}_while_using_app}
         END
-#        ${Status}       Run Keyword And Return Status    Wait Until Page Contains Element   ${${platformName}_${lang}_allow_access}     timeout=2s
-#        IF    '${Status}' == 'True'
-#             Click Element    ${${platformName}_${lang}_allow_access}
-#        END
 
-        ${Status}       Run Keyword And Return Status    Wait Until Page Contains Element   ${${platformName}_${lang}_dontallow_access}     timeout=2s
+        ${Status}       Run Keyword And Return Status    Wait Until Page Contains Element   ${${platformName}_${lang}_allow_access}     timeout=2s
         IF    '${Status}' == 'True'
-             Click Element    ${${platformName}_${lang}_dontallow_access}
+             Click Element    ${${platformName}_${lang}_allow_access}
+        END
+
+#        ${Status}       Run Keyword And Return Status    Wait Until Page Contains Element   ${${platformName}_${lang}_dontallow_access}     timeout=2s
+#        IF    '${Status}' == 'True'
+#             Click Element    ${${platformName}_${lang}_dontallow_access}
+#        END
+        ${Status}       Run Keyword And Return Status    Wait Until Page Contains Element   ${${platformName}_${lang}_Allow_Photos}   timeout=2s
+        IF    '${Status}' == 'True'
+             Click Element    ${${platformName}_${lang}_Allow_Photos}
         END
         ${Status}       Run Keyword And Return Status    Wait Until Page Contains Element   ${${platformName}_${lang}_allow_Option}     timeout=2s
         IF    '${Status}' == 'True'

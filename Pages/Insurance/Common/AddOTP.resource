@@ -77,6 +77,7 @@ Insert OTP
         ELSE IF      '${OTP_Source}' == 'db'
             Get Details from DB
             ${Current_OTP}      Set Variable    ${OTPNumber}
+            ${Previous_OTP}      Set Variable    987654
             IF    '${Previous_OTP}' != '${Current_OTP}'
                 ${Current_OTP}     Set Variable        ${Current_OTP}
             ELSE
@@ -208,7 +209,7 @@ Get OTP from Beneficiary Table
         Log    ${leng}
         ${list0}    Get From List    ${PDdf}    0
         Log    ${list0}
-        ${index1}    Get Index From List    ${list0}    OTP
+        ${index1}    Get Index From List    ${list0}    EncryptedOTP
         Log    ${index1}
         ${counter}    Set Variable    1
 
@@ -216,6 +217,9 @@ Get OTP from Beneficiary Table
 
         ${OTPNumber}    Set Variable    ${list}[${index1}]
         Log    ${OTPNumber}
+        IF    '${OTP_Column_Name}' == 'EncryptedOTP'
+          ${OTPNumber}   AES Decrypt    ${key}    ${OTPNumber}
+        END
         Set Global Variable    ${OTPNumber}
     EXCEPT     AS  ${reason}
         Set Failed Actual Result and VP    Omne_Flow   ${reason}   Get OTP from Beneficiary Table

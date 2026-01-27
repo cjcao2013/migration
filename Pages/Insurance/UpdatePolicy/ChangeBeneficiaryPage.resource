@@ -55,6 +55,7 @@ Beneficiary(s) details
         END
     #    Fatca Status
         SwipePage
+
         Click Element    ${${platformName}_${lang}_acknowledgeChkBox}
         Take Screenshot    Beneficiary_New_Details
         Click Element    ${${platformName}_${lang}_beneNextButton}
@@ -105,23 +106,46 @@ Add new beneficiary
         #beneficiary middle name (optional)
         Input Text    ${${platformName}_${lang}_beneficiary_last_name}    ${beneficiarylname}
         Close Keyboard
+
+        #beneficiary  Realationship
+        ${status}    Run Keyword And Return Status
+        ...    Element Should Be Visible
+        ...    ${${platformName}_${lang}_beneficiary_relationship}
+        IF    '${status}' == 'True'
+            Wait Until Element Is Visible    ${${platformName}_${lang}_beneficiary_relationship}        timeout=3s
+            Click Element    ${${platformName}_${lang}_beneficiary_relationship}
+            ${iOS_selectRelationship}    Set Variable
+            ...    chain=**/XCUIElementTypeOther[`label CONTAINS '${Change_Beneficiary_Relationship_${counter}}'`][-1]
+            ${Android_selectRelationship}    Set Variable
+            ...    android=new UiSelector().text("${Change_Beneficiary_Relationship_${counter}}")
+            ${status}    Run Keyword And Return Status  Wait Until Element Is Visible    ${${platformName}_selectRelationship}      timeout=4s
+            IF    '${status}' == 'False'
+                 Click Element    ${${platformName}_${lang}_beneficiary_relationship}
+            END
+            Wait Until Element Is Visible    ${${platformName}_selectRelationship}      timeout=4s
+            Click Element    ${${platformName}_selectRelationship}
+            Wait Until Element Is Visible    ${${platformName}_${lang}_bene_relationship_done_btn}   timeout=3s
+            Click Element    ${${platformName}_${lang}_bene_relationship_done_btn}
+        END
         #beneficiary National ID
         ${status}    Run Keyword And Return Status
         ...    Wait Until Element Is Visible
         ...    ${${platformName}_${lang}_beneficiary_nationality_dropdown}      timeout=3s
         IF    '${status}' == 'True'
             Click Element    ${${platformName}_${lang}_beneficiary_nationality_dropdown}
-            Wait Until Element Is Visible    ${${platformName}_${lang}_beneficiary_dropdown_search_field}       timeout=2s
-            Input Text
-            ...    ${${platformName}_${lang}_beneficiary_dropdown_search_field}
-            ...    ${Change_Beneficiary_Nationality_${counter}}
-            Close Keyboard
+#            Wait Until Element Is Visible    ${${platformName}_${lang}_beneficiary_dropdown_search_field}       timeout=2s
+#            Input Text
+#            ...    ${${platformName}_${lang}_beneficiary_dropdown_search_field}
+#            ...    ${Change_Beneficiary_Nationality_${counter}}
+#            Close Keyboard
             ${Android_selectNationality}    Set Variable
-            ...    android=new UiSelector().text("${Change_Beneficiary_Nationality_${counter}}").instance(1)
+            ...    android=new UiSelector().text("${Change_Beneficiary_Nationality_${counter}}")
             ${iOS_selectNationality}    Set Variable
             ...    chain=**/XCUIElementTypeOther[`label CONTAINS '${Change_Beneficiary_Nationality_${counter}}'`][-1]
             Wait Until Element Is Visible    ${${platformName}_selectNationality}       timeout=2s
             Click Element    ${${platformName}_selectNationality}
+            Wait Until Element Is Visible    ${${platformName}_${lang}_beneficiary_next_done_btn}       timeout=2s
+            Click Element    ${${platformName}_${lang}_beneficiary_next_done_btn}
         END
         #beneficiary DOB
         Wait Until Element Is Visible    ${${platformName}_${lang}_beneficiary_dob}     timeout=2s
@@ -136,40 +160,44 @@ Add new beneficiary
         ...    chain=**/XCUIElementTypeOther[`label CONTAINS '${Change_Beneficiary_Gender_${counter}}'`][-1]
         Wait Until Element Is Visible    ${${platformName}_selectGender}
         Click Element    ${${platformName}_selectGender}
-        Wait Until Element Is Visible    ${${platformName}_${lang}_document_type_dropdown}    timeout=20s
-        Click Element    ${${platformName}_${lang}_document_type_dropdown}
-        ${iOS_selectDocumentType}    Set Variable
-        ...    chain=**/XCUIElementTypeOther[`label CONTAINS '${Change_Beneficiary_Document_${counter}}'`][-1]
-        ${Android_selectDocumentType}    Set Variable
-        ...    android=new UiSelector().className("android.widget.TextView").text("${Change_Beneficiary_Document_${counter}}")
-        #beneficiary Dodcument Type
-        Wait Until Element Is Visible    ${${platformName}_selectDocumentType}    timeout=20s
-        Click Element    ${${platformName}_selectDocumentType}
-        IF    '${Change_Beneficiary_Document_${counter}}' == 'Password'
-            ${Invalid_Passport_Number}      Get Substring    ${Change_Beneficiary_Document_Number_${counter}}    5
+#        Wait Until Element Is Visible    ${${platformName}_${lang}_document_type_dropdown}    timeout=20s
+#        Click Element    ${${platformName}_${lang}_document_type_dropdown}
+#        ${iOS_selectDocumentType}    Set Variable
+#        ...    chain=**/XCUIElementTypeOther[`label CONTAINS '${Change_Beneficiary_Document_${counter}}'`][-1]
+#        ${Android_selectDocumentType}    Set Variable
+#        ...    android=new UiSelector().className("android.widget.TextView").text("${Change_Beneficiary_Document_${counter}}")
+#        #beneficiary Dodcument Type
+#        Wait Until Element Is Visible    ${${platformName}_selectDocumentType}    timeout=20s
+#        Click Element    ${${platformName}_selectDocumentType}
+        IF    '${Change_Beneficiary_Document_${counter}}' == 'Passport'
+            ${Invalid_Passport_Number}      Get Substring    ${Change_Beneficiary_Document_Number_${counter}}    0      5
             Wait Until Element Is Visible    ${${platformName}_${lang}_document_number_text_field}   timeout=20s
             Click Element    ${${platformName}_${lang}_document_number_text_field}
             Input Text
             ...    ${${platformName}_${lang}_document_number_text_field}
-            ...    ${Invalid_Passport_Number} 
-            ${Status}       Run Keyword And Return Status    Wait Until Element Is Visible    ${${platformName}_${lang}_bene_Inavlid_Passport_Error}
-            IF    '${Status} ' == True
-                 ${Error_Message}       Get Text    ${${platformName}_${lang}_bene_Inavlid_Passport_Error}
-                 ${VP_Message}      Set Variable        Please enter a valid Passport Number
-                 Set Calc VP With Source And Original Values    Invalid_Passport_Number_Eror_With_5_Digit_Number   ${VP_Message.strip()}     ${Error_Message.strip()}    Static    OMNE_SignInDocumentPage    ${VP_Message.strip()}     ${Error_Message.strip()}
-            END
+            ...    ${Invalid_Passport_Number}
+            Close Keyboard
+            Wait Until Element Is Visible    ${${platformName}_${lang}_bene_Inavlid_Passport_Error}     timeout=5s
+
+             ${Error_Message}       Get Text    ${${platformName}_${lang}_bene_Inavlid_Passport_Error}
+             ${VP_Message}      Set Variable        Please enter a valid Passport Number
+             Set Calc VP With Source And Original Values    Invalid_Passport_Number_Eror_With_5_Digit_Number   ${VP_Message.strip()}     ${Error_Message.strip()}    Static    OMNE_SignInDocumentPage    ${VP_Message.strip()}     ${Error_Message.strip()}
+
+            Take Screenshot    invalid passport
             ${Invalid_Passport_Number}      Set Variable    12345678901234567
             Click Element    ${${platformName}_${lang}_document_number_text_field}
             Clear Text    ${${platformName}_${lang}_document_number_text_field}
             Input Text
             ...    ${${platformName}_${lang}_document_number_text_field}
             ...    ${Invalid_Passport_Number}
-            ${Status}       Run Keyword And Return Status    Wait Until Element Is Visible    ${${platformName}_${lang}_bene_Inavlid_Passport_Error}
-            IF    '${Status} ' == True
-                 ${Error_Message}       Get Text    ${${platformName}_${lang}_bene_Inavlid_Passport_Error}
-                 ${VP_Message}      Set Variable        Please enter a valid Passport Number
-                 Set Calc VP With Source And Original Values    Invalid_Passport_Number_Eror_With_17_Digit_Number   ${VP_Message.strip()}     ${Error_Message.strip()}    Static    OMNE_SignInDocumentPage    ${VP_Message.strip()}     ${Error_Message.strip()}
-            END
+            Close Keyboard
+            Wait Until Element Is Visible    ${${platformName}_${lang}_bene_Inavlid_Passport_Error}         timeout=5s
+
+             ${Error_Message}       Get Text    ${${platformName}_${lang}_bene_Inavlid_Passport_Error}
+             ${VP_Message}      Set Variable        Please enter a valid Passport Number
+             Set Calc VP With Source And Original Values    Invalid_Passport_Number_Eror_With_17_Digit_Number   ${VP_Message.strip()}     ${Error_Message.strip()}    Static    OMNE_SignInDocumentPage    ${VP_Message.strip()}     ${Error_Message.strip()}
+
+            Take Screenshot    invalid passport
             Click Element    ${${platformName}_${lang}_document_number_text_field}
             Clear Text    ${${platformName}_${lang}_document_number_text_field}
             Input Text
@@ -181,31 +209,14 @@ Add new beneficiary
             Input Text
             ...    ${${platformName}_${lang}_document_number_text_field}
             ...    ${Change_Beneficiary_Document_Number_${counter}}
+            IF    '${platformName}' == 'iOS'
+                Wait Until Element Is Visible    ${${platformName}_${lang}_beneficiary_relationship}        timeout=3s
+                Click Element    ${${platformName}_${lang}_beneficiary_relationship}
+           END
         END
 
-        #beneficiary Last Name
-        Wait Until Element Is Visible    ${${platformName}_${lang}_beneficiary_last_name}   timeout=20s
-        Click Element    ${${platformName}_${lang}_beneficiary_last_name}
-        IF    '${platformName}' == 'iOS'
-            Click Element    ${${platformName}_${lang}_beneficiary_gender}
-        END
         Close Keyboard
-        #beneficiary  Realationship
-        ${status}    Run Keyword And Return Status
-        ...    Element Should Be Visible
-        ...    ${${platformName}_${lang}_beneficiary_relationship}
-        IF    '${status}' == 'True'
-            Wait Until Element Is Visible    ${${platformName}_${lang}_beneficiary_relationship}        timeout=3s
-            Click Element    ${${platformName}_${lang}_beneficiary_relationship}
-            ${iOS_selectRelationship}    Set Variable
-            ...    chain=**/XCUIElementTypeOther[`label CONTAINS '${Change_Beneficiary_Relationship_${counter}}'`][-1]
-            ${Android_selectRelationship}    Set Variable
-            ...    android=new UiSelector().text("${Change_Beneficiary_Relationship_${counter}}")
-            Wait Until Element Is Visible    ${${platformName}_selectRelationship}      timeout=3s
-            Click Element    ${${platformName}_selectRelationship}
-            Wait Until Element Is Visible    ${${platformName}_${lang}_beneficiary_next_done_btn}   timeout=3s
-            Click Element    ${${platformName}_${lang}_beneficiary_next_done_btn}
-        END
+
         #Pree Next button and
         Wait Until Element Is Visible    ${${platformName}_${lang}_beneNextButton}      timeout=2s
         Take Screenshot    Beneficiary Document Details
@@ -282,16 +293,17 @@ Capture Beneficiary Transaction Details for Android
     ${Total_beneCount}      Evaluate    ${Total_beneCount}/2
     ${namecounter}      Set Variable    1
     ${benenamecounter}      Set Variable    1
+    ${benedetailcounter}    Set Variable        2
     ${new_beneficiary_count}    Set Variable    1
     ${update_beneficiary_count}     Set Variable    1
     FOR    ${counter}    IN RANGE    1    ${Total_beneCount}+1
         ${status}   Run Keyword And Return Status    Wait Until Page Contains Element    xpath=//android.widget.TextView[@text='New beneficiary(s) details']   timeout=1s
         IF    '${status}' == 'True'
-            ${Beneficiary_Name}      Get Text    xpath=//android.widget.TextView[@text='New beneficiary(s) details']/following-sibling::android.widget.TextView[1]
+            ${Beneficiary_Name}      Get Text    xpath=//android.widget.TextView[@text='New beneficiary(s) details']/following-sibling::android.widget.TextView[${benenamecounter}]
             @{Name_Part}    Split String    ${Beneficiary_Name}
             ${Beneficiary_First_Name}       Get From List    ${Name_Part}    0
             ${Beneficiary_Last_Name}       Get From List    ${Name_Part}    -1
-            ${Beneficiary_Details}    Get Text    xpath=//android.widget.TextView[@text='New beneficiary(s) details']/following-sibling::android.widget.TextView[2]
+            ${Beneficiary_Details}    Get Text    xpath=//android.widget.TextView[@text='New beneficiary(s) details']/following-sibling::android.widget.TextView[${benedetailcounter}]
             @{Bene_Part}     Split String       ${Beneficiary_Details}
             ${Beneficiary_Relationship}    Get From List    ${Bene_Part}    0
             ${Beneficiary_Allocation}    Get From List    ${Bene_Part}    2
@@ -316,7 +328,8 @@ Capture Beneficiary Transaction Details for Android
                 END
                 ${update_beneficiary_count}     Evaluate    ${update_beneficiary_count}+1
             END
-            ${benenamecounter}      Evaluate        ${counter}+${namecounter}+1
+            ${benenamecounter}      Evaluate        ${benenamecounter}+2
+            ${benedetailcounter}    Evaluate        ${benedetailcounter}+2
         END
     END
     IF    '${Transaction_Info}' == 'Pre'

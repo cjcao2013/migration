@@ -55,13 +55,13 @@ Pending Details
            #upload document
             IF    '${Insurance_Flow}' != 'Submit claim'
                 ${iOS_clickonUploadDocument}        Set Variable            xpath=(//XCUIElementTypeStaticText[@name="${documentTypeName}"]/following::XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeScrollView/XCUIElementTypeOther)[1]
-                ${Android_clickonUploadDocument}        Set Variable        xpath=//android.widget.TextView[@text="${documentTypeName}"]/following::android.view.ViewGroup[contains(@resource-id,'add-image')][1]
+                ${Android_clickonUploadDocument}        Set Variable        xpath=//android.widget.TextView[@text="${documentTypeName}"]/parent::android.view.ViewGroup/following-sibling::android.view.ViewGroup/descendant::android.view.ViewGroup[contains(@resource-id,"add-image")]
             ELSE
                 ${iOS_clickonUploadDocument}        Set Variable            xpath=(//XCUIElementTypeStaticText[@name="${PendingReason}"]/following::XCUIElementTypeOther/XCUIElementTypeOther/descendant::XCUIElementTypeOther[@name="bankBook_0-add-image"])[1]
                 ${Android_clickonUploadDocument}        Set Variable        xpath=//android.widget.TextView[@text="${PendingReason}"]/following-sibling::android.view.ViewGroup/android.widget.HorizontalScrollView/android.view.ViewGroup/android.view.ViewGroup
             END
             Click Element    ${${platformName}_clickonUploadDocument}
-            IF    '${Insurance_Flow}' != 'Submit claim'
+            IF    '${Insurance_Flow}' != 'Submit claim' and '${platformName}' == 'iOS'
                 Click by Coordinates    54    384
             END
             IF    '${platformName}' == 'iOS'

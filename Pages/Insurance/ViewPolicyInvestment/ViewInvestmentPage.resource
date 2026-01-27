@@ -106,10 +106,10 @@ Investment(s)
           ${Android_EN_policyName}  Set Variable    xpath=//android.widget.TextView[@resource-id="header-product-name"]
           ${iOS_EN_policyName}    Set Variable
           ...    accessibility_id=header-product-name
-          ${Android_EN_policyrisklevel}     Set Variable    xpath=//android.widget.TextView[contains(@text,"RISK LEVEL")]
+          ${Android_EN_policyrisklevel}     Set Variable    xpath=(//android.widget.TextView[@resource-id="header-product-name"]/following-sibling::android.view.ViewGroup/android.view.ViewGroup/android.widget.TextView)[1]
           ${iOS_EN_policyrisklevel}    Set Variable
           ...    xpath=((//XCUIElementTypeOther[contains(@label, '${Policy_No}')])[last()-2]/XCUIElementTypeOther/XCUIElementTypeOther)[1]
-          ${Android_EN_policytype}      Set Variable    xpath=(//android.widget.TextView[@resource-id="header-product-name"]/following-sibling::android.view.ViewGroup[2]/android.view.ViewGroup/android.widget.TextView)[2]
+          ${Android_EN_policytype}      Set Variable    xpath=(//android.widget.TextView[@resource-id="header-product-name"]/following-sibling::android.view.ViewGroup/android.view.ViewGroup/android.widget.TextView)[3]
           ${iOS_EN_policytype}    Set Variable
           ...    xpath=((//XCUIElementTypeOther[contains(@label, '${Policy_No}')])[last()-2]/XCUIElementTypeOther/XCUIElementTypeOther)[3]
           ${Android_EN_PolicyStatus}    Set Variable    xpath=//android.widget.TextView[@text="Active" or @text="Inactive"]
@@ -240,7 +240,7 @@ Investment(s)
                     ${fundunitprice}    Get Text
                     ...    xpath=//android.widget.TextView[@text='${fundnameMerge}']/..//android.widget.TextView[@text='Unit price (THB)']/following-sibling::android.widget.TextView[1]
                     ${fundunitprice}    Strip String    ${fundunitprice}
-                    ${fundunitpricemsg}    Convert To Number    ${fundunitprice}
+                    ${fundunitpricemsg}    Convert To Number    ${fundunitprice}        2
                     ${fundate}    Get Text
                     ...    xpath=//android.widget.TextView[@text='${fundnameMerge}']/..//android.widget.TextView[@text='Date']/following-sibling::android.widget.TextView[1]
                     ${fundate}    Strip String    ${fundate}
@@ -276,7 +276,7 @@ Investment(s)
                     ...    OMNE_InvestmentsPage
                     Set Calc VP Expected Result With Original And Source
                     ...    Fund${counter}_UnitPrice
-                    ...    ${fundunitprice}
+                    ...    ${fundunitpricemsg}
                     ...    ${fundunitprice}
                     ...    OMNE_InvestmentsPage
                     Set Calc VP Expected Result With Original And Source

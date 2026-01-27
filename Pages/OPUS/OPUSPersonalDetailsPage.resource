@@ -118,9 +118,13 @@ Change Name VP
                 Click Element    ${EN_Select_Pending_reason}
                 Wait Until Element Is Visible    ${EN_Further_Requirement}    timeout=20s
                 Click Element    ${EN_Further_Requirement}
-                Pause Execution
-                Sleep    10s
-                Wait Until Element Is Visible    ${EN_MemoCode}    timeout=10s
+
+                ${status}   Run Keyword And Return Status   Wait Until Element Is Visible    ${EN_MemoCode}    timeout=15s
+                IF    '${status}' == 'False'
+                      Click Element    ${EN_Envoy}
+                END
+                Sleep    5s
+                Wait Until Element Is Visible    ${EN_MemoCode}     timeout=10s
                 Click Element    ${EN_MemoCode}
 
                 Wait Until Element Is Visible    ${EN_Select_Memocode}      timeout=10s

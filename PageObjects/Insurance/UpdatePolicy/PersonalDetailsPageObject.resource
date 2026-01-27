@@ -106,7 +106,6 @@ ${Android_EN_acknowledgeChkBox}                         chain=**/XCUIElementType
 ${Android_EN_submitButton}                              chain=**/XCUIElementTypeButton[`label == 'Submit'`]
 ${Android_EN_uploadIDCard}                              xpath=//XCUIElementTypeStaticText[contains(@name,'Upload ID card or Passport')]/following-sibling::XCUIElementTypeOther/XCUIElementTypeScrollView/XCUIElementTypeOther[1]
 ${Android_EN_uploadCourtLegal}                          xpath=//XCUIElementTypeStaticText[contains(@name,'Upload court legal letter')]/following-sibling::XCUIElementTypeOther/XCUIElementTypeScrollView/XCUIElementTypeOther[1]
-${Android_EN_Submit_btn}                                chain=**/XCUIElementTypeButton[`label == 'Submit'`]
 ${Android_EN_Personal_particulars}                      xpath=//android.widget.TextView[@text='Personal particulars']
 ${Android_EN_Upload_IDImage}                            xpath=//android.view.ViewGroup[@resource-id='iBank-add-image']
 ${Android_EN_Upload_DocImage}                           xpath=//android.view.ViewGroup[@resource-id='add-image']
