@@ -41,3 +41,5 @@ ${Android_EN_AddPaymentMethod_Button}           android=new UiSelector().textCon
 ${Android_EN_New_Payout_Option}                xpath=(//android.widget.TextView[@text='New ICP option']/following-sibling::android.widget.TextView)[1]
 ${Android_EN_ICPBankNameVP}                        xpath=(//android.widget.TextView[@text='Payout method']/following-sibling::android.view.ViewGroup/android.widget.TextView)[3]
 ${Android_EN_ICPAccountNoVP}                   xpath=(//android.widget.TextView[@text='Payout method']/following-sibling::android.view.ViewGroup/android.widget.TextView)[2]
+${android_EN_Checkbox_Promatpay}                xpath=//android.widget.CheckBox[@resource-id="check-box"]/android.view.ViewGroup
+${Android_EN_ICP_Natonalid}                     xpath=(//android.widget.TextView[@text='New ICP option']/parent::android.view.ViewGroup)/android.view.ViewGroup/android.widget.TextView[1]

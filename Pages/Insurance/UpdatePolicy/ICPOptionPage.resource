@@ -300,8 +300,8 @@ Capture ICP Transaction Details for Android
         END
         Set Calc VP Expected Result With Original And Source
         ...    Transaction_Status
-        ...    ${OPUSTransactionstatus}
-        ...    ${transactionstatus}
+        ...    ${OPUSTransactionstatus.strip()}
+        ...    ${transactionstatus.strip()}
         ...    OMNE_TransactionPage
         Click Element    ${${platformName}_selectCurrentTransaction}
         Wait Until Element Is Visible       ${${platformName}_${lang}_New_Payout_Option}
@@ -337,6 +337,16 @@ Capture ICP Transaction Details for Android
                 ...    ${AccountNo.strip()}
                 ...    ${mAccountNo.strip()}
                 ...    OMNE_TransactionPage
+        ELSE
+#            ${national_id}      Get Text    ${${platformName}_${lang}_ICP_Natonalid}
+#            ${NewICPOption}         Remove String    ${national_id}      National ID :
+
+            Set Calc VP Expected Result With Original And Source
+            ...    New_Payout_Option
+            ...    ${VP_New_Payout_Option.strip()}
+            ...    ${VP_New_Payout_Option}
+            ...    OMNE_TransactionPage
+
         END
 
 

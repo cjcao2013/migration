@@ -1,7 +1,7 @@
 *** Variables ***
-${Android_EN_Quicklink_mypolicy}        xpath=//android.view.ViewGroup[@content-desc="My policy(s)"]
-${Android_EN_Quicklink_mangepolicy}     xpath=(//android.widget.TextView[contains(@text,"Manage")][1])[2]
-${Android_EN_Quicklink_submitClaim}     xpath=//android.widget.TextView[contains(@text,"claim")]
+${Android_EN_Quicklink_mypolicy}        android=new UiSelector().textContains("My")
+${Android_EN_Quicklink_mangepolicy}     android=new UiSelector().textContains("Manage").instance(1)
+${Android_EN_Quicklink_submitClaim}     android=new UiSelector().textContains("claim")
 
 
 #Engagement_Buy_Insurance

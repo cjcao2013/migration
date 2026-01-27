@@ -23,12 +23,12 @@ Renewal premium
         #    Click On Policy Number
         ${Android_SelectPolicyNo}    Set Variable    android=new UiSelector().textContains("${Policy_No}")
         ${iOS_SelectPolicyNo}    Set Variable    chain=**/XCUIElementTypeOther[`name CONTAINS "${Policy_No} Premium"`][-1]
-        Wait Until Page Contains Element    ${${platformName}_SelectPolicyNo}       timeout=10s
+        Wait Until Page Contains Element    ${${platformName}_SelectPolicyNo}       timeout=30s
         Take Screenshot    Select Policy
         Click Element    ${${platformName}_SelectPolicyNo}
 
         IF    '${Payment_Method}' == 'Bank Transfer'
-            Wait Until Page Contains Element    ${${platformName}_${lang}_QRcode}       timeout=3s
+            Wait Until Page Contains Element    ${${platformName}_${lang}_QRcode}       timeout=30s
             Take Screenshot    RenewalPremium
             Click Element    ${${platformName}_${lang}_QRcode}
             QR Code

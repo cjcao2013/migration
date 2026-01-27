@@ -363,17 +363,17 @@ Handle Feedback
 
 
 Feedback 2nd page Android
-    FOR    ${counter}    IN RANGE    1    4
+    FOR    ${counter}    IN RANGE    1    5
         Log    ${counter}
         ${Android_EN_feedback_question_list}   Set Variable     xpath=(//android.view.ViewGroup[@resource-id="feedback-star-pressable-3"])[${counter}]/android.view.ViewGroup
+        
         Scroll Till Transaction Is Visible    ${${platformName}_${lang}_feedback_question_list}
         Wait Until Element Is Visible    ${${platformName}_${lang}_feedback_question_list}       timeout=5s
         Click Element    ${${platformName}_${lang}_feedback_question_list}
+        Sleep    0.5
     END
-        SwipePage
-        Scroll Till Transaction Is Visible      ${${platformName}_${lang}_Feedback_NextButton}
-        ${Android_EN_feedback_star5}    Set Variable    xpath=//android.widget.TextView[@text="The details I received felt relevant to my specific request."]/following-sibling::android.view.ViewGroup[1]//android.view.ViewGroup[4]
-        ${Android_EN_feedback_star6}    Set Variable    xpath=//android.widget.TextView[contains(@text,'my request properly')]/following-sibling::android.view.ViewGroup[1]/android.view.ViewGroup[4]
+        ${Android_EN_feedback_star5}    Set Variable    xpath=//android.widget.TextView[contains(@text,'It was easy')]/following-sibling::android.view.ViewGroup[1]//android.view.ViewGroup[4]
+        ${Android_EN_feedback_star6}    Set Variable    xpath=//android.widget.TextView[contains(@text,'The servicing')]/following-sibling::android.view.ViewGroup[1]/android.view.ViewGroup[4]
         Scroll Till Transaction Is Visible      ${Android_EN_feedback_star6}
         Sleep    1s
         Wait Until Element Is Visible   ${Android_EN_feedback_star6}    timeout=5s

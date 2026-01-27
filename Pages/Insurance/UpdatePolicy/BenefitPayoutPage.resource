@@ -27,18 +27,19 @@ Benefit payout
         #capture total list and check count
         ${TotalHistoryList}     Get Webelements    ${${platformName}_${lang}_BenefitPayoutHistoryList}
         ${TotalpyoutCount}      Get Length    ${TotalHistoryList}
+        Set Global Variable    ${TotalHistoryList}
+        Set Global Variable    ${TotalpyoutCount}
         Run Keyword             Capture benefit payout details ${platformName}
      EXCEPT     AS  ${reason}
         Set Failed Actual Result and VP    Omne_Flow   ${reason}   FWD Insurance Flow of ${Insurance_Flow}
     END
 
 Capture benefit payout details iOS
-    TRY
         #capture data of each payout from the list
         FOR    ${counter}    IN RANGE    1    ${TotalpyoutCount}-1
             Log    ${counter}
             #banktype and status
-            ${iOS_EN_BenefitTypeAndStatus}          Set Variable            chain=**/XCUIElementTypeOther[`name == "benefit-payout-flatlist"`]/XCUIElementTypeScrollView/XCUIElementTypeOther[${counter}]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[1]
+            ${iOS_EN_BenefitTypeAndStatus}          Set Variable            chain=**/XCUIElementTypeOther[`name == "benefit-payout-flatlist"`]/XCUIElementTypeScrollView/XCUIElementTypeOther[${counter}]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[${counter}]/XCUIElementTypeStaticText[-1]
             ${Android_EN_BenefitTypeAndStatus}          Set Variable        xpath=(//android.widget.TextView[@text="Interim cash payout"]//following-sibling::android.widget.TextView)[${counter}]
             ${BenefitTypeAndStatus}     Get Text        ${${platformName}_${lang}_BenefitTypeAndStatus}
             @{splitbankData}    Split String    ${BenefitTypeAndStatus}
@@ -47,6 +48,7 @@ Capture benefit payout details iOS
             IF   '${BankPayoutStatus}' == 'Failed'
                  ${mBankPayoutStatus}   Set Variable    Fail
             END
+            ${mBankPayoutStatus}        Set Variable        ${BankPayoutStatus}
             Set Calc VP Actual Result With Original And Source    PayoutStatus_${counter}    ${mBankPayoutStatus.strip()}    ${BankPayoutStatus.strip()}    Omne_payoutHistory_Page
             Set Calc VP Actual Result With Original And Source    BenefitType_${counter}    ${BenefitTypeValue.strip()}    ${BenefitTypeValue.strip()}    Omne_payoutHistory_Page
     
@@ -74,10 +76,7 @@ Capture benefit payout details iOS
         END
         Get Benefit Payout History from DB
         Set Global Variable    ${result}    Benefit Payout History for Policy No: ${Policy_No}
-    EXCEPT     AS  ${reason}
-        Set Failed Actual Result and VP    Omne_Flow   ${reason}   FWD Insurance Flow of ${Insurance_Flow}
-    END
-    
+
 Capture benefit payout details Android
      TRY
         #capture data of each payout from the list
@@ -126,8 +125,7 @@ Capture benefit payout details Android
 
 
 Get Benefit Payout History from DB
-    TRY
-         #Read The  Benefit Payout Details from BD
+     #Read The  Benefit Payout Details from BD
          ${benefitpayoutdf}    Run Keyword
         ...    Get Selected Policy BenefitPayout History from DB
         ...    ${dbhostname}
@@ -181,9 +179,6 @@ Get Benefit Payout History from DB
             Set Calc VP Expected Result With Original And Source    PayoutStatus_${counter}    ${PayoutStatus}    ${PayoutStatus}    ${ExpectedSource}
     END
 
-    EXCEPT     AS  ${reason}
-        Set Failed Actual Result and VP    Omne_Flow   ${reason}   Get Benefit Payout History from DB ${Insurance_Flow}
-    END
 
 
     

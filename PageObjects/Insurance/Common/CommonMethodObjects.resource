@@ -113,11 +113,12 @@ ${iOS_EN_EnterPinField}         chain=**/XCUIElementTypeOther[`name CONTAINS "yo
 ${iOS_EN_ConfirmPinField}       chain=**/XCUIElementTypeOther[`name CONTAINS "Almost there"`][-2]/XCUIElementTypeOther[2]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeTextField
 ${iOS_EN_SkipButton}            chain=**/XCUIElementTypeOther[`name == "Skip"`]
 
-${Android_EN_SetPin}            android=new UiSelector().textContains("Set Now")
-${Android_EN_SetPinField}       xpath=(//android.widget.TextView[contains(@text,"Set up your PIN code")]//ancestor::android.view.ViewGroup)[last()-2]//following-sibling::android.widget.EditText
-${Android_EN_EnterPinField}         xpath=(//android.widget.TextView[contains(@text,"your pin")]//ancestor::android.view.ViewGroup)[last()-2]//following-sibling::android.widget.EditText
-${Android_EN_ConfirmPinField}       xpath=(//android.widget.TextView[contains(@text,"Almost there")]//ancestor::android.view.ViewGroup)[last()-2]//following-sibling::android.widget.EditText
-${Android_EN_SkipButton}            android=new UiSelector().textContains("Skip")
+${Android_EN_SetNowPin}                             android=new UiSelector().textContains("Set Now")
+${Android_EN_SetPin}                                xpath=(//android.widget.TextView[contains(@text,"Set up your PIN code")]//ancestor::android.view.ViewGroup)[last()-2]//following-sibling::android.widget.EditText
+${Android_EN_EnterPinField}                         xpath=(//android.widget.TextView[contains(@text,"your pin")]//ancestor::android.view.ViewGroup)[last()-2]//following-sibling::android.widget.EditText
+${Android_EN_ConfirmPinField}                       xpath=(//android.widget.TextView[contains(@text,"Almost there")]//ancestor::android.view.ViewGroup)[last()-2]//following-sibling::android.widget.EditText
+${Android_EN_SkipButton}                            android=new UiSelector().textContains("Skip")
+
 
 #feedback objects
 ${iOS_EN_FeedbackRangeoption}       chain=**/XCUIElementTypeOther[`label == "8"`][-1]

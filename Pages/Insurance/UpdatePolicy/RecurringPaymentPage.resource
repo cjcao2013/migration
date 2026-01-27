@@ -193,8 +193,8 @@ Credit card recurring payment
         ${VP_SummaryPage_NewPaymentMethod}    Get Text    ${${platformName}_${lang}_SummaryPage_paymentMethod}
         # Previous OTP from DB
         Get Details from DB
-        ${Previous_OTP}    Set Variable    ${OTPNumber}
-        Set Global Variable    ${Previous_OTP}
+#        ${Previous_OTP}    Set Variable    ${OTPNumber}
+#        Set Global Variable    ${Previous_OTP}
         Click Element    ${${platformName}_${lang}_SubmitButton}
         ${status}    Run Keyword And Return Status    Wait Until Element Is Visible    ${${platformName}_${lang}_OTP_email}
         IF    '${status}' == 'True'
@@ -493,12 +493,12 @@ Capture RCC Transaction Details for iOS
 Capture RCC Transaction Details for Android
     [Arguments]    ${Transaction_Info}
     Sleep    10s
-    RefreshPage
+
     ${Android_selectCurrentTransaction}    Set Variable
         ...    xpath=(//android.widget.TextView[@text='${current_day}']/following-sibling::android.widget.TextView[@text='${current_month}']/parent::android.view.ViewGroup/following-sibling::android.widget.TextView[@text='Credit card recurring payment'])[1]
 
     Scroll Till Transaction Is Visible    ${${platformName}_selectCurrentTransaction}
-
+    SwipePage
     ${transactionstatus}    Get Text
     ...    xpath=(//android.widget.TextView[@text='${current_day}']/following-sibling::android.widget.TextView[@text='${current_month}']/parent::android.view.ViewGroup/following-sibling::android.widget.TextView[@text='Credit card recurring payment']/following-sibling::android.view.ViewGroup/android.widget.TextView)[1]
     ${transactionstatus}    Convert To Title Case    ${transactionstatus}

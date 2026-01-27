@@ -16,7 +16,7 @@ ${Android_EN_Update_BackButton}                                 xpath=(//android
 
 # ----------------------------------Update Particulares---------------------------------------------------------
 ${Android_EN_PersonalDetails_FirstName}                         xpath=//android.widget.TextView[@text='First name']/../..//android.widget.EditText
-${Android_EN_PersonalDetails_MiddleName}                        xpath=//android.widget.TextView[contains(@text,'Middle name')]/../..//android.widget.EditText
+${Android_EN_PersonalDe Omne_Flowtails_MiddleName}                        xpath=//android.widget.TextView[contains(@text,'Middle name')]/../..//android.widget.EditText
 ${Android_EN_PersonalDetails_LastName}                          xpath=//android.widget.TextView[@text='Last name']/../..//android.widget.EditText
 ${Android_EN_PersonalDetails_DOB}                               xpath=//android.widget.TextView[@text='Date of birth (dd/mm/yyyy)']/../..//android.widget.EditText
 ${Android_EN_PersonalDetails_Citizenship}                       xpath=//android.widget.TextView[@text='Citizenship']/../..//android.widget.EditText

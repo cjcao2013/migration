@@ -25,17 +25,17 @@ ${iOS_EN_AmountClearText}                     chain=**/XCUIElementTypeOther[`lab
 
 ${Android_EN_TimeingPoup}           xpath=//android.widget.TextView[@text="Loan interest disclaimer"]/following-sibling::android.widget.TextView
 ${Android_EN_IUnderstandbutton}         xpath=//android.widget.Button[@content-desc="I understand"]
-${Android_EN_loan_temsandconditonchekbox}                      xpath=//android.widget.CheckBox[@resource-id="LoanRepayment-terms-checkbox"]/android.view.ViewGroup
+${Android_EN_loan_temsandconditonchekbox}                      xpath=//android.view.ViewGroup[@resource-id="LoanRepayment-terms-checkbox"]/android.view.ViewGroup
 ${Android_EN_Notice_Text}                   xpath=(//android.widget.TextView[@text="Notice"]//parent::android.view.ViewGroup)/parent::android.view.ViewGroup/android.view.ViewGroup[2]/android.widget.TextView
 ${Android_EN_PolicyLoanRepayment_txt}           android=new UiSelector().text("Policy loan repayment")
 ${Android_EN_Loanoutstanding}                   xpath=//android.widget.TextView[@text="Loan outstanding"]//following-sibling::android.widget.TextView
 ${Android_EN_Loaninterest}                      xpath=//android.widget.TextView[@text="Loan interest"]//following-sibling::android.widget.TextView
 ${Android_EN_Interestrate}                      xpath=//android.widget.TextView[@text="Interest rate"]//following-sibling::android.widget.TextView
 ${Android_EN_Totalasoftoday}                    xpath=//android.widget.TextView[@text="Total as of today"]//following-sibling::android.widget.TextView
-${Android_EN_PolicyLoanAmt}                         xpath=//android.widget.EditText[@text="Enter amount here"]
-${Android_EN_AmountClearText}                       xpath=//android.widget.TextView[@text="Enter amount here"]/following-sibling::android.widget.EditText
+${Android_EN_PolicyLoanAmt}                         xpath=//android.widget.EditText[@resource-id='loan-repayment-specifiy-amount-input']
+${Android_EN_AmountClearText}                       xpath=//android.widget.EditText[@resource-id='loan-repayment-specifiy-amount-input']
 ${Android_EN_Max_LoanLimit_Error}                   xpath=//android.widget.TextView[@text="The inputted amount cannot be greater than the total as of today"]
-${Android_EN_Totalasoftoday_txt}                    xpath=//android.widget.TextView[@text="Total as of today (available after 8:00AM)"]
+${Android_EN_Totalasoftoday_txt}                    xpath=(//android.widget.TextView[contains(@text,'Total as of today')])[last()]
 ${Android_EN_PayNow}                                xpath=//android.widget.Button[@content-desc="Pay now"]
 ${Android_EN_QRcode_txt}                            xpath=//android.widget.TextView[@text="QR code for bank transfer"]
 ${Android_EN_PaymentDetails_txt}                 android=new UiSelector().text("Payment details")

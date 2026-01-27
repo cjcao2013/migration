@@ -5,6 +5,7 @@ ${iOS_EN_TransactionVP}                                 chain=**/XCUIElementType
 ${iOS_EN_BackArrow}                                     chain=**/XCUIElementTypeButton[`name == "back-button"`]
 ${iOS_EN_Transaction_BackButton}    chain=**/XCUIElementTypeOther[`name == "My transaction(s)"`][2]/XCUIElementTypeOther[1]/XCUIElementTypeOther
 
+
 ${IOS_EN_TransactionTab}                                chain=**/XCUIElementTypeOther[`label == "My transaction(s) See all"`]/XCUIElementTypeOther
 ${IOS_EN_SeeAll}                                        chain=**/XCUIElementTypeOther[`label == "My transaction(s) See all"`]/XCUIElementTypeOther[-1]
 ${IOS_EN_ServiceReuest}                                 chain=**/XCUIElementTypeOther[`label == "Service request(s)"`][2]
@@ -38,6 +39,7 @@ ${iOS_EN_Surrender_TransactionPolicyApplied}            chain=**/XCUIElementType
 ${iOS_EN_TransactionServiceRequest}                     chain=**/XCUIElementTypeOther[`label == "Service request(s)"`][2]
 ${iOS_EN_TransactionPremiumRequest}                     chain=**/XCUIElementTypeOther[`label == "Premium payment(s)"`][2]
 
+${Android_EN_Transaction_BackButton}                     xpath=//android.widget.TextView[@text="My transaction(s)"]/preceding-sibling::android.view.ViewGroup
 ${Android_EN_BackArrow}                                 xpath=//android.widget.Button[@resource-id='back-button']
 ${Android_EN_TransactionTab}                            android=new UiSelector().textContains("View transactions")
 ${Android_EN_TransactionServiceRequest}                 android=new UiSelector().textContains("Service request(s)")

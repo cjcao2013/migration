@@ -5,7 +5,7 @@ ${Android_EN_Estimated_Total_Amount}                xpath=//android.widget.TextV
 ${Android_EN_Current_Value}                         xpath=//android.widget.TextView[@text="Current value (PHP)"]/following-sibling::android.widget.TextView
 ${iOS_EN_Withdrawal_Percentage}                     chain=**/XCUIElementTypeTextField[`name == 'spi-input'`]
 ${iOS_EN_Estimated_Total_Amount}                    chain=**/XCUIElementTypeOther[`label CONTAINS 'Total estimated withdrawal amount'`][-1]/XCUIElementTypeOther
-
+${iOS_EN_partial_acknowledgeChkBox}                 chain=**/XCUIElementTypeOther[`label CONTAINS 'I acknowledge that'`]/XCUIElementTypeOther[-1]
 # Review Your Withdrawal
 ${Android_EN_Your_Withdrawal_Label}                 android=new UiSelector().textContains("Review your withdrawal")
 ${Android_EN_Total_Estimated_Withdrawal}            xpath=//android.widget.TextView[@text="Total estimated withdrawal amount"]/following-sibling::android.view.ViewGroup/android.widget.TextView
@@ -31,6 +31,7 @@ ${Android_EN_Transaction_Address}                   xpath=//android.widget.TextV
 ${Android_EN_Transaction_US_ID_Passport}            xpath=//android.widget.TextView[@text='U.S. ID/Passport No. or Green card']/following-sibling::android.widget.TextView[1]
 ${Android_EN_Transaction_US_Tax_ID}                 xpath=//android.widget.TextView[@text='U.S. Tax ID No. /Social Security No.']/following-sibling::android.widget.TextView[1]
 ${iOS_EN_Transaction_Total_Estimated_Amount}        chain=**/XCUIElementTypeOther[`label CONTAINS 'Total estimated withdrawal amount'`][-1]
+${Android_EN_partial_acknowledgeChkBox}            xpath=//android.view.ViewGroup[@resource-id="PartialWithdrawal-terms-checkbox"]/android.view.ViewGroup
 # Post Transaction
 
 ${Android_EN_PW_addPaymentMethod}                   xpath=//android.widget.TextView[@text='Add payment method']
