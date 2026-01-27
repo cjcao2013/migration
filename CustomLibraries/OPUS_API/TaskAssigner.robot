@@ -8,15 +8,15 @@ Resource        ../../Pages/OPUS/OPUSTaskInquiryPage.resource
 
 
 *** Variables ***
-${login_url}         https://uat-owb.fwd.com.th/api/workspace/user/login
-${adb_search}        https://uat-owb.fwd.com.th/api/dw/task/inquiry/advSearch
-${assign_task}       https://uat-owb.fwd.com.th/api/bpm/task/assignTask
+${login_url}         https://uat-${env}.fwd.com.th/api/workspace/user/login
+${adb_search}        https://uat-${env}.fwd.com.th/api/dw/task/inquiry/advSearch
+${assign_task}       https://uat-${env}.fwd.com.th/api/bpm/task/assignTask
 
 
 *** Keywords ***
 OWB API
     TRY
-        Create Session    OWB    url=https://opus-staging.fwd.com/api/
+        Create Session    OWB    url=https://opus-${environment}.fwd.com/api/
         Sleep    10s
         ${login_token}      Login To OWB API
         ${task_Id}   Advance Search      ${login_token}

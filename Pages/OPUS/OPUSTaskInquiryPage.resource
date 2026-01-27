@@ -38,12 +38,8 @@ OPUS Inquiry
         END
 
         #capture case no from DB
-        ${sOutput}    Run Keyword And Ignore Error    Get OPUS Details From DB
-        IF    ${sOutput} != ('PASS', None)
-            Take OPUS Screenshot    Error Screenshot
-            ${failure_reason}    Fetch Reason    ${sOutput}
-            RETURN    ${failure_reason}
-        END
+        Run Keyword     Get OPUS Details From DB
+
         #enter details to search transaction
         #policynumber
 

@@ -10,5 +10,5 @@ ${iOS_EN_PendDoumnetReasonClaimElements}            xpath=//XCUIElementTypeStati
 
 ${Android_EN_PendingReq_IssueDate}      xpath=//android.widget.TextView[@text='Pending requirement issued on']/following-sibling::android.widget.TextView
 ${Android_EN_PendReasonElements}        xpath=//android.widget.TextView[contains(@text,'Pending reason')]
-${Android_EN_DocumentTypesElements}      xpath=//android.view.ViewGroup[contains(@resource-id,'add-image')]/preceding::android.widget.TextView[2]
+${Android_EN_DocumentTypesElements}      xpath=//android.view.ViewGroup[contains(@resource-id,'add-image')]/ancestor::android.view.ViewGroup[3]/preceding-sibling::android.view.ViewGroup/android.widget.TextView
 

@@ -42,7 +42,7 @@ Personal details
             Click Element    chain=**/XCUIElementTypeOther[`label CONTAINS 'mobile'`][-1]
         ELSE
             ${iOS_Select_Personal_Detail_FLow}      Set Variable        chain=**/XCUIElementTypeOther[`label CONTAINS '${PersonalDetails_WhatChange}'`][-1]
-            ${Android_Select_Personal_Detail_FLow}      Set Variable        xpath= xpath=//android.widget.TextView[contains(@text,'${PersonalDetails_WhatChange}')]
+            ${Android_Select_Personal_Detail_FLow}      Set Variable    xpath=//android.widget.TextView[contains(@text,'${PersonalDetails_WhatChange}')]
             Wait Until Element Is Visible    ${${platformName}_Select_Personal_Detail_FLow}         timeout=20s
             Click Element               ${${platformName}_Select_Personal_Detail_FLow}
         END

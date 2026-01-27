@@ -90,6 +90,10 @@ Name Change
         IF    '${Status}' == 'True'
         Click Element    ${${platformName}_${lang}_DoneButton}
         END
+        ${new_title_namepage}    Get Text    ${${platformName}_${lang}_txtTitle}
+        ${new_title_namepage}    Remove String    ${new_title_namepage}    Title
+        ${new_title_namepage}    Remove String    ${new_title_namepage}    .
+        Set Global Variable     ${new_title_namepage}
         Wait Until Element Is Visible   ${${platformName}_${lang}_txtFirstName}     timeout=5s
         Click Element    ${${platformName}_${lang}_txtFirstName}
         Input Text    ${${platformName}_${lang}_txtFirstName}    ${fname}
@@ -165,13 +169,15 @@ Name Change
         ${path}    Set Variable    ${EXECDIR}/CustomLibraries/ClaimImages/Certificate.PNG
         Upload Document BS    ${path}
         Take Screenshot    Update_Name/MaritalStatus
+
         Click Text    Save    exact_match=true
         # Previous OTP from DB
-        Get Details from DB
-        ${Previous_OTP}    Set Variable    ${OTPNumber}
-        Set Global Variable    ${Previous_OTP}
+#        Get Details from DB
+#        ${Previous_OTP}    Set Variable    ${OTPNumber}
+#        Set Global Variable    ${Previous_OTP}
+        Sleep   4s
         Wait Until Page Contains Element    ${${platformName}_${lang}_Submit_btn}    timeout=20s
-        Click Text    Submit    exact_match=true
+        Click Element    ${${platformName}_${lang}_Submit_btn}
 #        ${status}    Run Keyword And Return Status
 #        ...    Wait Until Element Is Visible
 #        ...    ${${platformName}_${lang}_Submit_btn}
@@ -287,8 +293,8 @@ Capture Change Name Transaction Details for iOS
             ...    ${title.strip()}
             ...    OMNE_NameChangePage
             ...    OMNE_Transaction_Page
-            ...    ${Title}
-            ...    ${title}
+            ...    ${Title.strip()}
+            ...    ${title.strip()}
             Set Calc VP Expected Result With Original And Source
             ...    NEW_Title
             ...    ${title.strip()}
@@ -451,12 +457,12 @@ Capture Change Name Transaction Details for Android
         ${VP_Title}    Get Text    ${${platformName}_${lang}_TransactionTitle}
         Set Calc VP With Source And Original Values
         ...    Transaction_NEW_Title
-        ...    ${Title.strip()}
+        ...    ${new_title_namepage.strip()}
         ...    ${VP_Title.strip()}
         ...    OMNE_NameChangePage
         ...    OMNE_Transaction_Page
-        ...    ${Title}
-        ...    ${title}
+        ...    ${new_title_namepage.strip()}
+        ...    ${VP_Title.strip()}
         Set Calc VP Expected Result With Original And Source
         ...    NEW_Title
         ...    ${VP_Title.strip()}

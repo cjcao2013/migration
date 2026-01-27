@@ -11,6 +11,7 @@ ${iOS_EN__beneficiary_gender}                               chain=**/XCUIElement
 ${iOS_EN_document_type_dropdown}                            chain=**/XCUIElementTypeOther[`label == 'Document type'`][-1]
 ${iOS_EN_document_number_text_field}                        chain=**/XCUIElementTypeTextField[`name == "beneficiary-docNumber"`]
 ${iOS_EN_beneficiary_next_done_btn}                         chain=**/XCUIElementTypeButton[`label == 'Done'`][-1]
+${iOS_EN_bene_relationship_done_btn}                        accessibility_id=beneficiary-relation-done-button
 ${iOS_EN_ConfirmBtn}                                        chain=**/XCUIElementTypeButton[`label == 'Confirm'`][-1]
 ${iOS_EN_beneficiary_relationship}                          chain=**/XCUIElementTypeOther[`label CONTAINS 'Relationship'`][-1]
 ${iOS_EN_beneficiary_nationality_dropdown}                  chain=**/XCUIElementTypeOther[`label CONTAINS 'Nationality'`][-1]
@@ -44,6 +45,7 @@ ${Android_EN_beneficiary_gender}                            xpath=//android.view
 ${Android_EN_beneficiary_dob}                               xpath=//android.widget.EditText[@resource-id='beneficiary-dateOfBirth']
 ${Android_EN_beneficiary_relationship}                      xpath=//android.view.ViewGroup[@content-desc="Relationship"]
 ${Android_EN_beneficiary_next_done_btn}                     android=new UiSelector().className("android.widget.Button")
+${Android_EN_bene_relationship_done_btn}                    android=new UiSelector().resourceId("beneficiary-relation-done-button")
 ${Android_EN_document_type_dropdown}                        xpath=//android.view.ViewGroup[@resource-id='beneficiary-docType']
 ${Android_EN_document_number_text_field}                    xpath=//android.widget.EditText[@resource-id='beneficiary-docNumber']
 ${Android_EN_add_document_btn}                              android=new UiSelector().resourceId("add-image")
@@ -79,3 +81,4 @@ ${Android_EN_BeneficiarysTab}                               xpath=//android.widg
 ${Android_EN_ChangeBeneficiarydetails}                      xpath=//android.widget.TextView[@text='Change beneficiary(s) details']
 ${Android_EN_totalBenecountinTransaction}                   xpath=//android.widget.TextView[@text='New beneficiary(s) details']/following-sibling::android.widget.TextView
 ${Android_EN_beneNextButton}                                xpath=//android.widget.Button[@content-desc="Next"]
+${Android_EN_bene_Inavlid_Passport_Error}                   android=new UiSelector().text("Please enter a valid Passport Number")

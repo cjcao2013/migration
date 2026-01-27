@@ -112,7 +112,7 @@ ${Android_EN_Profile_DOB}                          xpath=//android.widget.TextVi
 ${Android_EN_BackButton_Arrow}                  xpath=(//android.widget.Button[@resource-id ='back-button'])
 
 ${iOS_EN_Allow}                                 accessibility_id=Allow
-${iOS_EN_Sign_in_here}                          accessibility_id=Already have an account? Sign in here
+${iOS_EN_Sign_in_here}                          chain=**/XCUIElementTypeButton[`name ENDSWITH "Sign in here"`]
 ${iOS_EN_SignIn_WelomebackText}                 chain=**/XCUIElementTypeStaticText[`label CONTAINS 'Welcome back'`]
 ${iOS_EN_SignIn_DontHaveText}                   chain=**/XCUIElementTypeStaticText[`label CONTAINS 'have an account yet?'`]
 ${iOS_EN_email_option}                          chain=**/XCUIElementTypeOther[`label == 'Email'`]

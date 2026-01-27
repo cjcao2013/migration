@@ -59,3 +59,4 @@ ${Android_EN_GalleryDone}           android=new UiSelector().description("Done")
 ${Android_EN_obj_captureImage1}         xpath=(//android.view.ViewGroup[@content-desc="Gallery"]//following-sibling::android.view.ViewGroup[1])[2]
 ${Android_EN_make_claim}                        android=new UiSelector().description("Make a claim")
 ${Android_EN_Start_Camera}                      android=new UiSelector().description("Start camera")
+${Android_EN_obj_captureImageforPersonal}           xpath=(//android.view.ViewGroup[@content-desc="Gallery"]//following-sibling::android.view.ViewGroup[1])[3]

@@ -426,14 +426,15 @@ Overview
             ELSE
                 @{riderNameArrayList}    Create List
                 ${ridercounter}    Set Variable    1
-                FOR    ${temp}    IN RANGE    1    5
+
                     ${totRider_Countelement}    Get Webelements    ${${platformName}_${lang}_RiderList}
                     ${rider_count}    Get Length    ${totRider_Countelement}
+                    ${rider_count}      Evaluate    ${rider_count}+1
 
                     FOR    ${temp}    IN RANGE    1    ${rider_count}
                         # ridername
                         ${Riders_policy_name}    Get Text
-                        ...    xpath=(//android.view.ViewGroup[@content-desc="Rider(s)"]/following::android.widget.TextView[@text="Insured for"]/preceding-sibling::android.widget.TextView[2])[${temp}]
+                        ...    xpath=(//android.view.ViewGroup[@content-desc="Rider(s)"]/following-sibling::android.view.ViewGroup/descendant::android.widget.HorizontalScrollView/android.view.ViewGroup/android.view.ViewGroup)[${temp}]/descendant::android.widget.TextView[@text="Insured for"]/preceding-sibling::android.widget.TextView[2]
                         ${Riders_policy_name}    Strip String    ${Riders_policy_name}
                         ${status}    Run Keyword And Return Status
                         ...    List Should Contain Value
@@ -443,7 +444,7 @@ Overview
                             Append To List    ${riderNameArrayList}    ${Riders_policy_name}
                             # rider premium amount
                             ${Riders_PremiumAmount}    Get Text
-                            ...    xpath=(//android.view.ViewGroup[@content-desc="Rider(s)"]/following::android.widget.TextView[@text="Insured for"]/preceding-sibling::android.widget.TextView[1])[${temp}]
+                            ...    xpath=(//android.view.ViewGroup[@content-desc="Rider(s)"]/following-sibling::android.view.ViewGroup/descendant::android.widget.HorizontalScrollView/android.view.ViewGroup/android.view.ViewGroup)[${temp}]/descendant::android.widget.TextView[@text="Insured for"]/preceding-sibling::android.widget.TextView[1]
                             ${Riders_PremiumAmount}    Strip String    ${Riders_PremiumAmount}
                             ${Riders_PremiumAmount}    Remove String    ${Riders_PremiumAmount}    ,
                             ${Riders_PremiumAmount}    Strip String    ${Riders_PremiumAmount}
@@ -451,22 +452,22 @@ Overview
 
                             # insuredname
                             ${Riders_InsuredFor}    Get Text
-                            ...    xpath=(//android.view.ViewGroup[@content-desc="Rider(s)"]/following::android.widget.TextView[@text="Insured for"]/following-sibling::android.widget.TextView[1])[${temp}]
+                            ...    xpath=(//android.view.ViewGroup[@content-desc="Rider(s)"]/following-sibling::android.view.ViewGroup/descendant::android.widget.HorizontalScrollView/android.view.ViewGroup/android.view.ViewGroup)[${temp}]/descendant::android.widget.TextView[@text="Insured for"]/following-sibling::android.widget.TextView[1]
                             ${Riders_InsuredFor}    Strip String    ${Riders_InsuredFor}
 
                             # startdate
                             ${Riders_StartedOnDate}    Get Text
-                            ...    xpath=(//android.widget.TextView[@text="Started on"]/following-sibling::android.widget.TextView)[${temp}]
+                            ...    xpath=(//android.widget.TextView[@text="Started on"]/following-sibling::android.widget.TextView)
                             ${Riders_StartedOnDate}    Strip String    ${Riders_StartedOnDate}
 
                             # enddate
                             ${Riders_EndsOnDate}    Get Text
-                            ...    xpath=(//android.widget.TextView[@text="Ends on"]/following-sibling::android.widget.TextView)[${temp}]
+                            ...    xpath=(//android.widget.TextView[@text="Ends on"]/following-sibling::android.widget.TextView)
                             ${Riders_EndsOnDate}    Strip String    ${Riders_EndsOnDate}
 
                             # rider policy status
                             ${Riders_policy_status}    Get Text
-                            ...    xpath=(//android.view.ViewGroup[@content-desc="Rider(s)"]/following::android.widget.TextView[@text="Insured for"]/parent::android.view.ViewGroup/following-sibling::android.view.ViewGroup//android.widget.TextView)[${temp}]
+                            ...    xpath=(//android.view.ViewGroup[@content-desc="Rider(s)"]/following-sibling::android.view.ViewGroup/descendant::android.widget.HorizontalScrollView/android.view.ViewGroup/android.view.ViewGroup)[${temp}]/descendant::android.widget.TextView[last()]
                             ${Riders_policy_status}    Strip String    ${Riders_policy_status}
 
                             Set Calc VP Actual Result With Original And Source
@@ -501,7 +502,7 @@ Overview
 
                         END
                     END
-                END
+
             END
         END
 

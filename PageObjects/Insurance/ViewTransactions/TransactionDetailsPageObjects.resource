@@ -3,7 +3,7 @@ ${iOS_EN_Transaction_Tab}                               chain=**/XCUIElementType
 ${iOS_EN_ServiceRequest_section}                        chain=**/XCUIElementTypeOther[`label == "Service request(s)"`][2]
 ${iOS_EN_TransactionVP}                                 chain=**/XCUIElementTypeOther[`label BEGINSWITH "Policy applied"`][2]
 ${iOS_EN_BackArrow}                                     chain=**/XCUIElementTypeButton[`name == "back-button"`]
-${iOS_EN_Transaction_BackButton}    chain=**/XCUIElementTypeOther[`name == "My transaction(s)"`][2]/XCUIElementTypeOther[1]/XCUIElementTypeOther
+${iOS_EN_Transaction_BackButton}                        chain=**/XCUIElementTypeOther[`name == "My transaction(s)"`][2]/XCUIElementTypeOther[1]/XCUIElementTypeOther
 
 ${IOS_EN_TransactionTab}                                chain=**/XCUIElementTypeOther[`label == "My transaction(s) See all"`]/XCUIElementTypeOther
 ${IOS_EN_SeeAll}                                        chain=**/XCUIElementTypeOther[`label == "My transaction(s) See all"`]/XCUIElementTypeOther[-1]
@@ -43,3 +43,4 @@ ${Android_EN_TransactionTab}                            android=new UiSelector()
 ${Android_EN_TransactionServiceRequest}                 android=new UiSelector().textContains("Service request(s)")
 ${Android_EN_SeeAll}                                    xpath=//android.widget.TextView[@text='My transaction(s)']/following-sibling::android.view.ViewGroup
 ${Android_EN_TransactionPremiumRequest}                 xpath=//android.widget.TextView[@text="Premium payment(s)"]
+${Android_EN_Transaction_BackButton}                    xpath=//android.widget.TextView[@text="My transaction(s)"]/preceding-sibling::android.view.ViewGroup

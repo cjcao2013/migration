@@ -31,7 +31,7 @@ ${executionDetailFile}
 *** Keywords ***
 Get Details from Qrace Environment
     TRY
-        ${env}                  Get Environment Attribute    Env
+        ${environment}                  Get Environment Attribute    Env
         ${mailSacKey}           Get Environment Attribute    mailSacKey
         ${TimeZone}             Get Environment Attribute    TimeZone
         ${dbhostname}           Get Environment Attribute    DB_hostname
@@ -79,6 +79,7 @@ Get Details from Qrace Environment
         Set Global Variable    ${api_key_valueauth}
         Set Global Variable    ${omneapp_version}
         Set Global Variable    ${api_host}
+        Set Global Variable     ${environment}
     EXCEPT     AS  ${reason}
         Set Failed Actual Result and VP    Omne_Flow   ${reason}   Capture Change Name Transaction Details for iOS
     END
@@ -308,7 +309,11 @@ Close keyboard
                         TRY
                             Hide Keyboard    Done
                         EXCEPT
-                            Click Text    Done      exact_match=True
+                           TRY
+                                Click Text    Done      exact_match=True
+                           EXCEPT
+                              Click by Coordinates        217     500
+                           END
                         END
                     END
                 END
@@ -432,13 +437,9 @@ Get Current Date and Time
     END
 Set Failed Actual Result and VP
     [Arguments]     ${flowname}     ${reason}   ${actualresultText}
-    TRY
-        Set Calc VP With Source And Original Values    ${flowname}    Flow_Successful    Flow_Failed    Static    Omne_Application_Flow   Flow_Successful    Flow_Failed
+    Set Calc VP With Source And Original Values    ${flowname}    Flow_Successful    Flow_Failed    Static    Omne_Application_Flow   Flow_Successful    Flow_Failed
 #        Take Screenshot    ${flowname} Error Screenshot
-        ${actualResult}     Catenate    ${actualResult}     | ${actualresultText} Failed due to :${reason}
-        Set Global Variable    ${actualResult}
-        Set Actual Result      ${actualResult}
-        Fail
-    EXCEPT     AS  ${reason}
-        Set Failed Actual Result and VP    Omne_Flow   ${reason}   Set Failed Actual Result and VP
-    END
+    ${actualResult}     Catenate    ${actualResult}     | ${actualresultText} Failed due to :${reason}
+    Set Global Variable    ${actualResult}
+    Set Actual Result      ${actualResult}
+    Fail

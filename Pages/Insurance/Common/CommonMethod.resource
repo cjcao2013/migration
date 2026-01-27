@@ -503,7 +503,7 @@ Set or enter PIN
             Click Element    ${${platformName}_${lang}_ConfirmButton}
         END
 
-#        Pause Execution
+        Pause Execution
         Overall APP Experience
     EXCEPT     AS  ${reason}
        Set Failed Actual Result and VP    Omne_Flow   ${reason}   SET UP PIN

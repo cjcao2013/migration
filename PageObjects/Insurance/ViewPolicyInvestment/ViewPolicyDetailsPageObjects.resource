@@ -23,13 +23,13 @@ ${iOS_EN_Plyname}                                       xpath=//XCUIElementTypeS
 ${Android_EN_policystatus_txt}                          xpath=//android.widget.TextView[@text="Active" or @text="Inactive" or @text="Lapsed"]
 ${iOS_EN_policystatus_txt}                              xpath=(//XCUIElementTypeOther[contains(@name,'Overview Document(s)')])[last()-4]/preceding::XCUIElementTypeOther[1]
 
-${Android_EN_plyNo}                                     xpath=(((//android.view.ViewGroup[@clickable="true"]/parent::android.view.ViewGroup)[1]//android.view.ViewGroup)[3]//android.view.ViewGroup)[1]//android.widget.TextView
+${Android_EN_plyNo}                                     xpath=(//android.widget.TextView[@resource-id="header-product-name"]/following-sibling::android.view.ViewGroup//child::android.widget.TextView)[1]
 ${iOS_EN_plyNo}                                         xpath=(//XCUIElementTypeOther[contains(@name,'Overview Document(s)')])[last()-4]/preceding::XCUIElementTypeOther[3]
 
-${Android_EN_policyName_txt}                            xpath=((//android.view.ViewGroup[@clickable="true"])[1]/following-sibling::android.widget.TextView)[2]
+${Android_EN_policyName_txt}                            android=new UiSelector().resourceId("header-product-name")
 ${iOS_EN_policyName_txt}                                accessibility_id=header-product-name
 
-${Android_EN_YouAreCoveredFor_txt}                      xpath=(//android.widget.TextView[@text="You’re covered for"]/following-sibling::android.widget.TextView)[1]
+${Android_EN_YouAreCoveredFor_txt}                      xpath=(//android.widget.TextView[@text="Sum assured"]/following-sibling::android.widget.TextView)[1]
 ${iOS_EN_YouAreCoveredFor_txt}                          chain=**/XCUIElementTypeOther[`label CONTAINS "Sum assured"`][-1]/XCUIElementTypeStaticText[2]
 
 ${Android_EN_InsuredFor_txt}                            xpath=//android.widget.TextView[@text="Insured for"]/following-sibling::android.view.ViewGroup//android.widget.TextView
@@ -75,7 +75,7 @@ ${Android_EN_Rider}                                     xpath=//android.widget.T
 ${iOS_EN_Rider}                                         chain=**/XCUIElementTypeOther[`label == "Rider(s)"`]
 
 ${iOS_EN_RiderList}                                     xpath=//XCUIElementTypeOther[@name="collapsible-header" and @label="Rider(s)"]/parent::XCUIElementTypeOther[last()]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeScrollView/XCUIElementTypeOther/XCUIElementTypeOther
-${Android_EN_RiderList}                                 xpath=//android.view.ViewGroup[@content-desc="Rider(s)"]/following::android.widget.HorizontalScrollView/android.view.ViewGroup/android.view.ViewGroup
+${Android_EN_RiderList}                                 xpath=//android.view.ViewGroup[@content-desc="Rider(s)"]/following-sibling::android.view.ViewGroup/descendant::android.widget.HorizontalScrollView/android.view.ViewGroup/android.view.ViewGroup
 
 ${Android_EN_Riders_YouAreCoveredFor_txt}               xpath=(//android.widget.TextView[@text="Insured for"]/preceding-sibling::android.widget.TextView)[2]
 
