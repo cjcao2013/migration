@@ -201,7 +201,7 @@ Update Particulars
         Wait Until Element Is Visible    ${${platformName}_${lang}_PersonalDetails_FirstName}    timeout=10s
         ${VP_PersonalDetails_FirstName}    Get Text    ${${platformName}_${lang}_PersonalDetails_FirstName}
 
-        ${VP_PersonalDetails_MiddleName}    Get Text    ${${platformName}_${lang}_PersonalDetails_MiddleName}
+        ${VP_PersonalDetails_MiddleName}    Get Text    ${${platformName}_${lang}_PersonalDetails_Flowtails_MiddleName}
 
         ${VP_PersonalDetails_LastName}    Get Text    ${${platformName}_${lang}_PersonalDetails_LastName}
 
@@ -239,7 +239,7 @@ Update Particulars
             Input Text    ${${platformName}_${lang}_PersonalDetails_FirstName}    ${fname}
         END
         ${mname}    FakerLibrary.First Name
-        Input Text    ${${platformName}_${lang}_PersonalDetails_MiddleName}    ${mname}
+        Input Text    ${${platformName}_${lang}_PersonalDetails_Flowtails_MiddleName}    ${mname}
         IF    '${VP_PersonalDetails_LastName}' != ''
             Clear Text    ${${platformName}_${lang}_PersonalDetails_LastName}
             ${lname}    FakerLibrary.Last Name
@@ -480,22 +480,22 @@ Update Particulars
         Clear Text    ${${platformName}_${lang}_Estimated_Asset_Value}
         Input Text    ${${platformName}_${lang}_Estimated_Asset_Value}    ${Update_Risk_Profile_EstimatedAssetValue}
         SwipePage
-        Wait Until Element Is Visible    ${${platformName}_${lang}_Objective_Investment}    timeout=5s
-        ${Android_Objective}    Set Variable
-        ...    xpath=//android.widget.TextView[contains(@text,'${Update_Risk_Profile_Objective_Investment}')]
-        ${IOS_Objective}    Set Variable
-        ...    xpath=(//XCUIElementTypeOther[@name="${Update_Risk_Profile_Objective_Investment}"])[2]
-        Click Element    ${${platformName}_${lang}_Objective_Investment}
-        Wait Until Element Is Visible    ${${platformName}_Objective}       timeout=10s
+#        Wait Until Element Is Visible    ${${platformName}_${lang}_Objective_Investment}    timeout=5s
+#        ${Android_Objective}    Set Variable
+#        ...    xpath=//android.widget.TextView[contains(@text,'${Update_Risk_Profile_Objective_Investment}')]
+#        ${IOS_Objective}    Set Variable
+#        ...    xpath=(//XCUIElementTypeOther[@name="${Update_Risk_Profile_Objective_Investment}"])[2]
+#        Click Element    ${${platformName}_${lang}_Objective_Investment}
+#        Wait Until Element Is Visible    ${${platformName}_Objective}       timeout=10s
+#
+#        ${Objective_value}      Get Element Attribute    ${${platformName}_Objective}       attribute=label
+#        IF    ' ${Objective_value} ' != '${Update_Risk_Profile_Objective_Investment}'
+#            Click Element    ${${platformName}_Objective}
+#        END
 
-        ${Objective_value}      Get Element Attribute    ${${platformName}_Objective}       attribute=label
-        IF    ' ${Objective_value} ' != '${Update_Risk_Profile_Objective_Investment}'
-            Click Element    ${${platformName}_Objective}
-        END
 
-
-        Wait Until Element Is Visible    ${${platformName}_${lang}_Done_Button}     timeout=10s
-        Click Element    ${${platformName}_${lang}_Done_Button}
+#        Wait Until Element Is Visible    ${${platformName}_${lang}_Done_Button}     timeout=10s
+#        Click Element    ${${platformName}_${lang}_Done_Button}
 
         SwipePage
         SwipePage
@@ -579,8 +579,8 @@ Suitablity Assessmaent
         Wait Until Page Contains Element    ${${platformName}_${lang}_Back_Button}    timeout=30s
         Click Element    ${${platformName}_${lang}_Back_Button}
 
-        Wait Until Page Contains Element    ${${platformName}_${lang}_Back_Button}    timeout=30s
-        Click Element    ${${platformName}_${lang}_Back_Button}
+        Wait Until Page Contains Element    ${${platformName}_${lang}_Update_BackButton}    timeout=30s
+        Click Element    ${${platformName}_${lang}_Update_BackButton}
 
         ${status}    Run Keyword And Return Status  Wait Until Element Is Visible    ${${platformName}_${lang}_SeeAll}   timeout=20s
         IF    '${status}' == 'True'

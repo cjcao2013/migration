@@ -114,6 +114,7 @@ Onboard Insurance
              FOR    ${char}    IN    @{CustID_len}
                     Input Text Into Current Element    ${char}
              END
+             Close keyboard
         ELSE
             IF    '${DocumentType}' == 'Passport'
                 ${Wrong_PasswordNumber}     Get Substring    ${Customer_ID}    5

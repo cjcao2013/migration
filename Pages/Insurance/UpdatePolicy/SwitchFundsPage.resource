@@ -65,7 +65,7 @@ Switch funds
             ${iOS_captureSelectedFundestimatedAmount}    Set Variable
             ...    xpath=//XCUIElementTypeOther[@name='${FundName}']/following-sibling::XCUIElementTypeOther[2]/XCUIElementTypeOther[2]
             ${Android_captureSelectedFundestimatedAmount}    Set Variable
-            ...    xpath=//android.widget.TextView[@text='SCBFP']/../../../android.view.ViewGroup[3]/android.view.ViewGroup[2]/android.widget.TextView
+            ...    xpath=//android.widget.TextView[@text='${FundName}']/../../../android.view.ViewGroup[3]/android.view.ViewGroup[2]/android.widget.TextView
             ${VP_Estimatedswitchoutamount}    Get Text    ${${platformName}_captureSelectedFundestimatedAmount}
 
             ${VP_Estimatedswitchoutamount}    Remove String    ${VP_Estimatedswitchoutamount}    ,
@@ -112,14 +112,16 @@ Switch funds
             Take Screenshot    New_${SIFund}_Selected
         END
     #    Check if button is enabled and click    ${${platformName}_${lang}_NextButton}
-        Click Element    ${${platformName}_${lang}_NextButton}
-        ${status}    Run Keyword And Return Status   Wait Until Element Is Visible    ${${platformName}_${lang}_SwitchInPage}    timeout=10s
-        IF    '${status}' != 'True'
-             Swipe    700    800    700    2500
-        END
+         Wait Until Element Is Visible    ${${platformName}_${lang}_NextButton}
+         Click Element    ${${platformName}_${lang}_NextButton}
+#        ${status}    Run Keyword And Return Status   Wait Until Element Is Visible    ${${platformName}_${lang}_SwitchInPage}    timeout=10s
+#        IF    '${status}' != 'True'
+#             Swipe    700    800    700    2500
+#        END
 
-        Wait Until Element Is Visible    ${${platformName}_${lang}_SwitchInPage}    timeout=10s
+#        Wait Until Element Is Visible    ${${platformName}_${lang}_SwitchInPage}    timeout=10s
         @{SIfundname_List}    Create List
+        Wait Until Element Is Visible    ${${platformName}${lang}_switchInFundName}         timeout=10s
         ${SIfundname}    Get Webelements    ${${platformName}${lang}_switchInFundName}
         ${SIfundnamecount}    Get Length    ${SIfundname}
         Set Global Variable    ${SIfundnamecount}
@@ -156,6 +158,7 @@ Switch funds
             Click Element    ${${platformName}_clickFundpercField}
             Clear Text    ${${platformName}_clickFundpercField}
             Input Text    ${${platformName}_clickFundpercField}    ${SwitchInfundPerc}
+            Close keyboard
             ${iOS_clickSwitchInFundName}    Set Variable    chain=**/XCUIElementTypeOther[`label CONTAINS '${SIFund}'`][-3]
             ${Android_clickSwitchInFundName}    Set Variable    xpath=//android.widget.TextView[@text='${SIFund}']
             Click Element    ${${platformName}_clickSwitchInFundName}

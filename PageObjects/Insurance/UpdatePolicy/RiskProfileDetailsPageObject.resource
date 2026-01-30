@@ -11,12 +11,12 @@ ${Android_EN_RiskLevel}                                         xpath=//android.
 ${Android_EN_InvestorType}                                      xpath=//android.widget.TextView[@text='Investor type']/following-sibling::android.widget.TextView[1]
 ${Android_EN_RiskProfileUpdated}                                xpath=//android.widget.TextView[@text='Risk profile updated!']
 ${Android_EN_NameUpdated}                                       xpath=//android.widget.TextView[@text='Name update']
-${Android_EN_Back_Button}                                       xpath=//android.widget.Button[@resource-id='back-button']
-${Android_EN_Update_BackButton}                                 xpath=(//android.widget.TextView[@text='Update policies']/preceding::android.view.ViewGroup)[3]
+${Android_EN_Back_Button}                                       xpath=//android.widget.TextView[@text="Update risk profile"]/parent::android.view.ViewGroup/parent::android.view.ViewGroup/parent::android.view.ViewGroup/android.view.ViewGroup[1]/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup
+${Android_EN_Update_BackButton}                                 xpath=(//android.widget.TextView[@text='Manage policy(s)']/parent::android.view.ViewGroup)/android.view.ViewGroup/android.view.ViewGroup
 
 # ----------------------------------Update Particulares---------------------------------------------------------
 ${Android_EN_PersonalDetails_FirstName}                         xpath=//android.widget.TextView[@text='First name']/../..//android.widget.EditText
-${Android_EN_PersonalDe Omne_Flowtails_MiddleName}                        xpath=//android.widget.TextView[contains(@text,'Middle name')]/../..//android.widget.EditText
+${Android_EN_PersonalDetails_Flowtails_MiddleName}                        xpath=//android.widget.TextView[contains(@text,'Middle name')]/../..//android.widget.EditText
 ${Android_EN_PersonalDetails_LastName}                          xpath=//android.widget.TextView[@text='Last name']/../..//android.widget.EditText
 ${Android_EN_PersonalDetails_DOB}                               xpath=//android.widget.TextView[@text='Date of birth (dd/mm/yyyy)']/../..//android.widget.EditText
 ${Android_EN_PersonalDetails_Citizenship}                       xpath=//android.widget.TextView[@text='Citizenship']/../..//android.widget.EditText
