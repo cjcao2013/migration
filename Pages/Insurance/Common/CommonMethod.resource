@@ -502,7 +502,6 @@ Set or enter PIN
             Take Screenshot    enter new pin Page
             Click Element    ${${platformName}_${lang}_ConfirmButton}
         END
-
         Pause Execution
         Overall APP Experience
     EXCEPT     AS  ${reason}

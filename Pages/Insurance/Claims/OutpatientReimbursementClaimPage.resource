@@ -82,4 +82,3 @@ Claim Outpatient reimbursement
     Take Screenshot    ClaimDetailsPage
     Click Text    Next    exact_match=true
 
-
