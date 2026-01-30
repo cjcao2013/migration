@@ -112,7 +112,20 @@ OWB Submit
     ${VP_instantpayment}    Get Element Attribute    ${EN_instantpayment}    attribute=title
     ${VP_acknowledgment}    Get Element Attribute    ${EN_acknowledgment}    attribute=title
     ${VP_claimWithOtherInsurer}    Get Element Attribute    ${EN_claimWithOtherInsurer}    attribute=title
-    ${VP_completiondate}    Get Element Attribute    ${EN_OWB_completiondate}    attribute=title
+    IF    '${CaseStatus}' != 'Pending'
+        ${VP_completiondate}    Get Element Attribute    ${EN_OWB_completiondate}    attribute=title
+        ${date}    Get Current Date
+        Log To Console    ${date}
+        ${date}    Convert Date    ${date}    result_format=%d %b %Y
+        Set Calc VP With Source And Original Values
+        ...    Completion Date
+        ...    ${date}
+        ...    ${VP_completiondate}
+        ...    Static
+        ...    OWB_ClaimPage
+        ...    ${date}
+        ...    ${VP_completiondate}
+    END
     IF    '${Claim_Type}' != 'Outpatient surgery'
         ${status}    Run Keyword And Return Status
         ...    Wait Until Element Is Visible
@@ -134,11 +147,12 @@ OWB Submit
         END
     END
     # stpfailure reason
-#    ${status}    Run Keyword And Return Status    Wait Until Element Is Visible    ${EN_stpfailurereason}    timeout=10s
-#    #add column in data container
-#    ${STPReasonPresent}    Set Variable    false
-#    Set Calc VP With Source And Original Values    STP FailureReason Present    ${STPReasonPresent}    ${status}    static    OWB_ClaimPage    ${STPReasonPresent}    ${status}
-
+    ${status}    Run Keyword And Return Status    Wait Until Element Is Visible    ${EN_stpfailurereason}    timeout=10s
+    #add column in data container
+    IF    '${status}' == 'True' and '${STPReasonPresent}' != '${EMPTY}'
+         ${STP_Reason}      Get Text    xpath=//div[text()='${STPReasonPresent}']
+         Set Calc VP With Source And Original Values    STP FailureReason Present    ${STPReasonPresent}    ${STP_Reason}    static    OWB_ClaimPage    ${STPReasonPresent}    ${STP_Reason}
+    END
     # SETVP
 
     Set Calc VP Actual Result With Original And Source
@@ -170,17 +184,7 @@ OWB Submit
     ...    OWB_ClaimPage
     ...    Yes
     ...    ${VP_claimWithOtherInsurer}
-    ${date}    Get Current Date
-    Log To Console    ${date}
-    ${date}    Convert Date    ${date}    result_format=%d %b %Y
-    Set Calc VP With Source And Original Values
-    ...    Completion Date
-    ...    ${date}
-    ...    ${VP_completiondate}
-    ...    Static
-    ...    OWB_ClaimPage
-    ...    ${date}
-    ...    ${VP_completiondate}
+
     ${Approved_Status}    Get Text    ${EN_claimApprovalStatus}
     Set Global Variable    ${Approved_Status}
 

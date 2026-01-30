@@ -88,6 +88,8 @@ ${iOS_EN_nextyearArrow}                             accessibility_id=claimDetail
 ${iOS_EN_DobDoneBtn}                                accessibility_id=claimDetails.durationHospitalStay-done-button
 ${iOS_EN_claimementsingle}                          xpath=//XCUIElementTypeOther[@name="claimantDetails.selectedClaimant-list-item"]
 
+# OPD popup
+${iOS_EN_OPD_Iunderstand_Popup}                     chain=**/XCUIElementTypeButton[`name == "I understand"`]
 # dob selection from calender
 ${Android_EN_currentmonthandyear}                   xpath=//android.view.ViewGroup[@resource-id='claimDetails.durationHospitalStay-calendar.header.leftArrow']/following-sibling::android.view.ViewGroup[@resource-id='claimDetails.durationHospitalStay-touchable-header']
 ${Android_EN_hospitalcurrentYear}                   xpath=(//android.view.ViewGroup[@resource-id='claimDetails.durationHospitalStay-year-month-selector-previous-year-arrow-button']/following-sibling::android.widget.TextView)[1]
@@ -188,3 +190,4 @@ ${Android_EN_AddAdditionalDocuments}                xpath=//android.widget.TextV
 ${Android_EN_AddClaimSettlementLetter}              xpath=(//android.view.ViewGroup[@resource-id='add-more-photo-button'])[2]
 ${Android_EN_PopUp_txt}                             xpath=//android.widget.TextView[@text='We’d love to hear from you']
 ${Android_EN_claimementsingle}                      id=claimantDetails.selectedClaimant-selected-content-text
+${Android_EN_OPD_Iunderstand_Popup}                 android=new UiSelector().description("I understand")

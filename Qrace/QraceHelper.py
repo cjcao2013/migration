@@ -27,7 +27,7 @@ class QraceHelper:
     calcData = dict()
     actualResult = remark = executionTag = ""
     server_url = "http://10.160.132.200:8082"
-    client_url = "http://127.0.0.1:8086"
+    client_url = "http://127.0.0.1:8085"
     auth = ('pooja.dhotre', 'Qrace@123P')
     customDir = set()
     sc_count = 0

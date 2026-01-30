@@ -22,21 +22,11 @@ Submit
         DOB
         ${Android_EN_InsurancePage}    Set Variable    android=new UiSelector().text("Insurance")
         ${iOS_EN_InsurancePage}    Set Variable    chain=**/XCUIElementTypeButton[`label == 'Insurance'`]
-        ${status}    Run Keyword And Return Status    Wait Until Element Is Visible    ${${platformName}_${lang}_InsurnacePage}
+        ${status}    Run Keyword And Return Status    Wait Until Element Is Visible    ${${platformName}_${lang}_InsurnacePage}     timeout=10s
           IF    '${status}' == 'True'
                 Take Screenshot     FWD_Insurance_Page
                 Click Element       ${${platformName}_${lang}_InsurnacePage}
           END
-        ${Android_EN_InsurancePage}    Set Variable    android=new UiSelector().text("${Flow_Flag}")
-        ${iOS_EN_InsurancePage}    Set Variable    chain=**/XCUIElementTypeButton[`label == '${Flow_Flag}'`]
-
-        Wait Until Element Is Visible    ${${platformName}_${lang}_InsurancePage}    timeout=30s
-        Take Screenshot    FWD_Insurance_Page
-#        IF    '${testtype}'!='NEGATIVE' and '${Transaction_Page_GUI}' == 'Yes'
-#            Verify FWDInsurance Page GUI
-#        END
-        Click Element    ${${platformName}_${lang}_InsurancePage}
-
         #enter pin
         Set or enter PIN
 
@@ -116,6 +106,7 @@ Submit
 
         #call specefic claim keyword
         Run keyword     Claim ${Claim_Type}
+        Total Amount Popup
         #check duplicate claim
         ${status}    Run Keyword And Return Status
         ...    Wait Until Element Is Visible
@@ -150,6 +141,7 @@ Submit
         SwipePage
         Take Screenshot    Claim_Step2_Page
         Click Element    ${${platformName}_${lang}_nextBtn}
+        Total Amount Popup
         Take Screenshot    Claim_Step3_Page
         Claim Payment Method
         #capture details
@@ -662,4 +654,11 @@ DOB
         Log    ${dob}
     EXCEPT     AS  ${reason}
         Set Failed Actual Result and VP    Omne_Flow   ${reason}   FWD Insurance Flow of ${Insurance_Flow}
+    END
+
+Total Amount Popup
+    IF  ${TotalAmountPaid} > 5000
+        Wait Until Element Is Visible    ${${platformName}_${lang}_OPD_Iunderstand_Popup}    timeout=10s
+        Take Screenshot    Amount popup
+        Click Element    ${${platformName}_${lang}_OPD_Iunderstand_Popup}
     END

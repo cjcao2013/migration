@@ -47,13 +47,14 @@ Assign and Change Status Task
         Input Text    ${EN_PayableAmount}    ${Loan_Amount}
 
     END
-    Wait Until Element Is Visible    ${EN_completeBtn}        timeout=5s
-    Click Element    ${EN_completeBtn}
+
 
     IF    '${CaseStatus}' == 'Pending'
         Click Element    ${EN_PendBtn}
         OWB Pending Flow
     ELSE
+        Wait Until Element Is Visible    ${EN_completeBtn}        timeout=5s
+        Click Element    ${EN_completeBtn}
         Wait Until Element Is Visible    xpath=//span[text()='${CaseStatus}']
         Click Element    xpath=//span[text()='${CaseStatus}']
 #    IF    '${CaseStatus}' == 'Decline'
@@ -81,7 +82,9 @@ OWB Pending Flow
 
     @{DocumentTypeList}    Split String    ${Pend_DocumentType}    ,
     @{PendingReasonList}    Split String    ${Pend_PendingReason}    ,
-    @{ReasonDisplayList}    Split String    ${Pend_Reason_To_display_In_Omne}    ,
+    IF    '${Insurance_Flow}' != 'Submit'
+        @{ReasonDisplayList}    Split String    ${Pend_Reason_To_display_In_Omne}    ,
+    END
     ${TotalPendingDocuments}    Get Length    ${DocumentTypeList}
     Set Global Variable    ${TotalPendingDocuments}
     FOR    ${counter}    IN RANGE    0    ${TotalPendingDocuments}
@@ -89,7 +92,8 @@ OWB Pending Flow
         IF    '${counter}' != '0'    Click Element    ${EN_pendAddNewButton}
         ${documentType}    Get From List    ${DocumentTypeList}    ${counter}
         ${pendingreason}    Get From List    ${PendingReasonList}    ${counter}
-        ${reasontodisplay}    Get From List    ${ReasonDisplayList}    ${counter}
+
+
         Click Element    ${EN_pendingDocumentTypeOption}
         Input Text    ${EN_pendingDocumentType}    ${documentType}
         Press Keys    ${EN_pendingDocumentType}    RETURN
@@ -97,8 +101,10 @@ OWB Pending Flow
         Click Element    ${EN_pendingReasonOption}
         Input Text    ${EN_pendingReason}    ${pendingreason}
         Press Keys    ${EN_pendingReason}    RETURN
-
-        Input Text    ${EN_ResonDisplayField}    ${reasontodisplay}
+        IF    '${Insurance_Flow}' != 'Submit'
+            ${reasontodisplay}    Get From List    ${ReasonDisplayList}    ${counter}
+            Input Text    ${EN_ResonDisplayField}    ${reasontodisplay}
+        END
         Take Screenshot    Pending RequestPage
     END
     Wait Until Element Is Visible    ${EN_statusPendBtn}        timeout=10s
