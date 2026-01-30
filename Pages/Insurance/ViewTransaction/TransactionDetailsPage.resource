@@ -575,6 +575,9 @@ Transaction Renewal premium
     END
 
 Transaction Submit
+    Wait Until Element Is Visible     ${${platformName}_${lang}_TransactionClaimRequest}    timeout=50s
+    Click Element    ${${platformName}_${lang}_TransactionClaimRequest}
+
     ${iOS_Selectposttransaction}    Set Variable        chain=**/XCUIElementTypeOther[`label CONTAINS '${currdate}' and label CONTAINS '${Claim_Type}' and label CONTAINS 'Policy no: ${Policy_No}'`][27]
     ${Android_Selectposttransaction}    Set Variable    xpath=(//android.widget.TextView[@text='${current_day}']/following-sibling::android.widget.TextView[@text='${current_month}']/following-sibling::android.widget.TextView[@text='${current_year}']/parent::android.view.ViewGroup/following-sibling::android.widget.TextView[@text='${Claim_Type}']/following-sibling::android.view.ViewGroup/android.widget.TextView[@text='In progress'])[1]
     Scroll Till Transaction Is Visible    ${${platformName}_Selectposttransaction}

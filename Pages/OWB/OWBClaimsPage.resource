@@ -184,9 +184,12 @@ OWB Submit
     ...    OWB_ClaimPage
     ...    Yes
     ...    ${VP_claimWithOtherInsurer}
-
-    ${Approved_Status}    Get Text    ${EN_claimApprovalStatus}
+    Set Variable    ${Approved_Status}
+    IF    '${CaseStatus}' != 'Pending'
+        ${Approved_Status}    Get Text    ${EN_claimApprovalStatus}
+    END
     Set Global Variable    ${Approved_Status}
+
 
     # check total documents
     Click Element    ${EN_viewAllImages}

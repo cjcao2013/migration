@@ -38,6 +38,7 @@ ${IOS_EN_InProgress_txt}                                chain=**/XCUIElementType
 ${iOS_EN_Surrender_TransactionPolicyApplied}            chain=**/XCUIElementTypeOther[`label BEGINSWITH "Policy applied"`][-1]
 ${iOS_EN_TransactionServiceRequest}                     chain=**/XCUIElementTypeOther[`label == "Service request(s)"`][2]
 ${iOS_EN_TransactionPremiumRequest}                     chain=**/XCUIElementTypeOther[`label == "Premium payment(s)"`][2]
+${iOS_EN_TransactionClaimRequest}                       chain=**/XCUIElementTypeOther[`label == "Claim(s)"`][2]
 
 ${Android_EN_Transaction_BackButton}                     xpath=//android.widget.TextView[@text="My transaction(s)"]/preceding-sibling::android.view.ViewGroup
 ${Android_EN_BackArrow}                                 xpath=//android.widget.Button[@resource-id='back-button']
@@ -46,3 +47,4 @@ ${Android_EN_TransactionServiceRequest}                 android=new UiSelector()
 ${Android_EN_SeeAll}                                    xpath=//android.widget.TextView[@text='My transaction(s)']/following-sibling::android.view.ViewGroup
 ${Android_EN_TransactionPremiumRequest}                 xpath=//android.widget.TextView[@text="Premium payment(s)"]
 ${Android_EN_Transaction_BackButton}                    xpath=//android.widget.TextView[@text="My transaction(s)"]/preceding-sibling::android.view.ViewGroup
+${Android_EN_TransactionClaimRequest}                   android=new UiSelector().textContains("Claim(s)")
