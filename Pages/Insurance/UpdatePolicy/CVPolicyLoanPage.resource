@@ -16,7 +16,9 @@ Policy loan
         ...    chain=**/XCUIElementTypeOther[`label == "${Add_Payment_Method_Type}"`][2]
         ${Android_EN_PolicyLoan_RequestAMount}    Set Variable      xpath=//android.widget.TextView[@text="${Request_Amount}"]/preceding-sibling::android.view.ViewGroup
         ${Android_AddPaymentTypeSelect}    Set Variable     xpath=//android.widget.TextView[@text="${Add_Payment_Method_Type}"]
-        Select Policy
+        Sleep    2s
+#        Select Policy
+        Pause Execution
         Wait Until Element Is Visible    ${${platformName}_${lang}_PolicyCashValue}    timeout=20
         ${VP_PolicyCashValue}    Get Text    ${${platformName}_${lang}_PolicyCashValue}
         ${mVP_PolicyCashValue}    Remove String    ${VP_PolicyCashValue}    THB
@@ -303,6 +305,7 @@ TransactionDetails for CV Loan iOS
                 END
             END
         END
+        Sleep    3s
     EXCEPT     AS  ${reason}
         Set Failed Actual Result and VP    Omne_Flow   ${reason}   TransactionDetails for CV Loan iOS
     END

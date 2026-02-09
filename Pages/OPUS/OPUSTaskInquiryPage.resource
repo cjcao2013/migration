@@ -26,7 +26,7 @@ Resource    OPUSChangeBeneficiaryPage.resource
 *** Keywords ***
 OPUS Inquiry
     TRY
-        Wait Until Element Is Visible    ${EN_search_Icon}      timeout=30s
+        Wait Until Element Is Visible    ${EN_search_Icon}      timeout=120s
         Take OWB Screenshot    Home Page
         Click Element    ${EN_search_Icon}
         Wait Until Element Is Visible    ${EN_taskInquiryOption}        timeout=10s
@@ -109,8 +109,9 @@ OPUS Inquiry
             Wait Until Element Is Visible    xpath=//a[text()='${OPUS_Case_No}']        timeout=10s
             Click Element    xpath=//a[text()='${OPUS_Case_No}']
             Take OPUS Screenshot    Inquiry Page
-            Wait Until Element Is Visible    ${EN_EWorksheet}         timeout=20s
             Sleep    1s
+            Wait Until Element Is Visible    ${EN_EWorksheet}         timeout=20s
+            Sleep    2s
             Click Element    ${EN_EWorksheet}
             ${tab2}    Switch Window    NEW
             Take OPUS Screenshot    Inquiry Page

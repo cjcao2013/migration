@@ -40,7 +40,7 @@ Tax Season Banner Link Redirection
 
     Wait Until Element Is Visible       ${${platformName}_${lang}_TaxDeducationBanner}       timeout=10s
     IF    '${platformName}' == 'iOS'
-        Click by Coordinates    183    400
+        Click by Coordinates    202    426
     ELSE
         Click Element    ${${platformName}_${lang}_TaxDeducationBanner}
     END

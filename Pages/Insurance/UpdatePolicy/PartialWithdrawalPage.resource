@@ -152,7 +152,7 @@ Partial withdrawal
         ${Previous_OTP}    Set Variable    ${OTPNumber}
         Set Global Variable    ${Previous_OTP}
         Click Element    ${${platformName}_${lang}_SubmitButton}
-        Sleep   2s
+        Sleep   5s
         Insert OTP      ${Transaction_OTP_Source}       ${Transaction_OTP_Expiry_Flag}      ${Transaction_OTP_Resend_Flag}
         # New All Done Confirmation Page
         Run Keywords     Check Transaction Status

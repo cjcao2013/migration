@@ -57,7 +57,7 @@ Engagement_My policy(s)
         Take Screenshot    Engagement Quick link
         Sleep    2s
         IF    '${platformName}' == 'iOS'
-            Click by Coordinates    78    502
+            Click by Coordinates    81    539
         ELSE
             Wait Until Element Is Visible    ${${platformName}_${lang}_Quicklink_mypolicy}    timeout=5s
             Click Element    ${${platformName}_${lang}_Quicklink_mypolicy}
@@ -78,7 +78,7 @@ Engagement_Submit claim
     Take Screenshot    Engagement Quick link
     Sleep    2s
     IF    '${platformName}' == 'iOS'
-        Click by Coordinates     205    502
+        Click by Coordinates     195    540
     ELSE
         Wait Until Element Is Visible    ${${platformName}_${lang}_Quicklink_submitClaim}    timeout=5s
         Click Element    ${${platformName}_${lang}_Quicklink_submitClaim}

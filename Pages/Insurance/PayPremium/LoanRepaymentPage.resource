@@ -153,7 +153,7 @@ Loan repayment
             Wait Until Element Is Visible    ${${platformName}_${lang}_PolicyLoan_RequestAmount}       timeout=10s
             Click Element    ${${platformName}_${lang}_PolicyLoan_RequestAmount}
             Clear Text      ${${platformName}_${lang}_AmountClearText}
-            Pause Execution
+
             Input Text    ${${platformName}_${lang}_PolicyLoanAmt}    ${Loan_Amount}\n
         ELSE
             Click Element   ${${platformName}_${lang}_PolicyLoan_RequestAmount}

@@ -27,7 +27,8 @@ Claim Outpatient reimbursement
     # Input recript number
     ${Recript_number}      generate random string  10  [NUMBERS]
     Set Global Variable    ${Recript_number}
-    
+
+    Wait Until Element Is Visible    ${${platformName}_${lang}_ReceiptNumber}       timeout=50s
     Input Text    ${${platformName}_${lang}_ReceiptNumber}    ${Recript_number}\n
 
     # add claimdetails
@@ -81,4 +82,5 @@ Claim Outpatient reimbursement
     Wait Until Element Is Visible    ${${platformName}_${lang}_nextBtn}    timeout=10s
     Take Screenshot    ClaimDetailsPage
     Click Text    Next    exact_match=true
+
 

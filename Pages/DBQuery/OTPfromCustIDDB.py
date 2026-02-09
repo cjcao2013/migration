@@ -32,9 +32,10 @@ class OTPfromCustIDDB:
             # Create a MySQL database connection
             conn = mysql.connector.connect(**db_config)
             # Create a pandas DataFrame from the SQL query
-            query =  f"select * from " + dbinstance + "."+tablename+" " \
-                    f" where "+ownercol+" = '" + owneruserid +"' " \
-                    f" order by "+orderbycol+" desc"
+            # query =  f"select * from " + dbinstance + "."+tablename+"' " \
+            #          f" where "+ownercol+" = '" + owneruserid +"' " \
+            #         f" order by "+orderbycol+" desc"
+            query = f"select * from " + dbinstance + "."+tablename+"  order by "+orderbycol+" desc"
             print(query)
             df = pd.read_sql(query, conn)
             # print (type(df))

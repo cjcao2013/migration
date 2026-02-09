@@ -102,6 +102,7 @@ ${Android_EN_Reimbursement_relatedChkBox}           xpath=(//android.widget.Chec
 # ----------------------------------Android Object ------------------------------------------------
 ${Android_EN_errorOKpopup}                          xpath=((//android.widget.TextView[@text='OK'])/preceding::android.widget.TextView)[2]
 ${Android_EN_captureerrormsgOKpopup1}               xpath=//android.widget.TextView[@text='Whoops!']
+${Android_EN_ReceiptNumber}                         xpath=//android.widget.EditText[@resource-id="claimDetails.receiptNumber-text-input"]
 
 ${Android_EN_captureerrormsgOKbtn}                  xpath=//android.widget.TextView[contains(@text,'identify')]/following::android.widget.Button
 ${Android_EN_minusImg}                              xpath=(//android.widget.ImageView/following::android.view.ViewGroup)[1]
@@ -118,13 +119,13 @@ ${Android_EN_claimantfield}                         xpath=//android.widget.TextV
 ${Android_EN_ClaimTypeOption}                       xpath=//android.widget.TextView[@text='Claim type']
 ${Android_EN_claimtypefield}                        xpath=//android.widget.TextView[@text='Select claim type']
 ${Android_EN_policyfield}                           xpath=//android.widget.TextView[contains(@text,'Policy number')]
-${Android_EN_PolicyOption}                          xpath=//android.widget.TextView[@text='Policy']
+${Android_EN_PolicyOption}                          android=new UiSelector().resourceId("claimantDetails.selectedPolicy-header-title")
 ${Android_EN_ClaimchkBox}                           xpath=//android.widget.TextView[contains(@text,"I received")]/preceding-sibling::android.widget.CheckBox[@content-desc="PromptPay-CheckBox"][last()]
 ${Android_EN_ClaimCheckBox}                         xpath=//android.widget.TextView[contains(@text,"I received")]/preceding-sibling::android.widget.CheckBox[@content-desc="PromptPay-CheckBox"][last()-1]
 ${Android_EN_treatmentdate}                         xpath=//android.widget.TextView[contains(@text,'Treatment date')]/preceding-sibling::android.view.ViewGroup/android.widget.EditText
 ${Android_EN_Disabilitytreatmentdate}               xpath=//android.widget.TextView[contains(@text,'Treatment date')]/preceding-sibling::android.view.ViewGroup/android.widget.EditText
 ${Android_EN_DiagnosisOption}                       xpath=//android.widget.TextView[@text='Diagnosis']
-${Android_EN_totalAmountPaid}                       xpath=//android.widget.EditText[@resource-id='currency-input']
+${Android_EN_totalAmountPaid}                       xpath=//android.widget.EditText[@resource-id="-new-currency-input"]
 ${Android_EN_treatmentitems}                        xpath=//android.widget.TextView[contains(@text,'Select treatment items')]
 ${Android_EN_diagnosisSearch}                       xpath=//android.widget.EditText[@text='Search here']
 ${Android_EN_addNewDiagnosis}                       xpath=//android.widget.TextView[contains(@text,'Add new diagnosis')]
@@ -180,7 +181,7 @@ ${Android_EN_invaliddateerror}                      xpath=//android.widget.TextV
 ${Android_EN_treatmentDateErrMsg}                   xpath=//android.widget.TextView[@text='Treatment date must be after the accident date']
 ${Android_EN_hospitalsaty}                          xpath=//android.widget.TextView[contains(@text,'Duration of hospital stay')]
 # -------------------------------    Select a Claim Type = 'Outpatient_Surgery'    ---------------------------------
-${Android_EN_totalcostPaid}                         xpath=//android.widget.EditText[@resource-id='currency-input']
+${Android_EN_totalcostPaid}                         android=new UiSelector().resourceId("-new-currency-input")
 # ----------------------------------Hospita Duration Vps --------------------------
 
 ${Android_EN_reviewDurationofStay}                  xpath=//android.widget.TextView[@text="Duration of hospital stay"]/following-sibling::android.widget.TextView[1]

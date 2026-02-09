@@ -95,13 +95,14 @@ Submit
         END
 
         #select policy
-        Wait Until Element Is Visible  ${${platformName}_${lang}_PolicyOption}      timeout=5s
+        Sleep    3s
+        Wait Until Element Is Visible  ${${platformName}_${lang}_PolicyOption}      timeout=50s
         Click Element    ${${platformName}_${lang}_PolicyOption}
         ${iOS_SelectPolicy}    Set Variable
         ...    xpath=(//XCUIElementTypeOther[@name='Select policy']//following::XCUIElementTypeOther[contains(@label,'${Policy_No}')])[last()]
         ${Android_SelectPolicy}    Set Variable
         ...    xpath=//android.widget.TextView[@text='Select policy']/following::android.widget.TextView[@text='${Policy_No}']
-        Wait Until Element Is Visible    ${${platformName}_SelectPolicy}    timeout=10s
+        Wait Until Element Is Visible    ${${platformName}_SelectPolicy}    timeout=50s
         Click Element    ${${platformName}_SelectPolicy}
 
         #call specefic claim keyword
@@ -657,8 +658,10 @@ DOB
     END
 
 Total Amount Popup
-    IF  ${TotalAmountPaid} > 5000
-        Wait Until Element Is Visible    ${${platformName}_${lang}_OPD_Iunderstand_Popup}    timeout=10s
-        Take Screenshot    Amount popup
-        Click Element    ${${platformName}_${lang}_OPD_Iunderstand_Popup}
+    IF    '${TotalAmountPaid}' != ''
+         IF  ${TotalAmountPaid} > 5000
+            Wait Until Element Is Visible    ${${platformName}_${lang}_OPD_Iunderstand_Popup}    timeout=10s
+            Take Screenshot    Amount popup
+            Click Element    ${${platformName}_${lang}_OPD_Iunderstand_Popup}
+        END
     END

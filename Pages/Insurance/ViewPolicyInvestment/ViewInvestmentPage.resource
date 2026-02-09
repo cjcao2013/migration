@@ -198,7 +198,7 @@ Investment(s)
                 ${width}    Get Window Width
                 ${hight}    Evaluate    ${hight}/2
                 ${width}    Evaluate    ${width}/2
-                Swipe    ${width}    ${hight}    ${width}    50
+                Swipe    start_x=${width}    start_y=${hight}    end_x=${width}    end_y=50   duration=1s
                 Take Screenshot    InvestmentFund_details
                 ${totalpercdisplaystatus}    Run Keyword And Return Status
                 ...    Element Should Be Visible

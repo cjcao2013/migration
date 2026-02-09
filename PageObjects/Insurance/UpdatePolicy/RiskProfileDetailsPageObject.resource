@@ -90,8 +90,8 @@ ${iOS_EN_RiskLevel}                                             xpath=//android.
 ${iOS_EN_InvestorType}                                          xpath=//android.widget.TextView[@text='Investor type']/following-sibling::android.widget.TextView[1]
 ${iOS_EN_RiskProfileUpdated}                                    chain=**/XCUIElementTypeStaticText[`label == "Risk profile updated!"`]
 ${iOS_EN_NameUpdated}                                           xpath=//android.widget.TextView[@text='Name update']
-${iOS_EN_Back_Button}                                           chain=**/XCUIElementTypeButton[`name == "back-button"`]
-${iOS_EN_Update_BackButton}                                     chain=**/XCUIElementTypeButton[`name == "back-button"`]
+${iOS_EN_Back_Button}                                           chain=**/XCUIElementTypeOther[`name == "Update risk profile Let’s get started on getting your risk profile up to date Risk overview card image Update & complete Personal particulars & Suitability assessment  Your current risk profile Last update 14 Jan 2026 Total score 19 Risk level 2 Investor type Medium to Low Risk"`][7]/XCUIElementTypeOther[1]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther
+${iOS_EN_Update_BackButton}                                     chain=**/XCUIElementTypeOther[`name == "Manage policy(s)"`][3]/XCUIElementTypeOther[1]/XCUIElementTypeOther
 #xpath=(//XCUIElementTypeOther[@name="Update policies"])[3]/XCUIElementTypeOther[1]/XCUIElementTypeOther
 # ----------------------------------Update Particulares---------------------------------------------------------
 ${iOS_EN_PersonalDetails_FirstName}                             chain=**/XCUIElementTypeOther[`label BEGINSWITH "First name"`][3]/XCUIElementTypeOther[1]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeTextField

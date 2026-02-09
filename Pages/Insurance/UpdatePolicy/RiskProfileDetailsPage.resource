@@ -201,7 +201,7 @@ Update Particulars
         Wait Until Element Is Visible    ${${platformName}_${lang}_PersonalDetails_FirstName}    timeout=10s
         ${VP_PersonalDetails_FirstName}    Get Text    ${${platformName}_${lang}_PersonalDetails_FirstName}
 
-        ${VP_PersonalDetails_MiddleName}    Get Text    ${${platformName}_${lang}_PersonalDetails_Flowtails_MiddleName}
+#        ${VP_PersonalDetails_MiddleName}    Get Text    ${${platformName}_${lang}_PersonalDetails_Flowtails_MiddleName}
 
         ${VP_PersonalDetails_LastName}    Get Text    ${${platformName}_${lang}_PersonalDetails_LastName}
 
@@ -239,7 +239,7 @@ Update Particulars
             Input Text    ${${platformName}_${lang}_PersonalDetails_FirstName}    ${fname}
         END
         ${mname}    FakerLibrary.First Name
-        Input Text    ${${platformName}_${lang}_PersonalDetails_Flowtails_MiddleName}    ${mname}
+#        Input Text    ${${platformName}_${lang}_PersonalDetails_Flowtails_MiddleName}    ${mname}
         IF    '${VP_PersonalDetails_LastName}' != ''
             Clear Text    ${${platformName}_${lang}_PersonalDetails_LastName}
             ${lname}    FakerLibrary.Last Name
@@ -402,8 +402,8 @@ Update Particulars
             ...    true
             ...    ${Status}
         END
-#        Wait Until Element Is Visible    ${${platformName}_${lang}_MyIDCardAddressSame_chkbox}      timeout=5s
-#        Click Element    ${${platformName}_${lang}_MyIDCardAddressSame_chkbox}
+        Wait Until Element Is Visible    ${${platformName}_${lang}_MyIDCardAddressSame_chkbox}      timeout=5s
+        Click Element    ${${platformName}_${lang}_MyIDCardAddressSame_chkbox}
 #        Wait Until Element Is Visible    ${${platformName}_${lang}_MyIDCardAddressSame_chkbox}      timeout=5s
 #        Click Element    ${${platformName}_${lang}_MyIDCardAddressSame_chkbox}
         SwipePage
@@ -575,12 +575,12 @@ Suitablity Assessmaent
             ...    ${VP_Change_Success_Pass}
         END
         Set Global Variable    ${result}    Risk Profile Updated Sucessfully
-
-        Wait Until Page Contains Element    ${${platformName}_${lang}_Back_Button}    timeout=30s
-        Click Element    ${${platformName}_${lang}_Back_Button}
-
-        Wait Until Page Contains Element    ${${platformName}_${lang}_Update_BackButton}    timeout=30s
-        Click Element    ${${platformName}_${lang}_Update_BackButton}
+        Pause Execution
+#        Wait Until Page Contains Element    ${${platformName}_${lang}_Back_Button}    timeout=30s
+#        Click Element    ${${platformName}_${lang}_Back_Button}
+#
+#        Wait Until Page Contains Element    ${${platformName}_${lang}_Update_BackButton}    timeout=30s
+#        Click Element    ${${platformName}_${lang}_Update_BackButton}
 
         ${status}    Run Keyword And Return Status  Wait Until Element Is Visible    ${${platformName}_${lang}_SeeAll}   timeout=20s
         IF    '${status}' == 'True'

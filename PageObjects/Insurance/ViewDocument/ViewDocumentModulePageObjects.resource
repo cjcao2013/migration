@@ -1,6 +1,7 @@
 *** Variables ***
 ${iOS_EN_Document_Download_Button}                  chain=**/XCUIElementTypeOther[`label == "Preview document"`]/XCUIElementTypeOther
-
+${iOS_EN_Document_Show_all}                         chain=**/XCUIElementTypeOther[`name == "Show all"`]
+${Android_EN_Document_Show_all}                     android=new UiSelector().text("Show all")
 ${Android_EN_Document_Popup_Download_Button}        xpath=//android.widget.TextView[@text='Download']
 ${iOS_EN_Document_Popup_Download_Button}            chain=**/XCUIElementTypeOther[`label == "Download"`]
 

@@ -29,7 +29,7 @@ Mobile and Email Change
             ${MobNo}    Set Variable    ${Mob}${oldMobileNo}
             Set Global Variable    ${MobNo}
             Take Screenshot    Update_Details
-            IF    '${PersonalDetails_WhatChange}' == 'MobileNo'
+            IF    '${PersonalDetails_WhatChange}' == 'mobile number'
 
                 Mobile Change
                 ${Static_Message}        Set Variable            FWD has successfully updated your mobile number as requested.
@@ -310,7 +310,7 @@ Capture Email and Mobile Details Transaction for iOS
         ${VP_Transaction_email}    Get From List    ${VP_Transaction_email}    0
     ELSE
         ${mobileDetails}    Get Element Attribute
-        ...    chain=**/XCUIElementTypeOther[`label CONTAINS "Email"`]
+        ...    chain=**/XCUIElementTypeOther[`label CONTAINS "Email"`][-1]
         ...    attribute=label
         @{mobileDetails1}    Split String    ${mobileDetails}    number
         ${mobileDetails11}    Get From List    ${mobileDetails1}    1
@@ -318,7 +318,7 @@ Capture Email and Mobile Details Transaction for iOS
         ${mobileDetails21}    Get From List    ${mobileDetails2}    0
         ${VP_Transaction_Mobile}    Strip String    ${mobileDetails21}
     END
-    IF    '${PersonalDetails_WhatChange}' == 'MobileNo'
+    IF    '${PersonalDetails_WhatChange}' == 'mobile number'
         Set Calc VP With Source And Original Values
         ...    NEW_MobileNo
         ...    ${NewMob}
@@ -394,7 +394,7 @@ Capture Email and Mobile Details Transaction for Android
     ${VP_Transaction_email}    Get Text    ${${platformName}_${lang}_TransactionEmail}
     ${VP_Transaction_Mobile}    Get Text    ${${platformName}_${lang}_TransactionMobile}
     ${VP_Completion_Date}    Get Text    ${${platformName}_${lang}_TransCompletion_Date}
-    IF    '${PersonalDetails_WhatChange}' == 'MobileNo'
+    IF    '${PersonalDetails_WhatChange}' == 'mobile number'
      Set Calc VP With Source And Original Values    OLD_MobileNo    ${MobNo}    ${VP_Transaction_Mobile}    PersonalDetail_Page    Transaction_Page    ${MobNo}    ${VP_Transaction_Mobile}
         Set Calc VP With Source And Original Values
         ...    NEW_MobileNo
