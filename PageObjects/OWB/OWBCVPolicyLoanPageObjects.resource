@@ -5,8 +5,8 @@ ${EN_LoanOutstanding}                   xpath=//div[@data-id='loanOutstanding']/
 ${EN_Total_Loan}                        xpath=//div[@data-id='totalLoanAsOfToday']/div/span/div/div/div[2]/input    # getvalue
 ${EN_PayableAmount}                     xpath=//input[@id='payableAmount']    # get title
 ${EN_LoanRequestAmount}                 xpath=//div[@data-id='loanRequestAmount']/div/span/div/div/div[2]/input    # getvalue
-${EN_BankNamePolicyLoan}                xpath=(//input[@id='bankCode'])[last()]   # get title
-${EN_BankAccountNumberPolicyLoan}       xpath=(//input[@id='bankAccountNo'][last()]   # get title
+${EN_BankNamePolicyLoan}                xpath=(//input[@id='bankCode'])[last()]  # get title
+${EN_BankAccountNumberPolicyLoan}       xpath=(//input[@id='bankAccountNo'][last()])   # get title
 ${EN_CompletionDate}                    xpath=//input[@id='endTime']    # get title
 ${EN_BankHolderNamePolicyLoan}          xpath=(//input[@id='bankAccountName'])[last()]
 ${EN_ApprovalStatusPolicyLoan}          xpath=//div[@id='businessDecision']/div/div/div[2]

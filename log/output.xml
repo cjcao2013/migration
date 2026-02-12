@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.3.2 (Python 3.14.0 on win32)" generated="2026-02-10T13:16:27.098289" rpa="false" schemaversion="5">
+<suite id="s1" name="Test" source="C:\Users\223741\OneDrive - FWD Group Management Holdings Limited\QKFolder\Automation_Script\TH Code\CustomLibraries\Test.robot">
+<test id="s1-t1" name="Compare Using Keyword" line="14">
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-02-10T13:16:27.156283" level="INFO">${a} = Test22234</msg>
+<var>${a}</var>
+<arg>Test22234</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-02-10T13:16:27.155865" elapsed="0.034238"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-02-10T13:16:27.191993" level="INFO">${b} = Ｔｅｓｔ２２２３４</msg>
+<var>${b}</var>
+<arg>Ｔｅｓｔ２２２３４</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-02-10T13:16:27.190479" elapsed="0.001711"/>
+</kw>
+<kw name="Normalize Text">
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2026-02-10T13:16:27.193855" level="INFO">${norm} = Test22234</msg>
+<var>${norm}</var>
+<arg>unicodedata.normalize('NFKC', $text)</arg>
+<arg>modules=unicodedata</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2026-02-10T13:16:27.193213" elapsed="0.000752"/>
+</kw>
+<return>
+<value>${norm}</value>
+<status status="PASS" start="2026-02-10T13:16:27.194088" elapsed="0.000153"/>
+</return>
+<msg time="2026-02-10T13:16:27.194484" level="INFO">${a_norm} = Test22234</msg>
+<var>${a_norm}</var>
+<arg>${a}</arg>
+<status status="PASS" start="2026-02-10T13:16:27.192614" elapsed="0.001957"/>
+</kw>
+<kw name="Normalize Text">
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2026-02-10T13:16:27.197439" level="INFO">${norm} = Test22234</msg>
+<var>${norm}</var>
+<arg>unicodedata.normalize('NFKC', $text)</arg>
+<arg>modules=unicodedata</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2026-02-10T13:16:27.195256" elapsed="0.002287"/>
+</kw>
+<return>
+<value>${norm}</value>
+<status status="PASS" start="2026-02-10T13:16:27.197672" elapsed="0.000119"/>
+</return>
+<msg time="2026-02-10T13:16:27.198017" level="INFO">${b_norm} = Test22234</msg>
+<var>${b_norm}</var>
+<arg>${b}</arg>
+<status status="PASS" start="2026-02-10T13:16:27.194820" elapsed="0.003292"/>
+</kw>
+<kw name="Should Be Equal As Strings" owner="BuiltIn">
+<arg>${a_norm}</arg>
+<arg>${b_norm}</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" start="2026-02-10T13:16:27.198274" elapsed="0.000329"/>
+</kw>
+<status status="PASS" start="2026-02-10T13:16:27.154662" elapsed="0.044126"/>
+</test>
+<status status="PASS" start="2026-02-10T13:16:27.103406" elapsed="0.096407"/>
+</suite>
+<statistics>
+<total>
+<stat pass="1" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat name="Test" id="s1" pass="1" fail="0" skip="0">Test</stat>
+</suite>
+</statistics>
+<errors>
+<msg time="2026-02-10T13:16:27.085442" level="WARN">Error in file 'C:\Users\223741\OneDrive - FWD Group Management Holdings Limited\QKFolder\Automation_Script\TH Code\CustomLibraries\Test.robot' on line 11: The '[Return]' setting is deprecated. Use the 'RETURN' statement instead.</msg>
+</errors>
+</robot>

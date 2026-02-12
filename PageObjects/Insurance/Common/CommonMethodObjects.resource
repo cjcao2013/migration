@@ -5,7 +5,7 @@ ${Android_EN_Response_select}                       xpath=//android.widget.TextV
 ${Android_EN_Skip}                                  xpath=(//android.widget.TextView[@text='Skip'])
 ${Android_EN_Done}                                  xpath=(//android.widget.TextView[@text='Done'])
 ${Android_EN_Submit_btn}                            android=new UiSelector().textContains("Submit")
-${Android_EN_AddImage}                              xpath=//android.view.ViewGroup[@resource-id="iBank-add-image"]
+${Android_EN_AddImage}                              xpath=//android.view.ViewGroup[@resource-id="add-more-photo-button"]
 ${Android_EN_BankName}                              xpath=//android.widget.TextView[@text='Bank name']
 ${Android_EN_BankAccNo}                             xpath=//android.widget.EditText[@resource-id="account-number-text-input"]
 ${Android_EN_BankAccountNoInput}                    xpath=//android.widget.EditText[@resource-id="account-number-text-input"]

@@ -287,29 +287,22 @@ Month Dic
     RETURN    ${Month_value}
 
 Select Policy
-    TRY
-        ${status}    Run Keyword And Return Status
-        ...    Wait Until Element Is Visible
-        ...    ${${platformName}_EN_PolicyNotAvailable}
-        ...    timeout=5s
-        IF    '${status}' == 'True'
-            Set Global Variable    ${errormsg}    No Eligible Policy
-        END
-        #    Click On Policy Number
-        ${Android_SelectPolicyNo}    Set Variable    android=new UiSelector().textContains("${Policy_No}")
-        ${iOS_SelectPolicyNo}    Set Variable    chain=**/XCUIElementTypeOther[`label CONTAINS '${Policy_No}'`][-1]
-        Scroll Till Transaction Is Visible    ${${platformName}_SelectPolicyNo}
-        Wait Until Page Contains Element    ${${platformName}_SelectPolicyNo}       timeout=30s
-        Take Screenshot    Select Policy
-        Click Element    ${${platformName}_SelectPolicyNo}
-        #        ${PolicyDetails}    Get Text    ${${platformName}_SelectPolicyNo}
-        Set Global Variable    ${${platformName}_SelectPolicyNo}
-   EXCEPT     AS  ${reason}
-        Set Failed Actual Result and VP    Omne_Flow   ${reason}   Select Policy ${Insurance_Flow}
-   END
-
-
-
+    ${status}    Run Keyword And Return Status
+    ...    Wait Until Element Is Visible
+    ...    ${${platformName}_EN_PolicyNotAvailable}
+    ...    timeout=5s
+    IF    '${status}' == 'True'
+        Set Global Variable    ${errormsg}    No Eligible Policy
+    END
+    #    Click On Policy Number
+    ${Android_SelectPolicyNo}    Set Variable    android=new UiSelector().textContains("${Policy_No}")
+    ${iOS_SelectPolicyNo}    Set Variable    chain=**/XCUIElementTypeOther[`label CONTAINS '${Policy_No}'`][-1]
+    Scroll Till Transaction Is Visible    ${${platformName}_SelectPolicyNo}
+    Wait Until Page Contains Element    ${${platformName}_SelectPolicyNo}       timeout=30s
+    Take Screenshot    Select Policy
+    Click Element    ${${platformName}_SelectPolicyNo}
+    #        ${PolicyDetails}    Get Text    ${${platformName}_SelectPolicyNo}
+    Set Global Variable    ${${platformName}_SelectPolicyNo}
 
 Handle Feedback
     ${status}   Run Keyword And Return Status    Wait Until Element Is Visible    ${${platformName}_${lang}_FeedbackPage_Title}     timeout=5s
@@ -659,3 +652,15 @@ Extra POP Up
         Click Text    Continue    exact_match=true
         Take Screenshot    PostSignInHome_Page
     END
+
+
+Decrypt Details
+    [Arguments]     ${Decrypt_Value}
+    [Documentation]         This Keyword is used for decrypt details
+    IF    '${Decrypt_Value}' != '' and '${Decrypt_Value}' != 'None'
+         ${Decrypt_Value}    Strip String    ${Decrypt_Value}
+        ${Decrypt_Value}    AES Decrypt    ${key}    ${Decrypt_Value}
+    ELSE
+         ${Decrypt_Value}       Set Variable    ${EMPTY}
+    END
+    [Return]    ${Decrypt_Value}

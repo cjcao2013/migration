@@ -22,6 +22,7 @@ ${iOS_EN_Change_BankDetails}                        chain=**/XCUIElementTypeOthe
 ${iOS_EN_Error_Max_LoanLimit}                       chain=**/XCUIElementTypeStaticText[`label CONTAINS "Maximum loan limit "`]
 ${iOS_EN_UploadDocument_JustConfirm_Yes}        chain=**/XCUIElementTypeButton[`label == "Yes"`]
 
+${Android_EN_CVloan_TermsandConCheckbox}                xpath=//android.view.ViewGroup[@resource-id="CashValueLoan-terms-checkbox"]
 ${Android_EN_PolicyCashValue}                       xpath=(//android.widget.TextView[contains(@text,'Policy cash value')]/following-sibling::android.widget.TextView)[1]
 ${Android_EN_Loanlimitasoftoday}                    xpath=(//android.widget.TextView[contains(@text,'Loan limit as of today')]/following-sibling::android.widget.TextView)[1]
 ${Android_EN_Loanoutstanding}                       xpath=(//android.widget.TextView[contains(@text,'Loan outstanding')]/following-sibling::android.widget.TextView)[1]
@@ -37,7 +38,7 @@ ${Android_EN_TermsandConCheckbox}                   xpath=//android.widget.Check
 ${Android_EN_CVLoanTransaction}                     xpath=//android.view.ViewGroup[@content-desc="View servicing request transactions"]/android.widget.TextView
 ${Android_EN_TransactionDetailspolicyloan}          xpath=//android.widget.TextView[@text="Request Amount"]
 ${Android_EN_PolicyLoanConfirmEmailPopup}           xpath=//android.view.ViewGroup[@content-desc="Yes"]
-${Android_EN_TransactionStatus}                     xpath=(//android.widget.TextView[contains(@text,'Policy Loan Request')]/following-sibling::android.view.ViewGroup/android.widget.TextView)[1]
+${Android_EN_cv_loan_TransactionStatus}                     xpath=(//android.widget.TextView[contains(@text,'Policy Loan Request')]/following-sibling::android.view.ViewGroup/android.widget.TextView)[1]
 ${Android_EN_TransactionRequestAmount}              xpath=(//android.widget.TextView[contains(@text,'Request Amount')]/following-sibling::android.widget.TextView)[1]
 ${Android_EN_TransactionPayableAmount}              xpath=(//android.widget.TextView[contains(@text,'Payable amount')]/following-sibling::android.widget.TextView)[1]
 ${Android_EN_TransactionPayoutmethodAccounNo}       xpath=(//android.widget.TextView[contains(@text,'Payout method')]/following-sibling::android.widget.TextView)[2]

@@ -27,6 +27,7 @@ Submit
                 Take Screenshot     FWD_Insurance_Page
                 Click Element       ${${platformName}_${lang}_InsurnacePage}
           END
+
         #enter pin
         Set or enter PIN
 

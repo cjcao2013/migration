@@ -109,12 +109,8 @@ Policy loan
                 Click Element    ${${platformName}_${lang}_saveBtn}
             ELSE
     #    Add Payment Method PolicyLoan
-                ${sOutput}    Run Keyword And Ignore Error    Add Payment Methods
-                IF    ${sOutput} != ('PASS', None)
-                    Take Screenshot    Error Screenshot
-                    ${failure_reason}    Fetch Reason    ${sOutput}
-                    RETURN    ${failure_reason}
-                END
+                Add Payment Methods
+
             END
         END
                 ${Status}    Run Keyword And Return Status
@@ -314,7 +310,7 @@ TransactionDetails for CV Loan Android
     Sleep    20s
     IF    '${Transaction_Info}'== 'Pre'
         Sleep    3s
-        RefreshPage
+
         ${Android_Selectposttransaction}    Set Variable
         ...    xpath=(//android.widget.TextView[@text='${current_day}']/following-sibling::android.widget.TextView[@text='${current_month}']/parent::android.view.ViewGroup/following-sibling::android.widget.TextView[@text='Policy Loan Request'])[1]
     ELSE IF    '${Transaction_Info}'== 'Post'
@@ -325,7 +321,7 @@ TransactionDetails for CV Loan Android
     Scroll Till Transaction Is Visible    ${${platformName}_Selectposttransaction}
     Wait Until Element Is Visible    ${${platformName}_Selectposttransaction}    timeout=300s
     Take Screenshot    Transaction Page
-    ${transactionstatus}    Get Text    ${${platformName}_${lang}_TransactionStatus}
+    ${transactionstatus}    Get Text    ${${platformName}_${lang}_cv_loan_TransactionStatus}
     IF    '${transactionstatus}' == 'Completed'
         ${mTransactionstatus}    Set Variable    Approve
     ELSE

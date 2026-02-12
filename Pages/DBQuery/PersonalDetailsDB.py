@@ -146,3 +146,55 @@ class PersonalDetailsDB:
                     conn.close()
                 lsdf = [df.columns.values.tolist()] + df.values.tolist()
                 return lsdf
+
+    @keyword("Get Contact Details")
+    def get_DBCotactDetails(self, dbhostname, dbusername, dbpassword, dbport, dbinstance, policynumber,
+                                          screenshotdir):
+        # Database connection parameters
+        db_config = {
+            "host": dbhostname,
+            "port": dbport,
+            "user": dbusername,
+            "password": dbpassword,
+            "database": dbinstance,
+        }
+        key = b'f057ecb7c8ed51ac'
+        print((policynumber))
+        encrypt_policynumber = AES.aes_encrypt(key, policynumber)
+        # Column header (column name)
+        # column_header = "UnitHolding"
+        value1 = ""
+        lsdf = []
+        try:
+            # Create a MySQL database connection
+            conn = mysql.connector.connect(**db_config)
+            # Create a pandas DataFrame from the SQL query
+            # query = f"select * from fwd_insurance_uat_addon.servicingdtltemp where owneruserid = '" + owneruserid + "'  and ListPoliciesApply = '" + policyid + "'  order by timegenerated desc"
+            # f" where owneruserid = '" + owneruserid +"' " \
+            # f" and ListPoliciesApply = '" + policyid +"' " \
+            query = f" select a.ExternalRemoteId,b.Email,b.MobileNumber,b.AddressLine1,b.AddressLine2,b.AddressLine3,b.AddressLine4,b.AddressLine5,b.PostalCode" \
+                    f" from customerpolicies a inner join customers b on a.OwnerUserId=b.Id" \
+                    f" where a.ExternalRemoteId ='" + encrypt_policynumber + "'; "
+            print(query)
+            df = pd.read_sql(query, conn)
+            # print (type(df))
+            print(df)
+            screenshot = screenshotdir
+            print(query)
+
+            f = open(screenshot + "/Policy_ContactDetails.txt", "a")
+            f.write(query)
+            f.close()
+
+            df = pd.read_sql(query, conn)
+            df.to_csv(screenshot + "/Policy_ContactDetails.csv", mode='a')
+
+        except mysql.connector.Error as err:
+            print(f"Error: {err}")
+        finally:
+            # Close the database connection
+            conn.close()
+        # print(value1)
+        # return df
+        lsdf = [df.columns.values.tolist()] + df.values.tolist()
+        return lsdf

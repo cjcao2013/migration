@@ -43,20 +43,20 @@ OPUS Policy loan
         ${VP_Total_Loan}    Get Text    ${EN_OPUS_CVloanPolicy_CurrentLoanAmount}
         ${VP_LoanRequestAmount}    Get Element Attribute    ${EN_OPUS_CVloan_Request_amount}    attribute=value
         ${VP_PayableAmount}    Get Element Attribute    ${EN_OPUS_cvloan_Payable_amount}    attribute=title
-    #    IF    '${Add_Payment_Method_Type}' != 'PromptPay'
-    #        ${VP_BankName}    Get Element Attribute    ${EN_BankNamePolicyLoan}    attribute=title
-    #        Wait Until Page Contains Element    ${EN_BankAccountNumberPolicyLoan}               timeout=90s
-    #        ${VP_BankAccountNumber}    Get Element Attribute    ${EN_BankAccountNumberPolicyLoan}    attribute=title
-    #        ${VP_BankHolderName}    Get Element Attribute    ${EN_BankHolderNamePolicyLoan}    attribute=title
-    #        ${BankName}    Split String    ${VP_BankName}
-    #
-    #        ${leng}    Get Length    ${BankName}
-    #        IF    '${leng}' < '3'
-    #            ${VP_BankName}    Split String    ${VP_BankName}    -
-    #            ${VP_BankName}    Get From List    ${VP_BankName}    1
-    #        END
-    #        ${mVP_BankAccountNumber}    Get Substring    ${VP_BankAccountNumber}    -4
-    #    END
+        IF    '${Add_Payment_Method_Type}' != 'PromptPay'
+            ${VP_BankName}    Get Element Attribute    ${EN_BankNamePolicyLoan}    attribute=title
+            Wait Until Page Contains Element    ${EN_BankAccountNumberPolicyLoan}               timeout=90s
+            ${VP_BankAccountNumber}    Get Element Attribute    ${EN_BankAccountNumberPolicyLoan}    attribute=title
+            ${VP_BankHolderName}    Get Element Attribute    ${EN_BankHolderNamePolicyLoan}    attribute=title
+            ${BankName}    Split String    ${VP_BankName}
+
+            ${leng}    Get Length    ${BankName}
+            IF    '${leng}' < '3'
+                ${VP_BankName}    Split String    ${VP_BankName}    -
+                ${VP_BankName}    Get From List    ${VP_BankName}    1
+            END
+            ${mVP_BankAccountNumber}    Get Substring    ${VP_BankAccountNumber}    -4
+        END
     #    ${VP_CompletionDate}    Get Element Attribute    ${EN_CompletionDate}    attribute=title
     #    ${VP_Approval_Status}    Get Element Attribute    ${EN_ApprovalStatusPolicyLoan}    attribute=title
     #    ${VP_Policy_Interest_Rate}    Get Element Attribute    ${EN_Policy_Interest_Rate}    attribute=value
@@ -115,11 +115,11 @@ OPUS Policy loan
     #        ...    ${VP_BankName.strip()}
     #        ...    ${VP_BankName.strip()}
     #        ...    OWB Application
-    #        Set Calc VP Actual Result With Original And Source
-    #        ...    Bank_Account_Number
-    #        ...    ${mVP_BankAccountNumber.strip()}
-    #        ...    ${VP_BankAccountNumber.strip()}
-    #        ...    OWB Application
+            Set Calc VP Actual Result With Original And Source
+            ...    Bank_Account_Number
+            ...    ${mVP_BankAccountNumber.strip()}
+            ...    ${VP_BankAccountNumber.strip()}
+            ...    OWB Application
         ELSE
     #        ${BO_Status}    Get Element Attribute    ${EN_BO_Status}    attribute=value
     #        Set Calc VP Expected Result With Original And Source

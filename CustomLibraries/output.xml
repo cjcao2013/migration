@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.3.2 (Python 3.14.0 on win32)" generated="2026-02-11T13:47:39.659588" rpa="false" schemaversion="5">
+<suite id="s1" name="Test" source="C:\Users\223741\OneDrive - FWD Group Management Holdings Limited\QKFolder\Automation_Script\TH Code\CustomLibraries\Test.robot">
+<test id="s1-t1" name="Compare Using Keyword" line="9">
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-02-11T13:47:39.715631" level="INFO">${a} = Feb 11 2026 Change mailing preference Completed Policy no: 40779327 New mailing preference: Email Policy applied ยูนิต ลิงค์ เลกาซี (1)</msg>
+<var>${a}</var>
+<arg>Feb 11 2026 Change mailing preference Completed Policy no: 40779327 New mailing preference: Email Policy applied ยูนิต ลิงค์ เลกาซี (1)</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-02-11T13:47:39.715413" elapsed="0.000263"/>
+</kw>
+<kw name="Split String" owner="String">
+<msg time="2026-02-11T13:47:39.716261" level="INFO">@{transactionstatusdetail} = [ Feb 11 2026 Change mailing preference Completed  |  40779327 New mailing preference: Email Policy applied ยูนิต ลิงค์ เลกาซี (1) ]</msg>
+<var>@{transactionstatusdetail}</var>
+<arg>${a}</arg>
+<arg>Policy no:</arg>
+<doc>Splits the ``string`` using ``separator`` as a delimiter string.</doc>
+<status status="PASS" start="2026-02-11T13:47:39.715998" elapsed="0.000299"/>
+</kw>
+<kw name="Get From List" owner="Collections">
+<msg time="2026-02-11T13:47:39.716770" level="INFO">${transactionstatus} = Feb 11 2026 Change mailing preference Completed </msg>
+<var>${transactionstatus}</var>
+<arg>${transactionstatusdetail}</arg>
+<arg>0</arg>
+<doc>Returns the value specified with an ``index`` from ``list``.</doc>
+<status status="PASS" start="2026-02-11T13:47:39.716598" elapsed="0.000196"/>
+</kw>
+<kw name="Split String" owner="String">
+<msg time="2026-02-11T13:47:39.717205" level="INFO">@{transactionstatus} = [ Feb 11 2026  |  Completed  ]</msg>
+<var>@{transactionstatus}</var>
+<arg>${transactionstatus}</arg>
+<arg>Change mailing preference</arg>
+<doc>Splits the ``string`` using ``separator`` as a delimiter string.</doc>
+<status status="PASS" start="2026-02-11T13:47:39.717025" elapsed="0.000203"/>
+</kw>
+<kw name="Get From List" owner="Collections">
+<msg time="2026-02-11T13:47:39.717604" level="INFO">${transactionstatus} =  Completed </msg>
+<var>${transactionstatus}</var>
+<arg>${transactionstatus}</arg>
+<arg>1</arg>
+<doc>Returns the value specified with an ``index`` from ``list``.</doc>
+<status status="PASS" start="2026-02-11T13:47:39.717447" elapsed="0.000180"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>Transaction_Status=${transactionstatus}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-02-11T13:47:39.717835" elapsed="0.000289"/>
+</kw>
+<kw name="Get From List" owner="Collections">
+<msg time="2026-02-11T13:47:39.718549" level="INFO">${ChangeMailingPreference_Transaction_Detail} =  40779327 New mailing preference: Email Policy applied ยูนิต ลิงค์ เลกาซี (1)</msg>
+<var>${ChangeMailingPreference_Transaction_Detail}</var>
+<arg>${transactionstatusdetail}</arg>
+<arg>1</arg>
+<doc>Returns the value specified with an ``index`` from ``list``.</doc>
+<status status="PASS" start="2026-02-11T13:47:39.718348" elapsed="0.000229"/>
+</kw>
+<kw name="Split String" owner="String">
+<msg time="2026-02-11T13:47:39.718969" level="INFO">@{ChangeMailingPreference_Transaction_Detail} = [  40779327  |  Email Policy applied ยูนิต ลิงค์ เลกาซี (1) ]</msg>
+<var>@{ChangeMailingPreference_Transaction_Detail}</var>
+<arg>${ChangeMailingPreference_Transaction_Detail}</arg>
+<arg>New mailing preference:</arg>
+<doc>Splits the ``string`` using ``separator`` as a delimiter string.</doc>
+<status status="PASS" start="2026-02-11T13:47:39.718779" elapsed="0.000216"/>
+</kw>
+<kw name="Get From List" owner="Collections">
+<msg time="2026-02-11T13:47:39.719355" level="INFO">${VP_PolicyNumber} =  40779327 </msg>
+<var>${VP_PolicyNumber}</var>
+<arg>${ChangeMailingPreference_Transaction_Detail}</arg>
+<arg>0</arg>
+<doc>Returns the value specified with an ``index`` from ``list``.</doc>
+<status status="PASS" start="2026-02-11T13:47:39.719207" elapsed="0.000169"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>PolicyNUmber=${VP_PolicyNumber}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-02-11T13:47:39.719672" elapsed="0.000260"/>
+</kw>
+<kw name="Get From List" owner="Collections">
+<msg time="2026-02-11T13:47:39.720603" level="INFO">${ChangeMailingPreference_Transaction_Detail} =  Email Policy applied ยูนิต ลิงค์ เลกาซี (1)</msg>
+<var>${ChangeMailingPreference_Transaction_Detail}</var>
+<arg>${ChangeMailingPreference_Transaction_Detail}</arg>
+<arg>1</arg>
+<doc>Returns the value specified with an ``index`` from ``list``.</doc>
+<status status="PASS" start="2026-02-11T13:47:39.720441" elapsed="0.000196"/>
+</kw>
+<kw name="Split String" owner="String">
+<msg time="2026-02-11T13:47:39.721200" level="INFO">@{ChangeMailingPreference_Transaction_Detail} = [  Email  |  ยูนิต ลิงค์ เลกาซี (1) ]</msg>
+<var>@{ChangeMailingPreference_Transaction_Detail}</var>
+<arg>${ChangeMailingPreference_Transaction_Detail}</arg>
+<arg>Policy applied</arg>
+<doc>Splits the ``string`` using ``separator`` as a delimiter string.</doc>
+<status status="PASS" start="2026-02-11T13:47:39.720942" elapsed="0.000297"/>
+</kw>
+<kw name="Get From List" owner="Collections">
+<msg time="2026-02-11T13:47:39.721751" level="INFO">${VP_Mailing_Preference} =  Email </msg>
+<var>${VP_Mailing_Preference}</var>
+<arg>${ChangeMailingPreference_Transaction_Detail}</arg>
+<arg>0</arg>
+<doc>Returns the value specified with an ``index`` from ``list``.</doc>
+<status status="PASS" start="2026-02-11T13:47:39.721528" elapsed="0.000259"/>
+</kw>
+<kw name="Get From List" owner="Collections">
+<msg time="2026-02-11T13:47:39.722266" level="INFO">${VP_Policy_Applied} =  ยูนิต ลิงค์ เลกาซี (1)</msg>
+<var>${VP_Policy_Applied}</var>
+<arg>${ChangeMailingPreference_Transaction_Detail}</arg>
+<arg>1</arg>
+<doc>Returns the value specified with an ``index`` from ``list``.</doc>
+<status status="PASS" start="2026-02-11T13:47:39.722058" elapsed="0.000244"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>New_Mailing_Address=${VP_Mailing_Preference}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-02-11T13:47:39.722599" elapsed="0.000414"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>New_Mailing_Address=${VP_Policy_Applied}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-02-11T13:47:39.723686" elapsed="0.000452"/>
+</kw>
+<status status="PASS" start="2026-02-11T13:47:39.714430" elapsed="0.009983"/>
+</test>
+<status status="PASS" start="2026-02-11T13:47:39.663317" elapsed="0.063185"/>
+</suite>
+<statistics>
+<total>
+<stat pass="1" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat name="Test" id="s1" pass="1" fail="0" skip="0">Test</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>

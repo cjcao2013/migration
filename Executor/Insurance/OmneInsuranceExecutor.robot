@@ -25,6 +25,7 @@ Resource            ../../Pages/Engagement/EngagementBannerPage.robot
 Resource            ../../Pages/Insurance/ViewDocument/ViewDocumentModulePage.resource
 Resource            ../../Pages/Insurance/UpdatePolicy/BenefitPayoutPage.resource
 Resource            ../../Pages/Insurance/ViewCareCard/ViewCareCardPage.resource
+Resource            ../../Pages/Insurance/UpdatePolicy/MailingPreferencePage.resource
 Test Setup          Get TestRun Metadata    ${testRunId}
 Test Teardown       Close Application
 
