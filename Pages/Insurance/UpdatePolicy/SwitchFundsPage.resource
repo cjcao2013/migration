@@ -318,12 +318,8 @@ Switch funds
         ...    true
         ...    ${status}
         Take Screenshot    OMNE_SwitchFund_Thanks_Page
-        Run Keyword    Check Transaction Status
-        Wait Until Element Is Visible    ${${platformName}_${lang}_SeeAll}   timeout=20s
-        Click Element    ${${platformName}_${lang}_SeeAll}
-        Take Screenshot    Transaction_Page
-        Wait Until Page Contains Element    ${${platformName}_${lang}_ServiceReuest}    timeout=50s
-        Click Element    ${${platformName}_${lang}_ServiceReuest}
+        Run Keyword    Transaction Success Page
+
         Take Screenshot    Transaction_Page
         Run Keyword    Capture Fund Switch Transaction Details    Pre
 

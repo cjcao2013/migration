@@ -430,6 +430,20 @@ Check Transaction Status
         Set Failed Actual Result and VP    Omne_Flow   ${reason}   Check Transaction Status
     END
 
+Transaction Success Page
+    ${status}   Run Keyword And Return Status      Wait Until Element Is Visible   ${${platformName}_${lang}_All_Done_Txt}       timeout=10s
+    IF    '${status}' == 'True'
+        Take Screenshot    All Done Page
+        Click Element    ${${platformName}_${lang}_All_Done_Txt}
+        Handle Feedback
+        Sleep   2s
+        Wait Until Element Is Visible        ${${platformName}_${lang}_TransactionTab}        timeout=30s
+        Click Element        ${${platformName}_${lang}_TransactionTab}
+        Sleep   5s
+        Wait Until Element Is Visible        ${${platformName}_${lang}_TransactionServiceRequest}       timeout=10s
+        Click Element    ${${platformName}_${lang}_TransactionServiceRequest}
+    END
+
 
 Set or enter PIN
     Take Screenshot    PIN PopUp

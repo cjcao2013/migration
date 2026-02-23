@@ -19,7 +19,7 @@ ${iOS_EN_PolicyDeatils}                 xpath=//XCUIElementTypeStaticText[contai
 ${Android_EN_Policy_Details}        xpath=
 
 ${iOS_EN_Current_Mailing_Email}         xpath=//XCUIElementTypeStaticText[contains(@label,'Email')][last()]
-${Android_EN_Current_Mailing_Email}         xpath=//android.widget.TextView[contains(@text,"Email")]
+${Android_EN_Current_Mailing_Email}         xpath=//android.widget.TextView[contains(@text,"Email")][last()]
 
 ${iOS_EN_Current_MailingPreference}        xpath=//XCUIElementTypeStaticText[contains(@label,'Current preference:')][last()]
 ${Android_EN_Current_MailingPreference}         xpath=//android.widget.TextView[contains(@text,"Current preference:")]

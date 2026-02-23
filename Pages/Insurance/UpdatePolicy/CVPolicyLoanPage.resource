@@ -144,29 +144,8 @@ Policy loan
         IF    '${status}' == 'True'
             Insert OTP    ${Transaction_OTP_Source}    ${Transaction_OTP_Expiry_Flag}    ${Transaction_OTP_Resend_Flag}
         END
-    #    Wait Until Element Is Visible    ${${platformName}_${lang}_CVLoanTransaction}    timeout=50s
-    #    Click Element    ${${platformName}_${lang}_CVLoanTransaction}
-
-            # New All Done Confirmation Page
-        ${sOutput}    Run Keyword And Ignore Error    Check Transaction Status
-        IF    ${sOutput} != ('PASS', None)
-            Take Screenshot    Update Policy
-            ${failure_reason}    Fetch Reason    ${sOutput}
-            RETURN    ${failure_reason}
-        END
-
-        ${sOutput}    Run Keyword And Ignore Error    Completion Popup
-        IF    ${sOutput} != ('PASS', None)
-            Take Screenshot    Update Policy
-            ${failure_reason}    Fetch Reason    ${sOutput}
-            RETURN    ${failure_reason}
-        END
-
-        Wait Until Element Is Visible    ${${platformName}_${lang}_SeeAll}   timeout=20s
-        Click Element    ${${platformName}_${lang}_SeeAll}
-        Take Screenshot    Transaction_Page
-        Wait Until Page Contains Element    ${${platformName}_${lang}_ServiceReuest}    timeout=50s
-        Click Element    ${${platformName}_${lang}_ServiceReuest}
+        Transaction Success Page
+        Completion Popup
         Take Screenshot    Transaction_Page
         Run Keyword    TransactionDetails for CV Loan ${platformName}    Pre
         Set Global Variable    ${result}    PolicyLoan Request Submitted Successfully

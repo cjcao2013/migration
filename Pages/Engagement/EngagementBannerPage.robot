@@ -18,15 +18,7 @@ Engagement Banner
     TRY
         Take Screenshot    Engagement Banner
         Sleep    3s
-        IF    '${Engagement_Quick_link_Module}' == 'Tax Season Banner Link Redirection'
-            Tax Season Banner Link Redirection
-        ELSE IF     '${Engagement_Quick_link_Module}' == 'Geolocator Link redirection'
-            Geolocator Link redirection
-        ELSE IF     '${Engagement_Quick_link_Module}' == 'Timely services link redirection'
-            Timely services link redirection
-        ELSE IF     '${Engagement_Quick_link_Module}' == 'Health Journey Link Redirection'
-            Health Journey Link Redirection
-        END
+        Run Keyword    ${Engagement_Quick_link_Module}
         Take Screenshot    Engagement Quick link
         Set Global Variable    ${result}   Engagement Quick link Module Successfully Done For ${Engagement_Quick_link_Module}
         ${OPUS_OR_OWB_App}          Set Variable         ${EMPTY}

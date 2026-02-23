@@ -201,9 +201,7 @@ Name Change
         ...    ${Transaction_OTP_Source}
         ...    ${Transaction_OTP_Expiry_Flag}
         ...    ${Transaction_OTP_Resend_Flag}
-        Run Keyword    Check Transaction Status
-        Wait Until Element Is Visible    ${${platformName}_${lang}_SeeAll}   timeout=20s
-        Click Element    ${${platformName}_${lang}_SeeAll}
+        Run Keyword    Transaction Success Page
         Run Keyword    Capture Change Name Transaction Details for ${platformName}    Pre
         Set Global Variable    ${result}    Personal Details Name/Marital Changed Initiate Successfully
     EXCEPT     AS  ${reason}
@@ -220,8 +218,6 @@ Capture Change Name Transaction Details for iOS
             ...    chain=**/XCUIElementTypeOther[`label CONTAINS '${currdate}' and label CONTAINS 'Change of personal details ${MCaseStatus}' and label CONTAINS 'Policy no: ${Policy_No}'`][27]
         END
 
-        Wait Until Page Contains Element    ${${platformName}_${lang}_TransactionServiceRequest}    timeout=10s
-        Click Element    ${${platformName}_${lang}_TransactionServiceRequest}
     #    Log    ${${platformName}_selectCurrentTransaction1}
 #        RefreshPage
         Scroll Till Transaction Is Visible    ${${platformName}_selectCurrentTransaction1}

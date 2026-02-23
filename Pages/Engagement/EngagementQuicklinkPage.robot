@@ -49,7 +49,6 @@ Engagement Quick link
         Take Screenshot    Engagement Quick link
         Set Global Variable    ${result}   Engagement Quick link Module Successfully Done For ${Engagement_Quick_link_Module}
 
-
     EXCEPT     AS  ${reason}
         Set Failed Actual Result and VP       Omne_Flow   ${reason}   FWD Engagement Flow of ${Engagement_Quick_link_Module}
     END
@@ -87,6 +86,7 @@ Engagement_Submit claim
 
 Engagement_Buy_Insurance
     [Documentation]  To check the Buy insurance flow for Native lead form and microsite
+
     Take Screenshot    Engagement Quick link
     IF    '${platformName}' == 'iOS'
         Click by Coordinates     61    525

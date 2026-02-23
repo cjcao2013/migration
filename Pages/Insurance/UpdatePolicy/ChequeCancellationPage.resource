@@ -116,15 +116,8 @@ Cheque cancellation
         ...    ${Transaction_OTP_Expiry_Flag}
         ...    ${Transaction_OTP_Resend_Flag}
 
-        Check Transaction Status
-
-        Wait Until Element Is Visible    ${${platformName}_${lang}_SeeAll}   timeout=20s
-        Click Element    ${${platformName}_${lang}_SeeAll}
-        Take Screenshot    Transaction_Page
-        Wait Until Page Contains Element    ${${platformName}_${lang}_ServiceReuest}    timeout=10s
-        Click Element    ${${platformName}_${lang}_ServiceReuest}
-        Take Screenshot    Transaction_Page
-        #Capture Transaction Deatils
+        Transaction Success Page
+         #Capture Transaction Deatils
         Run Keyword     Capture Cheque Cancellation Transaction Details for ${platformName}     Pre
 
         Set Global Variable    ${result}    Cheque Cancellation for Policy No: ${Policy_No}

@@ -63,7 +63,9 @@ frequency
                 Click Element    ${${platformName}_${lang}_SubmitButton}
                 Run Keyword         Insert OTP          ${Transaction_OTP_Source}       ${Transaction_OTP_Expiry_Flag}      ${Transaction_OTP_Resend_Flag}
                 Take Screenshot    Transaction_OTP_Page
-                Run Keyword     Payment frequency Transaction
+
+                Run Keyword     Transaction Success Page
+                Run Keyword    Capture Payment Frequency Details For ${platformName}    Pre
 
                 Set Global Variable    ${result}    Payment Frequency Changed Successfully For Policy No : ${Policy_No}
         ELSE
@@ -73,29 +75,7 @@ frequency
         Set Failed Actual Result and VP    Omne_Flow   ${reason}   FWD Insurance Flow of ${Insurance_Flow}
     END
 
-Payment frequency Transaction
-    TRY
-        ${status}    Run Keyword And Return Status       Wait Until Element Is Visible      ${${platformName}_${lang}_serviceRequestTransaction}        timeout=10s
-        IF    '${status}' == 'True'
-            Take Screenshot    submission Thanks Page
-            Wait Until Element Is Visible    ${${platformName}_${lang}_serviceRequestTransaction}       timeout=10s
-            Click Element    ${${platformName}_${lang}_serviceRequestTransaction}
-            Take Screenshot    Transaction complete status
-            Set Calc VP With Source And Original Values         Thanks Page Present     true    ${status}   Static      Omne Application    true    ${status}
-        ELSE
-            # New All Done Confirmation Page
-            Run Keyword    Check Transaction Status
-            Wait Until Element Is Visible    ${${platformName}_${lang}_SeeAll}   timeout=50s
-            Take Screenshot    Transaction_Page
-            Click Element    ${${platformName}_${lang}_SeeAll}
-            Wait Until Page Contains Element    ${${platformName}_${lang}_TransactionServiceRequest}    timeout=20s
-            Click Element    ${${platformName}_${lang}_TransactionServiceRequest}
-            Take Screenshot    Transaction_Page
-        END
-        Run Keyword    Capture Payment Frequency Details For ${platformName}    Pre
-    EXCEPT     AS  ${reason}
-        Set Failed Actual Result and VP    Omne_Flow   ${reason}   Payment frequency Transaction
-    END
+
 
 Capture Payment Frequency Details For Android
     [Arguments]    ${Transaction_Info}

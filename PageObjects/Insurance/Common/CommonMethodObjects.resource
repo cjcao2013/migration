@@ -89,7 +89,7 @@ ${iOS_EN_FeedbackDone_Btn}              chain=**/XCUIElementTypeOther[`label == 
 ${iOS_EN_FeedbackComment_Txt}           chain=**/XCUIElementTypeTextView[`name == "Type here"`]
 ${iOS_EN_TellUsMoreTxt}                 chain=**/XCUIElementTypeStaticText[`label == "Tell us more"`]
 
-${iOS_EN_All_Done_Txt}                                  chain=**/XCUIElementTypeStaticText[`label == "All Done!"`]
+${iOS_EN_All_Done_Txt}                                  chain=**/XCUIElementTypeStaticText[`label == "All done!"`]
 ${iOS_EN_Submitted_Txt}                                  chain=**/XCUIElementTypeStaticText[`label == "Submitted"`]
 ${iOS_EN_Feedback_Txt}              chain=**/XCUIElementTypeStaticText[`label == "We’d love to hear from you"`][2]
 ${iOS_EN_Seven_Txt}                 chain=**/XCUIElementTypeOther[`label == "7"`][2]

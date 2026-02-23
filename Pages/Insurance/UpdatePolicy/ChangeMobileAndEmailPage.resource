@@ -54,7 +54,7 @@ Mobile and Email Change
 #            Get Email   ${oldUsername}      Old
 #            Get Email   ${email}        New
             # New All Done Confirmation Page
-            Run Keyword    Check Transaction Status
+            Run Keyword    Transaction Success Page
             Run Keyword    Handle Feedback
             Run Keyword    Capture Email and Mobile Details Transaction for ${platformName}    Pre
             Take Screenshot    Update_Details
@@ -271,13 +271,6 @@ Get Agent Details
 
 Capture Email and Mobile Details Transaction for iOS
     [Arguments]    ${Transaction_Info}
-
-    Take Screenshot    Transaction Page
-    Wait Until Element Is Visible    ${${platformName}_${lang}_SeeAll}   timeout=50s
-    Click Element    ${${platformName}_${lang}_SeeAll}
-    Take Screenshot    Transaction_Page
-    Wait Until Page Contains Element    ${${platformName}_${lang}_ServiceReuest}    timeout=50s
-    Click Element    ${${platformName}_${lang}_ServiceReuest}
     Take Screenshot    Transaction Page
     IF    '${Transaction_Info}'== 'Pre'
 
@@ -363,14 +356,6 @@ Capture Email and Mobile Details Transaction for iOS
 Capture Email and Mobile Details Transaction for Android
     [Arguments]    ${Transaction_Info}
 
-    Take Screenshot    Transaction Page
-    Wait Until Element Is Visible    ${${platformName}_${lang}_SeeAll}   timeout=50s
-    Click Element    ${${platformName}_${lang}_SeeAll}
-    Take Screenshot    Transaction_Page
-    Wait Until Page Contains Element    ${${platformName}_${lang}_ServiceReuest}    timeout=50s
-    Click Element    ${${platformName}_${lang}_ServiceReuest}
-#    Wait Until Element Is Visible    ${${platformName}_${lang}_ViewTransaction}    timeout=20s
-#    Click Element    ${${platformName}_${lang}_ViewTransaction}
     Take Screenshot    Transaction Page
     IF    '${Transaction_Info}'== 'Pre'
 

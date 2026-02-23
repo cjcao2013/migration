@@ -203,14 +203,9 @@ Credit card recurring payment
 #        Pause Execution
         Take Screenshot    Payment_method_pag
        # New All Done Confirmation Page
-        Run Keyword    Check Transaction Status
+        Run Keyword    Transaction Success Page
         Run Keyword    Completion Popup
 
-        Wait Until Element Is Visible    ${${platformName}_${lang}_SeeAll}   timeout=20s
-        Click Element    ${${platformName}_${lang}_SeeAll}
-        Take Screenshot    Transaction_Page
-        Wait Until Page Contains Element    ${${platformName}_${lang}_ServiceReuest}    timeout=50s
-        Click Element    ${${platformName}_${lang}_ServiceReuest}
         Take Screenshot    Transaction_Page
         Run Keyword    Capture RCC Transaction Details for ${platformName}    Pre
 

@@ -78,13 +78,8 @@ Beneficiary(s) details
         ...    Wait Until Element Is Visible
         ...    ${${platformName}_${lang}_Thank_you_message}     timeout=2s
         Take Screenshot    Success Message
-        Run Keyword    Check Transaction Status
+        Run Keyword    Transaction Success Page
         Run Keyword    Handle Feedback
-        Wait Until Element Is Visible    ${${platformName}_${lang}_SeeAll}   timeout=60s
-        Click Element    ${${platformName}_${lang}_SeeAll}
-        Take Screenshot    Transaction_Page
-        Wait Until Page Contains Element    ${${platformName}_${lang}_ServiceReuest}    timeout=50s
-        Click Element    ${${platformName}_${lang}_ServiceReuest}
         Take Screenshot    Transaction_Page
         Run Keyword    Capture Beneficiary Transaction Details for ${platformName}    Pre
         Set Global Variable    ${result}    Beneficiary Details Changed Successfully for Policy No: ${Policy_No}

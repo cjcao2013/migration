@@ -29,7 +29,6 @@ Forgot_MPIN
     END
 
 Additional Verification
-    TRY
         ${status}    Run Keyword And Return Status    Wait Until Element Is Visible    ${${platformName}_${lang}_DD_dropdown}    timeout=5s
         IF    '${status}' == 'True'
             Take Screenshot    SignIn_Details_Page
@@ -147,7 +146,4 @@ Additional Verification
        Regestration Experience Feedback
        Wait Until Element Is Visible      ${${platformName}_${lang}_InsurancePage}            timeout=30s
        Take Screenshot    FWD Insurance Page
-        Omne Action Popup
-    EXCEPT     AS  ${reason}
-       Set Failed Actual Result and VP    Omne_Flow   ${reason}   Additional Verification Page
-    END
+       Omne Action Popup

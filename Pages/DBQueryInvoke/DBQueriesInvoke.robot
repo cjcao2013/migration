@@ -96,11 +96,12 @@ Get OTP from CustID
         Log     ${list}
         ${OTPNumber}    Set Variable    ${list}[${index1}]
         Log    ${OTPNumber}
+        ${Status}       Run Keyword And Return Status        Should Contain    ${OTPNumber}    ==
     ELSE
         ${OTPNumber}    Set Variable
     END
 #    Set Global Variable    ${OTPNumber}
-    IF    '${OTPCol}' == 'EncryptedOTP'
+    IF    '${OTPCol}' == 'EncryptedOTP' or '${Status}' == 'True'
          ${OTPNumber}   AES Decrypt    ${key}    ${OTPNumber}
     END
 

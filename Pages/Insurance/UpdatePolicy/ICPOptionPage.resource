@@ -90,14 +90,9 @@ Change preferred payout
         END
 
         # New All Done Confirmation Page
-        Check Transaction Status
+        Transaction Success Page
         Completion Popup
-        Wait Until Element Is Visible    ${${platformName}_${lang}_SeeAll}   timeout=10s
-        Click Element    ${${platformName}_${lang}_SeeAll}
-        Take Screenshot    Transaction_Page
-        Wait Until Page Contains Element    ${${platformName}_${lang}_ServiceReuest}    timeout=20s
-        Click Element    ${${platformName}_${lang}_ServiceReuest}
-        Take Screenshot    Transaction_Page
+
         Run Keyword      Capture ICP Transaction Details for ${platformName}
         Take Screenshot    Update_Details
         Set Global Variable    ${result}    ICP Option Changed Successfully For Policy No :${Policy_No}

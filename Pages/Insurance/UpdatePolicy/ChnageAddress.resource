@@ -191,7 +191,7 @@ Address Change
         END
 
         # New All Done Confirmation Page
-        Run Keyword    Check Transaction Status
+        Run Keyword    Transaction Success Page
         Run Keyword    Completion Popup
         Run Keyword    Capture Address Transaction Details for ${platformName}
 
@@ -303,11 +303,7 @@ Agent Address Verifcation
         Set Calc VP With Source And Original Values    Address_Validation_ErrorMsg    ${vp_errormsg}    ${vp_errormsg}    static    Omne Application    ${vp_errormsg}    ${vp_errormsg}
 
 Capture Address Transaction Details for iOS
-    Wait Until Element Is Visible    ${${platformName}_${lang}_SeeAll}   timeout=5s
-    Click Element    ${${platformName}_${lang}_SeeAll}
-    Take Screenshot    Transaction Page
-    Wait Until Page Contains Element    ${${platformName}_${lang}_ServiceReuest}    timeout=5s
-    Click Element    ${${platformName}_${lang}_ServiceReuest}
+
 #    RefreshPage
     ${iOS_selectCurrentTransaction1}    Set Variable
     ...    chain=**/XCUIElementTypeOther[`label CONTAINS '${currdate}' and label CONTAINS 'Change of mailing address' and label CONTAINS 'Policy no: ${Policy_No}'`][27]
@@ -448,13 +444,7 @@ Capture Address Transaction Details for iOS
 
 
 Capture Address Transaction Details for Android
-    Take Screenshot    Transaction Page
-    Wait Until Element Is Visible    ${${platformName}_${lang}_SeeAll}   timeout=50s
-    Click Element    ${${platformName}_${lang}_SeeAll}
-    Take Screenshot    Transaction_Page
-    Wait Until Page Contains Element    ${${platformName}_${lang}_ServiceReuest}    timeout=50s
-    Wait Until Page Contains Element    ${${platformName}_${lang}_ServiceReuest}    timeout=50s
-    Click Element    ${${platformName}_${lang}_ServiceReuest}
+
     Take Screenshot    Transaction_Page
     RefreshPage
     ${Android_selectCurrentTransaction1}    Set Variable

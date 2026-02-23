@@ -44,26 +44,29 @@ Mailing preference
     Run Keyword    ${VP_Current_MailingPrefernce.strip()}
     #Compare  Mailing preference deatil with Transaction details Page
     Set Calc VP Expected Result With Original And Source   New_Mailing_Preference    ${VP_New_Mailing_Preference}     ${VP_New_Mailing_Preference}     Mailing Preference Page
-    Set Calc VP Expected Result With Original And Source   New_Mailing_Preference_${Mailing_preference}    ${VP_New_Mailing_Preference_Value}     ${VP_New_Mailing_Preference_Value}     Mailing Preference Page
+#    Set Calc VP Expected Result With Original And Source       ${VP_New_Mailing_Preference_Value}     ${VP_New_Mailing_Preference_Value}     Mailing Preference Page
+
 
     Wait Until Element Is Visible    ${${platformName}_${lang}_SubmitButton}        timeout=10s
     Click Element    ${${platformName}_${lang}_SubmitButton}
     #run keyword as per data
+    Sleep    1s
     Insert OTP    ${Transaction_OTP_Source}    ${Transaction_OTP_Expiry_Flag}    ${Transaction_OTP_Resend_Flag}
 
     Run Keyword    Check Transaction Status
     Run Keyword    Handle Feedback
-    Run Keyword    Capture Email and Mobile Details Transaction for ${platformName}    Pre
+    Run Keyword    Capture Transaction Details for Email Mailing Preference ${platformName}
     Take Screenshot    Update_Details
     Set Global Variable    ${result}    Change Mailing Prference Changed to ${Mailing_preference}
 
 Email
     [Documentation]     This keyword is used for  capture current mailing email
     ${VP_Current_MailingPreferenceValue}            Get Text    ${${platformName}_${lang}_Current_Mailing_Email}
+    ${VP_Current_MailingPreferenceValue}            Remove String    ${VP_Current_MailingPreferenceValue}       Email:
     Set Global Variable    ${VP_Current_MailingPreferenceValue}
 
     #comapre current  email with DB
-    Set Calc VP With Source And Original Values    Current_Mailing_Preference_Email    ${DB_EmailAddress}    ${VP_Current_Mailing_Email}    DB Query    Mailing Preference Page    ${DB_EmailAddress}     ${VP_Current_Mailing_Email}
+    Set Calc VP With Source And Original Values    Current_Mailing_Preference_Email    ${DB_EmailAddress}    ${VP_Current_MailingPreferenceValue.strip()}    DB Query    Mailing Preference Page    ${DB_EmailAddress}     ${VP_Current_MailingPreferenceValue.strip()}
 
 
 SMS
@@ -72,7 +75,7 @@ SMS
     Set Global Variable    ${VP_Current_MailingPreferenceValue}
 
     ${VP_Current_MailingPreferenceValue}            Remove String    Mobile No:  ${VP_Current_MailingPreferenceValue}
-    Set Calc VP With Source And Original Values    Current_Mailing_Preference_Mobile    ${DB_MObileNUmber}    ${VP_Current_Mailing_Email}    DB Query    Mailing Preference Page    ${DB_MObileNUmber}     ${VP_Current_Mailing_Email}
+    Set Calc VP With Source And Original Values    Current_Mailing_Preference_Mobile    ${DB_MObileNUmber}    ${VP_Current_MailingPreferenceValue}    DB Query    Mailing Preference Page    ${DB_MObileNUmber}     ${VP_Current_MailingPreferenceValue}
 
 
 Mailing address
@@ -81,16 +84,17 @@ Mailing address
     Set Global Variable    ${VP_Current_MailingPreferenceValue}
 
     ${VP_Current_MailingPreferenceValue}            Remove String    Mobile No:  ${VP_Current_MailingPreferenceValue}
-    Set Calc VP With Source And Original Values    Current_Mailing_Preference_MailingAddess    ${DB_MObileNUmber}    ${VP_Current_Mailing_Email}    DB Query    Mailing Preference Page    ${DB_MObileNUmber}     ${VP_Current_Mailing_Email}
+    Set Calc VP With Source And Original Values    Current_Mailing_Preference_MailingAddess    ${DB_MObileNUmber}    ${VP_Current_MailingPreferenceValue}    DB Query    Mailing Preference Page    ${DB_MObileNUmber}     ${VP_Current_MailingPreferenceValue}
 
 
 Email preference
     [Documentation]   This keyword is used for when we  change mailing preference as Eamil
 
     ${VP_New_Mailing_Preference_Value}         Get Text       ${${platformName}_${lang}_NewMailing_Email_Text}
-    
+    ${VP_New_Mailing_Preference_Value}      Remove String    Eamil:       ${VP_New_Mailing_Preference_Value}
     Set Global Variable     ${VP_New_Mailing_Preference_Value}
-    
+    Set Calc VP With Source And Original Values    New_Mailing_Preference_${Mailing_preference}    ${VP_New_Mailing_Preference_Value}    ${DB_EmailAddress}    Mailing Preference Page    DB_Query    ${VP_New_Mailing_Preference_Value}    ${DB_EmailAddress}
+
 
 
 
@@ -99,7 +103,9 @@ SMS preference
 
     #Capture Current Mailing email
     ${VP_New_Mailing_Preference_Value}            Get Text    ${${platformName}_${lang}_NewMailing_Mobile_Text}
+    ${VP_New_Mailing_Preference_Value}              Remove String    ${VP_New_Mailing_Preference_Value}          Mobile no.:
     Set Global Variable     ${VP_New_Mailing_Preference_Value}
+    Set Calc VP With Source And Original Values    New_Mailing_Preference_${Mailing_preference}    ${VP_New_Mailing_Preference_Value}    ${DB_MObileNUmber}    Mailing Preference Page    DB_Query    ${VP_New_Mailing_Preference_Value}    ${DB_MObileNUmber}
 
 Post preference
      [Documentation]   This keyword is used for when we  change mailing preference as post
@@ -108,6 +114,8 @@ Post preference
     #Capture Current Mailing email
     ${VP_Current_Mailing_Email}            Get Text    ${${platformName}_${lang}_NewMailing_Post_Text}
     Set Global Variable     ${VP_New_Mailing_Preference_Value}
+    Set Calc VP With Source And Original Values    New_Mailing_Preference_${Mailing_preference}    ${VP_New_Mailing_Preference_Value}    ${DB_MObileNUmber}    Mailing Preference Page    DB_Query    ${VP_New_Mailing_Preference_Value}    ${DB_MObileNUmber}
+
 
 Capture DB Email Mobile addressDetails
     [Documentation]     This Keyword is used for
@@ -125,7 +133,7 @@ Capture DB Email Mobile addressDetails
     Log    ${PDdf}
     ${leng}    Get Length    ${PDdf}
     Log    ${leng}
-    ${list0}    Get From List    ${PDdf}    1
+    ${list0}    Get From List    ${PDdf}    0
     Log    ${list0}
     ${index1}    Get Index From List    ${list0}    Email
     Log    ${index1}
@@ -159,8 +167,14 @@ Capture DB Email Mobile addressDetails
 
 
 
-Capture Transaction Details for Eamil Mailing Preference iOS
+Capture Transaction Details for Email Mailing Preference iOS
+
     [Documentation]     This Keyword is used for capture transaction details
+    Wait Until Element Is Visible    ${${platformName}_${lang}_SeeAll}   timeout=50s
+    Click Element    ${${platformName}_${lang}_SeeAll}
+    Take Screenshot    Transaction Page
+    Wait Until Page Contains Element    ${${platformName}_${lang}_ServiceReuest}    timeout=50s
+    Click Element    ${${platformName}_${lang}_ServiceReuest}
 
     ${iOS_EN_MailingPreferenceTransaction}          Set Variable      chain=**/XCUIElementTypeOther[`label CONTAINS '${currdate}' and label CONTAINS 'Change mailing preference' and label CONTAINS 'Policy no: ${Policy_No}'`][27]
 
@@ -188,11 +202,11 @@ Capture Transaction Details for Eamil Mailing Preference iOS
     Log To Console    New_Mailing_Address=${VP_Mailing_Preference}
     Log To Console    PolicyApplied=${VP_Policy_Applied}
 
-    Set Calc VP With Source And Original Values    Transaction_Status    Completed    ${transactionstatus}    Static    Transaction Page    Completed    ${transactionstatus}
-    Set Calc VP Actual Result With Original And Source    New_Mailing_Preference    ${VP_Mailing_Preference}    ${VP_Mailing_Preference}    Transaction Page
+    Set Calc VP With Source And Original Values    Transaction_Status    Completed    ${transactionstatus.strip()}    Static    Transaction Page    Completed    ${transactionstatus.strip()}
+    Set Calc VP Actual Result With Original And Source    New_Mailing_Preference    ${VP_Mailing_Preference.strip()}    ${VP_Mailing_Preference}    Transaction Page
     Set Calc VP With Source And Original Values    Policy_NUmber    ${Policy_No}    ${VP_PolicyNumber}    TestData    Transaction Page    ${Policy_No}     ${VP_PolicyNumber}
 
-Capture Transaction Details for Eamil Mailing Preference Android
+Capture Transaction Details for Email Mailing Preference Android
 
      ${Android_EN_MailingPreferenceTransaction}          Set Variable      xpath=(//android.widget.TextView[@text='${current_day}']/following-sibling::android.widget.TextView[@text='${current_month}']/parent::android.view.ViewGroup/following-sibling::android.widget.TextView[@text='Change mailing preference'])[1]
 

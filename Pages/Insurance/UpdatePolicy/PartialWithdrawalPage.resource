@@ -155,12 +155,8 @@ Partial withdrawal
         Sleep   5s
         Insert OTP      ${Transaction_OTP_Source}       ${Transaction_OTP_Expiry_Flag}      ${Transaction_OTP_Resend_Flag}
         # New All Done Confirmation Page
-        Run Keywords     Check Transaction Status
-        Wait Until Element Is Visible    ${${platformName}_${lang}_SeeAll}   timeout=90s
-        Click Element    ${${platformName}_${lang}_SeeAll}
-        Take Screenshot    Transaction_Page
-        Wait Until Page Contains Element    ${${platformName}_${lang}_ServiceReuest}    timeout=50s
-        Click Element    ${${platformName}_${lang}_ServiceReuest}
+        Run Keywords     Transaction Success Page
+
         Take Screenshot    Transaction_Page
         Run Keyword    Capture Partial Withdrawal Transaction Details For ${platformName}       Pre
         Set Global Variable    ${result}    Partial Fund Withdrawal Successfully for Policy No: ${Policy_No}
