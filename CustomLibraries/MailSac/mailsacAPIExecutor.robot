@@ -99,3 +99,19 @@ Fetch Insurance Mobile Number from API
     ${countrycode_contains_status}      Run Keyword And Return Status    Should Start With    ${insurance_mobile_number}    81
 
     [Return]    ${insurance_mobile_number}
+
+Check Mailing Prefrence Confirmation Email
+    [Arguments]     ${Emailid}
+    ${mailId}       Set Variable    ${Emailid}
+        Set Global Variable    ${base_url}
+        ${mailSacKey}       Get Environment Attribute    mailSacKey
+        Set Global Variable    ${mailSacKey}
+        Set Global Variable     ${mailId}
+        Set Global Variable    ${screenshotPath}
+    #    Set Global Variable    ${messageId}
+        Get Latest Message ID
+        IF    '${messageId}' != '${EMPTY}'
+            Verify Mailing Prefrence Confirmation Email    ${mailId}
+        END
+
+

@@ -21,8 +21,8 @@ ${Android_EN_Policy_Details}        xpath=
 ${iOS_EN_Current_Mailing_Email}         xpath=//XCUIElementTypeStaticText[contains(@label,'Email')][last()]
 ${Android_EN_Current_Mailing_Email}         xpath=//android.widget.TextView[contains(@text,"Email")][last()]
 
-${iOS_EN_Current_MailingPreference}        xpath=//XCUIElementTypeStaticText[contains(@label,'Current preference:')][last()]
-${Android_EN_Current_MailingPreference}         xpath=//android.widget.TextView[contains(@text,"Current preference:")]
+${iOS_EN_Current_MailingPreference}        xpath=//XCUIElementTypeStaticText[contains(@label,'Current method:')][last()]
+${Android_EN_Current_MailingPreference}         xpath=//android.widget.TextView[contains(@text,"Current method:")]
 
 ${iOS_EN_Current_Mailing_Mobile_number}         xpath=//XCUIElementTypeStaticText[contains(@label,'Mobile no')][last()]
 ${Android_EN_Current_Mailing_Mobile_number}         xpath=//XCUIElementTypeStaticText[contains(@label,'Mobile no')][last()]

@@ -17,9 +17,9 @@ Mailing preference
     [Documentation]     This Keyword is used for perfrom the transaction for mailing preference
 
     # Select Policy which is mention in data
-    Select Policy
-    Wait Until Element Is Visible       ${${platformName}_${lang}_NextButton}           timeout=10s
-    Click Element    ${${platformName}_${lang}_NextButton}
+#    Select Policy
+#    Wait Until Element Is Visible       ${${platformName}_${lang}_NextButton}           timeout=10s
+#    Click Element    ${${platformName}_${lang}_NextButton}
 
 
     # Read the contact details from DB
@@ -39,7 +39,7 @@ Mailing preference
 
     Run Keyword    ${Mailing_preference} preference
     ${VP_Current_MailingPrefernce}      Get Text    ${${platformName}_${lang}_Current_MailingPreference}
-    ${VP_Current_MailingPrefernce.strip()}      Remove String    ${VP_Current_MailingPrefernce}     Current preference:
+    ${VP_Current_MailingPrefernce.strip()}      Remove String    ${VP_Current_MailingPrefernce}     Current method:
 
     Run Keyword    ${VP_Current_MailingPrefernce.strip()}
     #Compare  Mailing preference deatil with Transaction details Page
@@ -58,6 +58,10 @@ Mailing preference
     Run Keyword    Capture Transaction Details for Email Mailing Preference ${platformName}
     Take Screenshot    Update_Details
     Set Global Variable    ${result}    Change Mailing Prference Changed to ${Mailing_preference}
+
+    # check if confirmation email is recieved or not on insurance emailid
+    Run Keyword    Check Mailing Prefrence Confirmation Email      ${DB_EmailAddress}
+
 
 Email
     [Documentation]     This keyword is used for  capture current mailing email
@@ -190,12 +194,12 @@ Capture Transaction Details for Email Mailing Preference iOS
     Log To Console    Transaction_Status=${transactionstatus}
 
     ${ChangeMailingPreference_Transaction_Detail}           Get From List    ${transactionstatusdetail}    1
-    @{ChangeMailingPreference_Transaction_Detail}         Split String    ${ChangeMailingPreference_Transaction_Detail}       New mailing preference:
+    @{ChangeMailingPreference_Transaction_Detail}         Split String    ${ChangeMailingPreference_Transaction_Detail}       New mailing preference
     ${VP_PolicyNumber}     Get From List    ${ChangeMailingPreference_Transaction_Detail}     0
     Log To Console    PolicyNUmber=${VP_PolicyNumber}
 
     ${ChangeMailingPreference_Transaction_Detail}           Get From List    ${ChangeMailingPreference_Transaction_Detail}         1
-    @{ChangeMailingPreference_Transaction_Detail}         Split String    ${ChangeMailingPreference_Transaction_Detail}       Policy applied
+    @{ChangeMailingPreference_Transaction_Detail}         Split String    ${ChangeMailingPreference_Transaction_Detail}       Policy(s) applied
 
     ${VP_Mailing_Preference}        Get From List    ${ChangeMailingPreference_Transaction_Detail}     0
     ${VP_Policy_Applied}            Get From List    ${ChangeMailingPreference_Transaction_Detail}     1
@@ -204,7 +208,7 @@ Capture Transaction Details for Email Mailing Preference iOS
 
     Set Calc VP With Source And Original Values    Transaction_Status    Completed    ${transactionstatus.strip()}    Static    Transaction Page    Completed    ${transactionstatus.strip()}
     Set Calc VP Actual Result With Original And Source    New_Mailing_Preference    ${VP_Mailing_Preference.strip()}    ${VP_Mailing_Preference}    Transaction Page
-    Set Calc VP With Source And Original Values    Policy_NUmber    ${Policy_No}    ${VP_PolicyNumber}    TestData    Transaction Page    ${Policy_No}     ${VP_PolicyNumber}
+    Set Calc VP With Source And Original Values    Policy_NUmber    ${Policy_No}    ${VP_PolicyNumber.strip()}    TestData    Transaction Page    ${Policy_No}     ${VP_PolicyNumber.strip()}
 
 Capture Transaction Details for Email Mailing Preference Android
 

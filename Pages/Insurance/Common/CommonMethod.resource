@@ -404,11 +404,11 @@ Check Transaction Status
             Set Global Variable    ${Successmsg}    ${VP_All_Done}
             Set Calc VP With Source And Original Values
             ...    OMNE_Transaction_Status
-            ...    All Done!
+            ...    All done!
             ...    ${VP_All_Done}
             ...    Static
             ...    OMNE_Application
-            ...    All Done!
+            ...    All done!
             ...    ${VP_All_Done}
         ELSE
             Take Screenshot    TransactionStatusPage
