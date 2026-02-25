@@ -538,6 +538,44 @@ Overview
 
         # DetailsAgentName
         ${VP_Details_Contact_YourAgentName}    Get Text    ${${platformName}_${lang}_Details_CallYourAgent_txt}
+        ${VP_Details_Agent_Avaliblity_msg_txt}    Get Text    ${${platformName}_${lang}_Details_AgentAvaiblity_Messgae_Text}
+
+        Click Element    ${${platformName}_${lang}_Agent_Number}
+
+        Take Screenshot    OMNE_ViewPolicy_Page
+
+        Click Text    Cancel    exact_match=true
+        ${VP_Call_number}      Get Text    ${${platformName}_${lang}_Calling_number}
+
+        ${Status}           Should Contain          ${VP_Call_number}         1351
+        ${Policy_No_Status}       Should Contain          ${Policy_No}         C11
+        IF    '${Policy_No_Status}' == 'True'
+            Set Calc VP With Source And Original Values
+            ...    ${policydata}_Call_Your_Agent_Number
+            ...    1351
+            ...    1351
+            ...    Static
+            ...    OMNE_ViewPolicy_Page
+            ...    1351
+            ...    1351
+        ELSE
+            Set Calc VP With Source And Original Values
+            ...    ${policydata}_Call_Your_Agent_Number
+            ...    1351
+            ...    1351
+            ...    Static
+            ...    OMNE_ViewPolicy_Page
+            ...    1351
+            ...    1351
+        END
+        Set Calc VP With Source And Original Values
+            ...    ${policydata}_Agent_Avaliblity_msg_txt}
+            ...    FWD Customer Centre, we are here to help daily, 8am – 8pm.
+            ...    ${VP_Details_Agent_Avaliblity_msg_txt}
+            ...    Static
+            ...    OMNE_ViewPolicy_Page
+            ...    FWD Customer Centre, we are here to help daily, 8am – 8pm.
+            ...    ${VP_Details_Agent_Avaliblity_msg_txt}
 
         # callyourAgent
         IF    '${Transaction_Page_GUI}' == 'Yes'

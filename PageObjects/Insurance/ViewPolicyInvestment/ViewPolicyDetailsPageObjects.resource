@@ -126,6 +126,12 @@ ${iOS_EN_Details_AgentContact_txt}                      chain=**/XCUIElementType
 ${Android_EN_Details_CallYourAgent_txt}                 xpath=//android.widget.TextView[@text='Call your agent']
 ${iOS_EN_Details_CallYourAgent_txt}                     chain=**/XCUIElementTypeOther[`label == "Call your agent"`]
 
+${iOS_EN_Details_AgentAvaiblity_Messgae_Text}           xpath=//XCUIElementTypeStaticText[contains(@name,'Want to add on')]/following-sibling::XCUIElementTypeStaticText
+${Android_EN_Details_AgentAvaiblity_Messgae_Text}           xpath=//android.widget.TextView[contains(@name,'Want to add on')]/following-sibling::android.widget.TextView
+
+${iOS_EN_Calling_number}                            xpath=//XCUIElementTypeAlert
+${Android_EN_Calling_number}                        xpath=//XCUIElementTypeAlert
+
 ${iOS_EN_Agent_Number}                                  chain=**/XCUIElementTypeStaticText[`label CONTAINS "Call"`][-1]
 ${iOS_EN_CancelButton}                                  chain=**/XCUIElementTypeButton[`label == "Cancel"`][1]
 
