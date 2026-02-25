@@ -223,6 +223,45 @@ Get Transaction Confirmation Email
                 ${Email_Message}      Set Variable      ${Confirmation_Email_Message}[2]
                 ${Email_Message}      Fetch From Left    ${Email_Message}    </span>
 
-                Set Calc VP With Source And Original Values    Confimation_Email_Message_${oldUsername}    ${Static_Message_From_${EmailType}_EmailMobile}    ${Email_Message}    Static    Mailsac_API    ${Static_Message_From_${EmailType}_EmailMobile}    ${Email_Message}
+                Set Calc VP With Source And Original Values    Confimation_Email_Message    ${Static_Message_From_${EmailType}_EmailMobile}    ${Email_Message}    Static    Mailsac_API    ${Static_Message_From_${EmailType}_EmailMobile}    ${Email_Message}
 
         END
+
+
+Verify Mailing Prefrence Confirmation Email
+    [Arguments]     ${mailId}
+    ${url}      Set Variable      ${base_url}api/dirty/${mailId}/${messageId}
+    &{header}=    Create Dictionary       Mailsac-Key=${mailSacKey}
+    ${response}=     GET         url=${url}     headers=${header}       verify=${False}
+#    ${messageId}=       Get From Dictionary     ${response.json()}[0]      _id
+    Log To Console    ${response.status_code}
+    Log    ${response.text}
+    ${response_body}        Set Variable        ${response.text}
+#   ${ResBody}   Evaluate       json.dumps(${response.text})
+#    ${response_body}   Convert To String    ${Res_body}
+    Create File     ${screenshotPath}\\getMailBody_response.html     ${response_body}
+
+    # Capture the Header
+        ${Confirmation_Email_Header}      Split String    ${response_body}            h2>
+        ${Email_Header}      Set Variable      ${Confirmation_Email_Header}[1]
+        ${Email_Header}      Fetch From Left    ${Email_Header}    </h2>
+        ${Email_Header}     Remove String    ${Email_Header}        \n
+        ${Email_Header}     Remove String    ${Email_Header}        ${SPACE}
+        ${Email_Header}     Remove String    ${Email_Header}    </
+        Log    ${Email_Header}
+        ${Static_Message_From_EmailMobile}        Set Variable      We are delighted to confirm that we have completed your Change of Mailing preference request.
+        ${Static_Header}        Set Variable            We’ve completed your Change of Mailing preference request.
+        ${Static_Message_From_EmailMobile_msg}      Remove String    ${Static_Message_From_EmailMobile}     ${SPACE}
+        ${Static_Header_msg}    Remove String    ${Static_Header}   ${SPACE}
+
+        Set Calc VP With Source And Original Values    Confimation_Email_header    ${Static_Header_msg}    ${Email_Header}    Static    Mailsac_API    ${Static_Header}    ${Email_Header}
+
+    # Capture the  Email Message for New email
+        ${Confirmation_Email_Message}      Split String    ${response_body}            16px;">
+        ${Email_Message}      Set Variable      ${Confirmation_Email_Message}[2]
+        ${Email_Message}      Fetch From Left    ${Email_Message}    </span>
+        ${Email_Message}        Remove String    ${Email_Message}   \n
+        ${Email_Message}     Remove String    ${Email_Message}        ${SPACE}
+        Log     ${Email_Message}
+
+        Set Calc VP With Source And Original Values    Confimation_Email_Message    ${Static_Message_From_EmailMobile_msg}    ${Email_Message}    Static    Mailsac_API    ${Static_Message_From_EmailMobile}    ${Email_Message}
