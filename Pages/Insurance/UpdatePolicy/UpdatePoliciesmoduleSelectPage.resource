@@ -32,8 +32,8 @@ Manage
              Click Element    ${${platformName}_${lang}_InsurancePage}
         END
         Take Screenshot     FWD_Insurance_Page
-        Pause Execution
-#        Set or enter PIN
+#        Pause Execution
+        Set or enter PIN
         Sleep    2s
         #      Select Insurance Flow
         ${Android_EN_Insurance_Module}    Set Variable     android=new UiSelector().textContains("${Insurance_Flow}")

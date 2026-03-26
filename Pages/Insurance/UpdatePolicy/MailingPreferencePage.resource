@@ -17,9 +17,9 @@ Mailing preference
     [Documentation]     This Keyword is used for perfrom the transaction for mailing preference
 
     # Select Policy which is mention in data
-#    Select Policy
-#    Wait Until Element Is Visible       ${${platformName}_${lang}_NextButton}           timeout=10s
-#    Click Element    ${${platformName}_${lang}_NextButton}
+    Select Policy
+    Wait Until Element Is Visible       ${${platformName}_${lang}_NextButton}           timeout=10s
+    Click Element    ${${platformName}_${lang}_NextButton}
 
 
     # Read the contact details from DB
@@ -111,12 +111,12 @@ SMS preference
     Set Global Variable     ${VP_New_Mailing_Preference_Value}
     Set Calc VP With Source And Original Values    New_Mailing_Preference_${Mailing_preference}    ${VP_New_Mailing_Preference_Value}    ${DB_MObileNUmber}    Mailing Preference Page    DB_Query    ${VP_New_Mailing_Preference_Value}    ${DB_MObileNUmber}
 
-Post preference
+Postal mail preference
      [Documentation]   This keyword is used for when we  change mailing preference as post
 
 
     #Capture Current Mailing email
-    ${VP_Current_Mailing_Email}            Get Text    ${${platformName}_${lang}_NewMailing_Post_Text}
+    ${VP_New_Mailing_Preference_Value}            Get Text    ${${platformName}_${lang}_NewMailing_Post_Text}
     Set Global Variable     ${VP_New_Mailing_Preference_Value}
     Set Calc VP With Source And Original Values    New_Mailing_Preference_${Mailing_preference}    ${VP_New_Mailing_Preference_Value}    ${DB_MObileNUmber}    Mailing Preference Page    DB_Query    ${VP_New_Mailing_Preference_Value}    ${DB_MObileNUmber}
 

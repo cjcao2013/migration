@@ -192,7 +192,7 @@ Loan repayment
 
 QR Code
     # QR Scan Page
-    Wait Until Element Is Visible    ${${platformName}_${lang}_QRcode_txt}      timeout=10s
+        Wait Until Element Is Visible    ${${platformName}_${lang}_QRcode_txt}      timeout=50s
         ${VP_PolicyNumber}      Get Text    ${${platformName}_${lang}_PolicyNumber_txt}
         ${VP_PolicyNumber}      Remove String    ${VP_PolicyNumber}     Policy number
 

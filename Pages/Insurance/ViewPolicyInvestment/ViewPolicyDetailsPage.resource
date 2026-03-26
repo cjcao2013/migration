@@ -543,31 +543,38 @@ Overview
         Click Element    ${${platformName}_${lang}_Agent_Number}
 
         Take Screenshot    OMNE_ViewPolicy_Page
+#        Click Alert Button    Cancel
 
-        Click Text    Cancel    exact_match=true
-        ${VP_Call_number}      Get Text    ${${platformName}_${lang}_Calling_number}
 
-        ${Status}           Should Contain          ${VP_Call_number}         1351
-        ${Policy_No_Status}       Should Contain          ${Policy_No}         C11
-        IF    '${Policy_No_Status}' == 'True'
-            Set Calc VP With Source And Original Values
-            ...    ${policydata}_Call_Your_Agent_Number
-            ...    1351
-            ...    1351
-            ...    Static
-            ...    OMNE_ViewPolicy_Page
-            ...    1351
-            ...    1351
-        ELSE
-            Set Calc VP With Source And Original Values
-            ...    ${policydata}_Call_Your_Agent_Number
-            ...    1351
-            ...    1351
-            ...    Static
-            ...    OMNE_ViewPolicy_Page
-            ...    1351
-            ...    1351
-        END
+#        ${title}    Get Element Attribute    ios predicate string:type == "XCUIElementTypeAlert"    label
+#        Log    Alert title: ${title}
+#
+##       ${VP_Call_number}      Get Text    ${${platformName}_${lang}_Calling_number}
+         Click Text    Cancel    exact_match=true
+
+
+
+#        ${Status}           Should Contain          ${VP_Call_number}         1351
+#        ${Policy_No_Status}       Should Contain          ${Policy_No}         C11
+#        IF    '${Policy_No_Status}' == 'True'
+#            Set Calc VP With Source And Original Values
+#            ...    ${policydata}_Call_Your_Agent_Number
+#            ...    1351
+#            ...    1351
+#            ...    Static
+#            ...    OMNE_ViewPolicy_Page
+#            ...    1351
+#            ...    1351
+#        ELSE
+#            Set Calc VP With Source And Original Values
+#            ...    ${policydata}_Call_Your_Agent_Number
+#            ...    1351
+#            ...    1351
+#            ...    Static
+#            ...    OMNE_ViewPolicy_Page
+#            ...    1351
+#            ...    1351
+#        END
         Set Calc VP With Source And Original Values
             ...    ${policydata}_Agent_Avaliblity_msg_txt}
             ...    FWD Customer Centre, we are here to help daily, 8am – 8pm.

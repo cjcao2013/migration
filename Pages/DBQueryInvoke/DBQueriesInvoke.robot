@@ -166,6 +166,9 @@ Get SignUp OTP
     ...    ${dobDB}
     ...    ${Customer_ID}
     Log    ${OTPNumber}
+    ${OTPNumber}   AES Decrypt    ${key}    ${OTPNumber}
+
+
     Set Global Variable    ${OTPNumber}
 
 Get Name Marital Status Details

@@ -126,7 +126,7 @@ class DBQuerySelect:
             "database": dbinstance,
         }
         # Column header (column name)
-        column_header = "OTP"
+        column_header = "EncryptedOTP"
         try:
             # Create a MySQL database connection
             conn = mysql.connector.connect(**db_config)

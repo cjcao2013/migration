@@ -32,23 +32,14 @@ class PersonalDetailsDB:
         try:
             # Create a MySQL database connection
             conn = mysql.connector.connect(**db_config)
-            # Create a pandas DataFrame from the SQL query
-            # query = f"select * from fwd_insurance_uat_addon.servicingdtltemp where owneruserid = '" + owneruserid + "'  and ListPoliciesApply = '" + policyid + "'  order by timegenerated desc"
-            # f" where owneruserid = '" + owneruserid +"' " \
-            # f" and ListPoliciesApply = '" + policyid +"' " \
+
             query = f"select * from " + dbinstance + ".servicingdtltemp " \
                     f" order by timegenerated desc"
             print(query)
             df = pd.read_sql(query, conn)
             # print (type(df))
             print (df)
-            # BuiltIn.log(df)
-            # Retrieve values based on the column header name
-            # values = df[column_header]
-            # # Print the retrieved values
-            # for value in values:
-            #     print(value)
-            #     value1 = value
+
         except mysql.connector.Error as err:
             print(f"Error: {err}")
         finally:

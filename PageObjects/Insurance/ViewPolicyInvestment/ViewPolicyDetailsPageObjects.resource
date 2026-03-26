@@ -129,7 +129,7 @@ ${iOS_EN_Details_CallYourAgent_txt}                     chain=**/XCUIElementType
 ${iOS_EN_Details_AgentAvaiblity_Messgae_Text}           xpath=//XCUIElementTypeStaticText[contains(@name,'Want to add on')]/following-sibling::XCUIElementTypeStaticText
 ${Android_EN_Details_AgentAvaiblity_Messgae_Text}           xpath=//android.widget.TextView[contains(@name,'Want to add on')]/following-sibling::android.widget.TextView
 
-${iOS_EN_Calling_number}                            xpath=//XCUIElementTypeAlert
+${iOS_EN_Calling_number}                            ios predicate string:type == "XCUIElementTypeAlert"
 ${Android_EN_Calling_number}                        xpath=//XCUIElementTypeAlert
 
 ${iOS_EN_Agent_Number}                                  chain=**/XCUIElementTypeStaticText[`label CONTAINS "Call"`][-1]

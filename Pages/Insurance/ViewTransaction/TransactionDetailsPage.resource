@@ -575,14 +575,45 @@ Transaction Renewal premium
     END
 
 Transaction Submit
-    Wait Until Element Is Visible     ${${platformName}_${lang}_TransactionClaimRequest}    timeout=50s
-    Click Element    ${${platformName}_${lang}_TransactionClaimRequest}
+   IF     '${MCaseStatus}' == 'Declined'
+                ${MCaseStatus}  Set Variable    Claim not paid
+        ELSE IF  '${MCaseStatus}' == 'Paid'
+             ${MCaseStatus}  Set Variable    (Paid)
+        END
+        ${iOS_Selectposttransaction}        Set Variable    chain=**/XCUIElementTypeOther[`label CONTAINS '${currdate}' and label CONTAINS '${Claim_Type} ${MCaseStatus}' and label CONTAINS 'Policy no: ${Policy_No}'`][27]
+        ${Android_Selectposttransaction}    Set Variable    xpath=//android.widget.TextView[@text='${current_day}']/following-sibling::android.widget.TextView[@text='${current_month}']/parent::android.view.ViewGroup/following-sibling::android.widget.TextView[@text='${Claim_Type}']/following-sibling::android.view.ViewGroup/android.widget.TextView[contains(@text,'${MCaseStatus}')]
+        Scroll Till Transaction Is Visible      ${${platformName}_Selectposttransaction}
+        ${CompleteStatus_List}       Get Text     ${${platformName}_Selectposttransaction}
+        Set Global Variable    ${CompleteStatus_List}
+        IF    '${CaseStatus}' == 'Pending'
+            ${iOS_pendingButton}    Set Variable    chain=**/XCUIElementTypeOther[`label CONTAINS '${currdate}' and label CONTAINS '${Claim_Type} ${MCaseStatus}' and label CONTAINS 'Policy no: ${Policy_No}'`][27]
+            ${Android_pendingButton}    Set Variable    xpath=//android.view.ViewGroup[@content-desc="Pending details"]
+            Take Screenshot    Transaction Page
+            RefreshPage
+            Wait Until Element Is Visible        ${${platformName}_pendingButton}        timeout=30s
+            Click Element    ${${platformName}_pendingButton}
+            ${iOS_EN_newstatusobject}      Set Variable    chain=**/XCUIElementTypeOther[`label CONTAINS '${currdate}' and label CONTAINS '${Claim_Type} In progress' and label CONTAINS 'Policy no: ${Policy_No}'`][27]
+            ${Android_EN_newstatusobject}      Set Variable    xpath=//android.widget.TextView[@text='${current_day}']/following-sibling::android.widget.TextView[@text='${current_month}']/parent::android.view.ViewGroup/following-sibling::android.widget.TextView[@text='${Claim_Type}']/following-sibling::android.view.ViewGroup/android.widget.TextView[@text='In progress']
+            Pending Details     ${${platformName}_${lang}_newstatusobject}
+            Set Global Variable    ${MCaseStatus}       In progress
+    #        Click Element        ${newstatusobject}
+        END
+        ${status}   Run Keyword And Return Status    Element Should Contain Text    ${${platformName}_Selectposttransaction}    (Paid)
+        IF    '${status}' == 'True'
+            &{coordinateDict}    Get Element Rect    ${${platformName}_Selectposttransaction}
+            ${xaxis}    Get From Dictionary       ${coordinateDict}     x
+            ${yaxis}    Get From Dictionary       ${coordinateDict}     y
 
-    ${iOS_Selectposttransaction}    Set Variable        chain=**/XCUIElementTypeOther[`label CONTAINS '${currdate}' and label CONTAINS '${Claim_Type}' and label CONTAINS 'Policy no: ${Policy_No}'`][27]
-    ${Android_Selectposttransaction}    Set Variable    xpath=(//android.widget.TextView[@text='${current_day}']/following-sibling::android.widget.TextView[@text='${current_month}']/following-sibling::android.widget.TextView[@text='${current_year}']/parent::android.view.ViewGroup/following-sibling::android.widget.TextView[@text='${Claim_Type}']/following-sibling::android.view.ViewGroup/android.widget.TextView[@text='In progress'])[1]
-    Scroll Till Transaction Is Visible    ${${platformName}_Selectposttransaction}
-    ${CompleteStatus_List}    Get Text    ${${platformName}_Selectposttransaction}
-    Set Global Variable    ${CompleteStatus_List}
-    Click Element    ${${platformName}_Selectposttransaction}
+            ${start_X}=       Evaluate    (${xaxis}+360)
+            ${start_x}=       Convert To Integer  ${start_x}
+            ${start_Y}=       Evaluate    (${yaxis}+104)
+            ${start_Y}=       Convert To Integer  ${start_Y}
+    #        ${end_x}=         Evaluate    (${xaxis}+25)
+    #        ${end_x}=       Convert To Integer  ${end_x}
+            Click by Coordinates       ${start_x}    ${start_y}
+    #        Swipe  ${start_x}      ${start_y}     ${end_x}     ${start_y}
+
+            Claim Feedback
+        END
     Sleep   3s
     Take Screenshot     Post Transaction_Page

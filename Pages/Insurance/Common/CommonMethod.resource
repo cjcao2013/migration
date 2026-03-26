@@ -343,15 +343,15 @@ Handle Feedback
                     Click Element    ${${platformName}_${lang}_FeedbackDone_Btn}
                 END
             END
-#            ${iOS_EN_InsurancePage}           Set Variable    chain=**/XCUIElementTypeButton[`label == '${Flow_Flag}'`]
-#            ${Android_EN_InsurancePage}       Set Variable    android=new UiSelector().text("${Flow_Flag}")
-#            ${status}     Run Keyword And Return Status     Wait Until Element Is Visible      ${${platformName}_${lang}_InsurancePage}            timeout=5s
-#            Take Screenshot     FWD_Insurance_Page
-#            Sleep      2s
-#            IF    '${status}' == 'True'
-#                     Click Element       ${${platformName}_${lang}_InsurancePage}
-#                     Set or enter PIN
-#            END
+            ${iOS_EN_InsurancePage}           Set Variable    chain=**/XCUIElementTypeButton[`label == '${Flow_Flag}'`]
+            ${Android_EN_InsurancePage}       Set Variable    android=new UiSelector().text("${Flow_Flag}")
+            ${status}     Run Keyword And Return Status     Wait Until Element Is Visible      ${${platformName}_${lang}_InsurancePage}            timeout=5s
+            Take Screenshot     FWD_Insurance_Page
+            Sleep      2s
+            IF    '${status}' == 'True'
+                     Click Element       ${${platformName}_${lang}_InsurancePage}
+                     Set or enter PIN
+            END
     END
 
 
@@ -634,21 +634,21 @@ Biometric Check
         Set Failed Actual Result and VP    Omne_Flow   ${reason}   Biometric Check
     END
 
-Transaction Success Page
-    ${status}   Run Keyword And Return Status      Wait Until Element Is Visible    ${${platformName}_${lang}_AllDoneBtn}       timeout=10s
-    IF    '${status}' == 'True'
-        Take Screenshot    All Done Page
-        Click Element    ${${platformName}_${lang}_AllDoneBtn}
-        Handle Feedback
-        Wait Until Element Is Visible        ${${platformName}_${lang}_TransactionTab}        timeout=50s
-        Click Element        ${${platformName}_${lang}_TransactionTab}
-        ${status}       Run Keyword And Return Status   Wait Until Element Is Visible        ${${platformName}_${lang}_TransactionServiceRequest}   timeout=50s
-        IF    '${status}' != 'True'
-            Click Element        ${${platformName}_${lang}_TransactionTab}
-        END
-        Wait Until Element Is Visible        ${${platformName}_${lang}_TransactionServiceRequest}   timeout=10s
-        Click Element    ${${platformName}_${lang}_TransactionServiceRequest}
-    END
+#Transaction Success Page
+#    ${status}   Run Keyword And Return Status      Wait Until Element Is Visible    ${${platformName}_${lang}_AllDoneBtn}       timeout=10s
+#    IF    '${status}' == 'True'
+#        Take Screenshot    All Done Page
+#        Click Element    ${${platformName}_${lang}_AllDoneBtn}
+#        Handle Feedback
+#        Wait Until Element Is Visible        ${${platformName}_${lang}_TransactionTab}        timeout=50s
+#        Click Element        ${${platformName}_${lang}_TransactionTab}
+#        ${status}       Run Keyword And Return Status   Wait Until Element Is Visible        ${${platformName}_${lang}_TransactionServiceRequest}   timeout=50s
+#        IF    '${status}' != 'True'
+#            Click Element        ${${platformName}_${lang}_TransactionTab}
+#        END
+#        Wait Until Element Is Visible        ${${platformName}_${lang}_TransactionServiceRequest}   timeout=10s
+#        Click Element    ${${platformName}_${lang}_TransactionServiceRequest}
+#    END
 
 Extra POP Up
     ${Status}    Run Keyword And Return Status    Wait Until Element Is Visible    ${${platformName}_${lang}_Popup_SKIP}   timeout=3s

@@ -167,6 +167,7 @@ Switch funds
             ...    chain=**/XCUIElementTypeOther[`label CONTAINS '${SIFund}'`][-3]/XCUIElementTypeOther[2]/XCUIElementTypeOther[2]
             ${Android_captureEstimatedSwitchInFundAmount}    Set Variable
             ...    xpath=(//android.widget.TextView[@text='${SIFund}']/../../android.view.ViewGroup)/../../android.view.ViewGroup[2]/android.view.ViewGroup[2]/android.widget.TextView
+            Pause Execution
             ${VP_Estimatedswitchinamount}    Get Text    ${${platformName}_captureEstimatedSwitchInFundAmount}
             ${VP_Estimatedswitchinamount}    Remove String    ${VP_Estimatedswitchinamount}    ,
             ${VP_Estimatedswitchinamount}    Evaluate    "{:.2f}".format(${VP_Estimatedswitchinamount})
@@ -183,7 +184,7 @@ Switch funds
              Click Element    ${${platformName}_${lang}_Accept}
         END
          # -------------------------------------------------------Summary Page-----------------------------------------------------------------------------------------------------------
-
+        Pause Execution
         @{SOdata_list}    Split String    ${SwitchFund_SwitchOutFundName}    ,
         ${SOdata_Length}    Get Length    ${SOdata_list}
         Set Global Variable    ${SOdata_list}

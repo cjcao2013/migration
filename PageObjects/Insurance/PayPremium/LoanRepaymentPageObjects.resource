@@ -13,7 +13,7 @@ ${iOS_EN_QRcode_txt}                   chain=**/XCUIElementTypeStaticText[`label
 ${iOS_EN_PaymentDetails_txt}            chain=**/XCUIElementTypeStaticText[`label == "Payment details"`]
 ${iOS_EN_PolicyNumber_txt}        xpath=//XCUIElementTypeStaticText[@name="Policy number"]/following-sibling::XCUIElementTypeStaticText
 ${iOS_EN_PaymentAmount_txt}        xpath=//XCUIElementTypeStaticText[@name="Payment amount"]/following-sibling::XCUIElementTypeStaticText
-${iOS_EN_PremiumAmount_txt}        xpath=//XCUIElementTypeStaticText[@name="Payment amount"]/following-sibling::XCUIElementTypeStaticText
+${iOS_EN_PremiumAmount_txt}        xpath=//XCUIElementTypeStaticText[@name="Premium amount"]/following-sibling::XCUIElementTypeStaticText
 ${iOS_EN_DownloadQRCode}        chain=**/XCUIElementTypeButton[`label == "Download QR code"`]
 ${iOS_EN_BackToDashboard}        chain=**/XCUIElementTypeOther[`label == "Back to dashboard"`]
 ${iOS_EN_QRCodeSaved_txt}        chain=**/XCUIElementTypeOther[`label == "QR code is saved to your device album"`][5]
