@@ -239,7 +239,51 @@ Screenshots remain in their existing directory structure on disk.
 
 ---
 
-## 10. Dependencies to Add
+## 10. Excel File Sheet Structure
+
+### TestCasesFile.xlsx — 1 sheet
+
+| Sheet | Purpose |
+|---|---|
+| `TestCases` | All test case switches and routing parameters (ExecutorFlag, Flow_Flag, Insurance_Flow, etc.) |
+
+### TestDataFile_UAT.xlsx / TestDataFile_STG.xlsx — 16 sheets
+
+All sheets share `TestCaseId` as the join key. A single test case may have rows across multiple sheets; `QraceHelper` merges them all before setting Robot variables.
+
+| # | Sheet Name | Module | Key Data |
+|---|---|---|---|
+| 1 | `Common` | Login / shared | Email, Password, Policy_No, LoginMethod |
+| 2 | `Insurance_UpdatePolicy` | All update policy flows | NewName, NewAddress, Mobile/Email change, PaymentMethod, Beneficiary, SurrenderPolicy, etc. |
+| 3 | `Insurance_Claims` | All claim types | ClaimType, HospitalName, DiagnosisName, Amount, Hospitalisation/Outpatient/Disability/CI fields |
+| 4 | `Insurance_PayPremium` | Premium payment / loan repayment | PaymentMethod, Amount |
+| 5 | `Insurance_ViewDocument` | View document | DocumentType |
+| 6 | `Insurance_ViewCareCard` | View care card | CardType |
+| 7 | `Insurance_ViewTransaction` | View transaction history | TransactionType |
+| 8 | `Insurance_ViewInvestment` | View policy investment | FundName |
+| 9 | `Insurance_PayorOnboarding` | Payor onboarding flow | PayorDetails fields |
+| 10 | `Insurance_TrueOnboarding` | True onboarding / SignUp flow | SignUp fields |
+| 11 | `Engagement` | Banner and Quicklink module | BannerName, QuickLinkName |
+| 12 | `OWB` | OWB back-office verification | OWB_ExpectedStatus |
+| 13 | `OPUS` | OPUS back-office verification | OPUS_Flow, OPUS_User_ID |
+| 14 | `LA` | LA core system (AS400 mainframe) | LA_PolicyNo, LA_ExpectedField |
+| 15 | `IL` | IL core system | IL_CaseNo, IL_ExpectedField |
+| 16 | `VP` | Verification points (all cases) | FieldName, ExpectedValue, ExpectedSource |
+
+**Note:** If some sheets have very few columns (e.g. ViewDocument + ViewCareCard), they can be merged into one sheet to reduce complexity. The total count is flexible — what matters is that every variable used in Pages/ has a corresponding column somewhere in the file.
+
+### Data Source
+
+All initial data must be exported from **Qrace before it is shut down**:
+- Test case parameters → sheets 1–15
+- VP expected values → sheet 16 (`VP`)
+- Routing flags (Flow_Flag, Insurance_Flow, OWB_Flag, etc.) → `TestCasesFile.xlsx`
+
+This export is a **hard prerequisite** — data cannot be recovered after Qrace goes offline.
+
+---
+
+## 11. Dependencies to Add
 
 ```
 pandas>=2.0
