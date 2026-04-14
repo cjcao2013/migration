@@ -1,0 +1,94 @@
+{
+  "Environment": {
+    "UAT": {
+      "Env": "UAT",
+      "Release": "1.0_build1",
+
+      "BS_user": "",
+      "BS_accessKey": "",
+      "BS_link_iOS": "",
+      "BS_link_Android": "",
+      "bundleID": "",
+
+      "DB_hostname": "",
+      "DB_Username": "",
+      "DB_password": "",
+      "DB_port": "",
+      "DBinstanceTable": "",
+      "DBinstanceAddonTable": "",
+      "DB_Encrpt_AND_Decrpt_key": "",
+      "DB_Encrpt_AND_Decrpt_IVkey": "",
+
+      "host": "",
+      "APIKeyname": "",
+      "APIKeyValueauth": "",
+      "APIKeyvalue": "",
+      "mailSacKey": "",
+      "TimeZone": "Asia/Bangkok",
+      "App_Version": "",
+      "listofmobileno": "",
+
+      "OWB_URL": "",
+      "OWB_ENV": "",
+
+      "OPUS_URL": "",
+
+      "IL_URL": "",
+      "IL_username": "",
+      "IL_password": "",
+
+      "LA_USERNAME": "",
+      "LA_UPASSWORD": "",
+      "LA_Env": "",
+      "CATHLA01.TH.INTRANET": "",
+
+      "AppOrg": "",
+      "AppCenterAPIToken": ""
+    },
+    "STG": {
+      "Env": "STG",
+      "Release": "1.0_build1",
+
+      "BS_user": "",
+      "BS_accessKey": "",
+      "BS_link_iOS": "",
+      "BS_link_Android": "",
+      "bundleID": "",
+
+      "DB_hostname": "",
+      "DB_Username": "",
+      "DB_password": "",
+      "DB_port": "",
+      "DBinstanceTable": "",
+      "DBinstanceAddonTable": "",
+      "DB_Encrpt_AND_Decrpt_key": "",
+      "DB_Encrpt_AND_Decrpt_IVkey": "",
+
+      "host": "",
+      "APIKeyname": "",
+      "APIKeyValueauth": "",
+      "APIKeyvalue": "",
+      "mailSacKey": "",
+      "TimeZone": "Asia/Bangkok",
+      "App_Version": "",
+      "listofmobileno": "",
+
+      "OWB_URL": "",
+      "OWB_ENV": "",
+
+      "OPUS_URL": "",
+
+      "IL_URL": "",
+      "IL_username": "",
+      "IL_password": "",
+
+      "LA_USERNAME": "",
+      "LA_UPASSWORD": "",
+      "LA_Env": "",
+      "CATHLA01.TH.INTRANET": "",
+
+      "AppOrg": "",
+      "AppCenterAPIToken": ""
+    }
+  }
+}
