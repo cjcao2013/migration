@@ -1,0 +1,7 @@
+Config/Environment.json
+__pycache__/
+*.pyc
+*.pyo
+log/output.xml
+log/log.html
+log/report.html

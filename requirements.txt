@@ -1,0 +1,8 @@
+robotframework>=7.0
+robotframework-appiumlibrary
+robotframework-mainframe3270
+robotframework-faker
+robotframework-requests
+requests
+pandas>=2.0
+openpyxl>=3.1
