@@ -99,78 +99,89 @@ class QraceHelper:
             BuiltIn().log_to_console(f"[QraceHelper] Failed to set env globals: {err}")
 
     def _build_testjob_ids(self):
-        """Read TestCasesFile.xlsx, return '_'-joined TestCaseId list for ExecutorFlag=Yes rows."""
+        """
+        Read TestCasesFile.xlsx, return '_'-joined row indices for ExecutorFlag=Yes rows.
+        testjobId = str(index into _test_cases list). Integers have no underscores so
+        the executor's Split String on '_' works correctly.
+        reset_index(drop=True) is required: makes indices 0-based and contiguous
+        regardless of which rows had ExecutorFlag=No.
+        """
         try:
             if not EXCEL_AVAILABLE:
                 BuiltIn().log_to_console("[QraceHelper] pandas/openpyxl not installed")
                 return ""
             df = pd.read_excel(_TESTCASES_EXCEL, dtype=str).fillna("")
             eligible = df[df["ExecutorFlag"].str.strip().str.lower() == "yes"]
-            QraceHelper._test_cases = eligible.to_dict(orient="records")
-            ids = eligible["TestCaseId"].tolist()
-            BuiltIn().log_to_console(f"[QraceHelper] Test cases to run: {ids}")
-            return "_".join(ids)
+            QraceHelper._test_cases = eligible.reset_index(drop=True).to_dict(orient="records")
+            indices = [str(i) for i in range(len(QraceHelper._test_cases))]
+            BuiltIn().log_to_console(f"[QraceHelper] {len(indices)} test cases to run")
+            return "_".join(indices)
         except Exception as err:
             BuiltIn().log_to_console(f"[QraceHelper] Failed to read TestCasesFile: {err}")
             return ""
 
-    def _load_test_data_for_case(self, test_case_id):
-        """Merge all sheets in TestDataFile on TestCaseId, set Robot variables."""
+    def _load_test_data_for_case(self, test_job_id):
+        """
+        test_job_id is a row index into _test_cases (the eligible-only list).
+        Uses tc_row["Test Case Id"] directly as the Testcaseid join key in TestDataFile.
+        """
         try:
             if not EXCEL_AVAILABLE:
                 return
-            env = QraceHelper.env_name or "UAT"
-            testdata_path = _TESTDATA_EXCEL_TEMPLATE.format(env=env)
-            if not os.path.exists(testdata_path):
-                # fallback to UAT
-                testdata_path = _TESTDATA_EXCEL_TEMPLATE.format(env="UAT")
-            sheets = pd.read_excel(testdata_path, sheet_name=None, dtype=str)
-            merged = pd.DataFrame()
-            for sheet_name, sheet_df in sheets.items():
-                if "TestCaseId" not in sheet_df.columns:
-                    continue
-                if merged.empty:
-                    merged = sheet_df.copy()
-                else:
-                    merged = pd.merge(merged, sheet_df, on="TestCaseId", how="outer")
-
-            if merged.empty or "TestCaseId" not in merged.columns:
-                BuiltIn().log_to_console(f"[QraceHelper] No data found for {test_case_id}")
+            tc_row = QraceHelper._get_testcase_row(self, test_job_id)
+            test_case_id = tc_row.get("Test Case Id", "").strip()
+            if not test_case_id:
+                BuiltIn().log_to_console(
+                    f"[QraceHelper] No Test Case Id for job index {test_job_id}")
                 return
 
-            merged["TestCaseId"] = merged["TestCaseId"].astype(str)
-            result = merged[merged["TestCaseId"] == str(test_case_id)].fillna("")
+            sheets = pd.read_excel(_TESTDATA_EXCEL, sheet_name=None, dtype=str)
+            merged = pd.DataFrame()
+            for sheet_df in sheets.values():
+                if "Testcaseid" not in sheet_df.columns:
+                    continue
+                sheet_df = sheet_df.fillna("")
+                if merged.empty:
+                    merged = sheet_df
+                else:
+                    merged = pd.merge(merged, sheet_df, on="Testcaseid", how="outer",
+                                      suffixes=("", "_dup"))
+                    merged = merged[[c for c in merged.columns if not c.endswith("_dup")]]
 
+            if merged.empty:
+                BuiltIn().log_to_console("[QraceHelper] TestDataFile has no Testcaseid columns")
+                return
+
+            result = merged[merged["Testcaseid"].str.strip() == test_case_id].fillna("")
             if result.empty:
-                BuiltIn().log_to_console(f"[QraceHelper] TestCaseId not found: {test_case_id}")
+                BuiltIn().log_to_console(
+                    f"[QraceHelper] Test case not found in TestDataFile: {test_case_id}")
                 return
 
             row = result.iloc[0]
-            QraceHelper.testData = dict(row)
-
+            QraceHelper.testData = {}
             for col in result.columns:
                 val = str(row[col]).strip()
-                if val == "nan":
+                if val in ("nan", ""):
                     val = ""
-                var_name = "${" + col + "}"
-                BuiltIn().set_test_variable(var_name, val)
                 QraceHelper.testData[col] = val
+                BuiltIn().set_test_variable("${" + col + "}", val)
 
-            # Set workflow and test_type from the loaded data
-            if "Workflow" in QraceHelper.testData:
-                QraceHelper.workflow = QraceHelper.testData.get("Workflow", "")
-            if "Test_Type" in QraceHelper.testData:
-                QraceHelper.test_type = QraceHelper.testData.get("Test_Type", "POSITIVE")
+            # Workflow comes from TestCasesFile (tc_row), not TestDataFile
+            QraceHelper.workflow = tc_row.get("Workflow", "")
 
             BuiltIn().log_to_console(f"[QraceHelper] Loaded test data for: {test_case_id}")
         except Exception as err:
             BuiltIn().log_to_console(f"[QraceHelper] Failed to load test data: {err}")
 
-    def _get_testcase_row(self, test_case_id):
-        """Return the TestCasesFile row dict for the given TestCaseId."""
-        for row in QraceHelper._test_cases:
-            if str(row.get("TestCaseId", "")).strip() == str(test_case_id).strip():
-                return row
+    def _get_testcase_row(self, test_job_id):
+        """Return TestCasesFile row dict for the given eligible-list row index (str or int)."""
+        try:
+            idx = int(str(test_job_id).strip())
+            if 0 <= idx < len(QraceHelper._test_cases):
+                return QraceHelper._test_cases[idx]
+        except (ValueError, TypeError):
+            pass
         return {}
 
     def _write_execution_results(self):
@@ -196,9 +207,11 @@ class QraceHelper:
                 except Exception:
                     pass
 
-            with pd.ExcelWriter(output_path, engine="openpyxl",
-                                mode="a" if os.path.exists(output_path) else "w",
-                                if_sheet_exists="replace") as writer:
+            file_exists = os.path.exists(output_path)
+            writer_kwargs = {"engine": "openpyxl", "mode": "a" if file_exists else "w"}
+            if file_exists:
+                writer_kwargs["if_sheet_exists"] = "replace"
+            with pd.ExcelWriter(output_path, **writer_kwargs) as writer:
                 exec_df.to_excel(writer, index=False, sheet_name="ExecutionSummary")
                 vp_df.to_excel(writer, index=False, sheet_name="VerificationPoints")
 
@@ -229,34 +242,8 @@ class QraceHelper:
 
     @keyword("Get VPs From Qrace")
     def get_vps_from_qrace(self, testjobId):
-        """Load VP expected values from the VP sheet in TestDataFile."""
-        try:
-            if not EXCEL_AVAILABLE:
-                return
-            env = QraceHelper.env_name or "UAT"
-            testdata_path = _TESTDATA_EXCEL_TEMPLATE.format(env=env)
-            if not os.path.exists(testdata_path):
-                testdata_path = _TESTDATA_EXCEL_TEMPLATE.format(env="UAT")
-            sheets = pd.read_excel(testdata_path, sheet_name=None, dtype=str)
-            if "VP" not in sheets:
-                BuiltIn().log_to_console("[QraceHelper] No VP sheet found in TestDataFile")
-                return
-            vp_df = sheets["VP"].fillna("")
-            vp_df["TestCaseId"] = vp_df["TestCaseId"].astype(str)
-            rows = vp_df[vp_df["TestCaseId"] == str(testjobId)]
-            for _, row in rows.iterrows():
-                vp = {
-                    "id": -1,
-                    "fieldName": str(row.get("FieldName", "")),
-                    "expectedResult": str(row.get("ExpectedValue", "")),
-                    "originalExpectedValue": str(row.get("ExpectedValue", "")),
-                    "expectedSource": str(row.get("ExpectedSource", "Static")),
-                    "isCalcField": False,
-                }
-                QraceHelper.vps[vp["fieldName"]] = vp
-        except Exception as err:
-            BuiltIn().log_to_console(f"[QraceHelper] Get VPs From Qrace error: {err}")
-        BuiltIn().log_to_console(QraceHelper.vps)
+        # No VP sheet in TestDataFile — VP expected values are passed inline by test steps
+        BuiltIn().log_to_console("[QraceHelper] Get VPs From Qrace: no VP sheet (no-op)")
 
     @keyword("Get TableVPs From Qrace")
     def get_table_vps_from_qrace(self, testJobId):
@@ -580,7 +567,7 @@ class QraceHelper:
             QraceHelper.get_vps_from_qrace(self, testjobId)
             # Set test type and workflow from loaded data
             tc_row = QraceHelper._get_testcase_row(self, testjobId)
-            QraceHelper.test_type = tc_row.get("Test_Type", "POSITIVE")
+            QraceHelper.test_type = tc_row.get("Test Type", "POSITIVE")
             QraceHelper.workflow = tc_row.get("Workflow", "Main Executor")
             BuiltIn().set_test_variable("${testtype}", QraceHelper.test_type)
             BuiltIn().set_test_variable("${testCaseId}", testjobId)
@@ -599,8 +586,11 @@ class QraceHelper:
 
                 result_status = "PASS" if status == "PASS" else "FAIL"
 
+                tc_row = QraceHelper._get_testcase_row(self, testjobId)
+                display_tc_id = tc_row.get("Test Case Id", str(testjobId))
+
                 exec_row = {
-                    "TestCaseId": testjobId,
+                    "TestCaseId": display_tc_id,
                     "Env": QraceHelper.env_name,
                     "BuildVersion": QraceHelper.release_name,
                     "Execution_Status": result_status,
@@ -615,7 +605,7 @@ class QraceHelper:
                 # Accumulate VP rows
                 for field_name, vp in QraceHelper.vps.items():
                     vp_row = {
-                        "TestCaseId": testjobId,
+                        "TestCaseId": display_tc_id,
                         "FieldName": vp.get("fieldName", field_name),
                         "ExpectedValue": vp.get("expectedResult", ""),
                         "ActualValue": vp.get("actualResult", ""),

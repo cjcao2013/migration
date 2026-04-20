@@ -123,3 +123,52 @@ def test_qrace_teardown_summary_has_test_case_id(tmp_path):
                             sheet_name="ExecutionSummary", dtype=str)
     assert summary.iloc[0]["TestCaseId"] == "TC_ViewPolicy_001"
     assert summary.iloc[0]["Execution_Status"] == "PASS"
+
+
+# ---------------------------------------------------------------------------
+# Task 7: End-to-end smoke test — full call chain
+# ---------------------------------------------------------------------------
+
+def test_full_call_chain(tmp_path):
+    """get_testrun_metadata → qrace_test_setup → qrace_test_teardown end-to-end."""
+    env_file = tmp_path / "Environment.xlsx"
+    pd.DataFrame({"Key": ["Env", "BS_user"], "Value": ["staging", "u1"]}).to_excel(
+        env_file, sheet_name="STG", index=False)
+
+    tc_file = tmp_path / "TestCasesFile.xlsx"
+    pd.DataFrame({
+        "Test Case Id": ["TC_001"], "ExecutorFlag": ["Yes"],
+        "TestDataId": [""], "Test Type": ["POSITIVE"], "Workflow": ["Insurance"],
+    }).to_excel(tc_file, index=False)
+
+    td_file = tmp_path / "TestDataFile.xlsx"
+    with pd.ExcelWriter(td_file, engine="openpyxl") as w:
+        pd.DataFrame({"Testcaseid": ["TC_001"], "Flow_Flag": ["Insurance"],
+                      "Policy_No": ["P001"]}).to_excel(w, sheet_name="CommonData", index=False)
+
+    log_dir = tmp_path / "log"
+    log_dir.mkdir()
+
+    # Reset class-level accumulators so prior test runs don't bleed in
+    QraceHelper._execution_results = []
+    QraceHelper._verification_points = []
+
+    helper = QraceHelper()
+    with patch("Qrace.QraceHelper._ENV_XLSX", str(env_file)), \
+         patch("Qrace.QraceHelper._TESTCASES_EXCEL", str(tc_file)), \
+         patch("Qrace.QraceHelper._TESTDATA_EXCEL", str(td_file)), \
+         patch("Qrace.QraceHelper._OUTPUT_DIR", str(log_dir)):
+        helper.get_testrun_metadata("STG")
+        assert QraceHelper.env_name == "staging"
+        assert QraceHelper._env_config["BS_user"] == "u1"
+
+        helper.qrace_test_setup("0", 1)
+        assert QraceHelper.testData.get("Flow_Flag") == "Insurance"
+        assert QraceHelper.workflow == "Insurance"
+
+        helper.qrace_test_teardown("0", "PASS", "")
+
+    summary = pd.read_excel(log_dir / "ExecutionSummary.xlsx",
+                            sheet_name="ExecutionSummary", dtype=str)
+    assert summary.iloc[0]["TestCaseId"] == "TC_001"
+    assert summary.iloc[0]["Execution_Status"] == "PASS"
