@@ -23,9 +23,9 @@ except ImportError:
 # Paths (relative to project root, i.e. where robot is invoked from)
 # ---------------------------------------------------------------------------
 _PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-_ENV_JSON = os.path.join(_PROJECT_ROOT, "Config", "Environment.json")
+_ENV_XLSX = os.path.join(_PROJECT_ROOT, "Config", "Environment.xlsx")
 _TESTCASES_EXCEL = os.path.join(_PROJECT_ROOT, "TestData", "TestCasesFile.xlsx")
-_TESTDATA_EXCEL_TEMPLATE = os.path.join(_PROJECT_ROOT, "TestData", "TestDataFile_{env}.xlsx")
+_TESTDATA_EXCEL = os.path.join(_PROJECT_ROOT, "TestData", "TestDataFile.xlsx")
 _OUTPUT_DIR = os.path.join(_PROJECT_ROOT, "log")
 
 
@@ -63,19 +63,23 @@ class QraceHelper:
     # -----------------------------------------------------------------------
     # Internal helpers
     # -----------------------------------------------------------------------
-    def _load_env_json(self, env_name):
-        """Load Environment.json for the given env name and populate envAttributes."""
+    def _load_env_excel(self, env_name):
+        """Load Config/Environment.xlsx sheet matching env_name (case-insensitive)."""
         try:
-            with open(_ENV_JSON, "r", encoding="utf-8") as f:
-                config = json.load(f)
-            env_data = config.get("Environment", {}).get(env_name, {})
+            xl = pd.ExcelFile(_ENV_XLSX)
+            sheet = next(
+                (s for s in xl.sheet_names if s.strip().upper() == env_name.strip().upper()),
+                xl.sheet_names[0]
+            )
+            df = xl.parse(sheet, dtype=str).fillna("")
+            env_data = dict(zip(df["Key"].str.strip(), df["Value"].str.strip()))
             QraceHelper._env_config = env_data
             QraceHelper.envAttributes = dict(env_data)
             QraceHelper.env_name = env_data.get("Env", env_name)
             QraceHelper.release_name = env_data.get("Release", "")
-            BuiltIn().log_to_console(f"[QraceHelper] Loaded environment: {env_name}")
+            BuiltIn().log_to_console(f"[QraceHelper] Loaded env: {env_name} (sheet: {sheet})")
         except Exception as err:
-            BuiltIn().log_to_console(f"[QraceHelper] Failed to load Environment.json: {err}")
+            BuiltIn().log_to_console(f"[QraceHelper] Failed to load Environment.xlsx: {err}")
 
     def _set_env_globals(self):
         """Set all env attributes as Robot global variables."""
@@ -728,7 +732,7 @@ class QraceHelper:
     @keyword("Get Environment Config By TestRun")
     def get_environment_config_by_testrun(self, testRunId):
         # testRunId is now repurposed as the environment name (e.g. "UAT", "STG")
-        QraceHelper._load_env_json(self, testRunId)
+        QraceHelper._load_env_excel(self, testRunId)
         QraceHelper._set_env_globals(self)
 
     @keyword("Get TestRun Metadata")
@@ -739,7 +743,7 @@ class QraceHelper:
         """
         try:
             # Load environment config
-            QraceHelper._load_env_json(self, testRunId)
+            QraceHelper._load_env_excel(self, testRunId)
             QraceHelper._set_env_globals(self)
             QraceHelper.test_run_id = testRunId
             QraceHelper.env_name = QraceHelper._env_config.get("Env", testRunId)
